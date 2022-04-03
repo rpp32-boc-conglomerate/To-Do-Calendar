@@ -1,5 +1,9 @@
+const path = require("path");
+const webpack = require('webpack');
+
 module.exports = {
-  entry: __dirname + '/client/src/index.js',
+  entry: ['regenerator-runtime/runtime.js', path.resolve(__dirname, "client", "src", 'index.js')],
+  output: { path: path.resolve(__dirname, "client", "dist") },
   mode: 'development',
   devtool: 'source-map',
   module: {
@@ -16,7 +20,23 @@ module.exports = {
       },
       {
         test: /\.css$/i,
-        use: ['style-loader', 'css-loader'],
+        use: [{
+          loader: 'style-loader',
+        }, {
+          loader: 'css-loader',
+        }, {
+          loader: 'postcss-loader',
+          options: {
+            plugins: function () {
+              return [
+                require('precss'),
+                require('autoprefixer')
+              ];
+            }
+          }
+        }, {
+          loader: 'sass-loader'
+        }],
       }
     ]
   },
