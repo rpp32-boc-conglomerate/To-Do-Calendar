@@ -1,0 +1,23 @@
+{
+  "name": "to-do-cal",
+  "version": "1.0.0",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.3",
+    "jquery": "^3.6.0",
+    "react": "^17.0.2",
+    "react-big-calendar": "^0.40.0",
+    "react-dom": "^17.0.2",
+    "react-router": "^6.3.0",
+    "regenerator-runtime": "^0.13.9"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.16.11",
+    "@babel/preset-react": "^7.16.7",
+    "babel-jest": "^27.5.1",
+    "body-parser": "^1.20.0",
+    "eslint": "^8.12.0",
+    "jest": "^27.5.1",
+    "webpack": "^5.71.0"
+  }
+}
