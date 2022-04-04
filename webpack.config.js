@@ -19,7 +19,27 @@ module.exports = {
         }
       },
       {
-        test: /\.s[ac]ss$/i,
+        test: /\.css$/i,
+        use: [{
+          loader: 'style-loader',
+        }, {
+          loader: 'css-loader',
+        }, {
+          loader: 'postcss-loader',
+          options: {
+            plugins: function () {
+              return [
+                require('precss'),
+                require('autoprefixer')
+              ];
+            }
+          }
+        }, {
+          loader: 'sass-loader'
+        }]
+      },
+      {
+        test: /\.s[a|c]ss$/i,
         use: [
           // Creates `style` nodes from JS strings
           "style-loader",
@@ -28,7 +48,7 @@ module.exports = {
           // Compiles Sass to CSS
           "sass-loader",
         ],
-      },
+      }
     ]
   },
   output: {
