@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Registration from './components/authentication/registration.jsx';
 import MyCalendar from './components/calendar/MyCalendar.jsx';
+import ToDoList from './components/to-do-list/ToDoList.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -15,6 +16,7 @@ class App extends React.Component {
     return (
       <>
         <MyCalendar />
+        <ToDoList />
         <Registration />
         <div />
       </>
