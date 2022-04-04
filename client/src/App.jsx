@@ -3,7 +3,9 @@ import ReactDOM from 'react-dom';
 import moment from 'moment';
 import Registration from './components/authentication/registration.jsx';
 import MyCalendar from './components/calendar/MyCalendar.jsx';
+import ToDoList from './components/to-do-list/ToDoList.jsx';
 import './CalendarStyle.scss'
+
 class App extends React.Component {
   constructor(props) {
     super(props)
@@ -34,6 +36,7 @@ class App extends React.Component {
     return (
       <>
         <MyCalendar myEventsList={this.state.events}/>
+        <ToDoList />
         <Registration />
         <div />
       </>
