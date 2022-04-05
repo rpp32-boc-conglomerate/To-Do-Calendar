@@ -11,43 +11,49 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
 import Container from '@mui/material/Container';
-
+import Paper from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
+import registrationSchema from './RegistrationValidation.jsx';
 
 function handleSubmit(e) {
   e.preventDefault();
-  const data = new FormData(event.currentTarget);
-  console.log({
-    email: data.get('email'),
-    password: data.get('password'),
-  });
+  const data = new FormData(e.currentTarget);
 
-  var url = 'http://localhost:3000/signup';
-  console.log('in submit');
-  var stringified = JSON.stringify(this.state);
-  console.log('stringified: ', stringified);
-  if (this.state.firstName !== '' && this.state.lastName !== '' && this.state.password !== '') {
-    return new Promise((resolve, reject) => {
-      $.ajax({
-        'url': url,
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        type: 'POST',
-        contentType: 'application/json',
-        data: {result: stringified},
-        dataType: 'json',
-        success: function (response) {
-          resolve (response);
-        },
-        failure: function (response) {
-          console.log('rejected');
-          reject (response);
-        }
+  var user = {
+    firstName: data.get('firstName'),
+    lastName: data.get('lastName'),
+    email: data.get('email'),
+    password: data.get('password')
+  };
+
+  registrationSchema.isValid(user)
+    .then(function (valid) {
+      var stringified = JSON.stringify(user);
+      var url = 'http://localhost:3000/signup';
+
+      return new Promise((resolve, reject) => {
+        $.ajax({
+          'url': url,
+          type: 'POST',
+          contentType: 'application/json',
+          data: stringified,
+          dataType: 'json',
+          success: function (response) {
+            console.log('success');
+            resolve (response);
+          },
+          failure: function (response) {
+            console.log('rejected');
+            reject (response);
+          }
+        });
       });
+    })
+    .catch(function(e) {
+      //handle this later
+      console.log('invalid form data');
     });
-  } else {
-    console.log('invalid form input');
-  }
+
 }
 
 export default function registrationForm() {
@@ -70,6 +76,7 @@ export default function registrationForm() {
               <TextField
                   required
                   fullWidth
+                  name="firstName"
                   id="First Name"
                   label="First Name"
                   placeholder="First Name"
@@ -79,6 +86,7 @@ export default function registrationForm() {
               <TextField
                   required
                   fullWidth
+                  name="lastName"
                   id="Last Name"
                   label="Last Name"
                   placeholder="Last Name"
@@ -88,6 +96,7 @@ export default function registrationForm() {
               <TextField
                   required
                   fullWidth
+                  name="email"
                   id="Email"
                   label="Email"
                   placeholder="Email"
@@ -97,19 +106,22 @@ export default function registrationForm() {
               <TextField
                   required
                   fullWidth
+                  name="password"
                   id="Password"
                   label="Password"
                   placeholder="Password"
               />
             </Grid>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-              >
-                Submit
-            </Button>
+            <Grid item xs={12}>
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+                >
+                  Submit
+              </Button>
+            </Grid>
             <Grid container justifyContent="flex-end">
               <Grid item>
                 <Link href="#" variant="body2">

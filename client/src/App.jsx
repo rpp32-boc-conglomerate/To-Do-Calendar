@@ -10,7 +10,7 @@ class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      currentPage: 'home',
+      currentPage: 'signup',
       events: [{
         title: 'Sample Event',
         start: new Date,
@@ -34,7 +34,7 @@ class App extends React.Component {
 
 
   render() {
-    if (this.state.currentPage === 'registration') {
+    if (this.state.currentPage === 'signup') {
       return (
         <>
           <Registration />
