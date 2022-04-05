@@ -1,7 +1,9 @@
 import React from 'react';
-import { Calendar, momentLocalizer } from 'react-big-calendar'
-import moment from 'moment'
-const localizer = momentLocalizer(moment)
+import { Calendar, momentLocalizer } from 'react-big-calendar';
+import moment from 'moment';
+import './CalendarStyle.scss';
+
+const localizer = momentLocalizer(moment);
 
 const MyCalendar = (props) => (
   <div className='calendar'>
