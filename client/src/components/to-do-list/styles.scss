@@ -1,7 +1,7 @@
 #todo-list{
   border: black solid 2px;
   width: 50vw;
-  height: 100vh;
+  height: 80vh;
   display: flex;
 }
 
@@ -21,6 +21,7 @@
 
 #drop-board{
   border: red solid 10px;
-  height: 50vh;
+  height: 20vh;
   width: 20vw;
+  align-items: flex-end
 }
