@@ -1,96 +1,126 @@
 import React from 'react';
 import $ from 'jquery';
 
-class Registration extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      firstName: '',
-      lastName: '',
-      email: '',
-      password: ''
-    };
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-  }
+import FormControl, { useFormControl } from '@mui/material/FormControl';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import Box from '@mui/material/Box';
+import FormHelperText from '@mui/material/FormHelperText';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
+import Link from '@mui/material/Link';
+import Container from '@mui/material/Container';
 
-  handleSubmit(e) {
-    console.log(this.state);
-    console.log('clicked');
 
-    var url = 'http://localhost:3333/signup';
-    console.log('in submit');
-    var stringified = JSON.stringify(this.state);
-    console.log('stringified: ', stringified);
-    if (this.state.firstName !== '' && this.state.lastName !== '' && this.state.password !== '') {
-      return new Promise((resolve, reject) => {
-        $.ajax({
-          'url': url,
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-          },
-          type: 'POST',
-          contentType: 'application/json',
-          data: {result: stringified},
-          dataType: 'json',
-          success: function (response) {
-            resolve (response);
-          },
-          failure: function (response) {
-            console.log('rejected');
-            reject (response);
-          }
-        });
+function handleSubmit(e) {
+  e.preventDefault();
+  const data = new FormData(event.currentTarget);
+  console.log({
+    email: data.get('email'),
+    password: data.get('password'),
+  });
+
+  var url = 'http://localhost:3000/signup';
+  console.log('in submit');
+  var stringified = JSON.stringify(this.state);
+  console.log('stringified: ', stringified);
+  if (this.state.firstName !== '' && this.state.lastName !== '' && this.state.password !== '') {
+    return new Promise((resolve, reject) => {
+      $.ajax({
+        'url': url,
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        type: 'POST',
+        contentType: 'application/json',
+        data: {result: stringified},
+        dataType: 'json',
+        success: function (response) {
+          resolve (response);
+        },
+        failure: function (response) {
+          console.log('rejected');
+          reject (response);
+        }
       });
-    } else {
-      console.log('invalid form input');
-    }
-  }
-
-  handleChange(e) {
-
-    if (e.target.id === "firstName") {
-      this.setState({
-        firstName: e.target.value
-      });
-    }
-    if (e.target.id === "lastName") {
-      this.setState({
-        lastName: e.target.value
-      });
-    }
-    if (e.target.id === "email") {
-      this.setState({
-        email: e.target.value
-      });
-    }
-    if (e.target.id === "password") {
-      this.setState({
-        password: e.target.value
-      });
-    }
-
-  }
-
-  render() {
-    return (
-      <div>Registration form
-      <form onSubmit={this.handleSubmit}>
-        <label>First Name:
-          <input type="text" id="firstName" value={this.state.firstName} onChange={this.handleChange}/>
-        </label>
-        <label>Last Name:
-          <input type="text" id="lastName" value={this.state.lastName} onChange={this.handleChange}/> </label>
-        <label>Email:
-          <input type="text" id="email" value={this.state.email} onChange={this.handleChange}/>
-        </label>
-        <label>Number of Guests:
-          <input type="text" id="password" value={this.state.password} onChange={this.handleChange}/>
-        </label>
-        <button type="submit">Submit</button>
-      </form>
-      </div>
-    );
+    });
+  } else {
+    console.log('invalid form input');
   }
 }
-export default Registration;
+
+export default function registrationForm() {
+  return (
+    <Container component="main" maxWidth="xs">
+      <Box
+        sx={{
+          marginTop: 8,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}
+      >
+        <Typography component="h1" variant="h5">
+              Sign up
+        </Typography>
+        <Box component="form" noValidate autoComplete="off" onSubmit={handleSubmit} sx={{ mt: 3 }}>
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                  required
+                  fullWidth
+                  id="First Name"
+                  label="First Name"
+                  placeholder="First Name"
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                  required
+                  fullWidth
+                  id="Last Name"
+                  label="Last Name"
+                  placeholder="Last Name"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                  required
+                  fullWidth
+                  id="Email"
+                  label="Email"
+                  placeholder="Email"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                  required
+                  fullWidth
+                  id="Password"
+                  label="Password"
+                  placeholder="Password"
+              />
+            </Grid>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+              >
+                Submit
+            </Button>
+            <Grid container justifyContent="flex-end">
+              <Grid item>
+                <Link href="#" variant="body2">
+                  Already have an account? Sign in
+                </Link>
+              </Grid>
+            </Grid>
+          </Grid>
+
+        </Box>
+      </Box>
+    </Container>
+  );
+};
