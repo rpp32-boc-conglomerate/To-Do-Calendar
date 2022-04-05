@@ -6,7 +6,7 @@ function Category() {
   const [totalTime, setTotalTime] = useState(0)
   const [categoryTasks, setCategoryTasks] = useState([])
 
-  return <div>New Category
+  return <div id="category">New Category
     <div>Total Time {totalTime}</div>
     <div>
     <button onClick={() => {

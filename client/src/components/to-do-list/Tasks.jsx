@@ -5,7 +5,7 @@ import Task from './Task.jsx';
 
 function Tasks({tasks}) {
   return(
-    tasks.map(task => <Task />)
+    tasks.map((task, i) => <Task key={i} index={i}/>)
   )
 }
 
