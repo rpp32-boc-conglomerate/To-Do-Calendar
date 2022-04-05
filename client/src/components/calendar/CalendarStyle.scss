@@ -1,7 +1,15 @@
 @import 'react-big-calendar/lib/sass/styles';
 @import 'react-big-calendar/lib/addons/dragAndDrop/styles'; // if using DnD
 
-.calendar {
-  float: right;
-  max-width: 50vw;
+@media screen and (min-width: 1000px) {
+  .calendar {
+    float: right;
+    max-width: 50vw;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .calendar {
+    min-height: 80vh;
+  }
 }
