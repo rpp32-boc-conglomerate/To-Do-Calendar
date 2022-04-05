@@ -18,13 +18,15 @@ function Drop({tasks}) {
   }));
   const addTaskToBoard = (item) => {
     console.log('id addTaskToBoard', item);
-    const draggedTasks = tasks.filter((task) => {
-      console.log('item.id', item.id)
-      console.log('task.index', task.index)
-      item.id === task.index
-    });
-    console.log('draggedTasks', draggedTasks)
-    setBoard((board) => [...board, draggedTasks])
+    // console.log('board in addTask', tasks)
+    // const draggedTasks = board.filter((task) => {
+    //   console.log('item.id', item.id)
+    //   console.log('task.index', task.index)
+    //   item.id === task.index
+    // }
+    // );
+    // console.log('draggedTasks', draggedTasks)
+    setBoard(board => board.concat(item))
   };
   return <div id="drop-board" ref={drop} style={{border: isOver ? "5px solid pink" : "10px solid red"}}>drop board
     {board?.map((item, i) => {
