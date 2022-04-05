@@ -37,8 +37,6 @@ class App extends React.Component {
     if (this.state.currentPage === 'registration') {
       return (
         <>
-
-          {/* <MyCalendar /> */}
           <Registration />
           <div />
         </>
@@ -48,7 +46,7 @@ class App extends React.Component {
       <>
         <MyCalendar myEventsList={this.state.events}/>
         <ToDoList />
-        {/* <Login /> */}
+        <div />
       </>
     );
   }
