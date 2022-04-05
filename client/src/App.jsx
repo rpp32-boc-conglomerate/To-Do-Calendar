@@ -13,6 +13,7 @@ function App () {
     end: new Date(moment().add(1, 'hour')),
     allDay: false
   }]
+
   const [currentPage, changePage] = useState('home');
   const [myEvents, setMyEvents] = useState(eventsList);
 
