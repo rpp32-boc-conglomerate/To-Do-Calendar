@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "build": "webpack",
+    "build": "webpack --watch",
     "start": "nodemon server/server.js",
     "test": "jest"
   },
