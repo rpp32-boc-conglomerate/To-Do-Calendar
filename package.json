@@ -1,8 +1,8 @@
 {
   "scripts": {
-    "build": "webpack --watch",
+    "build": "webpack",
     "start": "nodemon server/server.js",
-    "test": "jest --coverage"
+    "test": "jest"
   },
   "dependencies": {
     "@emotion/styled": "^11.8.1",
