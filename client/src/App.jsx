@@ -11,10 +11,22 @@ class App extends React.Component {
     }
   }
 
+
   render() {
+    if (this.state.currentPage === 'registration') {
+      return (
+        <>
+
+          {/* <MyCalendar /> */}
+          <Registration />
+          <div />
+        </>
+      );
+    }
     return (
       <>
-        <MyCalendar />
+
+        {/* <MyCalendar /> */}
         <Registration />
         <div />
       </>
