@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import moment from 'moment';
 import Registration from './components/authentication/registration.jsx';
+import Login from './components/authentication/Login.jsx';
 import MyCalendar from './components/calendar/MyCalendar.jsx';
 import ToDoList from './components/to-do-list/ToDoList.jsx';
 
@@ -37,7 +38,7 @@ class App extends React.Component {
         <MyCalendar myEventsList={this.state.events}/>
         <ToDoList />
         <Registration />
-        <div />
+        {/* <Login /> */}
       </>
     );
   }
