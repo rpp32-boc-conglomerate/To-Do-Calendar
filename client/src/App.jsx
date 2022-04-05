@@ -32,12 +32,22 @@ class App extends React.Component {
     this.setState({events: this.state.events.concat(newToDo)})
   }
 
+
   render() {
+    if (this.state.currentPage === 'registration') {
+      return (
+        <>
+
+          {/* <MyCalendar /> */}
+          <Registration />
+          <div />
+        </>
+      );
+    }
     return (
       <>
         <MyCalendar myEventsList={this.state.events}/>
         <ToDoList />
-        <Registration />
         {/* <Login /> */}
       </>
     );
