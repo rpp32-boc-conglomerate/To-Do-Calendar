@@ -1,11 +1,12 @@
 import React, {useState, useEffect} from 'react';
+import "./styles.scss";
 import Categories from './Categories.jsx';
 import Category from './Category.jsx';
 import Tasks from './Tasks.jsx';
 import Drop from './testDrop.jsx';
-import "./styles.scss";
-import {DndProvider} from 'react-dnd';
-import {HTML5Backend} from 'react-dnd-html5-backend';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import { Container, Grid, ButtonGroup, Button } from '@material-ui/core';
 
 // var newToDo = {
 //   title: toDo.title,
@@ -14,20 +15,6 @@ import {HTML5Backend} from 'react-dnd-html5-backend';
 //   allDay: toDo.allDay ? toDo.allDay : false
 // }
 
-const testToDos = [
-  {
-  title: 'clean floors',
-  start: new Date('April 06, 2022 03:00:00'),
-  end: new Date('April 06, 2022 04:00:00'),
-  allDay: false
-},
-{
-  title: 'make music',
-  start: new Date('April 05, 2022 03:00:00'),
-  end: new Date('April 05, 2022 04:00:00'),
-  allDay: false
-},
-]
 //wrap with a provider for dnd
 function ToDoList() {
   //a state prop that's an array that has an element for everytime + task or + category is clicked
@@ -39,19 +26,19 @@ function ToDoList() {
   }
 
   return(
-    <div>
+    <Container>
     <DndProvider backend={HTML5Backend}>
-    <div id="todo-list">To-Do List
-      <div>
-      <button onClick={() => setNewCategories(newCategories => newCategories.concat('New'))}>+ Category</button>
-      <button onClick={() => setNewTasks(newTasks => newTasks.concat('New task'))}>+ Task</button>
-      </div>
+    <Grid item xs={2} md={4}>To-Do List
+    <ButtonGroup variant="contained" aria-label="outlined primary button group">
+      <Button onClick={() => setNewCategories(newCategories => newCategories.concat('New'))}>+ Category</Button>
+      <Button onClick={() => setNewTasks(newTasks => newTasks.concat('New task'))}>+ Task</Button>
+    </ButtonGroup>
+      </Grid>
       <Categories categories={newCategories} tasks={newTasks} addTask={handleAddTask}/>
       <Tasks tasks={newTasks} />
-    </div>
       <Drop tasks={newTasks}/>
     </DndProvider>
-    </div>
+    </Container>
   )
 }
 //don't forget empty array parameter for useEffect !!!
