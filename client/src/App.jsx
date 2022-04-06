@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import moment from 'moment';
-import Registration from './components/authentication/registration.jsx';
+import Registration from './components/authentication/Registration.jsx';
 import Login from './components/authentication/Login.jsx';
 import MyCalendar from './components/calendar/MyCalendar.jsx';
 import ToDoList from './components/to-do-list/ToDoList.jsx';
@@ -10,7 +10,7 @@ class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      currentPage: 'home',
+      currentPage: 'signup',
       events: [{
         title: 'Sample Event',
         start: new Date,
@@ -32,13 +32,21 @@ class App extends React.Component {
     this.setState({events: this.state.events.concat(newToDo)})
   }
 
+
   render() {
+    if (this.state.currentPage === 'signup') {
+      return (
+        <>
+          <Registration />
+          <div />
+        </>
+      );
+    }
     return (
       <>
         <MyCalendar myEventsList={this.state.events}/>
         <ToDoList />
-        <Registration />
-        {/* <Login /> */}
+        <div />
       </>
     );
   }
