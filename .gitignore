@@ -101,5 +101,5 @@ typings/
 .tern-port
 
 # web optimized file fonts
-.woff2
-.woff
+*.woff2
+*.woff
