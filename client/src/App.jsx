@@ -57,32 +57,13 @@ function App () {
     updateCalendar(...myEvents, newToDo)
   }
 
-<<<<<<< HEAD
     return (
       <div>
         <MyCalendar myEvents={myEvents} moveEvent={moveEvent} resizeEvent={resizeEvent}/>
         <ToDoList addToCalendar={addToCalendar}/>
-        <Registration />
+        {/* <Registration /> */}
         {/* <Login /> */}
       </div>
-=======
-
-  render() {
-    if (this.state.currentPage === 'signup') {
-      return (
-        <>
-          <Registration />
-          <div />
-        </>
-      );
-    }
-    return (
-      <>
-        <MyCalendar myEventsList={this.state.events}/>
-        <ToDoList />
-        <div />
-      </>
->>>>>>> 6ac2031ace2e7e303c0b80c60f5dc0491815dfdb
     );
 }
 
