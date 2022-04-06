@@ -77,7 +77,7 @@ const Login = () => {
         console.log('response:', res);
       })
       .catch((err) => {
-        console.log('login err:', err);
+        console.log('login errors:', err);
       })
     }
   }

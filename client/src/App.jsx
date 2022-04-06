@@ -1,7 +1,7 @@
 import React, {useState, useCallback} from 'react';
 import ReactDOM from 'react-dom';
 import moment from 'moment';
-import Registration from './components/authentication/registration.jsx';
+import Registration from './components/authentication/Registration.jsx';
 import Login from './components/authentication/Login.jsx';
 import MyCalendar from './components/calendar/MyCalendar.jsx';
 import ToDoList from './components/to-do-list/ToDoList.jsx';
@@ -57,6 +57,7 @@ function App () {
     updateCalendar(...myEvents, newToDo)
   }
 
+<<<<<<< HEAD
     return (
       <div>
         <MyCalendar myEvents={myEvents} moveEvent={moveEvent} resizeEvent={resizeEvent}/>
@@ -64,6 +65,24 @@ function App () {
         <Registration />
         {/* <Login /> */}
       </div>
+=======
+
+  render() {
+    if (this.state.currentPage === 'signup') {
+      return (
+        <>
+          <Registration />
+          <div />
+        </>
+      );
+    }
+    return (
+      <>
+        <MyCalendar myEventsList={this.state.events}/>
+        <ToDoList />
+        <div />
+      </>
+>>>>>>> 6ac2031ace2e7e303c0b80c60f5dc0491815dfdb
     );
 }
 
