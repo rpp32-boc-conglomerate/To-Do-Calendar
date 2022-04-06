@@ -8,11 +8,10 @@ registrationRouter.route('/').get((req, res) => {
   res.send('Signup List Router GET');
 });
 
-
-
 registrationRouter.route('/').post((req, res) => {
   console.log('post signup route');
   console.log(JSON.parse(req.body.result));
   res.send('Signup List Router POST');
 });
+
 module.exports = registrationRouter;
