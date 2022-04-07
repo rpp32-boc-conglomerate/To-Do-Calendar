@@ -28,3 +28,7 @@ const query = `SELECT * from todoitems`;
       console.error(err);
   }
 })();
+
+module.exports = {
+
+}
