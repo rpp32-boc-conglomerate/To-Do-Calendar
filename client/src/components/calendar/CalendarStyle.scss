@@ -2,6 +2,21 @@
 @import 'react-big-calendar/lib/addons/dragAndDrop/styles'; // if using DnD
 
 .calendar {
-  // float: right;
-  // max-width: 50vw;
+  font-family: arial;
+}
+
+@media screen and (min-width: 1000px) {
+  .calendar {
+    float: right;
+    min-width: 50vw;
+    font-size: small;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .calendar {
+    min-height: 80vh;
+    min-width: 100%;
+    font: 'sans-serif';
+  }
 }
