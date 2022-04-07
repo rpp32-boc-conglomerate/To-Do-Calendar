@@ -2,13 +2,13 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const cors = require('cors');
-
 const bodyParser = require('body-parser');
 
 const loginRouter = require('./routes/loginRouter.js');
 const registrationRouter = require('./routes/registrationRouter.js');
 const todoListRouter = require('./routes/todoListRouter.js');
 const calendarRouter = require('./routes/calendarRouter.js');
+
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
