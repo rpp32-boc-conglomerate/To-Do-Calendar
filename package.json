@@ -5,8 +5,8 @@
     "test": "jest"
   },
   "dependencies": {
-    "@emotion/styled": "^11.8.1",
     "@emotion/react": "^11.8.2",
+    "@emotion/styled": "^11.8.1",
     "@fontsource/roboto": "^4.5.5",
     "@mui/material": "^5.5.3",
     "axios": "^0.26.1",
@@ -19,10 +19,7 @@
     "moment": "^2.29.2",
     "nodemon": "^2.0.15",
     "pg": "^8.7.3",
-<<<<<<< HEAD
-=======
-    "pgtools": "^0.3.2",
->>>>>>> 7dd33041247a7340c781f3e16f36663c1c4bac1a
+    "pgtools": "^0.1.1",
     "postcss-loader": "^6.2.1",
     "react": "^17.0.2",
     "react-big-calendar": "^0.40.0",
