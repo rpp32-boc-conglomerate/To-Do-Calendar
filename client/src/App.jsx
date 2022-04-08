@@ -57,14 +57,15 @@ function App () {
     updateCalendar(...myEvents, newToDo)
   }
 
-    return (
-      <div>
-        <MyCalendar myEvents={myEvents} moveEvent={moveEvent} resizeEvent={resizeEvent}/>
-        <ToDoList addToCalendar={addToCalendar}/>
-        {/* <Registration /> */}
-        {/* <Login /> */}
-      </div>
-    );
+  console.log(currentPage);
+  return (
+    <div>
+      {/* <MyCalendar myEvents={myEvents} moveEvent={moveEvent} resizeEvent={resizeEvent}/> */}
+      {/* <ToDoList addToCalendar={addToCalendar}/> */}
+      <Registration />
+      <Login />
+    </div>
+  );
 }
 
 export default App;

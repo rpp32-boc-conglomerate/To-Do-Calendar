@@ -1,21 +1,22 @@
-const loginRouter   = require('express').Router();
+const authRouter   = require('express').Router();
 const session       = require('express-session');
 const passport      = require('passport');
 const localStrategy = require('passport-local').Strategy;
 const bcrypt        = require('bcrypt');
-const auth          = require('../models/authentication/login.js');
+const auth          = require('../models/authentication/auth.js');
+const saltStrength  = 10;
 // const hbs        = require('express-handlebars');
 // const app        = express();
 
-loginRouter.use(session({
+authRouter.use(session({
   secret: "verygoodsecret",
   resave: false,
   saveUninitialized: true,
   // store: new MongoStore({mongooseConnection: mongoose.connection})
 }));
 
-loginRouter.use(passport.initialize());
-loginRouter.use(passport.session());
+authRouter.use(passport.initialize());
+authRouter.use(passport.session());
 
 passport.serializeUser(function (user, done) {
   done(null, user.id);
@@ -32,7 +33,7 @@ passport.use(
     User.findOne({ email: email })
       .then(user => {
         if (!user) {
-          const newUser = new User({ email, password });
+          const newUser = new auth.User({ email, password });
           // Hash password before saving in database
           bcrypt.genSalt(10, (err, salt) => {
             bcrypt.hash(newUser.password, salt, (err, hash) => {
@@ -67,6 +68,18 @@ passport.use(
   })
 );
 
+passport.use(new localStrategy(
+  function(username, password, done) {
+    auth.User.findOne({ username: username }, function (err, user) {
+      if (err) { return done(err); }
+      if (!user) { return done(null, false); }
+      if (!user.verifyPassword(password)) { return done(null, false); }
+      return done(null, user);
+    });
+  }
+));
+
+
 function isLoggedIn(req, res, next) {
   if (req.isAuthenticated()) return next();
   res.redirect('/login');
@@ -78,29 +91,58 @@ function isLoggedOut(req, res, next) {
 };
 
 // routes
-loginRouter.route('/').get((req, res) => {
+
+authRouter.post("/register", async (req, res) => {
+  console.log(req.body);
+  try {
+    const hashedPw = await bcrypt.hash(req.body.password, saltStrength);
+    const insertResult = await auth.addNewUser({
+      email: req.body.email,
+      password: hashedPw,
+      firstName: req.body.firstName,
+      lastName: req.body.lastName
+    });
+    res.send(insertResult);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Internal Server error Occured");
+  }
+});
+
+
+authRouter.route('/testRoute').get((req, res) => {
+  console.log('testRoute');
+  res.send('Login Router GET');
+});
+
+
+authRouter.route('/login').get((req, res) => {
   console.log('login route');
   console.log(req.body);
   res.send('Login Router GET');
 });
 
-loginRouter.post('/password', (req, res) => {
+authRouter.post('/password', (req, res) => {
+  console.log('in password post');
   passport.authenticate('local', {
     successRedirect: '/',
     failureRedirect: '/login'
   });
 });
 
-loginRouter.route('/').post((req, res) => {
+authRouter.route('/').post((req, res) => {
   console.log('login post route');
   console.log(req.body);
   res.send('Login Router POST');
 });
 
-loginRouter.route('/newUser').get((req, res) => {
-  console.log('login route 2');
-  res.send('Login Router GET');
+
+
+authRouter.route('/').get((req, res) => {
+  console.log('get signup route');
+  res.send('Signup List Router GET');
 });
 
 
-module.exports = loginRouter;
+
+module.exports = authRouter;
