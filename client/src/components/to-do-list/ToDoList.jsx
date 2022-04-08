@@ -4,6 +4,7 @@ import Categories from './Categories.jsx';
 import Category from './Category.jsx';
 import Tasks from './Tasks.jsx';
 import Drop from './testDrop.jsx';
+import TestModal from './testModal.jsx';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { Container, Grid, ButtonGroup, Button } from '@material-ui/core';
@@ -18,11 +19,29 @@ import { Container, Grid, ButtonGroup, Button } from '@material-ui/core';
 //wrap with a provider for dnd
 function ToDoList() {
   //a state prop that's an array that has an element for everytime + task or + category is clicked
-  const [newTasks, setNewTasks] = useState([])
+  const [newTasks, setNewTasks] = useState({})
   const [newCategories, setNewCategories] = useState([])
+  const [touched, setTouch] = useState(false)
 
-  function handleAddTask() {
-    setNewTasks(newTasks => newTasks.concat('New'))
+  function handleAddTask(index) {
+    if (newTasks[index]) {
+      setNewTasks(newTasks => newTasks[index].concat('New'))
+    } else {
+      let newTask = {}
+      newTask = {index: 'new'}
+      setNewTasks(newTasks => ({
+        ...newTasks,
+        ...newTask
+      }))
+    }
+    setNewTasks(newTasks => {
+
+  })
+}
+
+  function openModal() {
+    console.log('openModal called')
+    setTouch(true)
   }
 
   return(
@@ -34,9 +53,10 @@ function ToDoList() {
       <Button onClick={() => setNewTasks(newTasks => newTasks.concat('New task'))}>+ Task</Button>
     </ButtonGroup>
       </Grid>
-      <Categories categories={newCategories} tasks={newTasks} addTask={handleAddTask}/>
-      <Tasks tasks={newTasks} />
+      <Categories categories={newCategories} tasks={newTasks} addTask={handleAddTask} openModal={openModal}/>
+      {/* <Tasks tasks={newTasks} openModal={openModal} /> */}
       <Drop tasks={newTasks}/>
+      {touched && <TestModal/>}
     </DndProvider>
     </Container>
   )

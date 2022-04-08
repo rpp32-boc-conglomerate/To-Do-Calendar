@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-function Category({tasks, addTask}) {
+function Category({index, tasks, addTask, openModal}) {
   const classes = useStyles();
   const [totalTime, setTotalTime] = useState(0);
 
@@ -31,11 +31,11 @@ function Category({tasks, addTask}) {
    <Grid>
     <Button onClick={() => {
       setTotalTime(totalTime + 1);
-      addTask()
+      addTask(index)
     }
     }>+ Task</Button>
     </Grid>
-    <Tasks tasks={tasks} />
+    <Tasks tasks={tasks} categoryIndex={index} openModal={openModal}/>
     </Paper>
 </Container>
 )}

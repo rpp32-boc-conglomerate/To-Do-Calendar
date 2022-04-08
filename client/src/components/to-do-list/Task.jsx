@@ -38,6 +38,8 @@ function Task(props) {
     index={props.index}
     ref={drag}
     className={classes.card}
+    onTouchStart={props.openModal}
+    onClick={props.openModal}
     // style={{border: isDragging ? "2px solid pink" : "0px"}}
     >
   <TextareaAutosize

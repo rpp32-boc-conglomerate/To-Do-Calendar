@@ -3,9 +3,9 @@
 import React from 'react';
 import Task from './Task.jsx';
 
-function Tasks({tasks}) {
+function Tasks({tasks, openModal}) {
   return(
-    tasks.map((task, i) => <Task key={i} index={i} title={task.title}/>)
+    tasks.map((task, i) => <Task key={i} index={i} title={task.title} openModal={openModal}/>)
   )
 }
 

@@ -3,9 +3,10 @@
 import React from 'react';
 import Category from './Category.jsx';
 
-function Categories({categories, tasks, addTask}) {
+function Categories({categories, tasks, addTask, openModal}) {
   return(
-    categories.map((category, i) => <Category key={i} index={i} tasks={tasks} addTask={addTask}/>)
+    categories.map((category, i) => <Category key={i} index={i} tasks={tasks}
+    addTask={addTask} openModal={openModal}/>)
   )
 }
 export default Categories;
