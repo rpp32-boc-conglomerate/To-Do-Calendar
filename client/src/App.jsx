@@ -1,4 +1,4 @@
-import React, {useState, useCallback} from 'react';
+import React, { useState, useCallback } from 'react';
 import ReactDOM from 'react-dom';
 import moment from 'moment';
 import Registration from './components/authentication/Registration.jsx';
@@ -6,7 +6,7 @@ import Login from './components/authentication/Login.jsx';
 import MyCalendar from './components/calendar/MyCalendar.jsx';
 import ToDoList from './components/to-do-list/ToDoList.jsx';
 
-function App () {
+function App() {
   var eventsList = [{
     title: 'Sample Event',
     start: new Date,
@@ -56,15 +56,23 @@ function App () {
     }
     updateCalendar(...myEvents, newToDo)
   }
+  const changeTitle = (event) => {
+    var title = prompt('Change title', event.title);
+    setMyEvents((prev) => {
+      var newList = prev;
+      title ? newList[prev.indexOf(event)].title : event.title;
+      return newList;
+    })
+  }
 
-    return (
-      <div>
-        <MyCalendar myEvents={myEvents} moveEvent={moveEvent} resizeEvent={resizeEvent}/>
-        <ToDoList addToCalendar={addToCalendar}/>
-        {/* <Registration /> */}
-        {/* <Login /> */}
-      </div>
-    );
+  return (
+    <div>
+      <MyCalendar myEvents={myEvents} moveEvent={moveEvent} resizeEvent={resizeEvent} changeTitle={changeTitle} />
+      <ToDoList addToCalendar={addToCalendar} />
+      {/* <Registration /> */}
+      {/* <Login /> */}
+    </div>
+  );
 }
 
 export default App;

@@ -15,9 +15,12 @@ const MyCalendar = (props) => {
       events={props.myEvents}
       startAccessor="start"
       endAccessor="end"
+      onSelectEvent={(event) => {
+        props.changeTitle(event);
+      }}
       onEventDrop={props.moveEvent}
       onEventResize={props.resizeEvent}
-      style={{ height: 500 }}
+      style={{ height: 1000 }}
     />
   )
 }
