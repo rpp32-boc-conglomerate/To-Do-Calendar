@@ -1,6 +1,8 @@
 import React, {useState, useCallback} from 'react';
 import ReactDOM from 'react-dom';
 import moment from 'moment';
+
+import Header from './components/Headers.jsx';
 import Registration from './components/authentication/Registration.jsx';
 import Login from './components/authentication/Login.jsx';
 import MyCalendar from './components/calendar/MyCalendar.jsx';
@@ -58,9 +60,10 @@ function App () {
   }
 
     return (
-      <div>
-        <MyCalendar myEvents={myEvents} moveEvent={moveEvent} resizeEvent={resizeEvent}/>
+      <div style={{display: 'flex'}}>
+        <Header />
         <ToDoList addToCalendar={addToCalendar}/>
+        <MyCalendar myEvents={myEvents} moveEvent={moveEvent} resizeEvent={resizeEvent}/>
         {/* <Registration /> */}
         {/* <Login /> */}
       </div>

@@ -3,9 +3,9 @@
 import React from 'react';
 import Task from './Task.jsx';
 
-function Tasks({tasks}) {
+function Tasks({tasks, editTask, deleteTask}) {
   return(
-    tasks.map(task => <Task />)
+    tasks.map(task => <Task editTask={editTask} deleteTask={deleteTask}/>)
   )
 }
 

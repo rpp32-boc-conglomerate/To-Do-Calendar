@@ -39,25 +39,11 @@ let addTables = function() {
     }
   };
 
-  const queryText1 = `
-      CREATE TABLE IF NOT EXISTS "users" (
-        "id" SERIAL,
-        "name" VARCHAR(64) NOT NULL,
-        "hash" VARCHAR(64) NOT NULL,
-        PRIMARY KEY ("id")
-      );`;
-
-  execute(queryText1)
-    .then(result => {
-      if (result) {
-          console.log('user table created: ', result);
-      }
-    })
-
   const queryText2 = `
     CREATE TABLE IF NOT EXISTS "categories" (
       "id" SERIAL,
       "name" VARCHAR(64) NOT NULL,
+      "userEmail" VARCHAR(64) NOT NULL,
       PRIMARY KEY ("id")
     );`;
 
@@ -71,13 +57,14 @@ let addTables = function() {
   const queryText3 = `
     CREATE TABLE IF NOT EXISTS "todoItems" (
       "id" SERIAL,
-      "itemName" VARCHAR(64) NOT NULL,
-      "itemDesc" VARCHAR(255) NOT NULL,
+      "title" VARCHAR(64) NOT NULL,
+      "description" VARCHAR(255) NOT NULL,
       "duration" INTERVAL NOT NULL,
-      "startDay" DATE NOT NULL,
-      "startTime" TIME NOT NULL,
-      "userID" INTEGER NOT NULL,
-      "catagoryID" INTEGER NOT NULL,
+      "start" TIMESTAMP NOT NULL,
+      "end" TIME NOT NULL,
+      "allDay" BOOLEAN
+      "userEmail" VARCHAR(64) NOT NULL,
+      "categoryID" INTEGER NOT NULL,
       PRIMARY KEY ("id")
     );`;
 
