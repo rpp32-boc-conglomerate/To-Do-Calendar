@@ -19,7 +19,6 @@ function App () {
   const [currentPage, changePage] = useState('home');
   const [myEvents, setMyEvents] = useState(eventsList);
   const [onCalendar, setOnCalendar] = useState(false);
-
   //Calendar helper functions
   const moveEvent = useCallback(
     ({ event, start, end, isAllDay: droppedOnAllDaySlot = false }) => {
@@ -59,7 +58,10 @@ function App () {
     }
     updateCalendar(...myEvents, newToDo)
   }
+  // condition redering base on device
+
   const renderContent = () => {
+    // view for mobile and in to do list page
     if (isMobile && !onCalendar) {
       return (
         <div>
@@ -68,6 +70,7 @@ function App () {
         </div>
       )
     } else if (isMobile && onCalendar) {
+      // // view for mobile and in calendar page
       return (
         <div>
           <TopBar isMobile={isMobile} onCalendar={onCalendar} setOnCalendar={setOnCalendar}/>
@@ -76,14 +79,14 @@ function App () {
       )
     } else {
       return (
+        // view for desktop display both calendar and to do list
         <div>
-          <TopBar isMobile={isMobile}/>
+          <TopBar isMobile={isMobile} onCalendar={onCalendar} setOnCalendar={setOnCalendar}/>
           <MyCalendar myEvents={myEvents} moveEvent={moveEvent} resizeEvent={resizeEvent}/>
           <ToDoList addToCalendar={addToCalendar}/>
         </div>
       )
     }
-
   }
     return (
       <div>
