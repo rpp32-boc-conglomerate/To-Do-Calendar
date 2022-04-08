@@ -96,8 +96,8 @@ function App () {
         {/* <MyCalendar myEvents={myEvents} moveEvent={moveEvent} resizeEvent={resizeEvent}/>
         <ToDoList addToCalendar={addToCalendar}/> */}
         {/* <Registration /> */}
-        <Login />
-        {/* {renderContent()} */}
+        {/* <Login /> */}
+        {renderContent()}
       </div>
     );
 }
