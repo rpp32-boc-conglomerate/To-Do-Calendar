@@ -94,16 +94,9 @@ function App () {
     }
   }
     return (
-<<<<<<< HEAD
-      <div style={{display: 'flex'}}>
-        <Header />
-        <ToDoList addToCalendar={addToCalendar}/>
-        <MyCalendar myEvents={myEvents} moveEvent={moveEvent} resizeEvent={resizeEvent}/>
-=======
       <div>
         {/* <MyCalendar myEvents={myEvents} moveEvent={moveEvent} resizeEvent={resizeEvent}/>
         <ToDoList addToCalendar={addToCalendar}/> */}
->>>>>>> main
         {/* <Registration /> */}
         {/* <Login /> */}
         {renderContent()}
