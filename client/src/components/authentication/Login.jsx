@@ -3,7 +3,7 @@ import { makeStyles, IconButton, Link, Avatar, TextField, Box, Paper, Typography
 import GoogleIcon from '@mui/icons-material/Google';
 import loginSchema from './LoginValidation.js';
 import axios from 'axios'
-import img from '../../../dist/images/d1.png';
+import { useNavigate } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -30,6 +30,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Login = () => {
+  const navigate = useNavigate();
   const classes = useStyles();
   const [state, setState] = useState({'email': '', 'password': ''})
   const [formErr, setFormErr] = useState('');
@@ -71,13 +72,18 @@ const Login = () => {
     if (!isValid) {
       console.log('cannot submit')
     } else {
-      console.log(state['email'], state['password'], isValid)
-      await axios.post('http://localhost:4000/login', {'email': state['email'], 'password': state['password']})
+      await axios.post('http://localhost:4000/login', {'username': state['email'], 'password': state['password']})
       .then((res) => {
-        console.log('response:', res);
+        console.log('response:', res.data);
+        if(res.data === true) {
+          navigate('/')
+        } else if (res.data === 'incorrect') {
+          setFormErr('email');
+          setErrMsg("Email doesn't exist or Incorrect password")
+        }
       })
       .catch((err) => {
-        console.log('login errors:', err);
+        console.log('login err:', err);
       })
     }
   }
@@ -90,7 +96,7 @@ const Login = () => {
                 <Avatar
                   variant="square"
                   alt="Remy Sharp"
-                  src={img}
+                  src={require('./d1.jpg')}
                   style={{width:'120px', height:'100px'}}/>
                 <h1 style={{color:'#545863'}}><i>Sign In</i></h1>
               </Grid>
