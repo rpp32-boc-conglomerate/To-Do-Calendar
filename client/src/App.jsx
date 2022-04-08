@@ -1,4 +1,5 @@
 import React, {useState, useCallback} from 'react';
+import { BrowserView, MobileView, isBrowser, isMobile} from 'react-device-detect';
 import ReactDOM from 'react-dom';
 import moment from 'moment';
 
@@ -7,6 +8,7 @@ import Registration from './components/authentication/Registration.jsx';
 import Login from './components/authentication/Login.jsx';
 import MyCalendar from './components/calendar/MyCalendar.jsx';
 import ToDoList from './components/to-do-list/ToDoList.jsx';
+import TopBar from './components/TopBar.jsx';
 
 function App () {
   var eventsList = [{
@@ -18,7 +20,7 @@ function App () {
 
   const [currentPage, changePage] = useState('home');
   const [myEvents, setMyEvents] = useState(eventsList);
-
+  const [onCalendar, setOnCalendar] = useState(false);
   //Calendar helper functions
   const moveEvent = useCallback(
     ({ event, start, end, isAllDay: droppedOnAllDaySlot = false }) => {
@@ -59,13 +61,52 @@ function App () {
     updateCalendar(...myEvents, newToDo)
   }
 
+  // condition redering base on device
+  const naviBar = (<TopBar isMobile={isMobile} onCalendar={onCalendar} setOnCalendar={setOnCalendar}/>)
+  const toDoList = (<ToDoList addToCalendar={addToCalendar}/>)
+  const myCalender = (<MyCalendar myEvents={myEvents} moveEvent={moveEvent} resizeEvent={resizeEvent}/>)
+  const renderContent = () => {
+    // view for mobile and in to do list page
+    if (isMobile && !onCalendar) {
+      return (
+        <div>
+          {naviBar}
+          {toDoList}
+        </div>
+      )
+    } else if (isMobile && onCalendar) {
+      // // view for mobile and in calendar page
+      return (
+        <div>
+          {naviBar}
+          {myCalender}
+        </div>
+      )
+    } else {
+      return (
+        // view for desktop display both calendar and to do list
+        <div>
+          {naviBar}
+          {myCalender}
+          {toDoList}
+        </div>
+      )
+    }
+  }
     return (
+<<<<<<< HEAD
       <div style={{display: 'flex'}}>
         <Header />
         <ToDoList addToCalendar={addToCalendar}/>
         <MyCalendar myEvents={myEvents} moveEvent={moveEvent} resizeEvent={resizeEvent}/>
+=======
+      <div>
+        {/* <MyCalendar myEvents={myEvents} moveEvent={moveEvent} resizeEvent={resizeEvent}/>
+        <ToDoList addToCalendar={addToCalendar}/> */}
+>>>>>>> main
         {/* <Registration /> */}
         {/* <Login /> */}
+        {renderContent()}
       </div>
     );
 }
