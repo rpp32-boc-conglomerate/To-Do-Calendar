@@ -3,7 +3,6 @@ import { BrowserView, MobileView, isBrowser, isMobile} from 'react-device-detect
 import ReactDOM from 'react-dom';
 import moment from 'moment';
 
-import Header from './components/Headers.jsx';
 import Registration from './components/authentication/Registration.jsx';
 import Login from './components/authentication/Login.jsx';
 import MyCalendar from './components/calendar/MyCalendar.jsx';
@@ -61,13 +60,13 @@ function App () {
     updateCalendar(...myEvents, newToDo)
   }
 
-  // condition redering base on device
+  // conditional rendering based on device
   const naviBar = (<TopBar isMobile={isMobile} onCalendar={onCalendar} setOnCalendar={setOnCalendar}/>)
   const toDoList = (<ToDoList addToCalendar={addToCalendar}/>)
   const myCalender = (<MyCalendar myEvents={myEvents} moveEvent={moveEvent} resizeEvent={resizeEvent}/>)
   const renderContent = () => {
-    // view for mobile and in to do list page
     if (isMobile && !onCalendar) {
+      // Mobile View -> Todo-list
       return (
         <div>
           {naviBar}
@@ -75,7 +74,7 @@ function App () {
         </div>
       )
     } else if (isMobile && onCalendar) {
-      // // view for mobile and in calendar page
+      // Mobile View -> Calendar
       return (
         <div>
           {naviBar}
@@ -83,8 +82,9 @@ function App () {
         </div>
       )
     } else {
+      // Desktop View -> Display both calendar and todo-list
       return (
-        // view for desktop display both calendar and to do list
+
         <div>
           {naviBar}
           {myCalender}

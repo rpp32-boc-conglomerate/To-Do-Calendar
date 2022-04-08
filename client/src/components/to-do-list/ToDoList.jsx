@@ -19,10 +19,10 @@ function ToDoList() {
 
   return (
     <div id="todo-list" style={{width: '45%', display: 'inline-block'}}>
-      <div style={{display: 'flex', height: '10%', width: '100%'}}>
+      <div style={{display: 'flex', height: '50px', width: '100%'}}>
         <div style={{width: '80%'}}>To-Do List</div>
-        <Button variant="contained" onClick={() => setNewCategories(newCategories => newCategories.concat('New'))}>+ Category</Button>
-        <Button variant="contained" onClick={() => setNewTasks(newTasks => newTasks.concat('New task'))}>+ Task</Button>
+        <Button variant="contained" onClick={() => setNewCategories(newCategories => newCategories.concat('New'))}>Add Category</Button>
+        <Button variant="contained" onClick={() => setNewTasks(newTasks => newTasks.concat('New task'))}>Add Task</Button>
       </div>
       <div>
         <Categories categories={newCategories} deleteTask={deleteTask} tasks={newTasks}/>

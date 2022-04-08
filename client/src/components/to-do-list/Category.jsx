@@ -5,13 +5,14 @@ import { makeStyles, Paper, Container, Grid, ButtonGroup, Button, TextField, Too
 
 const useStyles = makeStyles((theme) => ({
   paper: {
+    display: 'flex',
     padding: '2rem',
-    width: '40%',
+    width: '100%',
     color: 'grey'
   }
 }))
 
-function Category({tasks, addTask}) {
+function Category({tasks, addTask, deleteTask}) {
   const classes = useStyles();
   const [totalTime, setTotalTime] = useState(0);
 
@@ -32,7 +33,7 @@ function Category({tasks, addTask}) {
             // addTask()
           }}>+ Task</Button>
         </Grid>
-      <Tasks tasks={tasks} />
+      <Tasks tasks={tasks} deleteTask={deleteTask}/>
     </Paper>
   </Container>
 )}
