@@ -58,32 +58,35 @@ function App () {
     }
     updateCalendar(...myEvents, newToDo)
   }
+  
   // condition redering base on device
-
+  const naviBar = (<TopBar isMobile={isMobile} onCalendar={onCalendar} setOnCalendar={setOnCalendar}/>)
+  const toDoList = (<ToDoList addToCalendar={addToCalendar}/>)
+  const myCalender = (<MyCalendar myEvents={myEvents} moveEvent={moveEvent} resizeEvent={resizeEvent}/>)
   const renderContent = () => {
     // view for mobile and in to do list page
     if (isMobile && !onCalendar) {
       return (
         <div>
-          <TopBar isMobile={isMobile} onCalendar={onCalendar} setOnCalendar={setOnCalendar}/>
-          <ToDoList addToCalendar={addToCalendar}/>
+          {naviBar}
+          {toDoList}
         </div>
       )
     } else if (isMobile && onCalendar) {
       // // view for mobile and in calendar page
       return (
         <div>
-          <TopBar isMobile={isMobile} onCalendar={onCalendar} setOnCalendar={setOnCalendar}/>
-          <MyCalendar myEvents={myEvents} moveEvent={moveEvent} resizeEvent={resizeEvent}/>
+          {naviBar}
+          {myCalender}
         </div>
       )
     } else {
       return (
         // view for desktop display both calendar and to do list
         <div>
-          <TopBar isMobile={isMobile} onCalendar={onCalendar} setOnCalendar={setOnCalendar}/>
-          <MyCalendar myEvents={myEvents} moveEvent={moveEvent} resizeEvent={resizeEvent}/>
-          <ToDoList addToCalendar={addToCalendar}/>
+          {naviBar}
+          {myCalender}
+          {toDoList}
         </div>
       )
     }
