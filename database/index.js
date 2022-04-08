@@ -9,6 +9,16 @@ const config = {
   host: 'localhost'
 }
 
+//drop db, if needed uncomment to use
+
+// pgtools.dropdb(config, 'tododb', function (err, res) {
+//   if (err) {
+//     console.error(err);
+//     process.exit(-1);
+//   }
+//   console.log(res);
+// });
+
 pgtools.createdb(config, 'tododb', function (err, res) {
   if (err) {
     console.error(err);
@@ -41,40 +51,37 @@ let addTables = function() {
 
   const queryText2 = `
     CREATE TABLE IF NOT EXISTS "categories" (
-      "id" SERIAL,
+      "category_id" INT GENERATED ALWAYS AS IDENTITY,
       "name" VARCHAR(64) NOT NULL,
-      "userID" INTEGER NOT NULL,
-      PRIMARY KEY ("id")
+      PRIMARY KEY ("category_id")
     );`;
-
-  execute(queryText2)
-  .then(result => {
-    if (result) {
-        console.log('category table created: ', result);
-    }
-  })
 
   const queryText3 = `
     CREATE TABLE IF NOT EXISTS "todoItems" (
-      "id" SERIAL,
-      "title" VARCHAR(64) NOT NULL,
-      "description" VARCHAR(255) NOT NULL,
+      "todo_id" SERIAL,
+      "itemName" VARCHAR(64) NOT NULL,
+      "itemDesc" VARCHAR(255) NOT NULL,
       "duration" INTERVAL NOT NULL,
-      "start" TIMESTAMP NOT NULL,
-      "end" TIME NOT NULL,
-      "allDay" BOOLEAN NOT NULL
-      "userID" INTEGER NOT NULL,
-      "categoryID" INTEGER NOT NULL,
-      PRIMARY KEY ("id")
+      "startDay" DATE NOT NULL,
+      "startTime" TIME NOT NULL,
+      "inCalendar" BOOLEAN NOT NULL,
+      "user_id" INTEGER NOT NULL,
+      "category_id" INTEGER NOT NULL,
+      PRIMARY KEY ("todo_id"),
+      CONSTRAINT fk_category
+        FOREIGN KEY("category_id")
+          REFERENCES categories("category_id")
     );`;
 
-  execute(queryText3)
-  .then(result => {
-    if (result) {
+    execute(queryText2)
+      .then(function(result) {
+        console.log('category table created: ', result);
+        return execute(queryText3)
+      })
+      .then(function(result) {
         console.log('to do item table created: ', result);
         db.end();
-    }
-  })
+      })
 }
 
 
