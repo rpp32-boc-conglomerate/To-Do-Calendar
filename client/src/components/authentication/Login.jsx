@@ -96,7 +96,7 @@ const Login = () => {
                 <Avatar
                   variant="square"
                   alt="Remy Sharp"
-                  src={require('./d1.jpg')}
+                  // src={require('./d1.jpg')}
                   style={{width:'120px', height:'100px'}}/>
                 <h1 style={{color:'#545863'}}><i>Sign In</i></h1>
               </Grid>
