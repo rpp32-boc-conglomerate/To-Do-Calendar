@@ -5,7 +5,7 @@ import Task from './Task.jsx';
 
 function Tasks({tasks, editTask, deleteTask}) {
   return(
-    tasks.map(task => <Task editTask={editTask} deleteTask={deleteTask}/>)
+    tasks.map((task, i) => <Task key={i} index={i} title={task.title}/>)
   )
 }
 

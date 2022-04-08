@@ -1,26 +1,40 @@
 import React, {useState} from 'react';
 import Task from './Task.jsx';
 import Tasks from './Tasks.jsx';
+import { makeStyles, Paper, Container, Grid, ButtonGroup, Button, TextField, Toolbar } from '@material-ui/core';
 
-function Category ({ editTask, deleteTask }) {
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    padding: '2rem',
+    width: '40%',
+    color: 'grey'
+  }
+}))
+
+function Category({tasks, addTask}) {
+  const classes = useStyles();
   const [totalTime, setTotalTime] = useState(0);
-  const [categoryTasks, setCategoryTasks] = useState([]);
 
   return (
-    <div>
-      <div style={{display: 'flex'}}>
-        <div style={{padding: '10px'}}>New Category</div>
-        <div style={{padding: '10px'}}>Total Time {totalTime}</div>
-      </div>
-      <div>
-        <button onClick={() => {
-          setTotalTime(totalTime + 1)
-          setCategoryTasks(categoryTasks => categoryTasks.concat('New'))
-        }}>+ Task</button>
-      </div>
-      <Tasks tasks={categoryTasks} editTask={editTask} deleteTask={deleteTask} />
-    </div>
-  )
-}
+  <Container>
+    <Paper elevation={2} className={classes.paper}>
+      <TextField
+      label='New Category'
+      variant='outlined'
+      />
+      <TextField
+      label='Allotted Time'
+      variant='outlined'
+      />
+        <Grid>
+          <Button onClick={() => {
+            setTotalTime(totalTime + 1);
+            // addTask()
+          }}>+ Task</Button>
+        </Grid>
+      <Tasks tasks={tasks} />
+    </Paper>
+  </Container>
+)}
 
 export default Category;

@@ -43,7 +43,7 @@ let addTables = function() {
     CREATE TABLE IF NOT EXISTS "categories" (
       "id" SERIAL,
       "name" VARCHAR(64) NOT NULL,
-      "userEmail" VARCHAR(64) NOT NULL,
+      "userID" INTEGER NOT NULL,
       PRIMARY KEY ("id")
     );`;
 
@@ -62,8 +62,8 @@ let addTables = function() {
       "duration" INTERVAL NOT NULL,
       "start" TIMESTAMP NOT NULL,
       "end" TIME NOT NULL,
-      "allDay" BOOLEAN
-      "userEmail" VARCHAR(64) NOT NULL,
+      "allDay" BOOLEAN NOT NULL
+      "userID" INTEGER NOT NULL,
       "categoryID" INTEGER NOT NULL,
       PRIMARY KEY ("id")
     );`;

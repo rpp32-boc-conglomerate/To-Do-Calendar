@@ -43,8 +43,4 @@ registrationRouter.route('/').post((req, res) => {
 
 });
 
-<<<<<<< HEAD
-=======
-
->>>>>>> ebc9ed8846bc263fd8bfae6410f802f5630a2439
 module.exports = registrationRouter;
