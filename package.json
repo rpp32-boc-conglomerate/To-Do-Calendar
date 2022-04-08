@@ -17,11 +17,7 @@
     "dotenv": "^16.0.0",
     "enzyme": "^3.11.0",
     "express": "^4.17.3",
-<<<<<<< HEAD
-    "install": "^0.13.0",
-=======
     "express-session": "^1.17.2",
->>>>>>> ebc9ed8846bc263fd8bfae6410f802f5630a2439
     "jquery": "^3.6.0",
     "moment": "^2.29.2",
     "mongoose": "^6.2.10",
