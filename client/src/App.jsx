@@ -58,8 +58,8 @@ function App () {
     }
     updateCalendar(...myEvents, newToDo)
   }
-  
-  // condition redering base on device
+
+  // conditional rendering base on device
   const naviBar = (<TopBar isMobile={isMobile} onCalendar={onCalendar} setOnCalendar={setOnCalendar}/>)
   const toDoList = (<ToDoList addToCalendar={addToCalendar}/>)
   const myCalender = (<MyCalendar myEvents={myEvents} moveEvent={moveEvent} resizeEvent={resizeEvent}/>)
@@ -96,8 +96,8 @@ function App () {
         {/* <MyCalendar myEvents={myEvents} moveEvent={moveEvent} resizeEvent={resizeEvent}/>
         <ToDoList addToCalendar={addToCalendar}/> */}
         {/* <Registration /> */}
-        {/* <Login /> */}
-        {renderContent()}
+        <Login />
+        {/* {renderContent()} */}
       </div>
     );
 }
