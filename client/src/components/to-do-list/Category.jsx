@@ -31,7 +31,7 @@ function Category({tasks, addTask, deleteTask}) {
           <Button onClick={() => {
             setTotalTime(totalTime + 1);
             // addTask()
-          }}>+ Task</Button>
+          }}>Add Task</Button>
         </Grid>
       <Tasks tasks={tasks} deleteTask={deleteTask}/>
     </Paper>
