@@ -1,5 +1,6 @@
 import React, {useState, useCallback} from 'react';
 import { BrowserView, MobileView, isBrowser, isMobile} from 'react-device-detect';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import ReactDOM from 'react-dom';
 import moment from 'moment';
 
@@ -8,6 +9,7 @@ import Login from './components/authentication/Login.jsx';
 import MyCalendar from './components/calendar/MyCalendar.jsx';
 import ToDoList from './components/to-do-list/ToDoList.jsx';
 import TopBar from './components/TopBar.jsx';
+import Home from './components/Home.jsx';
 
 function App () {
   var eventsList = [{
@@ -60,48 +62,32 @@ function App () {
     updateCalendar(...myEvents, newToDo)
   }
 
-  // conditional rendering based on device
-  const naviBar = (<TopBar isMobile={isMobile} onCalendar={onCalendar} setOnCalendar={setOnCalendar}/>)
-  const toDoList = (<ToDoList addToCalendar={addToCalendar}/>)
-  const myCalender = (<MyCalendar myEvents={myEvents} moveEvent={moveEvent} resizeEvent={resizeEvent}/>)
-  const renderContent = () => {
-    if (isMobile && !onCalendar) {
-      // Mobile View -> Todo-list
-      return (
-        <div>
-          {naviBar}
-          {toDoList}
-        </div>
-      )
-    } else if (isMobile && onCalendar) {
-      // Mobile View -> Calendar
-      return (
-        <div>
-          {naviBar}
-          {myCalender}
-        </div>
-      )
-    } else {
-      // Desktop View -> Display both calendar and todo-list
-      return (
+  // const naviBar = (<TopBar isMobile={isMobile} onCalendar={onCalendar} setOnCalendar={setOnCalendar}/>)
+  // const toDoList = (<ToDoList addToCalendar={addToCalendar}/>)
+  // const myCalender = (<MyCalendar myEvents={myEvents} moveEvent={moveEvent} resizeEvent={resizeEvent}/>)
 
-        <div>
-          {naviBar}
-          {myCalender}
-          {toDoList}
-        </div>
-      )
-    }
-  }
+  // all the props would pass to the homepage: './components/Home.jsx'
+  const homePage = (<Home
+    isMobile={isMobile}
+    onCalendar={onCalendar}
+    setOnCalendar={setOnCalendar}
+    addToCalendar={addToCalendar}
+    myEvents={myEvents}
+    moveEvent={moveEvent}
+    resizeEvent={resizeEvent}
+    />);
+
     return (
+      // react router
       <div>
-        {/* <MyCalendar myEvents={myEvents} moveEvent={moveEvent} resizeEvent={resizeEvent}/>
-        <ToDoList addToCalendar={addToCalendar}/> */}
-        {/* <Registration /> */}
-        {/* <Login /> */}
-        {renderContent()}
+        <Router>
+          <Routes>
+            <Route path='/' element={homePage}/>
+            <Route path='/signin' element={<Login />}/>
+            <Route path='/signup' element={<Registration />}/>
+          </Routes>
+          </Router>
       </div>
     );
 }
-
 export default App;

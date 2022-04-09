@@ -64,6 +64,20 @@ module.exports = {
       }
     ]
   },
+  devServer: {
+    port: 3001,
+    watchContentBase: true,
+    contentBase: path.join(__dirname, 'client','/dist'),
+    hot: true,
+    overlay: true,
+    historyApiFallback: true,
+    // proxy: {
+    //   '/api': {
+    //     target: 'http://localhost:3000',
+    //     pathRewrite: {'^/api' : ''}, // In this case we don't pass `api` path
+    //   }
+    // }
+  },
   output: {
     filename: 'bundle.js',
     path: __dirname + '/client/dist'

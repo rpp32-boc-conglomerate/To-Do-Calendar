@@ -33,7 +33,7 @@ passport.deserializeUser(function (id, done) {
 	});
 });
 
-app.use('/', express.static('client/dist'));
+// app.use('/', express.static('client/dist'));
 app.use('/login', loginRouter);
 app.use('/signup', registrationRouter);
 app.use('/todoList', todoListRouter);
