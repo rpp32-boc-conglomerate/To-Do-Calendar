@@ -24,7 +24,7 @@ function ToDoList() {
   const [touched, setTouch] = useState(false)
 
   function handleAddTask(index) {
-    console.log('add task', index)
+    console.log('add task category index', index)
     if (newTasks[index]) {
       setNewTasks(newTasks => newTasks[index].concat('New'))
     } else {
