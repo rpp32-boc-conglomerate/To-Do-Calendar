@@ -35,7 +35,7 @@ function Category({index, tasks, addTask, openModal}) {
     }
     }>+ Task</Button>
     </Grid>
-    <Tasks tasks={tasks} categoryIndex={index} openModal={openModal}/>
+    {/* <Tasks tasks={tasks} categoryIndex={index} openModal={openModal}/> */}
     </Paper>
 </Container>
 )}

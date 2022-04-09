@@ -24,6 +24,7 @@ function ToDoList() {
   const [touched, setTouch] = useState(false)
 
   function handleAddTask(index) {
+    console.log('add task', index)
     if (newTasks[index]) {
       setNewTasks(newTasks => newTasks[index].concat('New'))
     } else {
@@ -34,9 +35,7 @@ function ToDoList() {
         ...newTask
       }))
     }
-    setNewTasks(newTasks => {
-
-  })
+    console.log('newTasks', newTasks)
 }
 
   function openModal() {
