@@ -70,11 +70,11 @@ function App() {
   };
 
   const changeTitle = (event) => {
-    var title = prompt("Change title", event.title);
+    var title = prompt("Change title", event.title) ?? '';
+    var newList = eventsList;
     setMyEvents((prev) => {
-      var newList = prev;
-      title ? newList[prev.indexOf(event)].title : event.title;
-      return newList;
+      newList[prev.indexOf(event)].title = title;
+      return newList
     });
   };
   // const naviBar = (<TopBar isMobile={isMobile} onCalendar={onCalendar} setOnCalendar={setOnCalendar}/>)
