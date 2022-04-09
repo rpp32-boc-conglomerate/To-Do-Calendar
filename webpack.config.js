@@ -52,14 +52,31 @@ module.exports = {
         ],
       },
       {
-        test: /\.(png|jpe?g|gif)$/i,
+        test: /\.(png|jpg|gif)$/i,
         use: [
           {
-            loader: 'file-loader',
+            loader: 'url-loader',
+            options: {
+              limit: 8192,
+            },
           },
         ],
       }
     ]
+  },
+  devServer: {
+    port: 3001,
+    watchContentBase: true,
+    contentBase: path.join(__dirname, 'client','/dist'),
+    hot: true,
+    overlay: true,
+    historyApiFallback: true,
+    // proxy: {
+    //   '/api': {
+    //     target: 'http://localhost:3000',
+    //     pathRewrite: {'^/api' : ''}, // In this case we don't pass `api` path
+    //   }
+    // }
   },
   output: {
     filename: 'bundle.js',

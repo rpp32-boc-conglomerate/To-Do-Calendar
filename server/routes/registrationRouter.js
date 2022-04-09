@@ -43,5 +43,4 @@ registrationRouter.route('/').post((req, res) => {
 
 });
 
-
 module.exports = registrationRouter;
