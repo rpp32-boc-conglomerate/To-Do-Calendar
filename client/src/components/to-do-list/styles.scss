@@ -1,11 +1,11 @@
-#todo-list{
+#todo-list {
   border: black solid 2px;
   width: 50vw;
   height: 80vh;
   display: flex;
 }
 
-#category{
+#category {
   border: blue solid 2px;
   padding: 10px;
   height: 20vh;
@@ -14,12 +14,12 @@
   align-items: flex-start
 }
 
-#task{
+#task {
   border: green solid 2px;
   height: 5vh;
 }
 
-#drop-board{
+#drop-board {
   border: red solid 10px;
   height: 20vh;
   width: 20vw;

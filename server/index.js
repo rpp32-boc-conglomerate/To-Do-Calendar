@@ -13,6 +13,7 @@ const loginRouter = require('./routes/loginRouter.js');
 const registrationRouter = require('./routes/registrationRouter.js');
 const todoListRouter = require('./routes/todoListRouter.js');
 const calendarRouter = require('./routes/calendarRouter.js');
+
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));

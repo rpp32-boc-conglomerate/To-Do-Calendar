@@ -5,8 +5,9 @@ import { makeStyles, Paper, Container, Grid, ButtonGroup, Button, TextField, Too
 
 const useStyles = makeStyles((theme) => ({
   paper: {
+    display: 'flex',
     padding: '2rem',
-    width: '40vw',
+    width: '100%',
     color: 'grey'
   }
 }))
@@ -17,27 +18,27 @@ function Category({index, tasks, addTask, openModal}) {
 
   return (
   <Container>
-  <Paper elevation={2} className={classes.paper}>
-    <TextField
-    label='New Category'
-    variant='outlined'
-    />
-    <TextField
-    label='Allotted Time'
-    variant='outlined'
-    />
-
-
-   <Grid>
-    <Button onClick={() => {
-      setTotalTime(totalTime + 1);
-      addTask(index)
-    }
-    }>+ Task</Button>
-    </Grid>
-    {/* <Tasks tasks={tasks} categoryIndex={index} openModal={openModal}/> */}
+    <Paper elevation={2} className={classes.paper}>
+      <TextField
+      required
+      label='New Category'
+      variant='outlined'
+      onClick=''
+      />
+      <TextField
+      required
+      label='Allotted Time'
+      variant='outlined'
+      />
+        <Grid>
+          <Button onClick={() => {
+            setTotalTime(totalTime + 1);
+            // addTask()
+          }}>Add Task</Button>
+        </Grid>
+      <Tasks tasks={tasks} deleteTask={deleteTask}/>
     </Paper>
-</Container>
+  </Container>
 )}
 
 export default Category;

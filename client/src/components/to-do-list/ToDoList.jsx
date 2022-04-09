@@ -1,28 +1,24 @@
 import React, {useState, useEffect} from 'react';
-import "./styles.scss";
 import Categories from './Categories.jsx';
 import Category from './Category.jsx';
 import Tasks from './Tasks.jsx';
+<<<<<<< HEAD
 import Drop from './testDrop.jsx';
 import TestModal from './testModal.jsx';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { Container, Grid, ButtonGroup, Button } from '@material-ui/core';
+=======
+import { Button } from '@material-ui/core';
+>>>>>>> 995817ae3ec71ecad2ffbae479cc5105163ca4ec
 
-// var newToDo = {
-//   title: toDo.title,
-//   start: toDo.start,
-//   end: toDo.end ? toDo.end : new Date(moment(toDo.start).add(1, 'hour')),
-//   allDay: toDo.allDay ? toDo.allDay : false
-// }
-
-//wrap with a provider for dnd
 function ToDoList() {
   //a state prop that's an array that has an element for everytime + task or + category is clicked
   const [newTasks, setNewTasks] = useState({})
   const [newCategories, setNewCategories] = useState([])
   const [touched, setTouch] = useState(false)
 
+<<<<<<< HEAD
   function handleAddTask(index) {
     console.log('add task category index', index)
     if (newTasks[index]) {
@@ -58,6 +54,28 @@ function ToDoList() {
       {touched && <TestModal/>}
     </DndProvider>
     </Container>
+=======
+  var deleteTask = (e) => {
+    // var target = e.target;
+    // console.log(target);
+    e.target.parentNode.style.display = 'none';
+
+    console.log(e.target.parentNode.style);
+  }
+
+  return (
+    <div id="todo-list" style={{width: '45%', display: 'inline-block'}}>
+      <div style={{display: 'flex', height: '50px', width: '100%'}}>
+        <div style={{width: '80%'}}>To-Do List</div>
+        <Button variant="contained" onClick={() => setNewCategories(newCategories => newCategories.concat('New'))}>Add Category</Button>
+        <Button variant="contained" onClick={() => setNewTasks(newTasks => newTasks.concat('New task'))}>Add Task</Button>
+      </div>
+      <div>
+        <Categories categories={newCategories} deleteTask={deleteTask} tasks={newTasks}/>
+        {/* <Tasks tasks={newTasks} /> */}
+      </div>
+    </div>
+>>>>>>> 995817ae3ec71ecad2ffbae479cc5105163ca4ec
   )
 }
 //don't forget empty array parameter for useEffect !!!
