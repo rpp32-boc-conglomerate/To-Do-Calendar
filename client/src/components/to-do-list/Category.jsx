@@ -20,10 +20,13 @@ function Category({tasks, addTask, deleteTask}) {
   <Container>
     <Paper elevation={2} className={classes.paper}>
       <TextField
+      required
       label='New Category'
       variant='outlined'
+      onClick=''
       />
       <TextField
+      required
       label='Allotted Time'
       variant='outlined'
       />

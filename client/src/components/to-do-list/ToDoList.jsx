@@ -26,7 +26,7 @@ function ToDoList() {
       </div>
       <div>
         <Categories categories={newCategories} deleteTask={deleteTask} tasks={newTasks}/>
-        <Tasks tasks={newTasks} />
+        {/* <Tasks tasks={newTasks} /> */}
       </div>
     </div>
   )

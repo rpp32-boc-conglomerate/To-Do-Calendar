@@ -3,7 +3,7 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Modal from '@mui/material/Modal';
 
-var minutes = [15, 30, 45];
+var minutes = [15, 30, 45, 60];
 var hours = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 var days = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30];
 var units = ['minutes', 'hours', 'days']
@@ -24,7 +24,7 @@ var TaskOptionsModal = (props) => {
 
   return (
     <Modal
-      open={open}
+      // open={props.open}
     >
       <Stack component="form" noValidate spacing={3}>
         <Button variant="contained" onClick={() => {
