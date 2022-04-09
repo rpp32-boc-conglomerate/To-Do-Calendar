@@ -3,6 +3,7 @@ import { BrowserView, MobileView, isBrowser, isMobile} from 'react-device-detect
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import ReactDOM from 'react-dom';
 import moment from 'moment';
+
 import Registration from './components/authentication/Registration.jsx';
 import Login from './components/authentication/Login.jsx';
 import MyCalendar from './components/calendar/MyCalendar.jsx';

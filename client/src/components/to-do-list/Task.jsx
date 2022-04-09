@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
 //every element requires a type
 function Task(props) {
   //the object is what you'll be passing in drop
-  const classes = useStyles()
+  const classes = useStyles();
   const [{isDragging}, drag] = useDrag(() => ({
     type: "task",
     id: props.index,
@@ -32,19 +32,21 @@ function Task(props) {
       isDragging: !!monitor.isDragging(),
     }),
   }));
-  return  (
+
+  return (
   <Card
     id="task"
     index={props.index}
     ref={drag}
     className={classes.card}
     // style={{border: isDragging ? "2px solid pink" : "0px"}}
-    >
-  <TextareaAutosize
-  aria-label="empty textarea"
-  placeholder="Empty"
-  className={classes.textArea}
-  />
+  >
+    <TextareaAutosize
+      aria-label="empty textarea"
+      placeholder="Empty"
+      className={classes.textArea}
+    />
+    <Button variant="contained" onClick={() => console.log('Task X Button Clicked!')}>X</Button>
   </Card>
   );
 };
