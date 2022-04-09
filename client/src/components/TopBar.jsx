@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useNavigate, BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { CssBaseline } from '@material-ui/core';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -23,6 +24,7 @@ const TopBar = ({isMobile, onCalendar, setOnCalendar}) => {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
   const isLogin = false;
+  const navigate = useNavigate();
   if (!isMobile) {
     pages = []
   } else if (isMobile && onCalendar) {
@@ -70,7 +72,12 @@ const TopBar = ({isMobile, onCalendar, setOnCalendar}) => {
             </Tooltip>
             :
             <Box>
-              <Button  style={{ background: '#1d71e4', color:'white', borderRadius:'5px' }}>
+              <Button
+              onClick={() => {navigate('/signin')}}
+              style={{ background: '#1d71e4',
+              color:'white',
+              borderRadius:'5px'
+              }}>
                 Sign in
               </Button >
             </Box>

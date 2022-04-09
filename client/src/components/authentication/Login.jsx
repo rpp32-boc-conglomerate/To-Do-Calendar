@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useNavigate, BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { makeStyles, IconButton, Link, Avatar, TextField, Box, Paper, Typography, AppBar, Button, Card, Container, CardActions, CardContent, CardMedia, CssBaseline, Grid, Toolbar } from '@material-ui/core';
 import GoogleIcon from '@mui/icons-material/Google';
 import loginSchema from './LoginValidation.js';
 import axios from 'axios'
-import { useNavigate } from 'react-router-dom';
 import img from '../../../dist/images/d1.png';
 
 const useStyles = makeStyles((theme) => ({
@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Login = () => {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const classes = useStyles();
   const [state, setState] = useState({'email': '', 'password': ''})
   const [formErr, setFormErr] = useState('');
@@ -77,7 +77,7 @@ const Login = () => {
       .then((res) => {
         console.log('response:', res.data);
         if(res.data === true) {
-          // navigate('/')
+          navigate('/')
         } else if (res.data === 'incorrect') {
           setFormErr('email');
           setErrMsg("Email doesn't exist or Incorrect password")
@@ -149,7 +149,7 @@ const Login = () => {
               </Typography>
               <Typography className={classes.bottomMsg}>
                     Don't have an account? &nbsp;&nbsp;
-                  <Link  href='#' variant="body1">Sign up</Link>
+                  <Link  href='#' variant="body1" onClick={() => {navigate('/signup')}}>Sign up</Link>
               </Typography>
             </Paper>
           </Grid>
