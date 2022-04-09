@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { CssBaseline } from '@material-ui/core';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -12,13 +12,17 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
+import img from '../../dist/images/d1.png';
 
 var pages = [];
 const settings = ['Profile', 'Account', 'Logout'];
 
 const TopBar = ({isMobile, onCalendar, setOnCalendar}) => {
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [anchorElNav, setAnchorElNav] = useState(null);
+  const [anchorElUser, setAnchorElUser] = useState(null);
+  const isLogin = false;
   if (!isMobile) {
     pages = []
   } else if (isMobile && onCalendar) {
@@ -32,11 +36,7 @@ const TopBar = ({isMobile, onCalendar, setOnCalendar}) => {
   };
 
   const handlePage = (event) => {
-    if (event.target.name === 'Calendar') {
-      setOnCalendar(true);
-    } else if (event.target.name === 'To Do List') {
-      setOnCalendar(false);
-    }
+    setOnCalendar(!onCalendar);
   };
 
   const handleCloseUserMenu = () => {
@@ -45,45 +45,36 @@ const TopBar = ({isMobile, onCalendar, setOnCalendar}) => {
 
   return (
     <div>
-    <CssBaseline />
-    <AppBar position="static">
-      <Container maxWidth="xl">
-        <Toolbar disableGutters>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
-          >
-            LOGO
-          </Typography>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
-          >
-            LOGO
-          </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'flex' } }}>
-            {pages.map((page) => (
-              <Button
-                name={page}
-                key={page}
-                onClick={(e) => {handlePage(e)}}
-                sx={{ my: 2, color: 'white', display: 'block' }}
+      <CssBaseline />
+      <AppBar style={{ background: 'white', marginBottom:'20px' }} position='static'>
+        <Toolbar >
+          <Box>
+            {isMobile && <IconButton
+              name={pages[0]}
+              onClick={(e) => {handlePage(e)}}
               >
-                {page}
-              </Button>
-            ))}
+                {pages[0] === 'Calendar' ?
+                <CalendarMonthIcon style={{fontSize: '50px'}}/> :
+                <AssignmentTurnedInIcon style={{fontSize: '50px'}}/>}
+              </IconButton>}
           </Box>
-
-          <Box sx={{ flexGrow: 0 }}>
+          <Box style={{margin: '0 auto', display: "flex"}}>
+            <Avatar variant="square" src={img} style={{width:'60px', height:'50px'}}/>
+          </Box>
+         <Box sx={{ flexGrow: 0 }}>
+            {isLogin ?
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Yanlin" src="/static/images/avatar/2.jpg" />
+                <Avatar alt="Yanlin" src="/" />
               </IconButton>
             </Tooltip>
+            :
+            <Box>
+              <Button  style={{ background: '#1d71e4', color:'white', borderRadius:'5px' }}>
+                Sign in
+              </Button >
+            </Box>
+            }
             <Menu
               sx={{ mt: '45px' }}
               id="menu-appbar"
@@ -108,8 +99,7 @@ const TopBar = ({isMobile, onCalendar, setOnCalendar}) => {
             </Menu>
           </Box>
         </Toolbar>
-      </Container>
-    </AppBar>
+      </AppBar>
     </div>
   );
 };
