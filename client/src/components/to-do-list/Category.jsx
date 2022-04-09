@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-function Category({index, tasks, addTask, openModal}) {
+function Category({index, tasks, addTask, openModal, deleteTask}) {
   const classes = useStyles();
   const [totalTime, setTotalTime] = useState(0);
 
