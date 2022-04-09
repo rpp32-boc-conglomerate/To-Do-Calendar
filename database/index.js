@@ -9,6 +9,16 @@ const config = {
   host: 'localhost'
 }
 
+//drop db, if needed uncomment to use
+
+// pgtools.dropdb(config, 'tododb', function (err, res) {
+//   if (err) {
+//     console.error(err);
+//     process.exit(-1);
+//   }
+//   console.log(res);
+// });
+
 pgtools.createdb(config, 'tododb', function (err, res) {
   if (err) {
     console.error(err);
@@ -39,55 +49,39 @@ let addTables = function() {
     }
   };
 
-  const queryText1 = `
-      CREATE TABLE IF NOT EXISTS "users" (
-        "id" SERIAL,
-        "name" VARCHAR(64) NOT NULL,
-        "hash" VARCHAR(64) NOT NULL,
-        PRIMARY KEY ("id")
-      );`;
-
-  execute(queryText1)
-    .then(result => {
-      if (result) {
-          console.log('user table created: ', result);
-      }
-    })
-
   const queryText2 = `
     CREATE TABLE IF NOT EXISTS "categories" (
-      "id" SERIAL,
+      "category_id" INT GENERATED ALWAYS AS IDENTITY,
       "name" VARCHAR(64) NOT NULL,
-      PRIMARY KEY ("id")
+      PRIMARY KEY ("category_id")
     );`;
-
-  execute(queryText2)
-  .then(result => {
-    if (result) {
-        console.log('category table created: ', result);
-    }
-  })
 
   const queryText3 = `
     CREATE TABLE IF NOT EXISTS "todoItems" (
-      "id" SERIAL,
+      "todo_id" SERIAL,
       "itemName" VARCHAR(64) NOT NULL,
       "itemDesc" VARCHAR(255) NOT NULL,
       "duration" INTERVAL NOT NULL,
       "startDay" DATE NOT NULL,
       "startTime" TIME NOT NULL,
-      "userID" INTEGER NOT NULL,
-      "catagoryID" INTEGER NOT NULL,
-      PRIMARY KEY ("id")
+      "inCalendar" BOOLEAN NOT NULL,
+      "user_id" INTEGER NOT NULL,
+      "category_id" INTEGER NOT NULL,
+      PRIMARY KEY ("todo_id"),
+      CONSTRAINT fk_category
+        FOREIGN KEY("category_id")
+          REFERENCES categories("category_id")
     );`;
 
-  execute(queryText3)
-  .then(result => {
-    if (result) {
+    execute(queryText2)
+      .then(function(result) {
+        console.log('category table created: ', result);
+        return execute(queryText3)
+      })
+      .then(function(result) {
         console.log('to do item table created: ', result);
         db.end();
-    }
-  })
+      })
 }
 
 
