@@ -84,7 +84,6 @@ function App () {
     } else {
       // Desktop View -> Display both calendar and todo-list
       return (
-
         <div>
           {naviBar}
           {myCalender}
