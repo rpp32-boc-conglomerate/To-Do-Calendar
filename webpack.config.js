@@ -71,12 +71,12 @@ module.exports = {
     hot: true,
     overlay: true,
     historyApiFallback: true,
-    proxy: {
-      '/api': {
-        target: 'http://localhost:3000',
-        pathRewrite: {'^/api' : ''}, // In this case we don't pass `api` path
-      }
-    }
+    // proxy: {
+    //   '/api': {
+    //     target: 'http://localhost:3000',
+    //     pathRewrite: {'^/api' : ''}, // In this case we don't pass `api` path
+    //   }
+    // }
   },
   output: {
     filename: 'bundle.js',
