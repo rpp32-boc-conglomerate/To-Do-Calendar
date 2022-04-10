@@ -17,8 +17,6 @@ module.exports = {
       name: 'Backlog'
     },
   ],
-
-  // userEmail for verifying ownership of calendar
   example: [{
     id: '1'
     category: 'Travel',
