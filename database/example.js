@@ -133,15 +133,9 @@ module.exports = {
       title: 'Work on App',
       description: 'Note-taking app for iOS',
       duration: '4 hours',
-<<<<<<< HEAD
-      start: 'April 15, 2022 18:30:00',
-      end: 'April 13, 2022 22:30:00',
-      category_id: 4,
-=======
       start: 'Fri 15 April 2022 18:30:00 UT',
       end: 'Fri 15 April 2022 22:30:00 UT',
       category_id: 4
->>>>>>> 2be8e121e9f114b1de552acacee469f98cc61617
       inCalendar: false
     },
   ]
