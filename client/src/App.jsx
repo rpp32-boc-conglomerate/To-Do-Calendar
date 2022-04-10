@@ -1,7 +1,7 @@
 import React, {useState, useCallback} from 'react';
 import ReactDOM from 'react-dom';
 import moment from 'moment';
-import Registration from './components/authentication/Registration.jsx';
+import Registration from './components/authentication/Registrationv2.jsx';
 import Login from './components/authentication/Login.jsx';
 import MyCalendar from './components/calendar/MyCalendar.jsx';
 import ToDoList from './components/to-do-list/ToDoList.jsx';
@@ -57,13 +57,14 @@ function App () {
     updateCalendar(...myEvents, newToDo)
   }
 
-  console.log(currentPage);
+  // console.log(currentPage);
   return (
     <div>
       {/* <MyCalendar myEvents={myEvents} moveEvent={moveEvent} resizeEvent={resizeEvent}/> */}
       {/* <ToDoList addToCalendar={addToCalendar}/> */}
-      <Registration />
       <Login />
+      <Registration />
+
     </div>
   );
 }

@@ -42,9 +42,7 @@ var addNewUser = function (data) {
 }
 
 
-
 module.exports.connection = connection;
-
 module.exports.user = User;
 module.exports.addNewUser = addNewUser;
 module.exports.findUserByEmail = findUserByEmail;

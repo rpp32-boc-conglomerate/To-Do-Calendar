@@ -8,6 +8,7 @@ const bcrypt        = require('bcrypt');
 const auth          = require('../models/authentication/auth.js');
 const saltStrength  = 10;
 // const hbs        = require('express-handlebars');
+// const bodyParser = require('body-parser');
 
 const congolmerateSecret = 'superSecretSecrets';
 const mongoStoreUrl = 'mongodb://localhost:27017/boc-auth-store';
@@ -16,7 +17,7 @@ const loginSuccessPath = '/auth/success';
 
 authRouter.use(session({
   secret: congolmerateSecret,
-  resave: false,
+  resave: true,
   saveUninitialized: true,
   store: MongoStore.create({ mongoUrl: mongoStoreUrl}),
   ttl: 14 * 24 * 60 * 60 // = 14 days. Default
@@ -24,16 +25,6 @@ authRouter.use(session({
 
 authRouter.use(passport.initialize());
 authRouter.use(passport.session());
-
-passport.serializeUser(function (user, done) {
-  done(null, user.id);
-});
-
-passport.deserializeUser(function (id, done) {
-  auth.User.findById(id, function (err, user) {
-    done(err, user);
-  });
-});
 
 passport.use(new LocalStrategy(
   {usernameField:"email", passwordField:"password"},
@@ -43,16 +34,30 @@ passport.use(new LocalStrategy(
       if (!info)  { return cb(null, false)};
       // password verification
       var hash = info.password;
-      bcrypt.compare(passwordField, hash, function(err, result) {
+      return bcrypt.compare(passwordField, hash, function(err, result) {
         if (!result) {
-          return cb(null, false, { message: 'Incorrect username or password.' });
-        } else {
-          return cb(null, info);
-        };
-      });
+          return cb(null, false, { message: 'Incorrect username or password.' })
+        }
+        return cb(null, info)
+      })
     })
   }
 ));
+
+
+passport.serializeUser(function(user, cb) {
+  process.nextTick(function() {
+    cb(null, { username: user.email });
+  });
+});
+
+passport.deserializeUser(function(user, cb) {
+  process.nextTick(function() {
+    return cb(null, user);
+  });
+});
+
+
 
 function isLoggedIn(req, res, next) {
   if (req.isAuthenticated()) return next();
@@ -66,7 +71,6 @@ function isLoggedOut(req, res, next) {
 
 // routes
 authRouter.post("/register", async (req, res) => {
-
   try {
     const hashedPw = await bcrypt.hash(req.body.password, saltStrength);
     const insertResult = await auth.addNewUser({
@@ -83,25 +87,23 @@ authRouter.post("/register", async (req, res) => {
 });
 
 
-authRouter.post('/login',
-  passport.authenticate('local',
-  {
-    failureRedirect: loginFailurePath,
-    failureMessage: true,
-    successRedirect: loginSuccessPath
-  })
-);
+authRouter.post('/login', passport.authenticate('local', {
+  successRedirect: '/auth/success',
+  failureRedirect: '/auth/failure',
+  failureMessage: true
+}));
+
 
 
 authRouter.route('/success').get((req, res) => {
   console.log('success');
-  res.send('Login Router GET');
+  res.sendStatus(200);
 });
 
 
 authRouter.route('/failure').get((req, res) => {
   console.log('failure');
-  res.send('Login Router GET');
+  res.sendStatus(200);
 });
 
 
@@ -118,6 +120,9 @@ authRouter.route('/').get((req, res) => {
   res.send('Signup List Router GET');
 });
 
-
+authRouter.post('/logout', function(req, res, next) {
+  req.logout();
+  res.redirect('/');
+});
 
 module.exports = authRouter;

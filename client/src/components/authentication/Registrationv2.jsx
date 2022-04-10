@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { makeStyles, IconButton, Link, Avatar, TextField, Box, Paper, Typography, AppBar, Button, Card, Container, CardActions, CardContent, CardMedia, CssBaseline, Grid, Toolbar } from '@material-ui/core';
 import GoogleIcon from '@mui/icons-material/Google';
-import loginSchema from './LoginValidation.js';
-import axios from 'axios'
+import registrationSchema from './RegistrationValidation.jsx';
+import axios from 'axios';
+import $ from 'jquery';
 import img from '../../../dist/images/d1.png';
 
 const useStyles = makeStyles((theme) => ({
@@ -31,22 +32,29 @@ const useStyles = makeStyles((theme) => ({
 
 const Login = () => {
   const classes = useStyles();
-  const [state, setState] = useState({'email': '', 'password': ''})
+  const [state, setState] = useState({
+    'firstName': '',
+    'lastName' : '',
+    'email': '',
+    'password': ''
+  });
   const [formErr, setFormErr] = useState('');
   const [errMsg, setErrMsg] = useState('');
   const isMounted = useRef(false);
 
   const formData = {
+    'firstName': state['firstName'],
+    'lastName': state['lastName'],
     'password': state['password'],
     'email': state['email'],
   }
 
   const validation = async () => {
-      loginSchema.validate(formData).catch((err) => {
+    registrationSchema.validate(formData).catch((err) => {
       setFormErr(err.errors[0].split(' ')[0]);
       setErrMsg(err.errors[0])
     });
-    let isValid = await loginSchema.isValid(formData);
+    let isValid = await registrationSchema.isValid(formData);
     return isValid;
   }
   useEffect(() => {
@@ -66,14 +74,47 @@ const Login = () => {
         }))
   }
 
-  const handleLogin = async () => {
+
+  function handleSubmit(e) {
+    // e.preventDefault();
+    // var data = new FormData(e.currentTarget);
+    var user = {
+      'firstName': state['firstName'], 'lastName': state['lastName'],
+      'email': state['email'], 'password': state['password']
+    };
+
+    var stringified = JSON.stringify(user);
+    var url = 'http://localhost:3000/auth/register';
+    console.log(stringified);
+    return new Promise((resolve, reject) => {
+      $.ajax({
+        'url': url,
+        type: 'POST',
+        contentType: 'application/json',
+        data: stringified,
+        dataType: 'json',
+        success: function (response) {
+          console.log('success');
+          resolve (response);
+        },
+        failure: function (response) {
+          console.log('rejected');
+          reject (response);
+        }
+      });
+    });
+  }
+
+  const handleRegister = async () => {
     let isValid = await validation();
     if (!isValid) {
       console.log('cannot submit')
     } else {
       console.log(state['email'], state['password'], isValid)
-      await axios.post('http://localhost:3000/auth/login', {'email': state['email'], 'password': state['password']})
-      .then((res) => {
+      await axios.post('http://localhost:3000/auth/register', {
+        'firstName': state['firstName'], 'lastName': state['lastName'],
+        'email': state['email'], 'password': state['password']
+      }).then((res) => {
         console.log('response:', res);
       })
       .catch((err) => {
@@ -92,8 +133,34 @@ const Login = () => {
               alt="Remy Sharp"
               src={img}
               style={{width:'120px', height:'100px'}}/>
-            <h1 style={{color:'#545863'}}><i>Sign In</i></h1>
+            <h1 style={{color:'#545863'}}><i>Sign Up</i></h1>
           </Grid>
+          <TextField
+            name='firstName'
+            error={formErr === 'firstName' ? true : false}
+            placeholder='Enter your first name'
+            label='First Name'
+            variant="outlined"
+            value={state['firstName']}
+            require = 'true'
+            helperText={formErr === 'firstName' ? errMsg : ''}
+            fullWidth
+            className={classes.fieldGap}
+            onChange={(e)=>(handleChange(e))}
+          />
+          <TextField
+            name='lastName'
+            error={formErr === 'lastName' ? true : false}
+            placeholder='Enter your last name'
+            label='Last Name'
+            variant="outlined"
+            value={state['lastName']}
+            require = 'true'
+            helperText={formErr === 'lastName' ? errMsg : ''}
+            fullWidth
+            className={classes.fieldGap}
+            onChange={(e)=>(handleChange(e))}
+          />
           <TextField
             name='email'
             error={formErr === 'email' ? true : false}
@@ -127,9 +194,9 @@ const Login = () => {
             type='submit' color='primary'
             variant="contained"
             fullWidth
-            onClick={() => (handleLogin())}
+            onClick={() => (handleRegister())}
             >
-              Sign in
+              Sign Up
           </Button>
           <Button
             startIcon={<GoogleIcon />}
@@ -143,8 +210,8 @@ const Login = () => {
               <Link  href='#' variant="body1">Forgot password ?</Link>
           </Typography>
           <Typography className={classes.bottomMsg}>
-                Don't have an account? &nbsp;&nbsp;
-              <Link  href='#' variant="body1">Sign up</Link>
+                Already have an account? &nbsp;&nbsp;
+              <Link  href='#' variant="body1">Sign in</Link>
           </Typography>
         </Paper>
       </Grid>
