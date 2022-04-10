@@ -3,7 +3,6 @@ import { makeStyles, IconButton, Link, Avatar, TextField, Box, Paper, Typography
 import GoogleIcon from '@mui/icons-material/Google';
 import registrationSchema from './RegistrationValidation.jsx';
 import axios from 'axios';
-import $ from 'jquery';
 import img from '../../../dist/images/d1.png';
 
 const useStyles = makeStyles((theme) => ({
@@ -74,36 +73,6 @@ const Login = () => {
         }))
   }
 
-
-  function handleSubmit(e) {
-    // e.preventDefault();
-    // var data = new FormData(e.currentTarget);
-    var user = {
-      'firstName': state['firstName'], 'lastName': state['lastName'],
-      'email': state['email'], 'password': state['password']
-    };
-
-    var stringified = JSON.stringify(user);
-    var url = 'http://localhost:3000/auth/register';
-    console.log(stringified);
-    return new Promise((resolve, reject) => {
-      $.ajax({
-        'url': url,
-        type: 'POST',
-        contentType: 'application/json',
-        data: stringified,
-        dataType: 'json',
-        success: function (response) {
-          console.log('success');
-          resolve (response);
-        },
-        failure: function (response) {
-          console.log('rejected');
-          reject (response);
-        }
-      });
-    });
-  }
 
   const handleRegister = async () => {
     let isValid = await validation();
