@@ -24,40 +24,40 @@ module.exports = {
   //   end: new Date(moment().add(1, 'hour')),
   //   allDay: false
   // }]
-{
-  id: '1'
-  category: 'travel',
-  tasks: [
-    {
-      id: 1,
-      title: 'Trip to China',
-      description: '5-day business trip to meet with manufacturers',
-      duration: '5 days',
-      start: 'April 9, 2022 09:30:00',
-      end: 'April 13, 2022 09:30:00',
-      category_id: 1
-      inCalendar: true
-    },
-    {
-      id: 1,
-      title: 'Trip to China',
-      description: '5-day business trip to meet with manufacturers',
-      duration: '5 days',
-      start: 'April 9, 2022 09:30:00',
-      end: 'April 13, 2022 09:30:00',
-      category_id: 1
-    },
-    {
-      id: 1,
-      title: 'Trip to China',
-      description: '5-day business trip to meet with manufacturers',
-      duration: '5 days',
-      start: 'April 9, 2022 09:30:00',
-      end: 'April 13, 2022 09:30:00',
-      category_id: 1
-    },
-  ]
-}
+// {
+//   id: '1'
+//   category: 'travel',
+//   tasks: [
+//     {
+//       id: 1,
+//       title: 'Trip to China',
+//       description: '5-day business trip to meet with manufacturers',
+//       duration: '5 days',
+//       start: 'April 9, 2022 09:30:00',
+//       end: 'April 13, 2022 09:30:00',
+//       category_id: 1
+//       inCalendar: true
+//     },
+//     {
+//       id: 1,
+//       title: 'Trip to China',
+//       description: '5-day business trip to meet with manufacturers',
+//       duration: '5 days',
+//       start: 'April 9, 2022 09:30:00',
+//       end: 'April 13, 2022 09:30:00',
+//       category_id: 1
+//     },
+//     {
+//       id: 1,
+//       title: 'Trip to China',
+//       description: '5-day business trip to meet with manufacturers',
+//       duration: '5 days',
+//       start: 'April 9, 2022 09:30:00',
+//       end: 'April 13, 2022 09:30:00',
+//       category_id: 1
+//     },
+//   ]
+// }
 
 
 
@@ -139,7 +139,7 @@ module.exports = {
       duration: '4 hours',
       start: 'April 15, 2022 18:30:00',
       end: 'April 13, 2022 22:30:00',
-      category_id: 4
+      category_id: 4,
       inCalendar: false
     },
   ]
