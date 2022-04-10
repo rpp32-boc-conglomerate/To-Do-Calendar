@@ -72,7 +72,7 @@ const Login = () => {
       console.log('cannot submit')
     } else {
       console.log(state['email'], state['password'], isValid)
-      await axios.post('http://localhost:3000/auth/password', {'email': state['email'], 'password': state['password']})
+      await axios.post('http://localhost:3000/auth/login', {'email': state['email'], 'password': state['password']})
       .then((res) => {
         console.log('response:', res);
       })
