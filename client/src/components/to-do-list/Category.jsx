@@ -24,7 +24,6 @@ function Category({id, categorizedTasks, addTask, openModal, deleteTask, title})
   <Container>
     <div style={{display: 'flex'}}>
     <Paper elevation={2} className={classes.paper}>
-      <div>{title}</div>
       {/* <TextField
       required
       label='New Category'
