@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import Categories from './Categories.jsx';
 import Category from './Category.jsx';
 import Tasks from './Tasks.jsx';
-import {categories, tasks} from '/Users/meredithwhite/JavaScript/HackReactor/RPP32/Senior/To-Do-Calendar-2/database/example.js';
+import {example} from '/Users/meredithwhite/JavaScript/HackReactor/RPP32/Senior/To-Do-Calendar-2/database/example.js';
 import { Button } from '@material-ui/core';
 
 function ToDoList() {
@@ -24,13 +24,12 @@ function ToDoList() {
     // categories.map(category => console.log(category.name))
     let storage = []
     // console.log('categories BEFORE', categories)
-    categories.forEach((el) => {
+    example.forEach((el) => {
       var category = {}
-      var id = el.id
-      var categoryTasks = tasks.filter(task => task.category_id === el.id)
+      var id = el.category
+      // var categoryTasks = tasks.filter(task => task.category_id === el.id)
       // console.log('categoryTasks', categoryTasks)
-      category[id] = categoryTasks
-      category['name'] = el.name
+      category['name'] = category.tasks
       // console.log('category', category)
 
       storage.push(category)
