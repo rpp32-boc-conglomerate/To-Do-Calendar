@@ -3,6 +3,8 @@ import {useDrag} from 'react-dnd';
 import "./styles.scss";
 import { makeStyles, Container, Grid, Card, ButtonGroup, Button, TextareaAutosize } from '@material-ui/core';
 
+const TaskOptionsModal = require('../TaskOptionsModal.jsx');
+
 const useStyles = makeStyles((theme) => ({
   textArea: {
     padding: '2rem',
@@ -35,27 +37,25 @@ function Task({task}) {
   //   }),
   // }));
 
-  return (
-    <div style={{display: 'flex'}}>
-  <Card
-    id="task"
-    // index={props.index}
-    // ref={drag}
-    className={classes.card}
-    // onTouchStart={props.openModal}
-    // onClick={props.openModal}
-    // style={{border: isDragging ? "2px solid pink" : "0px"}}
-  >{task.title}
-  {/* //   <div>{task[i].title}</div>
-  //   {/* <TextareaAutosize
-  //     aria-label="empty textarea"
-  //     placeholder="Empty"
-  //     className={classes.textArea}
-  //   /> */}
-  <Button variant="contained" onClick={() => console.log('Task X Button Clicked!')}>X</Button>
+  const [isOpen, setIsOpen] = useState(false);
 
-  </Card>
-  </div>
+  return (
+    <Card
+      id="task"
+      index={props.index}
+      ref={drag}
+      className={classes.card}
+      // style={{border: isDragging ? "2px solid pink" : "0px"}}
+    >
+      <TextareaAutosize
+        aria-label="empty textarea"
+        placeholder="Empty"
+        className={classes.textArea}
+      />
+      <Button variant="contained" onClick={() => setIsOpen()}>Edit</Button>
+      <Button variant="contained" onClick={() => console.log('Task X Button Clicked!')}>X</Button>
+      { isOpen === false && <TaskOptionsModal open={isOpen}/> }
+    </Card>
   );
 };
 

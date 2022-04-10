@@ -9,7 +9,8 @@ const localizer = momentLocalizer(moment);
 
 const MyCalendar = (props) => {
   return (
-    <DragAndDropCalendar className='calendar'
+    <DragAndDropCalendar
+      className='calendar'
       localizer={localizer}
       defaultView="week"
       events={props.myEvents}
