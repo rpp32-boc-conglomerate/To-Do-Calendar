@@ -1,5 +1,7 @@
 const path = require("path");
 const webpack = require('webpack');
+const dotenv = require('dotenv').config();
+
 
 module.exports = {
   entry: ['regenerator-runtime/runtime.js', path.resolve(__dirname, "client", "src", 'index.js')],
@@ -71,6 +73,7 @@ module.exports = {
     hot: true,
     overlay: true,
     historyApiFallback: true,
+    host: process.env.HOST
     // proxy: {
     //   '/api': {
     //     target: 'http://localhost:3000',
