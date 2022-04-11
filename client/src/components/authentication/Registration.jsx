@@ -29,7 +29,7 @@ function handleSubmit(e) {
   registrationSchema.isValid(user)
     .then(function (valid) {
       var stringified = JSON.stringify(user);
-      var url = 'http://localhost:3000/signup';
+      var url = 'http://localhost:3000/auth/register';
 
       return new Promise((resolve, reject) => {
         $.ajax({
