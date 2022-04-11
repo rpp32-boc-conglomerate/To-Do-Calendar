@@ -3,9 +3,15 @@
 import React from 'react';
 import Category from './Category.jsx';
 
-function Categories({taskData, addTask, deleteTask}) {
+function Categories({addTask, openModal, categorizedTasks, editClick, editing, deleteTask}) {
+  // console.log('tasks in categories', categorizedTasks)
   return(
-    taskData.map((category, i) => <Category key={i} index={i} tasks={category.tasks} addTask={addTask} deleteTask={deleteTask}/>)
+    categorizedTasks.map((category, i) => {
+    return <Category key={i}
+    tasks={category}
+    addTask={addTask} openModal={openModal}
+    editClick={editClick} editing={editing} deleteTask={deleteTask}/>
+    })
   )
 }
 export default Categories;

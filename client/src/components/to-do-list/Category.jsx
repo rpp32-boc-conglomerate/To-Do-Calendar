@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import Task from './Task.jsx';
 import Tasks from './Tasks.jsx';
 import { makeStyles, Paper, Container, Grid, ButtonGroup, Button, TextField, Toolbar } from '@material-ui/core';
@@ -12,9 +12,11 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-function Category({tasks, addTask, deleteTask}) {
+function Category({tasks, addTask, openModal, deleteTask, editClick, editing}) {
   const classes = useStyles();
   const [totalTime, setTotalTime] = useState(0);
+
+  const {name} = tasks
 
   console.log('category: ', tasks);
 
@@ -22,25 +24,18 @@ function Category({tasks, addTask, deleteTask}) {
   <Container>
     <Paper elevation={2} className={classes.paper} sx={{ display: 'inline-block' }}>
       <Container  sx={{ display: 'flex' }}>
-        <TextField
-        required
-        label='New Category'
-        variant='outlined'
-        />
-        <TextField
-        required
-        label='Allotted Time'
-        variant='outlined'
-        />
+        <div>{tasks.name}</div>
+        <div>Time Spent So Far: 0</div>
         <Button onClick={() => {
           setTotalTime(totalTime + 1);
-          addTask()
+          // addTask()
         }}>Add Task</Button>
       </Container>
       <Container sx={{ display: 'inline-block' }}>
-        <Tasks tasks={tasks} deleteTask={deleteTask}/>
+        <Tasks tasks={tasks.tasks} deleteTask={deleteTask} openModal={openModal} editClick={editClick} editing={editing} />      
       </Container>
     </Paper>
+    </div>
   </Container>
 )}
 
