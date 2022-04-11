@@ -21,22 +21,21 @@ function Category({tasks, addTask, openModal, deleteTask, editClick, editing}) {
   console.log('category: ', tasks);
 
   return (
-  <Container>
-    <Paper elevation={2} className={classes.paper} sx={{ display: 'inline-block' }}>
-      <Container  sx={{ display: 'flex' }}>
-        <div>{tasks.name}</div>
-        <div>Time Spent So Far: 0</div>
-        <Button onClick={() => {
-          setTotalTime(totalTime + 1);
-          // addTask()
-        }}>Add Task</Button>
-      </Container>
-      <Container sx={{ display: 'inline-block' }}>
-        <Tasks tasks={tasks.tasks} deleteTask={deleteTask} openModal={openModal} editClick={editClick} editing={editing} />      
-      </Container>
-    </Paper>
-    </div>
-  </Container>
+    <Container>
+      <Paper elevation={2} className={classes.paper}>
+        <Container sx={{display: 'flex'}}>
+          <div>{tasks.category}</div>
+          <div>Time Spent So Far: 0</div>
+          <Button onClick={() => {
+            setTotalTime(totalTime + 1);
+            // addTask()
+          }}>Add Task</Button>
+        </Container>
+        <Container sx={{ display: 'inline-block' }}>
+          <Tasks tasks={tasks.tasks} deleteTask={deleteTask} openModal={openModal} editClick={editClick} editing={editing} />
+        </Container>
+      </Paper>
+    </Container>
 )}
 
 export default Category;

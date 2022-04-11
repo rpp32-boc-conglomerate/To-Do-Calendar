@@ -16,11 +16,11 @@ const useStyles = makeStyles({
   textArea: {
     padding: '1rem',
     width: '90%',
-    color: 'blue'
+    color: 'black'
   },
   card: {
     display: 'flex',
-    border: '2rem solid black',
+    border: '1rem solid black',
   }
 });
 
@@ -53,26 +53,25 @@ function Task({task, openModal, editClick, editing, deleteTask}) {
   // const [isOpen, setIsOpen] = useState(false);
 
 
-  console.log('Task', props.task);
+  console.log('Task', task);
+  // console.log(isOpen);
 
   return (
-
     <Grid container xs={12} lg={12}>
       <Grid item xs={12}>
       <Card>
           <CardContent>
             <div style={{display: 'flex', flexDirection: 'row', gap: '5%'}}>
-            {/* {todoTitle} */}
-            <Typography variant="body1" contentEditable={editing}>{task.title}</Typography>
-            <Button variant="contained" size="small" onClick={openModal} >Add To Calendar</Button>
+              <Typography variant="body1" contentEditable={editing}>{task.title}</Typography>
+              <Button variant="contained" size="small" onClick={openModal} >Add To Calendar</Button>
             </div>
             <Typography variant="body2" contentEditable={editing}>
               {task.description}
             </Typography>
             <CardActions>
-            <ExpandMoreIcon/>
-            <Button variant="contained" size="small" onClick={editClick}>{editing ? 'Done' : 'Edit'}</Button>
-            <Button variant="contained" size="small" onClick={deleteTask}>Delete</Button>
+              <ExpandMoreIcon/>
+              <Button variant="contained" size="small" onClick={editClick}>{editing ? 'Done' : 'Edit'}</Button>
+              <Button variant="contained" size="small" onClick={deleteTask}>Delete</Button>
             </CardActions>
           </CardContent>
       </Card>
