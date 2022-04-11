@@ -3,15 +3,13 @@
 import React from 'react';
 import Task from './Task.jsx';
 
-function Tasks({tasks, editTask, deleteTask, id}) {
+function Tasks({tasks, openModal, editClick, editing, deleteTask}) {
   // console.log('tasks in tasks', tasks)
-  const {array} = tasks
-  console.log('tasks in tasks', tasks[id + 1])
-  const listOfTasks = tasks[id + 1]
   return(
-    listOfTasks.map((task, i) => {
-      // console.log('task in tasks map', task)
-    return (<Task key={i} i={i} task={task} deleteTask={deleteTask}/>)
+    tasks.map((task, i) => {
+    return (<Task style={{display: 'inline-block'}}
+    key={i} task={task} openModal={openModal}
+    editClick={editClick} editing={editing} deleteTask={deleteTask}/>)
     }
   )
   )

@@ -2,44 +2,48 @@ import React, {useState, useEffect} from 'react';
 import Categories from './Categories.jsx';
 import Category from './Category.jsx';
 import Tasks from './Tasks.jsx';
+import TestModal from './TestModal.jsx';
 import {example} from '/Users/meredithwhite/JavaScript/HackReactor/RPP32/Senior/To-Do-Calendar-2/database/example.js';
 import { Button } from '@material-ui/core';
 
+
 function ToDoList() {
   //a state prop that's an array that has an element for everytime + task or + category is clicked
-  const [newTasks, setNewTasks] = useState({})
-  const [newCategories, setNewCategories] = useState([])
   const [categorizedTasks, setCategorizedTasks] = useState([])
-  const [touched, setTouch] = useState(false)
+  const [modalOpen, setModalOpen] = useState(false)
+  const [editing, setEditing] = useState(false)
 
-  var deleteTask = (e) => {
+  const deleteTask = (e) => {
     // var target = e.target;
     // console.log(target);
-    e.target.parentNode.style.display = 'none';
+    // e.target.parentNode.style.display = 'none';
+    console.log('deletetask called');
+  }
 
-    console.log(e.target.parentNode.style);
+  const openModal = () => {
+    console.log('openModal called')
+    setModalOpen(true)
+  }
+
+  const handleEditClick = () => {
+    setEditing(!editing)
   }
 
   const sampleCategories = () => {
-    // categories.map(category => console.log(category.name))
     let storage = []
-    // console.log('categories BEFORE', categories)
     example.forEach((el) => {
       var category = {}
       var id = el.category
       // var categoryTasks = tasks.filter(task => task.category_id === el.id)
-      // console.log('categoryTasks', categoryTasks)
-      category['name'] = category.tasks
-      // console.log('category', category)
-
+      category['tasks'] = el.tasks
+      category['name'] = id
       storage.push(category)
     })
-    console.log('storage AFTER', storage)
+    // console.log('storage AFTER', storage)
     setCategorizedTasks(storage)
   }
 
   useEffect(() => {
-    console.log('USING EFFECT')
     sampleCategories()
   }, [])
 
@@ -48,12 +52,12 @@ function ToDoList() {
     <div id="todo-list" style={{width: '45%', display: 'inline-block'}}>
       <div style={{display: 'flex', height: '50px', width: '100%'}}>
         <div style={{width: '80%'}}>To-Do List</div>
+        {modalOpen && <TestModal/>}
         <Button variant="contained" onClick={() => setNewCategories(newCategories => newCategories.concat('New'))}>Add Category</Button>
         <Button variant="contained" onClick={() => setNewTasks(newTasks => newTasks.concat('New task'))}>Add Task</Button>
       </div>
       <div>
-        <Categories categories={newCategories} deleteTask={deleteTask} tasks={newTasks} categorizedTasks={categorizedTasks}/>
-        {/* <Tasks tasks={newTasks} /> */}
+        <Categories deleteTask={deleteTask} categorizedTasks={categorizedTasks} openModal={openModal} editClick={handleEditClick} editing={editing}/>
       </div>
     </div>
   )

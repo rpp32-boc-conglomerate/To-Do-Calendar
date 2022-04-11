@@ -18,9 +18,9 @@ module.exports = {
     },
   ],
   example: [{
-    id: '1'
+    id: '1',
     category: 'Travel',
-    userEmail: 'todocal@gmail.com'
+    userEmail: 'todocal@gmail.com',
     tasks: [
       {
         id: 1,
@@ -133,7 +133,7 @@ module.exports = {
       duration: '4 hours',
       start: 'Fri 15 April 2022 18:30:00 UT',
       end: 'Fri 15 April 2022 22:30:00 UT',
-      category_id: 4
+      category_id: 4,
       inCalendar: false
     },
   ]

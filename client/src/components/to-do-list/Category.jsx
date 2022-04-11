@@ -5,24 +5,21 @@ import { makeStyles, Paper, Container, Grid, ButtonGroup, Button, TextField, Too
 
 const useStyles = makeStyles((theme) => ({
   paper: {
-    display: 'flex',
+    display: 'inline-block',
     padding: '2rem',
     width: '100%',
     color: 'grey'
   }
 }))
 
-function Category({id, categorizedTasks, addTask, openModal, deleteTask, title}) {
+function Category({tasks, addTask, openModal, deleteTask, editClick, editing}) {
   const classes = useStyles();
   const [totalTime, setTotalTime] = useState(0);
-
-  console.log('categorized tasks', categorizedTasks)
-  const [tasks] = categorizedTasks.filter((category, i) => i===id)
-  console.log('tasks in category', tasks)
-
+  const {name} = tasks
+  // console.log('tasks in category', tasks.name)
   return (
   <Container>
-    <div style={{display: 'flex'}}>
+    <div style={{display: 'inline-block'}}>
     <Paper elevation={2} className={classes.paper}>
       {/* <TextField
       required
@@ -30,7 +27,7 @@ function Category({id, categorizedTasks, addTask, openModal, deleteTask, title})
       variant='outlined'
       onClick=''
       /> */}
-      <div>{tasks[name]}</div>
+      <div>{tasks.name}</div>
       <div>Time Spent So Far: 0</div>
       <div>
         <Button onClick={() => {
@@ -38,7 +35,8 @@ function Category({id, categorizedTasks, addTask, openModal, deleteTask, title})
             // addTask()
           }}>Add Task</Button>
       </div>
-      <Tasks tasks={tasks} deleteTask={deleteTask} id={id}/>
+      <Tasks tasks={tasks.tasks} deleteTask={deleteTask} openModal={openModal}
+      editClick={editClick} editing={editing} />
     </Paper>
     </div>
   </Container>
