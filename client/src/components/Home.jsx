@@ -27,7 +27,9 @@ function Home (
       return (
         <div>
           {naviBar}
-          {toDoList}
+          <div className="">
+            {toDoList}
+          </div>
         </div>
       )
     } else if (isMobile && onCalendar) {
@@ -35,7 +37,9 @@ function Home (
       return (
         <div>
           {naviBar}
-          {myCalender}
+          <div>
+            {myCalender}
+          </div>
         </div>
       )
     } else {
@@ -43,8 +47,10 @@ function Home (
         // view for desktop display both calendar and to do list
         <div>
           {naviBar}
-          {myCalender}
-          {toDoList}
+          <div>
+            {myCalender}
+            {toDoList}
+          </div>
         </div>
       )
     }
