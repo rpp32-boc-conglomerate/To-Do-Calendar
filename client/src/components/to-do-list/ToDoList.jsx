@@ -3,12 +3,10 @@ import Categories from './Categories.jsx';
 import Category from './Category.jsx';
 import Tasks from './Tasks.jsx';
 import TestModal from './testModal.jsx';
-import {example} from '../../../.././database/example.js';
+import { example } from '../../../../database/example.js';
 import { Button } from '@material-ui/core';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { DndProvider } from 'react-dnd';
-
-const { example } = require('../../../../database/example.js');
 
 
 function ToDoList() {
@@ -25,8 +23,8 @@ function ToDoList() {
   }
 
   const openModal = () => {
-    console.log('openModal called')
-    setModalOpen(true)
+    console.log('openModal called');
+    setModalOpen(true);
   }
 
   const handleEditClick = () => {
@@ -34,22 +32,23 @@ function ToDoList() {
   }
 
 
-  const sampleCategories = () => {
-    let storage = []
-    example.forEach((el) => {
-      var category = {}
-      var id = el.category
-      // var categoryTasks = tasks.filter(task => task.category_id === el.id)
-      category['tasks'] = el.tasks
-      category['name'] = id
-      storage.push(category)
-    })
-    // console.log('storage AFTER', storage)
-    setCategorizedTasks(storage)
-  }
+  // const sampleCategories = () => {
+  //   let storage = [];
+  //   example.forEach((el) => {
+  //     var category = {};
+  //     var id = el.category;
+  //     // var categoryTasks = tasks.filter(task => task.category_id === el.id)
+  //     category['tasks'] = el.tasks;
+  //     category['name'] = id;
+  //     storage.push(category);
+  //   })
+  //   // console.log('storage AFTER', storage)
+  //   setCategorizedTasks(storage);
+  // }
 
   useEffect(() => {
-    sampleCategories()
+    setCategorizedTasks(example);
+    // sampleCategories();
   }, [])
 
   var addTask = (e) => {
@@ -67,7 +66,7 @@ function ToDoList() {
           <Button variant="contained" onClick={() => setNewTasks(newTasks => newTasks.concat('New task'))}>Add Task</Button>
         </div>
         <div>
-          <Categories deleteTask={deleteTask} categorizedTasks={categorizedTasks} openModal={openModal} editClick={handleEditClick} editing={editing}/>
+          <Categories deleteTask={deleteTask} categorizedTasks={example} openModal={openModal} editClick={handleEditClick} editing={editing}/>
           {/* <Tasks tasks={newTasks} /> */}
         </div>
       </div>

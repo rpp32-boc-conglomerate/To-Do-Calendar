@@ -27,7 +27,7 @@ function Home (
       return (
         <div>
           {naviBar}
-          <div>
+          <div className="">
             {toDoList}
           </div>
         </div>
