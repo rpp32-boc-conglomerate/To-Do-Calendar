@@ -18,6 +18,13 @@ const useStyles = makeStyles((theme) => ({
     width: '40vw',
     color: 'blue'
   },
+  edit: {
+    border: '2px blue solid'
+  },
+
+  title: {
+    border: '2px black solid'
+  }
   // card: {
   //   display: 'flex',
   //   flexDirection: 'column',
@@ -29,11 +36,16 @@ const useStyles = makeStyles((theme) => ({
 //isDragging returns t or f
 //drag reference which element you want to make draggable
 //every element requires a type
-function Task({task, openModal, editClick, editing, deleteTask}) {
+function Task({task, openModal, deleteTask}) {
   // console.log('task in task', task )
   const [expanded, setExpanded] = useState(false)
+  const [isEditing, setIsEditing] = useState(false)
 
-  const handleExpandClick = ( )=> {
+  const handleEdit = () => {
+    setIsEditing(!isEditing)
+  }
+
+  const handleExpandClick = () => {
     setExpanded(!expanded)
   }
 
@@ -61,15 +73,17 @@ function Task({task, openModal, editClick, editing, deleteTask}) {
           <CardContent>
             <div style={{display: 'flex', flexDirection: 'row', gap: '5%'}}>
             {/* {todoTitle} */}
-            <Typography variant="body1" contentEditable={editing}>{task.title}</Typography>
+            <Typography variant="body1" contentEditable={isEditing}>
+              {task.title}
+            </Typography>
             <Button variant="contained" size="small" onClick={openModal} >Add To Calendar</Button>
             </div>
-            <Typography variant="body2" contentEditable={editing}>
+            <Typography variant="body2" contentEditable={isEditing} class>
               {task.description}
             </Typography>
             <CardActions>
             <ExpandMoreIcon/>
-            <Button variant="contained" size="small" onClick={editClick}>{editing ? 'Done' : 'Edit'}</Button>
+            <Button variant="contained" size="small" onClick={handleEdit}>{isEditing ? 'Done' : 'Edit'}</Button>
             <Button variant="contained" size="small" onClick={deleteTask}>Delete</Button>
             </CardActions>
           </CardContent>

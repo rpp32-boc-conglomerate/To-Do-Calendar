@@ -11,7 +11,6 @@ function ToDoList() {
   //a state prop that's an array that has an element for everytime + task or + category is clicked
   const [categorizedTasks, setCategorizedTasks] = useState([])
   const [modalOpen, setModalOpen] = useState(false)
-  const [editing, setEditing] = useState(false)
 
   const deleteTask = (e) => {
     // var target = e.target;
@@ -25,10 +24,6 @@ function ToDoList() {
     setModalOpen(true)
   }
 
-  const handleEditClick = () => {
-    setEditing(!editing)
-  }
-
   const sampleCategories = () => {
     let storage = []
     example.forEach((el) => {
@@ -39,7 +34,7 @@ function ToDoList() {
       category['name'] = id
       storage.push(category)
     })
-    // console.log('storage AFTER', storage)
+    console.log('storage AFTER', storage)
     setCategorizedTasks(storage)
   }
 
@@ -57,7 +52,8 @@ function ToDoList() {
         <Button variant="contained" onClick={() => setNewTasks(newTasks => newTasks.concat('New task'))}>Add Task</Button>
       </div>
       <div>
-        <Categories deleteTask={deleteTask} categorizedTasks={categorizedTasks} openModal={openModal} editClick={handleEditClick} editing={editing}/>
+        <Categories deleteTask={deleteTask} categorizedTasks={categorizedTasks} openModal={openModal}
+        />
       </div>
     </div>
   )

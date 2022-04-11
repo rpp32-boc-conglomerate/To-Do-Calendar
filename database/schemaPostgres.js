@@ -9,6 +9,10 @@ const config = {
   host: 'localhost'
 }
 
+// let client = new pg.Client(config)
+// client.connect()
+// .then(() => console.log('connect to database'))
+// .catch((err) => console.log('error in connect to db', err))
 //drop db, if needed uncomment to use
 
 // pgtools.dropdb(config, 'tododb', function (err, res) {
@@ -18,13 +22,13 @@ const config = {
 //   }
 //   console.log(res);
 // });
-
-pgtools.createdb(config, 'tododb', function (err, res) {
+console.log('pgtools', pgtools)
+pgtools.dropdb(config, 'tododb', function (err, res) {
   if (err) {
     console.error(err);
     process.exit(-1);
   }
-  console.log(res);
+  console.log(res, 'created tables');
   addTables();
 });
 
@@ -35,7 +39,7 @@ let addTables = function() {
     database: 'tododb',
     user: 'postgres',
     password: process.env.PGPASS,
-    port: '5432'
+    port: 5432
    });
 
    const execute = async (query) => {
@@ -62,7 +66,7 @@ let addTables = function() {
       "name" VARCHAR(64) NOT NULL,
       PRIMARY KEY ("category_id")
     );`;
-
+//inCalendar
   const queryText3 = `
     CREATE TABLE IF NOT EXISTS "todoitems" (
       "id" SERIAL,
@@ -78,7 +82,7 @@ let addTables = function() {
         FOREIGN KEY("category_id")
           REFERENCES categories("category_id")
     );`;
-
+      //beware of camel case userToDoLookup
     const queryText4 = `
     CREATE TABLE IF NOT EXISTS "userToDoLookup" (
       "user_id" INT NOT NULL,

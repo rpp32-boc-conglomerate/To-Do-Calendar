@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-function Category({tasks, addTask, openModal, deleteTask, editClick, editing}) {
+function Category({tasks, addTask, openModal, deleteTask}) {
   const classes = useStyles();
   const [totalTime, setTotalTime] = useState(0);
   const {name} = tasks
@@ -35,8 +35,7 @@ function Category({tasks, addTask, openModal, deleteTask, editClick, editing}) {
             // addTask()
           }}>Add Task</Button>
       </div>
-      <Tasks tasks={tasks.tasks} deleteTask={deleteTask} openModal={openModal}
-      editClick={editClick} editing={editing} />
+      <Tasks tasks={tasks.tasks} deleteTask={deleteTask} openModal={openModal}/>
     </Paper>
     </div>
   </Container>
