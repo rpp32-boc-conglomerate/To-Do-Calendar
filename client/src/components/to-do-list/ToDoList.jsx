@@ -8,7 +8,7 @@ import { Button } from '@material-ui/core';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { DndProvider } from 'react-dnd';
 
-const { example } = require('../../../../database/example.js');
+//const { example } = require('../../../../database/example.js');
 
 
 function ToDoList() {
