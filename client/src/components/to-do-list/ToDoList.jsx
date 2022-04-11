@@ -3,7 +3,7 @@ import Categories from './Categories.jsx';
 import Category from './Category.jsx';
 import Tasks from './Tasks.jsx';
 import TestModal from './testModal.jsx';
-import {example} from '/Users/meredithwhite/JavaScript/HackReactor/RPP32/Senior/To-Do-Calendar-2/database/example.js';
+import {example} from '../../../.././database/example.js';
 import { Button } from '@material-ui/core';
 
 
