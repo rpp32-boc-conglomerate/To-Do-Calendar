@@ -15,22 +15,18 @@ const useStyles = makeStyles((theme) => ({
 function Category({tasks, addTask, openModal, deleteTask}) {
   const classes = useStyles();
   const [totalTime, setTotalTime] = useState(0);
+
   const {name} = tasks
-  // console.log('tasks in category', tasks.name)
+
+  console.log('category: ', tasks);
+
   return (
-  <Container>
-    <div style={{display: 'inline-block'}}>
-    <Paper elevation={2} className={classes.paper}>
-      {/* <TextField
-      required
-      label='New Category'
-      variant='outlined'
-      onClick=''
-      /> */}
-      <div>{tasks.name}</div>
-      <div>Time Spent So Far: 0</div>
-      <div>
-        <Button onClick={() => {
+    <Container>
+      <Paper elevation={2} className={classes.paper}>
+        <Container sx={{display: 'flex'}}>
+          <div>{tasks.category}</div>
+          <div>Time Spent So Far: 0</div>
+          <Button onClick={() => {
             setTotalTime(totalTime + 1);
             // addTask()
           }}>Add Task</Button>
