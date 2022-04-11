@@ -5,6 +5,10 @@ import Tasks from './Tasks.jsx';
 import TestModal from './testModal.jsx';
 import {example} from '../../../.././database/example.js';
 import { Button } from '@material-ui/core';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import { DndProvider } from 'react-dnd';
+
+const { example } = require('../../../../database/example.js');
 
 
 function ToDoList() {
@@ -29,6 +33,7 @@ function ToDoList() {
     setEditing(!editing)
   }
 
+
   const sampleCategories = () => {
     let storage = []
     example.forEach((el) => {
@@ -47,19 +52,26 @@ function ToDoList() {
     sampleCategories()
   }, [])
 
+  var addTask = (e) => {
+    console.log('addTask');
+  }
+
+  console.log(example);
 
   return (
-    <div id="todo-list" style={{width: '45%', display: 'inline-block'}}>
-      <div style={{display: 'flex', height: '50px', width: '100%'}}>
-        <div style={{width: '80%'}}>To-Do List</div>
-        {modalOpen && <TestModal/>}
-        <Button variant="contained" onClick={() => setNewCategories(newCategories => newCategories.concat('New'))}>Add Category</Button>
-        <Button variant="contained" onClick={() => setNewTasks(newTasks => newTasks.concat('New task'))}>Add Task</Button>
+    <DndProvider backend={HTML5Backend}>
+      <div id="todo-list" style={{width: '45%', display: 'inline-block'}}>
+        <div style={{display: 'flex', height: '50px', width: '100%'}}>
+          <div style={{width: '80%'}}>To-Do List</div>
+          <Button variant="contained" onClick={() => setNewCategories(newCategories => newCategories.concat('New'))}>Add Category</Button>
+          <Button variant="contained" onClick={() => setNewTasks(newTasks => newTasks.concat('New task'))}>Add Task</Button>
+        </div>
+        <div>
+          <Categories deleteTask={deleteTask} categorizedTasks={categorizedTasks} openModal={openModal} editClick={handleEditClick} editing={editing}/>
+          {/* <Tasks tasks={newTasks} /> */}
+        </div>
       </div>
-      <div>
-        <Categories deleteTask={deleteTask} categorizedTasks={categorizedTasks} openModal={openModal} editClick={handleEditClick} editing={editing}/>
-      </div>
-    </div>
+    </DndProvider>
   )
 }
 //don't forget empty array parameter for useEffect !!!

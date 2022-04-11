@@ -15,28 +15,25 @@ const useStyles = makeStyles((theme) => ({
 function Category({tasks, addTask, openModal, deleteTask, editClick, editing}) {
   const classes = useStyles();
   const [totalTime, setTotalTime] = useState(0);
+
   const {name} = tasks
-  // console.log('tasks in category', tasks.name)
+
+  console.log('category: ', tasks);
+
   return (
   <Container>
-    <div style={{display: 'inline-block'}}>
-    <Paper elevation={2} className={classes.paper}>
-      {/* <TextField
-      required
-      label='New Category'
-      variant='outlined'
-      onClick=''
-      /> */}
-      <div>{tasks.name}</div>
-      <div>Time Spent So Far: 0</div>
-      <div>
+    <Paper elevation={2} className={classes.paper} sx={{ display: 'inline-block' }}>
+      <Container  sx={{ display: 'flex' }}>
+        <div>{tasks.name}</div>
+        <div>Time Spent So Far: 0</div>
         <Button onClick={() => {
-            setTotalTime(totalTime + 1);
-            // addTask()
-          }}>Add Task</Button>
-      </div>
-      <Tasks tasks={tasks.tasks} deleteTask={deleteTask} openModal={openModal}
-      editClick={editClick} editing={editing} />
+          setTotalTime(totalTime + 1);
+          // addTask()
+        }}>Add Task</Button>
+      </Container>
+      <Container sx={{ display: 'inline-block' }}>
+        <Tasks tasks={tasks.tasks} deleteTask={deleteTask} openModal={openModal} editClick={editClick} editing={editing} />      
+      </Container>
     </Paper>
     </div>
   </Container>
