@@ -3,6 +3,10 @@ import Categories from './Categories.jsx';
 import Category from './Category.jsx';
 import Tasks from './Tasks.jsx';
 import { Button } from '@material-ui/core';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import { DndProvider } from 'react-dnd';
+
+const { example } = require('../../../../database/example.js');
 
 function ToDoList() {
   //a state prop that's an array that has an element for everytime + task or + category is clicked
@@ -13,22 +17,31 @@ function ToDoList() {
     // var target = e.target;
     // console.log(target);
     e.target.parentNode.style.display = 'none';
+    console.log('deleteTask');
 
     console.log(e.target.parentNode.style);
   }
 
+  var addTask = (e) => {
+    console.log('addTask');
+  }
+
+  console.log(example);
+
   return (
-    <div id="todo-list" style={{width: '45%', display: 'inline-block'}}>
-      <div style={{display: 'flex', height: '50px', width: '100%'}}>
-        <div style={{width: '80%'}}>To-Do List</div>
-        <Button variant="contained" onClick={() => setNewCategories(newCategories => newCategories.concat('New'))}>Add Category</Button>
-        <Button variant="contained" onClick={() => setNewTasks(newTasks => newTasks.concat('New task'))}>Add Task</Button>
+    <DndProvider backend={HTML5Backend}>
+      <div id="todo-list" style={{width: '45%', display: 'inline-block'}}>
+        <div style={{display: 'flex', height: '50px', width: '100%'}}>
+          <div style={{width: '80%'}}>To-Do List</div>
+          <Button variant="contained" onClick={() => setNewCategories(newCategories => newCategories.concat('New'))}>Add Category</Button>
+          <Button variant="contained" onClick={() => setNewTasks(newTasks => newTasks.concat('New task'))}>Add Task</Button>
+        </div>
+        <div>
+          <Categories taskData={example} deleteTask={deleteTask}/>
+          {/* <Tasks tasks={newTasks} /> */}
+        </div>
       </div>
-      <div>
-        <Categories categories={newCategories} deleteTask={deleteTask} tasks={newTasks}/>
-        {/* <Tasks tasks={newTasks} /> */}
-      </div>
-    </div>
+    </DndProvider>
   )
 }
 //don't forget empty array parameter for useEffect !!!

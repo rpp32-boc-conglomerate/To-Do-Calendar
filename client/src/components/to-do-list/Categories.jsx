@@ -3,9 +3,9 @@
 import React from 'react';
 import Category from './Category.jsx';
 
-function Categories({categories, tasks, addTask, deleteTask}) {
+function Categories({taskData, addTask, deleteTask}) {
   return(
-    categories.map((category, i) => <Category key={i} index={i} tasks={tasks} addTask={addTask} deleteTask={deleteTask}/>)
+    taskData.map((category, i) => <Category key={i} index={i} tasks={category.tasks} addTask={addTask} deleteTask={deleteTask}/>)
   )
 }
 export default Categories;
