@@ -9,11 +9,11 @@ const useStyles = makeStyles({
   textArea: {
     padding: '1rem',
     width: '90%',
-    color: 'blue'
+    color: 'black'
   },
   card: {
     display: 'flex',
-    border: '2rem solid black',
+    border: '1rem solid black',
   }
 });
 
@@ -39,6 +39,7 @@ var Task = (props) => {
   const [isOpen, setIsOpen] = useState(false);
 
   console.log('Task', props.task);
+  console.log(isOpen);
 
   return (
     <Card
@@ -58,7 +59,7 @@ var Task = (props) => {
         defaultValue={props.task.duration}
         className={classes.textArea}
       />
-      <Button variant="contained" onClick={() => setIsOpen()}>Edit</Button>
+      <Button variant="contained" onClick={() => setIsOpen(true)}>Edit</Button>
       <Button variant="contained" onClick={() => console.log('Task X Button Clicked!')}>X</Button>
       {/* { isOpen === false && <TaskOptionsModal open={isOpen}/> } */}
     </Card>
