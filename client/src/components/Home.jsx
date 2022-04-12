@@ -9,14 +9,27 @@ import TopBar from './TopBar.jsx';
 
 function Home (
   {isMobile={isMobile},
-  onCalendar={onCalendar},
-  setOnCalendar={setOnCalendar},
-  addToCalendar={addToCalendar},
-  myEvents={myEvents},
-  moveEvent={moveEvent},
-  resizeEvent={resizeEvent}}){
+   isLoggedIn={isLoggedIn},
+   isLoading={isLoading},
+   setIsLoggedIn={setIsLoggedIn},
+   onCalendar={onCalendar},
+   setOnCalendar={setOnCalendar},
+   addToCalendar={addToCalendar},
+   myEvents={myEvents},
+   moveEvent={moveEvent},
+   resizeEvent={resizeEvent}}){
 
-  const naviBar = (<TopBar isMobile={isMobile} onCalendar={onCalendar} setOnCalendar={setOnCalendar}/>)
+  // useEffect(async () => {
+  //   axios.get('http://localhost:3000/auth/isLoggedIn', {withCredentials: true})
+  //   .then((result) => {
+  //     setIsLoggedIn(result.data);
+  //   })
+  //   .catch((err) => {
+  //     console.log(err);
+  //   })
+  // }, [])
+
+  const naviBar = (<TopBar isLoading={isLoading} setIsLoggedIn={setIsLoggedIn} isLoggedIn={isLoggedIn} isMobile={isMobile} onCalendar={onCalendar} setOnCalendar={setOnCalendar}/>)
   const toDoList = (<ToDoList addToCalendar={addToCalendar}/>)
   const myCalender = (<MyCalendar myEvents={myEvents} moveEvent={moveEvent} resizeEvent={resizeEvent}/>)
 

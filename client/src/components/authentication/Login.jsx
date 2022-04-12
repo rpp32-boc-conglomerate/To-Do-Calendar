@@ -30,7 +30,8 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const Login = () => {
+
+const Login = ({isLoggedIn, setIsLoggedIn}) => {
   const navigate = useNavigate();
   const classes = useStyles();
   const [state, setState] = useState({'email': '', 'password': ''})
@@ -42,7 +43,12 @@ const Login = () => {
     'password': state['password'],
     'email': state['email'],
   }
-
+  useEffect(() => {
+    console.log('is log in:', isLoggedIn)
+    if (isLoggedIn) {
+      navigate('/')
+    }
+  }, [isLoggedIn])
   const validation = async () => {
       loginSchema.validate(formData).catch((err) => {
       setFormErr(err.errors[0].split(' ')[0]);
@@ -59,6 +65,8 @@ const Login = () => {
     }
   }, [state])
 
+
+
   const handleChange =  (e) => {
     setFormErr('');
     const { name, value } = e.target;
@@ -73,10 +81,11 @@ const Login = () => {
     if (!isValid) {
       console.log('cannot submit')
     } else {
-      await axios.post('http://localhost:3000/auth/login', {'email': state['email'], 'password': state['password']})
+      await axios.post('http://localhost:3000/auth/login', {'email': state['email'], 'password': state['password']}, {withCredentials: true})
       .then((res) => {
         console.log('response:', res.data);
         if(res.data === true) {
+          setIsLoggedIn(true);
           navigate('/')
         } else if (res.data === 'incorrect') {
           setFormErr('email');
@@ -144,9 +153,6 @@ const Login = () => {
                 >
                  Sign in with google
                </Button>
-              <Typography className={classes.bottomMsg} >
-                  <Link  href='#' variant="body1">Forgot password ?</Link>
-              </Typography>
               <Typography className={classes.bottomMsg}>
                     Don't have an account? &nbsp;&nbsp;
                   <Link  href='#' variant="body1" onClick={() => {navigate('/signup')}}>Sign up</Link>
