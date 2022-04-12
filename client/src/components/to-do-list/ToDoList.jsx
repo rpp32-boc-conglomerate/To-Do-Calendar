@@ -54,7 +54,7 @@ function ToDoList() {
     console.log('addTask');
   }
 
-  console.log(example);
+  // console.log(example);
 
   return (
     <div id="todo-list" style={{width: '45%', display: 'inline-block'}}>
@@ -68,7 +68,7 @@ function ToDoList() {
         <Categories deleteTask={deleteTask} categorizedTasks={categorizedTasks} openModal={openModal}
         />
       </div>
-    </DndProvider>
+    </div>
   )
 }
 //don't forget empty array parameter for useEffect !!!

@@ -18,7 +18,7 @@ function Category({tasks, addTask, openModal, deleteTask}) {
 
   const {name} = tasks
 
-  console.log('category: ', tasks);
+  // console.log('category: ', tasks);
 
   return (
     <Container>
@@ -30,10 +30,11 @@ function Category({tasks, addTask, openModal, deleteTask}) {
             setTotalTime(totalTime + 1);
             // addTask()
           }}>Add Task</Button>
-      </div>
-      <Tasks tasks={tasks.tasks} deleteTask={deleteTask} openModal={openModal}/>
+        </Container>
+        <Container sx={{ display: 'inline-block' }}>
+          <Tasks tasks={tasks.tasks} deleteTask={deleteTask} openModal={openModal}/>
+        </Container>
     </Paper>
-    </div>
   </Container>
 )}
 
