@@ -153,9 +153,6 @@ const Login = ({isLoggedIn, setIsLoggedIn}) => {
                 >
                  Sign in with google
                </Button>
-              <Typography className={classes.bottomMsg} >
-                  <Link  href='#' variant="body1">Forgot password ?</Link>
-              </Typography>
               <Typography className={classes.bottomMsg}>
                     Don't have an account? &nbsp;&nbsp;
                   <Link  href='#' variant="body1" onClick={() => {navigate('/signup')}}>Sign up</Link>

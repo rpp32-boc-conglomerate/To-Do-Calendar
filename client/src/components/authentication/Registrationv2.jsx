@@ -87,6 +87,7 @@ const Login = () => {
         'email': state['email'], 'password': state['password']
       }, {withCredentials: true}).then((res) => {
         console.log('response:', res);
+        navigate('/signin')
       })
       .catch((err) => {
         console.log('login errors:', err);
@@ -169,17 +170,6 @@ const Login = () => {
             >
               Sign Up
           </Button>
-          <Button
-            startIcon={<GoogleIcon />}
-            type='submit' color='primary'
-            variant="contained"
-            fullWidth
-            >
-              Sign in with google
-            </Button>
-          <Typography className={classes.bottomMsg} >
-              <Link  href='#' variant="body1">Forgot password ?</Link>
-          </Typography>
           <Typography className={classes.bottomMsg}>
                 Already have an account? &nbsp;&nbsp;
                 <Link  href='#' variant="body1" onClick={() => {navigate('/signin')}}>Sign in</Link>
