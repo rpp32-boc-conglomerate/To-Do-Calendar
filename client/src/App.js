@@ -23,6 +23,8 @@ function App() {
   const [currentPage, changePage] = useState("home");
   const [myEvents, setMyEvents] = useState(eventsList);
   const [onCalendar, setOnCalendar] = useState(false);
+  const [draggedEvent, setDraggedEvent] = useState()
+
   //Calendar helper functions
   const moveEvent = useCallback(
     ({ event, start, end, isAllDay: droppedOnAllDaySlot = false }) => {
@@ -39,6 +41,17 @@ function App() {
     },
     [setMyEvents]
   );
+
+  const newEvent = useCallback(
+    (event) => {
+      setMyEvents((prev) => {
+        const idList = prev.map((item) => item.id)
+        const newId = Math.max(...idList) + 1
+        return [...prev, { ...event, id: newId }]
+      })
+    },
+    [setMyEvents]
+  )
 
   const resizeEvent = useCallback(
     ({ event, start, end }) => {
@@ -71,6 +84,21 @@ function App() {
       return newList
     });
   };
+  const handleDragStart = useCallback((event) => setDraggedEvent(event), [])
+
+  const onDropFromOutside = useCallback(
+    ({ title, start, end, allDay: isAllDay }) => {
+      const event = {
+        title,
+        start,
+        end,
+        isAllDay,
+      }
+      setDraggedEvent(null)
+      newEvent(event)
+    },
+    [draggedEvent, setDraggedEvent, newEvent]
+  )
   // const naviBar = (<TopBar isMobile={isMobile} onCalendar={onCalendar} setOnCalendar={setOnCalendar}/>)
   // const toDoList = (<ToDoList addToCalendar={addToCalendar}/>)
   // const myCalender = (<MyCalendar myEvents={myEvents} moveEvent={moveEvent} resizeEvent={resizeEvent}/>)
@@ -85,7 +113,12 @@ function App() {
       myEvents={myEvents}
       moveEvent={moveEvent}
       resizeEvent={resizeEvent}
+      newEvent={newEvent}
       changeTitle={changeTitle}
+      handleDragStart={handleDragStart}
+      draggedEvent={draggedEvent}
+      setDraggedEvent={setDraggedEvent}
+      onDropFromOutside={onDropFromOutside}
     />
   );
 

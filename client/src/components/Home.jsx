@@ -6,6 +6,7 @@ import Registration from './authentication/Registration.jsx';
 import MyCalendar from './calendar/MyCalendar.jsx';
 import ToDoList from './to-do-list/ToDoList.jsx';
 import TopBar from './TopBar.jsx';
+import TestToDo from './calendar/TestToDo.jsx';
 
 function Home (
   {isMobile={isMobile},
@@ -15,12 +16,16 @@ function Home (
   myEvents={myEvents},
   moveEvent={moveEvent},
   resizeEvent={resizeEvent},
-  changeTitle={changeTitle}}){
+  changeTitle={changeTitle},
+  handleDragStart={handleDragStart},
+  draggedEvent={draggedEvent},
+  setDraggedEvent={setDraggedEvent},
+  onDropFromOutside={onDropFromOutside}}){
 
   const naviBar = (<TopBar isMobile={isMobile} onCalendar={onCalendar} setOnCalendar={setOnCalendar}/>)
   const toDoList = (<ToDoList addToCalendar={addToCalendar}/>)
-  const myCalender = (<MyCalendar myEvents={myEvents} moveEvent={moveEvent} resizeEvent={resizeEvent} changeTitle={changeTitle}/>)
-
+  const myCalender = (<MyCalendar myEvents={myEvents} moveEvent={moveEvent} resizeEvent={resizeEvent} changeTitle={changeTitle} onDropFromOutside={onDropFromOutside}/>)
+  const testToDo = (<TestToDo draggedEvent={draggedEvent} setDraggedEvent={setDraggedEvent} handleDragStart={handleDragStart}/>)
   // condition redering base on device
   const renderContent = () => {
     // view for mobile and in to do list page
@@ -48,10 +53,9 @@ function Home (
         // view for desktop display both calendar and to do list
         <div>
           {naviBar}
-          <div>
-            {myCalender}
-            {toDoList}
-          </div>
+          {myCalender}
+          {testToDo}
+          {/* {toDoList} */}
         </div>
       )
     }

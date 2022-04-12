@@ -21,6 +21,7 @@ const MyCalendar = (props) => {
       }}
       onEventDrop={props.moveEvent}
       onEventResize={props.resizeEvent}
+      onDropFromOutside={props.onDropFromOutside}
       style={{ height: 1000 }}
     />
   )
