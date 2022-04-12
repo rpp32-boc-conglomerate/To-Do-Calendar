@@ -23,7 +23,7 @@ const config = {
 //   console.log(res);
 // });
 console.log('pgtools', pgtools)
-pgtools.dropdb(config, 'tododb', function (err, res) {
+pgtools.createdb(config, 'tododb', function (err, res) {
   if (err) {
     console.error(err);
     process.exit(-1);

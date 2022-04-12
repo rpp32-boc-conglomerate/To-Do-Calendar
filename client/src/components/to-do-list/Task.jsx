@@ -1,7 +1,10 @@
-import React, {useState, useEffect} from 'react';
-import {useDrag} from 'react-dnd';
+import React, { useState, useEffect } from 'react';
+import { useDrag } from 'react-dnd';
 import "./styles.scss";
-import { makeStyles, Grid, Card, CardHeader, CardContent, CardActions, Typography, Button, TextareaAutosize, Collapse } from '@material-ui/core';
+import { makeStyles, Grid, Card, CardHeader, CardContent, CardActions, Typography, Toolbar, TextField, Button, TextareaAutosize, Collapse } from '@material-ui/core';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DesktopDateTimePicker } from '@mui/x-date-pickers/DesktopDateTimePicker';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 const TaskOptionsModal = require('../TaskOptionsModal.jsx');
 
@@ -29,10 +32,24 @@ const useStyles = makeStyles({
 // isDragging returns t or f
 // drag reference which element you want to make draggable
 // every element requires a type
-function Task({task, openModal, editClick, editing, deleteTask}) {
+function Task({task, openModal, isMobile, deleteTask}) {
   // console.log('task in task', task )
-  const [expanded, setExpanded] = useState(false)
-  const [isEditing, setIsEditing] = useState(false)
+  const [expanded, setExpanded] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [value, setValue] = useState<Date | null>(new Date());
+
+  const addToCal = <Button variant="contained" size="small" onClick={openModal} >Add To Calendar</Button>
+  const timeSelectors =
+ <LocalizationProvider dateAdapter={AdapterDateFns}>
+   <DesktopDateTimePicker
+   renderInput={(props) => <TextField {...props} />}
+   label="Start Time"
+   value={value}
+   onChange={(newValue) => {
+     setValue(newValue)
+   }}
+  />
+ </LocalizationProvider>
 
   const handleEdit = () => {
     setIsEditing(!isEditing)
@@ -67,11 +84,10 @@ function Task({task, openModal, editClick, editing, deleteTask}) {
       <Card>
           <CardContent>
             <div style={{display: 'flex', flexDirection: 'row', gap: '5%'}}>
-            {/* {todoTitle} */}
             <Typography variant="body1" contentEditable={isEditing}>
               {task.title}
             </Typography>
-            <Button variant="contained" size="small" onClick={openModal} >Add To Calendar</Button>
+            {isMobile && addToCal}
             </div>
             <Typography variant="body2" contentEditable={isEditing} class>
               {task.description}
@@ -80,6 +96,7 @@ function Task({task, openModal, editClick, editing, deleteTask}) {
             <ExpandMoreIcon/>
             <Button variant="contained" size="small" onClick={handleEdit}>{isEditing ? 'Done' : 'Edit'}</Button>
             <Button variant="contained" size="small" onClick={deleteTask}>Delete</Button>
+            {timeSelectors}
             </CardActions>
           </CardContent>
       </Card>

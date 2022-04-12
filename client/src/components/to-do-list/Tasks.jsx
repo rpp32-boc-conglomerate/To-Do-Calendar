@@ -3,12 +3,12 @@
 import React from 'react';
 import Task from './Task.jsx';
 
-function Tasks({tasks, openModal, deleteTask}) {
+function Tasks({tasks, openModal, isMobile, deleteTask}) {
   // console.log('tasks in tasks', tasks)
   return(
     tasks.map((task, i) => {
     return (<Task style={{display: 'inline-block'}}
-    key={i} task={task} openModal={openModal}
+    key={i} task={task} openModal={openModal} isMobile={isMobile}
     deleteTask={deleteTask}/>)
     }
   )
