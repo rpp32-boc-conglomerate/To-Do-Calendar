@@ -12,7 +12,6 @@ function Home (
   {isMobile={isMobile},
   onCalendar={onCalendar},
   setOnCalendar={setOnCalendar},
-  addToCalendar={addToCalendar},
   myEvents={myEvents},
   moveEvent={moveEvent},
   resizeEvent={resizeEvent},
@@ -23,7 +22,7 @@ function Home (
   onDropFromOutside={onDropFromOutside}}){
 
   const naviBar = (<TopBar isMobile={isMobile} onCalendar={onCalendar} setOnCalendar={setOnCalendar}/>)
-  const toDoList = (<ToDoList addToCalendar={addToCalendar}/>)
+  const toDoList = (<ToDoList/>)
   const myCalender = (<MyCalendar myEvents={myEvents} moveEvent={moveEvent} resizeEvent={resizeEvent} changeTitle={changeTitle} onDropFromOutside={onDropFromOutside}/>)
   const testToDo = (<TestToDo draggedEvent={draggedEvent} setDraggedEvent={setDraggedEvent} handleDragStart={handleDragStart}/>)
   // condition redering base on device
