@@ -85,7 +85,7 @@ const Login = () => {
       await axios.post('http://localhost:3000/auth/register', {
         'firstName': state['firstName'], 'lastName': state['lastName'],
         'email': state['email'], 'password': state['password']
-      }).then((res) => {
+      }, {withCredentials: true}).then((res) => {
         console.log('response:', res);
       })
       .catch((err) => {
