@@ -56,7 +56,7 @@ let addTables = function() {
   const queryText1 = `
     CREATE TABLE IF NOT EXISTS "users" (
       "user_id" INT GENERATED ALWAYS AS IDENTITY,
-      "email" VARCHAR(64) NOT NULL,
+      "user_email" VARCHAR(64) NOT NULL,
       PRIMARY KEY ("user_id")
     );`;
 
@@ -66,7 +66,8 @@ let addTables = function() {
       "name" VARCHAR(64) NOT NULL,
       PRIMARY KEY ("category_id")
     );`;
-//inCalendar
+
+    //removed camel case from inCalendar, as postgres doesn't like camelcase
   const queryText3 = `
     CREATE TABLE IF NOT EXISTS "todoitems" (
       "id" SERIAL,
@@ -75,16 +76,17 @@ let addTables = function() {
       "duration" INTERVAL NOT NULL,
       "start" TIMESTAMP NOT NULL,
       "end" TIMESTAMP NOT NULL,
-      "inCalendar" BOOLEAN NOT NULL,
+      "in_calendar" BOOLEAN NOT NULL,
       "category_id" INTEGER NOT NULL,
       PRIMARY KEY ("id"),
       CONSTRAINT fk_category
         FOREIGN KEY("category_id")
           REFERENCES categories("category_id")
     );`;
-      //beware of camel case userToDoLookup
+
+    //removed camel case from userToDoLookup, as postgres doesn't like camelcase
     const queryText4 = `
-    CREATE TABLE IF NOT EXISTS "userToDoLookup" (
+    CREATE TABLE IF NOT EXISTS "user_todo_lookup" (
       "user_id" INT NOT NULL,
       "todo_id" INT NOT NULL,
       "owner" BOOLEAN NOT NULL,

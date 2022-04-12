@@ -1,5 +1,6 @@
 module.exports = {
   // userEmail for verifying ownership of calendar
+  //notes from Rob: userEmail changed to user_email, table userToDoLookup changed to user_todo_lookup, and inCalendar changed to in_calendar because postgres throws syntax errors sometimes for camelcase.
   example: [
     {
       id: 1,

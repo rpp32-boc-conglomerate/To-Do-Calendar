@@ -17,7 +17,7 @@ function Home (
   resizeEvent={resizeEvent}}){
 
   const naviBar = (<TopBar isMobile={isMobile} onCalendar={onCalendar} setOnCalendar={setOnCalendar}/>)
-  const toDoList = (<ToDoList addToCalendar={addToCalendar}/>)
+  const toDoList = (<ToDoList addToCalendar={addToCalendar} isMobile={isMobile}/>)
   const myCalender = (<MyCalendar myEvents={myEvents} moveEvent={moveEvent} resizeEvent={resizeEvent}/>)
 
   // condition redering base on device

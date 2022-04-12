@@ -30,24 +30,8 @@ function ToDoList() {
     setEditing(!editing)
   }
 
-
-  // const sampleCategories = () => {
-  //   let storage = [];
-  //   example.forEach((el) => {
-  //     var category = {};
-  //     var id = el.category;
-  //     // var categoryTasks = tasks.filter(task => task.category_id === el.id)
-  //     category['tasks'] = el.tasks;
-  //     category['name'] = id;
-  //     storage.push(category);
-  //   })
-  //   // console.log('storage AFTER', storage)
-  //   setCategorizedTasks(storage);
-  // }
-
   useEffect(() => {
     setCategorizedTasks(example);
-    // sampleCategories();
   }, [])
 
   var addTask = (e) => {
@@ -70,7 +54,6 @@ function ToDoList() {
       </div>
     </div>
   )
-}
-//don't forget empty array parameter for useEffect !!!
+};
 
 export default ToDoList;
