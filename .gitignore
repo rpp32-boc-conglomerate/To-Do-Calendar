@@ -9,6 +9,7 @@ lerna-debug.log*
 # Webpack Bundles
 client/dist/bundle.js
 client/dist/bundle.js.map
+client/dist/bundle.js.LICENSE.txt
 
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
@@ -99,3 +100,7 @@ typings/
 
 # TernJS port file
 .tern-port
+
+# web optimized file fonts
+*.woff2
+*.woff

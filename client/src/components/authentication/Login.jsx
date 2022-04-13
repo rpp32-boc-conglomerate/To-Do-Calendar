@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useNavigate, BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { makeStyles, IconButton, Link, Avatar, TextField, Box, Paper, Typography, AppBar, Button, Card, Container, CardActions, CardContent, CardMedia, CssBaseline, Grid, Toolbar } from '@material-ui/core';
 import GoogleIcon from '@mui/icons-material/Google';
 import loginSchema from './LoginValidation.js';
@@ -30,6 +31,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Login = () => {
+  const navigate = useNavigate();
   const classes = useStyles();
   const [state, setState] = useState({'email': '', 'password': ''})
   const [formErr, setFormErr] = useState('');
@@ -71,13 +73,18 @@ const Login = () => {
     if (!isValid) {
       console.log('cannot submit')
     } else {
-      console.log(state['email'], state['password'], isValid)
-      await axios.post('http://localhost:4000/login', {'email': state['email'], 'password': state['password']})
+      await axios.post('http://localhost:3000/auth/login', {'email': state['email'], 'password': state['password']})
       .then((res) => {
-        console.log('response:', res);
+        console.log('response:', res.data);
+        if(res.data === true) {
+          navigate('/')
+        } else if (res.data === 'incorrect') {
+          setFormErr('email');
+          setErrMsg("Email doesn't exist or Incorrect password")
+        }
       })
       .catch((err) => {
-        console.log('login errors:', err);
+        console.log('login err:', err);
       })
     }
   }
@@ -89,7 +96,6 @@ const Login = () => {
               <Grid item align='center'>
                 <Avatar
                   variant="square"
-                  alt="Remy Sharp"
                   src={img}
                   style={{width:'120px', height:'100px'}}/>
                 <h1 style={{color:'#545863'}}><i>Sign In</i></h1>
@@ -143,7 +149,7 @@ const Login = () => {
               </Typography>
               <Typography className={classes.bottomMsg}>
                     Don't have an account? &nbsp;&nbsp;
-                  <Link  href='#' variant="body1">Sign up</Link>
+                  <Link  href='#' variant="body1" onClick={() => {navigate('/signup')}}>Sign up</Link>
               </Typography>
             </Paper>
           </Grid>

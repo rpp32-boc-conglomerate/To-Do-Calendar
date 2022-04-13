@@ -1,0 +1,28 @@
+#todo-list {
+  border: black solid 2px;
+  width: 50vw;
+  height: 80vh;
+  display: flex;
+}
+
+#category {
+  border: blue solid 2px;
+  padding: 10px;
+  height: 20vh;
+  width: 40vw;
+  flex-direction: column;
+  align-items: flex-start
+}
+
+#task {
+  border: #FFE496 solid 2px;
+  background-color: #FFE496;
+  height: 5vh;
+}
+
+#drop-board {
+  border: red solid 10px;
+  height: 20vh;
+  width: 20vw;
+  align-items: flex-end
+}

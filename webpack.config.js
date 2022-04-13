@@ -1,5 +1,7 @@
 const path = require("path");
 const webpack = require('webpack');
+const dotenv = require('dotenv').config();
+
 
 module.exports = {
   entry: ['regenerator-runtime/runtime.js', path.resolve(__dirname, "client", "src", 'index.js')],
@@ -24,17 +26,19 @@ module.exports = {
           loader: 'style-loader',
         }, {
           loader: 'css-loader',
-        }, {
-          loader: 'postcss-loader',
-          options: {
-            plugins: function () {
-              return [
-                require('precss'),
-                require('autoprefixer')
-              ];
-            }
-          }
-        }, {
+        },
+        // {
+        //   loader: 'postcss-loader',
+        //   options: {
+        //     plugins: function () {
+        //       return [
+        //         require('precss'),
+        //         require('autoprefixer')
+        //       ];
+        //     }
+        //   }
+        // },
+        {
           loader: 'sass-loader'
         }]
       },
@@ -50,14 +54,32 @@ module.exports = {
         ],
       },
       {
-        test: /\.(png|jpe?g|gif)$/i,
+        test: /\.(png|jpg|gif)$/i,
         use: [
           {
-            loader: 'file-loader',
+            loader: 'url-loader',
+            options: {
+              limit: 8192,
+            },
           },
         ],
       }
     ]
+  },
+  devServer: {
+    port: 3001,
+    watchContentBase: true,
+    contentBase: path.join(__dirname, 'client','/dist'),
+    hot: true,
+    overlay: true,
+    historyApiFallback: true,
+    host: process.env.HOST
+    // proxy: {
+    //   '/api': {
+    //     target: 'http://localhost:3000',
+    //     pathRewrite: {'^/api' : ''}, // In this case we don't pass `api` path
+    //   }
+    // }
   },
   output: {
     filename: 'bundle.js',
