@@ -54,6 +54,14 @@ function ToDoList() {
     console.log('addTask');
   }
 
+  const setNewCategories = () => {
+    console.log('click');
+  }
+
+  const setNewTasks = () => {
+    console.log('click');
+  }
+
   console.log(example);
 
   return (
