@@ -14,7 +14,7 @@ import { DndProvider } from 'react-dnd';
 const useStyles = makeStyles({
   mobileMain: {
     width: '100%',
-    display: 'inline-block',
+    display: 'inline-block'
   },
   desktopMain: {
     width: '45%',

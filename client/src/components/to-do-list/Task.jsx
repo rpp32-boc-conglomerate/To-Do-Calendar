@@ -88,18 +88,11 @@ function Task({task, openModal, isMobile, deleteTask}) {
   //props are static, state is dynamic
 
   const updateTaskTime = (startTime) => {
-    console.log('type',  typeof startTime)
-    // moment(startTime, 'MM-DD-YYYY')
-    const newStart = new Date(moment(startTime))
-    console.log('newStart', typeof newStart)
+    const newStart = new Intl.DateTimeFormat('en-US',
+    {dateStyle: 'full', timeStyle: 'long', }).format(startTime)
     const taskCopy = taskWithTime
     taskCopy.start = newStart
-
     setTaskWithTime(taskCopy)
-
-    console.log('taskwithtime', taskWithTime)
-
-
   }
 
   const handleEdit = () => {
