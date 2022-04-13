@@ -8,7 +8,7 @@ const config = {
   port: 5432,
   host: 'localhost'
 }
-
+console.log(process.env.PGPASS)
 // let client = new pg.Client(config)
 // client.connect()
 // .then(() => console.log('connect to database'))
@@ -34,13 +34,7 @@ pgtools.createdb(config, 'tododb', function (err, res) {
 
 let addTables = function() {
 
-  const db = new pg.Pool({
-    host: 'localhost',
-    database: 'tododb',
-    user: 'postgres',
-    password: process.env.PGPASS,
-    port: 5432
-   });
+  const db = new pg.Pool(config);
 
    const execute = async (query) => {
     try {

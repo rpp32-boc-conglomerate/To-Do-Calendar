@@ -19,10 +19,10 @@ function Home (
    moveEvent={moveEvent},
    resizeEvent={resizeEvent}}){
 
-<<<<<<< HEAD
+
   const naviBar = (<TopBar isMobile={isMobile} onCalendar={onCalendar} setOnCalendar={setOnCalendar}/>)
   const toDoList = (<ToDoList addToCalendar={addToCalendar} isMobile={isMobile}/>)
-=======
+
   // useEffect(async () => {
   //   axios.get('http://localhost:3000/auth/isLoggedIn', {withCredentials: true})
   //   .then((result) => {
@@ -35,7 +35,7 @@ function Home (
 
   const naviBar = (<TopBar isLoading={isLoading} setIsLoggedIn={setIsLoggedIn} isLoggedIn={isLoggedIn} isMobile={isMobile} onCalendar={onCalendar} setOnCalendar={setOnCalendar}/>)
   const toDoList = (<ToDoList addToCalendar={addToCalendar}/>)
->>>>>>> 248d52a496707d03f7c13b8535c6d264f0cc045d
+
   const myCalender = (<MyCalendar myEvents={myEvents} moveEvent={moveEvent} resizeEvent={resizeEvent}/>)
 
   // condition redering base on device
