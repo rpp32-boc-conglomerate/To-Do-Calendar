@@ -24,6 +24,8 @@ function App () {
   const [onCalendar, setOnCalendar] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [userEmail, setEmail] = useState(null);
+
   useEffect(() => {
     axios.get('http://localhost:3000/auth/isLoggedIn', {withCredentials: true})
     .then((result) => {
@@ -35,6 +37,17 @@ function App () {
       console.log(err);
     })
   }, [isLoggedIn])
+
+  useEffect(() => {
+    axios.get('http://localhost:3000/auth/userEmail', {withCredentials: true})
+    .then((result) => {
+      console.log('result:', result);
+      setEmail(result.data.username);
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+  }, [userEmail])
 
   //Calendar helper functions
   const moveEvent = useCallback(
