@@ -1,6 +1,7 @@
-import React, {useState, useCallback} from 'react';
+import React, {useState, useCallback, useEffect} from 'react';
 import { BrowserView, MobileView, isBrowser, isMobile} from 'react-device-detect';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import axios from 'axios'
 import ReactDOM from 'react-dom';
 import moment from 'moment';
 import Registration from './components/authentication/Registrationv2.jsx';
@@ -21,6 +22,20 @@ function App () {
   const [currentPage, changePage] = useState('home');
   const [myEvents, setMyEvents] = useState(eventsList);
   const [onCalendar, setOnCalendar] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  useEffect(() => {
+    axios.get('http://localhost:3000/auth/isLoggedIn', {withCredentials: true})
+    .then((result) => {
+      console.log('is login auth:', result.data)
+      setIsLoggedIn(result.data);
+      setIsLoading(false);
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+  }, [isLoggedIn])
+
   //Calendar helper functions
   const moveEvent = useCallback(
     ({ event, start, end, isAllDay: droppedOnAllDaySlot = false }) => {
@@ -68,12 +83,15 @@ function App () {
   // all the props would pass to the homepage: './components/Home.jsx'
   const homePage = (<Home
     isMobile={isMobile}
+    isLoggedIn={isLoggedIn}
+    setIsLoggedIn={setIsLoggedIn}
     onCalendar={onCalendar}
     setOnCalendar={setOnCalendar}
     addToCalendar={addToCalendar}
     myEvents={myEvents}
     moveEvent={moveEvent}
     resizeEvent={resizeEvent}
+    isLoading={isLoading}
     />);
 
     return (
@@ -82,7 +100,7 @@ function App () {
         <Router>
           <Routes>
             <Route path='/' element={homePage}/>
-            <Route path='/signin' element={<Login />}/>
+            <Route path='/signin' element={<Login isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>}/>
             <Route path='/signup' element={<Registration />}/>
           </Routes>
           </Router>
