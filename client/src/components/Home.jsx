@@ -6,7 +6,7 @@ import Registration from './authentication/Registration.jsx';
 import MyCalendar from './calendar/MyCalendar.jsx';
 import ToDoList from './to-do-list/ToDoList.jsx';
 import TopBar from './TopBar.jsx';
-import Share from './sharing/SharedBy.jsx';
+
 
 function Home (
   {isMobile={isMobile},
@@ -19,6 +19,7 @@ function Home (
    sharedBy={sharedBy},
    myEvents={myEvents},
    moveEvent={moveEvent},
+   userEmail={userEmail},
    resizeEvent={resizeEvent}}){
 
   // useEffect(async () => {
@@ -34,7 +35,7 @@ function Home (
   const naviBar = (<TopBar isLoading={isLoading} setIsLoggedIn={setIsLoggedIn} isLoggedIn={isLoggedIn} isMobile={isMobile} onCalendar={onCalendar} setOnCalendar={setOnCalendar}/>)
   const toDoList = (<ToDoList addToCalendar={addToCalendar}/>)
   const myCalender = (<MyCalendar myEvents={myEvents} moveEvent={moveEvent} resizeEvent={resizeEvent}/>)
-  console.log('isLoggedIn:', isLoggedIn);
+
   // condition redering base on device
   const renderContent = () => {
     // view for mobile and in to do list page

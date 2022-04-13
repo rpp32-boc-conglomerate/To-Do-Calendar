@@ -105,6 +105,7 @@ function App () {
     moveEvent={moveEvent}
     resizeEvent={resizeEvent}
     isLoading={isLoading}
+    userEmail={userEmail}
     />);
 
     return (
