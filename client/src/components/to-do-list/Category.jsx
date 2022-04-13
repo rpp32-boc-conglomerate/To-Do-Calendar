@@ -31,7 +31,7 @@ function Category({tasks, addTask, openModal, isMobile, deleteTask}) {
             // addTask()
           }}>Add Task</Button>
         </Container>
-        <Container sx={{ display: 'inline-block' }}>
+        <Container sx={{ display: 'inline-block'}}>
           <Tasks tasks={tasks.tasks} deleteTask={deleteTask} openModal={openModal} isMobile={isMobile}/>
         </Container>
     </Paper>

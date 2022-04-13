@@ -63,8 +63,8 @@ function ToDoList({addToCalendar, isMobile}) {
       <div style={{display: 'flex', height: '50px', width: '100%'}}>
         <div style={{width: '80%'}}>To-Do List</div>
         {modalOpen && <TestModal/>}
-        <Button variant="contained" onClick={() => setNewCategories(newCategories => newCategories.concat('New'))}>Add Category</Button>
-        <Button variant="contained" onClick={() => setNewTasks(newTasks => newTasks.concat('New task'))}>Add Task</Button>
+        <Button variant="contained" onClick={() => setNewCategories(newCategories => newCategories.concat('New'))}>New Category</Button>
+        <Button variant="contained" onClick={() => setNewTasks(newTasks => newTasks.concat('New task'))}>New Task</Button>
       </div>
       <div>
         <Categories deleteTask={deleteTask} categorizedTasks={categorizedTasks}

@@ -19,10 +19,6 @@ function Home (
    moveEvent={moveEvent},
    resizeEvent={resizeEvent}}){
 
-
-  const naviBar = (<TopBar isMobile={isMobile} onCalendar={onCalendar} setOnCalendar={setOnCalendar}/>)
-  const toDoList = (<ToDoList addToCalendar={addToCalendar} isMobile={isMobile}/>)
-
   // useEffect(async () => {
   //   axios.get('http://localhost:3000/auth/isLoggedIn', {withCredentials: true})
   //   .then((result) => {

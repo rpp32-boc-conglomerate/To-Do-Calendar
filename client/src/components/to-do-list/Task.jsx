@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDrag } from 'react-dnd';
 import moment from 'moment';
+import ContentEditable from 'react-contenteditable'
 import { Button, Grid, Card, CardHeader, CardContent, CardActions, Collapse, makeStyles, Typography, Toolbar, TextField,  TextareaAutosize, Stack } from '@material-ui/core';
 import { format } from 'date-fns';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
@@ -35,7 +36,7 @@ const useStyles = makeStyles({
 // every element requires a type
 function Task({task, openModal, isMobile, deleteTask}) {
   // console.log('task in task', task )
-  const [taskWithTime, setTaskWithTime] = useState(task);
+  const [userTask, setUserTask] = useState(task);
   const [expanded, setExpanded] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [hasDates, setHasDates] = useState(false);
@@ -51,9 +52,15 @@ function Task({task, openModal, isMobile, deleteTask}) {
    <DesktopDateTimePicker
    renderInput={(props) => <TextField {...props} />}
    label="Start Time"
-   value={startTime}
+   value={!userTask.start ? startTime : userTask.start}
    onChange={(newValue) => {
-     setStartTime(newValue)
+     console.log('newValue', newValue)
+    setStartTime(newValue)
+    // const newStart = new Intl.DateTimeFormat('en-US',
+    // {dateStyle: 'full', timeStyle: 'long', }).format(newValue)
+    // const taskCopy = userTask
+    // taskCopy.start = newStart
+    // setUserTask(taskCopy)
    }}
   />
  </LocalizationProvider>
@@ -62,7 +69,7 @@ function Task({task, openModal, isMobile, deleteTask}) {
    <DesktopDateTimePicker
    renderInput={(props) => <TextField {...props} />}
    label="End Time"
-   value={endTime}
+   value={userTask.end || endTime}
    onChange={(newValue) => {
      setEndTime(newValue)
    }}
@@ -70,65 +77,47 @@ function Task({task, openModal, isMobile, deleteTask}) {
  </LocalizationProvider>
  </div>
 
-  const timeDisplay =
-  <div>
-    <div>{task.start}</div>
-    <div>{task.end}</div>
-  </div>
-
   const isDateProvided = (task) => {
-    if (!task.start && !task.end) {
+    if (!userTask.start) {
       setHasDates(false)
     } else {
       setHasDates(true)
     }
   }
-  //do i need to put task in state ?
-  //if it has to go to parent component
-  //props are static, state is dynamic
 
   const updateTaskTime = (startTime) => {
+    console.log('startTime', startTime)
     const newStart = new Intl.DateTimeFormat('en-US',
     {dateStyle: 'full', timeStyle: 'long', }).format(startTime)
-    const taskCopy = taskWithTime
+    const taskCopy = userTask
     taskCopy.start = newStart
-    setTaskWithTime(taskCopy)
-  }
+    setUserTask(taskCopy)
+    console.log('userTask', userTask)
+  };
 
   const handleEdit = () => {
     setIsEditing(!isEditing)
-  }
+  };
+
+  const handleContentEditable = (e, field) => {
+    const taskCopy = userTask;
+    taskCopy[field] = e.target.value;
+    setUserTask(taskCopy)
+  };
 
   const handleExpandClick = () => {
     setExpanded(!expanded)
-  }
+  };
 
   const classes = useStyles();
 
   useEffect(() => {
     isDateProvided(task)
-  }, [])
+  }, []);
 
   useEffect(() => {
     updateTaskTime(startTime)
-  }, [startTime])
-
-  //the object is what you'll be passing in drop
-  // const [{isDragging}, drag] = useDrag(() => ({
-  //   type: "task",
-  //   id: props.index,
-  //   item: {id: props.index},
-  //   //define different states/props, but optional
-
-  //   collect: (monitor) => ({
-  //     isDragging: !!monitor.isDragging(),
-  //   }),
-  // }));
-  // const [isOpen, setIsOpen] = useState(false);
-
-
-  // console.log('Task', task);
-  // console.log(isOpen);
+  }, [startTime]);
 
   return (
     <Grid item xs={12} lg={12}>
@@ -136,20 +125,21 @@ function Task({task, openModal, isMobile, deleteTask}) {
       <Card>
           <CardContent>
             <div style={{display: 'flex', flexDirection: 'row', gap: '5%'}}>
-            <Typography variant="body1" contentEditable={isEditing}>
-              {task.title}
-            </Typography>
+            <ContentEditable variant="body1" contentEditable={isEditing}
+            onChange={(e)=>handleContentEditable(e, 'title')}
+              html={task.title}
+            />
             {isMobile && addToCal}
             </div>
-            <Typography variant="body2" contentEditable={isEditing}>
-              {task.description}
-            </Typography>
+            <ContentEditable variant="body1" contentEditable={isEditing}
+            onChange={(e)=>handleContentEditable(e, 'description')}
+            html={task.description}
+            />
             <CardActions>
             <ExpandMoreIcon/>
             <Button variant="contained" size="small" onClick={handleEdit}>{isEditing ? 'Done' : 'Edit'}</Button>
             <Button variant="contained" size="small" onClick={deleteTask}>Delete</Button>
-            {!hasDates && timeSelectors}
-            {hasDates && timeDisplay}
+            {timeSelectors}
             </CardActions>
           </CardContent>
       </Card>
