@@ -9,7 +9,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DesktopDateTimePicker } from '@mui/x-date-pickers/DesktopDateTimePicker';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 const TaskOptionsModal = require('../TaskOptionsModal.jsx');
-
+//on hover over editable field -- pen icon or underline
 const useStyles = makeStyles({
   grid: {
     display: 'in-line block',
@@ -40,7 +40,7 @@ function Task({task, openModal, isMobile, deleteTask}) {
   const [expanded, setExpanded] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [hasDates, setHasDates] = useState(false);
-  const [startTime, setStartTime] = useState(new Date('2018-01-01T00:00:00.000Z'));
+  const [startTime, setStartTime] = useState(new Date());
   const [endTime, setEndTime] = useState(new Date('2018-01-01T00:00:00.000Z'));
 
   const addToCal =
@@ -52,15 +52,9 @@ function Task({task, openModal, isMobile, deleteTask}) {
    <DesktopDateTimePicker
    renderInput={(props) => <TextField {...props} />}
    label="Start Time"
-   value={!userTask.start ? startTime : userTask.start}
+   value={userTask.start || startTime}
    onChange={(newValue) => {
-     console.log('newValue', newValue)
     setStartTime(newValue)
-    // const newStart = new Intl.DateTimeFormat('en-US',
-    // {dateStyle: 'full', timeStyle: 'long', }).format(newValue)
-    // const taskCopy = userTask
-    // taskCopy.start = newStart
-    // setUserTask(taskCopy)
    }}
   />
  </LocalizationProvider>
@@ -86,9 +80,13 @@ function Task({task, openModal, isMobile, deleteTask}) {
   }
 
   const updateTaskTime = (startTime) => {
-    console.log('startTime', startTime)
-    const newStart = new Intl.DateTimeFormat('en-US',
+    console.log('startTime', typeof startTime)
+    const momentTime = moment(startTime).format()
+    console.log('momentTime', momentTime)
+    let newStart = new Intl.DateTimeFormat('en-US',
     {dateStyle: 'full', timeStyle: 'long', }).format(startTime)
+
+    console.log('momentized', newStart)
     const taskCopy = userTask
     taskCopy.start = newStart
     setUserTask(taskCopy)
