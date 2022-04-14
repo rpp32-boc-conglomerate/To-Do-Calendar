@@ -57,10 +57,7 @@ CREATE INDEX ON "categories" ("category_id");
 CREATE INDEX ON "todoitems" ("id");
 
 SELECT setval('users_user_id_seq', max(user_id)) from users;
-​
 SELECT setval('calendars_calendar_id_seq', max(calendar_id)) from calendars;
-
 SELECT setval('categories_category_id_seq', max(category_id)) from categories;
-
 SELECT setval('todoitems_id_seq', max(id)) from todoitems;
 
