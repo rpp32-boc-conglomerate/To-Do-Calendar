@@ -20,8 +20,6 @@ CREATE TABLE "categories" (
       REFERENCES users("user_id")
 );
 
--- happy to do this any way people want, but to avoid confusion, owner id now goes right in this table, no need for a lookup table or owner boolean
-
 DROP table IF EXISTS "todoitems";
 CREATE TABLE "todoitems" (
   "id" SERIAL NOT NULL PRIMARY KEY,
@@ -37,7 +35,7 @@ CREATE TABLE "todoitems" (
       REFERENCES categories("category_id")
 );
 
---we keep the lookup table to show shared calendars only
+
 DROP table IF EXISTS "calendars";
 CREATE TABLE "calendars" (
   "calendar_id" SERIAL NOT NULL PRIMARY KEY,
