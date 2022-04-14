@@ -56,7 +56,15 @@ function ToDoList({addToCalendar, isMobile}) {
     console.log('addTask');
   }
 
-  // console.log(example);
+  const setNewCategories = () => {
+    console.log('click');
+  }
+
+  const setNewTasks = () => {
+    console.log('click');
+  }
+
+  console.log(example);
 
   return (
     <Container className={isMobile ? classes.mobileMain : classes.desktopMain}>
