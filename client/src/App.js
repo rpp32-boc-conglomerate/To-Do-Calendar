@@ -1,6 +1,7 @@
-import React, {useState, useCallback} from 'react';
+import React, {useState, useCallback, useEffect} from 'react';
 import { BrowserView, MobileView, isBrowser, isMobile} from 'react-device-detect';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import axios from 'axios'
 import ReactDOM from 'react-dom';
 import moment from 'moment';
 import Registration from './components/authentication/Registrationv2.jsx';
@@ -23,6 +24,32 @@ function App() {
   ]);
   const [onCalendar, setOnCalendar] = useState(false);
   const [draggedEvent, setDraggedEvent] = useState()
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [userEmail, setEmail] = useState(null);
+
+  useEffect(() => {
+    axios.get('http://localhost:3000/auth/isLoggedIn', {withCredentials: true})
+    .then((result) => {
+      console.log('is login auth:', result.data)
+      setIsLoggedIn(result.data);
+      setIsLoading(false);
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+  }, [isLoggedIn])
+
+  useEffect(() => {
+    axios.get('http://localhost:3000/auth/userEmail', {withCredentials: true})
+    .then((result) => {
+      console.log('result:', result);
+      setEmail(result.data.username);
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+  }, [userEmail])
 
   //Calendar helper functions
   const moveEvent = useCallback(
@@ -88,6 +115,8 @@ function App() {
   const homePage = (
     <Home
       isMobile={isMobile}
+      isLoggedIn={isLoggedIn}
+      setIsLoggedIn={setIsLoggedIn}
       onCalendar={onCalendar}
       setOnCalendar={setOnCalendar}
       myEvents={myEvents}
@@ -99,6 +128,8 @@ function App() {
       draggedEvent={draggedEvent}
       setDraggedEvent={setDraggedEvent}
       onDropFromOutside={onDropFromOutside}
+      isLoading={isLoading}
+      userEmail={userEmail}
     />
   );
 

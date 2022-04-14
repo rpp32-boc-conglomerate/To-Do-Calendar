@@ -53,7 +53,7 @@ function Task({task, openModal, editClick, editing, deleteTask}) {
   // const [isOpen, setIsOpen] = useState(false);
 
 
-  console.log('Task', task);
+  // console.log('Task', task);
   // console.log(isOpen);
 
   return (

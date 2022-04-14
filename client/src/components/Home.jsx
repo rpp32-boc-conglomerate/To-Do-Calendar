@@ -8,8 +8,14 @@ import ToDoList from './to-do-list/ToDoList.jsx';
 import TopBar from './TopBar.jsx';
 import TestToDo from './calendar/TestToDo.jsx';
 
+
 function Home (
   {isMobile={isMobile},
+  isLoggedIn={isLoggedIn},
+  isLoading={isLoading},
+  setIsLoggedIn={setIsLoggedIn},
+  userEmail={userEmail},
+  sharedBy={sharedBy},
   onCalendar={onCalendar},
   setOnCalendar={setOnCalendar},
   myEvents={myEvents},
@@ -21,10 +27,20 @@ function Home (
   setDraggedEvent={setDraggedEvent},
   onDropFromOutside={onDropFromOutside}}){
 
-  const naviBar = (<TopBar isMobile={isMobile} onCalendar={onCalendar} setOnCalendar={setOnCalendar}/>)
+  const naviBar = (<TopBar isLoading={isLoading} setIsLoggedIn={setIsLoggedIn} isLoggedIn={isLoggedIn} isMobile={isMobile} onCalendar={onCalendar} setOnCalendar={setOnCalendar}/>)
   const toDoList = (<ToDoList/>)
   const myCalender = (<MyCalendar myEvents={myEvents} moveEvent={moveEvent} resizeEvent={resizeEvent} changeTitle={changeTitle} onDropFromOutside={onDropFromOutside}/>)
   const testToDo = (<TestToDo draggedEvent={draggedEvent} setDraggedEvent={setDraggedEvent} handleDragStart={handleDragStart}/>)
+
+  // useEffect(async () => {
+  //   axios.get('http://localhost:3000/auth/isLoggedIn', {withCredentials: true})
+  //   .then((result) => {
+  //     setIsLoggedIn(result.data);
+  //   })
+  //   .catch((err) => {
+  //     console.log(err);
+  //   })
+  // }, [])
   // condition redering base on device
   const renderContent = () => {
     // view for mobile and in to do list page

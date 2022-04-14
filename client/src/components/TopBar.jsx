@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { CssBaseline } from '@material-ui/core';
+import axios from 'axios'
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -16,15 +17,17 @@ import MenuItem from '@mui/material/MenuItem';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
 import img from '../../dist/images/d1.png';
+import CircularProgress from '@mui/material/CircularProgress';
+import ShareBy from './sharing/SharedBy.jsx';
 
 var pages = [];
-const settings = ['Profile', 'Account', 'Logout'];
+const settings = ['Profile','Logout'];
 
-const TopBar = ({isMobile, onCalendar, setOnCalendar}) => {
+const TopBar = ({isLoading, setIsLoggedIn, isLoggedIn, isMobile, onCalendar, setOnCalendar}) => {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
-  const isLogin = false;
   const navigate = useNavigate();
+
   if (!isMobile) {
     pages = []
   } else if (isMobile && onCalendar) {
@@ -32,8 +35,8 @@ const TopBar = ({isMobile, onCalendar, setOnCalendar}) => {
   } else {
     pages = ['Calendar']
   }
-
   const handleOpenUserMenu = (event) => {
+    console.log('trigger open menu:', event.currentTarget)
     setAnchorElUser(event.currentTarget);
   };
 
@@ -41,10 +44,22 @@ const TopBar = ({isMobile, onCalendar, setOnCalendar}) => {
     setOnCalendar(!onCalendar);
   };
 
-  const handleCloseUserMenu = () => {
+  const handleCloseUserMenu = (e) => {
+    console.log('trigger close menu:', e.target.innerHTML)
     setAnchorElUser(null);
+    if (e.target.innerHTML === 'Logout') {
+      axios.get('http://localhost:3000/auth/logout', {withCredentials: true})
+      .then((res) => {
+        console.log('log out res:', res.data)
+        if (res.data === false) {
+          setIsLoggedIn(false)
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+    }
   };
-
   return (
     <div>
       <CssBaseline />
@@ -61,10 +76,13 @@ const TopBar = ({isMobile, onCalendar, setOnCalendar}) => {
               </IconButton>}
           </Box>
           <Box style={{margin: '0 auto', display: "flex"}}>
+            <ShareBy />
+          </Box>
+          <Box style={{margin: '0 auto', display: "flex"}}>
             <Avatar variant="square" src={img} style={{width:'60px', height:'50px'}}/>
           </Box>
          <Box sx={{ flexGrow: 0 }}>
-            {isLogin ?
+            {isLoading ? <CircularProgress /> : (isLoggedIn ?
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Avatar alt="Yanlin" src="/" />
@@ -81,7 +99,7 @@ const TopBar = ({isMobile, onCalendar, setOnCalendar}) => {
                 Sign in
               </Button >
             </Box>
-            }
+            )}
             <Menu
               sx={{ mt: '45px' }}
               id="menu-appbar"
@@ -99,8 +117,8 @@ const TopBar = ({isMobile, onCalendar, setOnCalendar}) => {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
+                <MenuItem key={setting} onClick={(e) => {handleCloseUserMenu(e)}}>
+                  <Typography textAlign="center" >{setting}</Typography>
                 </MenuItem>
               ))}
             </Menu>
