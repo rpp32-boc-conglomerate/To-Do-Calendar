@@ -5,7 +5,7 @@ module.exports = {
     {
       id: 1,
       category: 'Travel',
-      userEmail: 'todocal@gmail.com',
+      user_email: 'todocal@gmail.com',
       tasks: [
         {
           id: 1,
@@ -15,7 +15,7 @@ module.exports = {
           start: 'Sat 9 April 2022 09:30:00 UT',
           end: 'April 13, 2022 09:30:00 UT',
           category_id: 1,
-          inCalendar: true
+          in_calendar: true
         },
         {
           id: 2,
@@ -25,7 +25,7 @@ module.exports = {
           start: 'Thu 14 April 2022 09:30:00 UT',
           end: 'Thu 14 April 2022 15:30:00 UT',
           category_id: 1,
-          inCalendar: false
+          in_calendar: false
         },
         {
           id: 3,
@@ -35,14 +35,14 @@ module.exports = {
           start: 'Sun 17 April 2022 11:30:00 UT',
           end: 'Sun 17 April 2022 14:30:00 UT',
           category_id: 1,
-          inCalendar: false
+          in_calendar: false
         },
       ]
     },
     {
       id: 2,
       category: 'Housework',
-      userEmail: 'todocal@gmail.com',
+      user_email: 'todocal@gmail.com',
       tasks: [
         {
           id: 3,
@@ -52,7 +52,7 @@ module.exports = {
           start: 'Sun 17 April 2022 11:30:00 UT',
           end: 'Sun 17 April 2022 14:30:00 UT',
           category_id: 2,
-          inCalendar: false
+          in_calendar: false
         },
         {
           id: 4,
@@ -62,7 +62,7 @@ module.exports = {
           start: 'Fri 15 April 2022 09:30:00 UT',
           end: 'Fri 15 April 2022 11:30:00 UT',
           category_id: 2,
-          inCalendar: true
+          in_calendar: true
         },
         {
           id: 5,
@@ -72,14 +72,14 @@ module.exports = {
           start: 'Sat 16 April 2022 13:30:00 UT',
           end: 'Sat 16 April 2022 15:30:00 UT',
           category_id: 2,
-          inCalendar: false
+          in_calendar: false
         },
       ]
     },
     {
       id: 3,
       category: 'Meetings',
-      userEmail: 'todocal@gmail.com',
+      user_email: 'todocal@gmail.com',
       tasks: [
         {
           id: 6,
@@ -89,7 +89,7 @@ module.exports = {
           start: 'Thu 14 April 2022 18:30:00 UT',
           end: 'Thu 14 April 2022 19:00:00 UT',
           category_id: 3,
-          inCalendar: false
+          in_calendar: false
         },
         {
           id: 7,
@@ -99,14 +99,14 @@ module.exports = {
           start: 'Fri 15 April 2022 15:30:00 UT',
           end: 'Fri 15 April 2022 17:30:00 UT',
           category_id: 3,
-          inCalendar: true
+          in_calendar: true
         },
       ]
     },
     {
       id: 4,
       category: 'Backlog',
-      userEmail: 'todocal@gmail.com',
+      user_email: 'todocal@gmail.com',
       tasks: [
         {
           id: 8,
@@ -116,7 +116,7 @@ module.exports = {
           start: 'Fri 15 April 2022 18:30:00 UT',
           end: 'Fri 15 April 2022 22:30:00 UT',
           category_id: 4,
-          inCalendar: false
+          in_calendar: false
         },
       ]
     },
@@ -131,7 +131,7 @@ module.exports = {
       start: 'Sat 9 April 2022 09:30:00 UT',
       end: 'Wed 13 April 2022 09:30:00 UT',
       category_id: 1,
-      inCalendar: true
+      in_calendar: true
     },
     {
       id: 2,
@@ -141,7 +141,7 @@ module.exports = {
       start: 'Thu 14 April 2022 09:30:00 UT',
       end: 'Thu 14 April 2022 15:30:00 UT',
       category_id: 1,
-      inCalendar: false
+      in_calendar: false
     },
     {
       id: 3,
@@ -151,7 +151,7 @@ module.exports = {
       start: 'Sun 17 April 2022 11:30:00 UT',
       end: 'Sun 17 April 2022 14:30:00 UT',
       category_id: 2,
-      inCalendar: false
+      in_calendar: false
     },
     {
       id: 4,
@@ -161,7 +161,7 @@ module.exports = {
       start: 'Fri 15 April 2022 09:30:00 UT',
       end: 'Fri 15 April 2022 11:30:00 UT',
       category_id: 2,
-      inCalendar: true
+      in_calendar: true
     },
     {
       id: 5,
@@ -171,7 +171,7 @@ module.exports = {
       start: 'Sat 16 April 2022 13:30:00 UT',
       end: 'Sat 16 April 2022 15:30:00 UT',
       category_id: 2,
-      inCalendar: false
+      in_calendar: false
     },
     {
       id: 6,
@@ -181,7 +181,7 @@ module.exports = {
       start: 'Thu 14 April 2022 18:30:00 UT',
       end: 'Thu 14 April 2022 19:00:00 UT',
       category_id: 3,
-      inCalendar: false
+      in_calendar: false
     },
     {
       id: 7,
@@ -191,7 +191,7 @@ module.exports = {
       start: 'Fri 15 April 2022 15:30:00 UT',
       end: 'Fri 15 April 2022 17:30:00 UT',
       category_id: 3,
-      inCalendar: true
+      in_calendar: true
     },
     {
       id: 8,
@@ -201,7 +201,7 @@ module.exports = {
       start: 'Fri 15 April 2022 18:30:00 UT',
       end: 'Fri 15 April 2022 22:30:00 UT',
       category_id: 4,
-      inCalendar: false
+      in_calendar: false
     },
   ]
 

@@ -11,9 +11,13 @@ CREATE TABLE "users" (
 
 DROP table IF EXISTS "categories";
 CREATE TABLE "categories" (
-  "category_id" INT GENERATED ALWAYS AS IDENTITY,
+  "category_id" SERIAL NOT NULL PRIMARY KEY,
+  "user_id" INTEGER NOT NULL,
   "category" TEXT NOT NULL,
-  PRIMARY KEY ("category_id")
+  PRIMARY KEY ("category_id"),
+  CONSTRAINT fk_user
+    FOREIGN KEY("user_id")
+      REFERENCES users("user_id")
 );
 
 -- happy to do this any way people want, but to avoid confusion, owner id now goes right in this table, no need for a lookup table or owner boolean
@@ -28,28 +32,30 @@ CREATE TABLE "todoitems" (
   "end" TIMESTAMP NOT NULL,
   "in_calendar" BOOLEAN NOT NULL,
   "category_id" INTEGER NOT NULL,
-  "owner_id" INTEGER NOT NULL,
   CONSTRAINT fk_category
     FOREIGN KEY("category_id")
-      REFERENCES categories("category_id"),
-  CONSTRAINT fk_owner
-    FOREIGN KEY("owner_id")
-      REFERENCES "users" ("user_id")
+      REFERENCES categories("category_id")
 );
 
 --we keep the lookup table to show shared calendars only
-DROP table IF EXISTS "shared_lookup";
-    CREATE TABLE "shared_lookup" (
-      "user_id" INT NOT NULL,
-      "todo_id" INT NOT NULL,
-      CONSTRAINT fk_user
-        FOREIGN KEY("user_id")
-          REFERENCES users("user_id"),
-      CONSTRAINT fk_todo
-        FOREIGN KEY("todo_id")
-          REFERENCES "todoitems"("id")
-    );
+DROP table IF EXISTS "calendars";
+CREATE TABLE "calendars" (
+  "calendar_id" SERIAL NOT NULL PRIMARY KEY,
+  "user_id" INTEGER NOT NULL,
+  "calendar_owner" VARCHAR(64) NOT NULL,
+  CONSTRAINT fk_user
+      FOREIGN KEY("user_id")
+        REFERENCES users("user_id")
+);
 
 CREATE INDEX ON "users" ("user_id");
 
 CREATE INDEX ON "todoitems" ("id");
+
+CREATE INDEX ON "categories" ("category_id");
+
+SELECT setval('users_user_id_seq', max(user_id)) from users;
+​
+SELECT setval('calendars_calendar_id_seq', max(calendar_id)) from calendars;
+​
+SELECT setval('todoitems_item_id_seq', max(item_id)) from todoitems;
