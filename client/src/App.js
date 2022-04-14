@@ -24,6 +24,32 @@ function App() {
   ]);
   const [onCalendar, setOnCalendar] = useState(false);
   const [draggedEvent, setDraggedEvent] = useState()
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [userEmail, setEmail] = useState(null);
+
+  useEffect(() => {
+    axios.get('http://localhost:3000/auth/isLoggedIn', {withCredentials: true})
+    .then((result) => {
+      console.log('is login auth:', result.data)
+      setIsLoggedIn(result.data);
+      setIsLoading(false);
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+  }, [isLoggedIn])
+
+  useEffect(() => {
+    axios.get('http://localhost:3000/auth/userEmail', {withCredentials: true})
+    .then((result) => {
+      console.log('result:', result);
+      setEmail(result.data.username);
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+  }, [userEmail])
 
   //Calendar helper functions
   const moveEvent = useCallback(
@@ -69,10 +95,9 @@ function App() {
     var newList = myEvents;
     setMyEvents((prev) => {
       newList[prev.indexOf(event)].title = title;
-      return newList;
+      return newList
     });
   };
-
   const handleDragStart = useCallback((event) => setDraggedEvent(event), [])
 
   const onDropFromOutside = useCallback(
@@ -82,11 +107,16 @@ function App() {
     },
     [draggedEvent, setDraggedEvent, newEvent]
   )
+  // const naviBar = (<TopBar isMobile={isMobile} onCalendar={onCalendar} setOnCalendar={setOnCalendar}/>)
+  // const toDoList = (<ToDoList addToCalendar={addToCalendar}/>)
+  // const myCalender = (<MyCalendar myEvents={myEvents} moveEvent={moveEvent} resizeEvent={resizeEvent}/>)
 
   // all the props would pass to the homepage: './components/Home.jsx'
   const homePage = (
     <Home
       isMobile={isMobile}
+      isLoggedIn={isLoggedIn}
+      setIsLoggedIn={setIsLoggedIn}
       onCalendar={onCalendar}
       setOnCalendar={setOnCalendar}
       myEvents={myEvents}
@@ -98,6 +128,8 @@ function App() {
       draggedEvent={draggedEvent}
       setDraggedEvent={setDraggedEvent}
       onDropFromOutside={onDropFromOutside}
+      isLoading={isLoading}
+      userEmail={userEmail}
     />
   );
 
