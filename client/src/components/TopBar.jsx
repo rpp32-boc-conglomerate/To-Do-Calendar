@@ -19,6 +19,7 @@ import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
 import img from '../../dist/images/d1.png';
 import CircularProgress from '@mui/material/CircularProgress';
 import ShareBy from './sharing/SharedBy.jsx';
+import ViewShares from './sharing/SharedWithUserDropdown.jsx';
 
 var pages = [];
 const settings = ['Profile','Logout'];
@@ -65,6 +66,12 @@ const TopBar = ({isLoading, setIsLoggedIn, isLoggedIn, isMobile, onCalendar, set
       <CssBaseline />
       <AppBar style={{ background: 'white', marginBottom:'20px' }} position='static'>
         <Toolbar >
+          <Box style={{margin: '0 auto', display: "flex"}}>
+            <ShareBy />
+          </Box>
+          <Box style={{margin: '0 auto', display: "flex"}}></Box>
+            <ViewShares />
+          <Box style={{margin: '0 auto', display: "flex"}}></Box>
           <Box>
             {isMobile && <IconButton
               name={pages[0]}
@@ -74,9 +81,6 @@ const TopBar = ({isLoading, setIsLoggedIn, isLoggedIn, isMobile, onCalendar, set
                 <CalendarMonthIcon style={{fontSize: '50px'}}/> :
                 <AssignmentTurnedInIcon style={{fontSize: '50px'}}/>}
               </IconButton>}
-          </Box>
-          <Box style={{margin: '0 auto', display: "flex"}}>
-            <ShareBy />
           </Box>
           <Box style={{margin: '0 auto', display: "flex"}}>
             <Avatar variant="square" src={img} style={{width:'60px', height:'50px'}}/>
