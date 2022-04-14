@@ -11,6 +11,11 @@ import TestToDo from './calendar/TestToDo.jsx';
 
 function Home (
   {isMobile={isMobile},
+  isLoggedIn={isLoggedIn},
+  isLoading={isLoading},
+  setIsLoggedIn={setIsLoggedIn},
+  userEmail={userEmail},
+  sharedBy={sharedBy},
   onCalendar={onCalendar},
   setOnCalendar={setOnCalendar},
   myEvents={myEvents},
@@ -22,11 +27,12 @@ function Home (
   setDraggedEvent={setDraggedEvent},
   onDropFromOutside={onDropFromOutside}}){
 
-  const naviBar = (<TopBar isMobile={isMobile} onCalendar={onCalendar} setOnCalendar={setOnCalendar}/>)
+  const naviBar = (<TopBar isLoading={isLoading} setIsLoggedIn={setIsLoggedIn} isLoggedIn={isLoggedIn} isMobile={isMobile} onCalendar={onCalendar} setOnCalendar={setOnCalendar}/>)
   const toDoList = (<ToDoList/>)
-  const myCalendar = (<MyCalendar myEvents={myEvents} moveEvent={moveEvent} resizeEvent={resizeEvent} changeTitle={changeTitle} onDropFromOutside={onDropFromOutside}/>)
+  const myCalender = (<MyCalendar myEvents={myEvents} moveEvent={moveEvent} resizeEvent={resizeEvent} changeTitle={changeTitle} onDropFromOutside={onDropFromOutside}/>)
   const testToDo = (<TestToDo draggedEvent={draggedEvent} setDraggedEvent={setDraggedEvent} handleDragStart={handleDragStart}/>)
-  // condition rendering based on device
+
+  // conditional rendering based on device
   const renderContent = () => {
     // view for mobile and in to do list page
     if (isMobile && !onCalendar) {
@@ -39,12 +45,12 @@ function Home (
         </div>
       )
     } else if (isMobile && onCalendar) {
-      // // view for mobile and in calendar page
+      // view for mobile and in calendar page
       return (
         <div>
           {naviBar}
           <div>
-            {myCalendar}
+            {myCalender}
           </div>
         </div>
       )
@@ -53,7 +59,7 @@ function Home (
         // view for desktop display both calendar and to do list
         <div>
           {naviBar}
-          {myCalendar}
+          {myCalender}
           {/* {testToDo} */}
           {toDoList}
         </div>
