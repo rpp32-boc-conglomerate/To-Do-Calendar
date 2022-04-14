@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDrag } from 'react-dnd';
-import ContentEditable from 'react-contenteditable'
+import ContentEditable from 'react-contenteditable';
 import { Button, Grid, Card, CardHeader, CardContent, CardActions, Collapse, makeStyles, Typography, Toolbar, TextField,  TextareaAutosize, Stack } from '@material-ui/core';
-
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 const TaskOptionsModal = require('../TaskOptionsModal.jsx');
 //on hover over editable field -- pen icon or underline

@@ -10,8 +10,6 @@ import { makeStyles, Container, Button } from '@material-ui/core';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { DndProvider } from 'react-dnd';
 
-//need to filter task for inCalendar
-
 const useStyles = makeStyles({
   mobileMain: {
     width: '100%',
@@ -63,13 +61,6 @@ function ToDoList({addToCalendar, isMobile}) {
   const handleEditClick = () => {
     setEditing(!editing)
   }
-
-  console.log('modalOpen: ', modalOpen);
-
-  // display: 'inline-block',
-  // padding: '1rem',
-  // width: '100%',
-  // color: 'black'
 
   return (
     <Container className={isMobile ? classes.mobileMain : classes.desktopMain}>

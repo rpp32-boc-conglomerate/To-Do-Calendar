@@ -6,11 +6,10 @@ import Category from './Category.jsx';
 function Categories ({addTask, openModal, isMobile, categorizedTasks, deleteTask}) {
   return (
     categorizedTasks.map((category, i) => {
-    return <Category key={i}
-    tasks={category}
-    addTask={addTask} openModal={openModal}
-    isMobile={isMobile} deleteTask={deleteTask}/>
-    })
+      return <Category key={i} tasks={category}
+        addTask={addTask} openModal={openModal}
+        isMobile={isMobile} deleteTask={deleteTask}/>
+      })
   )
 }
 export default Categories;
