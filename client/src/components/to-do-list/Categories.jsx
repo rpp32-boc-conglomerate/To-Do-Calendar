@@ -3,9 +3,8 @@
 import React from 'react';
 import Category from './Category.jsx';
 
-function Categories({addTask, openModal, isMobile, categorizedTasks, deleteTask}) {
-  // console.log('tasks in categories', categorizedTasks)
-  return(
+function Categories ({addTask, openModal, isMobile, categorizedTasks, deleteTask}) {
+  return (
     categorizedTasks.map((category, i) => {
     return <Category key={i}
     tasks={category}
