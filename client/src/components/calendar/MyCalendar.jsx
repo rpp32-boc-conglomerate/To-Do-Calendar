@@ -19,6 +19,8 @@ const MyCalendar = (props) => {
       onSelectEvent={(event) => {
         props.changeTitle(event);
       }}
+      min={new Date(moment().hour(6).minute(0))}
+      max={new Date(moment().hour(23).minute(0))}
       onEventDrop={props.moveEvent}
       onEventResize={props.resizeEvent}
       onDropFromOutside={props.onDropFromOutside}
