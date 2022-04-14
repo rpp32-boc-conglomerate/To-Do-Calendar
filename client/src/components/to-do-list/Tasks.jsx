@@ -7,7 +7,7 @@ function Tasks({tasks, openModal, editClick, editing, deleteTask}) {
   // console.log('tasks in tasks', tasks)
   return(
     tasks.map((task, i) => {
-      console.log('Task: ', task);
+      // console.log('Task: ', task);
       if (task.inCalendar === false) {
         return (<Task key={i} task={task} openModal={openModal} editClick={editClick} editing={editing} deleteTask={deleteTask}/>)
       }

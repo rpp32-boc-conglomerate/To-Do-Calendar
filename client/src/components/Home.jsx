@@ -6,18 +6,31 @@ import Registration from './authentication/Registration.jsx';
 import MyCalendar from './calendar/MyCalendar.jsx';
 import ToDoList from './to-do-list/ToDoList.jsx';
 import TopBar from './TopBar.jsx';
+import TestToDo from './calendar/TestToDo.jsx';
+
 
 function Home (
   {isMobile={isMobile},
-   isLoggedIn={isLoggedIn},
-   isLoading={isLoading},
-   setIsLoggedIn={setIsLoggedIn},
-   onCalendar={onCalendar},
-   setOnCalendar={setOnCalendar},
-   addToCalendar={addToCalendar},
-   myEvents={myEvents},
-   moveEvent={moveEvent},
-   resizeEvent={resizeEvent}}){
+  isLoggedIn={isLoggedIn},
+  isLoading={isLoading},
+  setIsLoggedIn={setIsLoggedIn},
+  userEmail={userEmail},
+  sharedBy={sharedBy},
+  onCalendar={onCalendar},
+  setOnCalendar={setOnCalendar},
+  myEvents={myEvents},
+  moveEvent={moveEvent},
+  resizeEvent={resizeEvent},
+  changeTitle={changeTitle},
+  handleDragStart={handleDragStart},
+  draggedEvent={draggedEvent},
+  setDraggedEvent={setDraggedEvent},
+  onDropFromOutside={onDropFromOutside}}){
+
+  const naviBar = (<TopBar isLoading={isLoading} setIsLoggedIn={setIsLoggedIn} isLoggedIn={isLoggedIn} isMobile={isMobile} onCalendar={onCalendar} setOnCalendar={setOnCalendar}/>)
+  const toDoList = (<ToDoList/>)
+  const myCalender = (<MyCalendar myEvents={myEvents} moveEvent={moveEvent} resizeEvent={resizeEvent} changeTitle={changeTitle} onDropFromOutside={onDropFromOutside}/>)
+  const testToDo = (<TestToDo draggedEvent={draggedEvent} setDraggedEvent={setDraggedEvent} handleDragStart={handleDragStart}/>)
 
   // useEffect(async () => {
   //   axios.get('http://localhost:3000/auth/isLoggedIn', {withCredentials: true})
@@ -28,11 +41,6 @@ function Home (
   //     console.log(err);
   //   })
   // }, [])
-
-  const naviBar = (<TopBar isLoading={isLoading} setIsLoggedIn={setIsLoggedIn} isLoggedIn={isLoggedIn} isMobile={isMobile} onCalendar={onCalendar} setOnCalendar={setOnCalendar}/>)
-  const toDoList = (<ToDoList addToCalendar={addToCalendar}/>)
-  const myCalender = (<MyCalendar myEvents={myEvents} moveEvent={moveEvent} resizeEvent={resizeEvent}/>)
-
   // condition redering base on device
   const renderContent = () => {
     // view for mobile and in to do list page
@@ -60,10 +68,9 @@ function Home (
         // view for desktop display both calendar and to do list
         <div>
           {naviBar}
-          <div>
-            {myCalender}
-            {toDoList}
-          </div>
+          {myCalender}
+          {testToDo}
+          {/* {toDoList} */}
         </div>
       )
     }
