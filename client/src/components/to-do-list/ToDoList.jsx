@@ -22,7 +22,7 @@ const useStyles = makeStyles({
   }
 })
 
-function ToDoList({addToCalendar, isMobile}) {
+function ToDoList({addToCalendar, isMobile, draggedEvent, setDraggedEvent, handleDragStart}) {
   //a state prop that's an array that has an element for everytime + task or + category is clicked
   const [categorizedTasks, setCategorizedTasks] = useState([])
   const [modalOpen, setModalOpen] = useState(false)
@@ -68,7 +68,7 @@ function ToDoList({addToCalendar, isMobile}) {
       </div>
       <div>
         <Categories deleteTask={deleteTask} categorizedTasks={categorizedTasks}
-        openModal={openModal} isMobile={isMobile}/>
+        openModal={openModal} isMobile={isMobile} draggedEvent={draggedEvent} setDraggedEvent={setDraggedEvent} handleDragStart={handleDragStart}/>
       </div>
     </Container>
   )

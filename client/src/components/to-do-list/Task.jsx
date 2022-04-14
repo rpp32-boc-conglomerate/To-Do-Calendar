@@ -34,14 +34,14 @@ const useStyles = makeStyles({
 // isDragging returns t or f
 // drag reference which element you want to make draggable
 // every element requires a type
-function Task({task, openModal, isMobile, deleteTask}) {
+function Task({task, openModal, isMobile, deleteTask, draggedEvent, setDraggedEvent, handleDragStart}) {
   // console.log('task in task', task )
   const [userTask, setUserTask] = useState(task);
   const [expanded, setExpanded] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [hasDates, setHasDates] = useState(false);
   const [startTime, setStartTime] = useState(new Date());
-  const [endTime, setEndTime] = useState(new Date('2018-01-01T00:00:00.000Z'));
+  const [endTime, setEndTime] = useState(new Date(moment(Date.now()).add(2, 'hours')));
 
   const addToCal =
   <Button variant="contained" size="small" touchstart={openModal} >Add To Calendar</Button>
@@ -81,14 +81,12 @@ function Task({task, openModal, isMobile, deleteTask}) {
 
   const updateTaskTime = (startTime) => {
     console.log('startTime', typeof startTime)
-    const momentTime = moment(startTime).format()
+    const momentTime = new Date(moment(startTime))
     console.log('momentTime', momentTime)
-    let newStart = new Intl.DateTimeFormat('en-US',
-    {dateStyle: 'full', timeStyle: 'long', }).format(startTime)
-
-    console.log('momentized', newStart)
+    // let newStart = new Intl.DateTimeFormat('en-US',
+    // {dateStyle: 'full', timeStyle: 'long', }).format(startTime)
     const taskCopy = userTask
-    taskCopy.start = newStart
+    taskCopy.start = momentTime
     setUserTask(taskCopy)
     console.log('userTask', userTask)
   };
@@ -120,7 +118,7 @@ function Task({task, openModal, isMobile, deleteTask}) {
   return (
     <Grid item xs={12} lg={12}>
       <Grid item xs={12}>
-      <Card>
+      <Card onDragStart={() => handleDragStart(task)} draggable='true'>
           <CardContent>
             <div style={{display: 'flex', flexDirection: 'row', gap: '5%'}}>
             <ContentEditable variant="body1" contentEditable={isEditing}

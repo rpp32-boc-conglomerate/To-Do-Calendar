@@ -20,6 +20,7 @@ function App() {
       start: new Date(),
       end: new Date(moment().add(1, "hour")),
       allDay: false,
+      inCalendar: true
     },
   ]);
   const [onCalendar, setOnCalendar] = useState(false);
@@ -85,7 +86,11 @@ function App() {
       return newList
     });
   };
-  const handleDragStart = useCallback((event) => setDraggedEvent(event), [])
+  const handleDragStart = useCallback((event) => {
+    console.log('dragged event', event)
+    setDraggedEvent(event), []
+  })
+
 
   const onDropFromOutside = useCallback(
     () => {
