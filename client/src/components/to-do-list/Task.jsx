@@ -113,9 +113,8 @@ function Task({task, openModal, isMobile, deleteTask}) {
     isDateProvided(task)
   }, []);
 
-  useEffect(() => {
-    updateTaskTime(startTime)
-  }, [startTime]);
+  // console.log('Task', task);
+  // console.log(isOpen);
 
   return (
     <Grid item xs={12} lg={12}>
