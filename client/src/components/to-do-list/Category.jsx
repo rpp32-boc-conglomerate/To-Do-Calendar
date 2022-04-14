@@ -18,7 +18,7 @@ function Category({tasks, addTask, openModal, deleteTask, editClick, editing}) {
 
   const {name} = tasks
 
-  console.log('category: ', tasks);
+  // console.log('category: ', tasks);
 
   return (
     <Container>

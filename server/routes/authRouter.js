@@ -17,8 +17,8 @@ const loginSuccessPath = '/auth/success';
 
 authRouter.use(session({
   secret: congolmerateSecret,
-  resave: true,
-  saveUninitialized: true,
+  resave: false,
+  saveUninitialized: false,
   store: MongoStore.create({ mongoUrl: mongoStoreUrl}),
   ttl: 14 * 24 * 60 * 60 // = 14 days. Default
 }));
@@ -95,12 +95,29 @@ authRouter.post('/login', passport.authenticate('local', {
 }));
 
 
-
 authRouter.route('/success').get((req, res) => {
   console.log('success');
-  res.sendStatus(200);
+  res.status(200).send(true);
 });
 
+authRouter.get('/isLoggedIn', (req, res) => {
+  let isAuth = req.isAuthenticated();
+  console.log('isLoggedIn auth:', isAuth,  req.session);
+  res.status(200).send(isAuth)
+});
+
+// optimize later with middleware that verifies this and /isloggedin
+authRouter.get('/userEmail', (req, res) => {
+  let isAuth = req.isAuthenticated();
+  console.log('user:', req.user);
+  // res.locals.currentUser = req.user;
+  if (isAuth) {
+    res.status(200).send(req.user);
+  } else {
+    res.status(200).send(null);
+  }
+
+});
 
 authRouter.route('/failure').get((req, res) => {
   console.log('failure');
@@ -121,9 +138,11 @@ authRouter.route('/').get((req, res) => {
   res.send('Signup List Router GET');
 });
 
-authRouter.post('/logout', function(req, res, next) {
-  req.logout();
-  res.redirect('/');
+authRouter.get('/logout', function(req, res) {
+  console.log('logout auth:', req.isAuthenticated(), req.session);
+   req.session.destroy(function (err) {
+    res.send(false);
+  });
 });
 
 module.exports = authRouter;
