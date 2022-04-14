@@ -60,6 +60,7 @@ const TopBar = ({isLoading, setIsLoggedIn, isLoggedIn, isMobile, onCalendar, set
       })
     }
   };
+
   return (
     <div>
       <CssBaseline />
