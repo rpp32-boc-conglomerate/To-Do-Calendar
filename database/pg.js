@@ -3,11 +3,11 @@ const query = require('./queries.js');
 require('dotenv').config();
 
 const pool = new Pool({
-  user: process.env.pgUser,
-  password: process.env.pgPassword,
-  database: process.env.pgDB,
-  host: process.env.pgHost,
+  user: 'postgres',
+  password: process.env.PGPASS,
+  database: 'tododb',
   port: 5432,
+  host: 'localhost'
 });
 
 const getInfo = async (email, callback) => {

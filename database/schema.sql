@@ -42,19 +42,19 @@ CREATE TABLE todoitems (
   description TEXT NOT NULL,
   duration INTERVAL NOT NULL,
   start TIMESTAMP NOT NULL,
-  end TIMESTAMP NOT NULL,
+  end_date TIMESTAMP NOT NULL,
   in_calendar BOOLEAN NOT NULL,
   category_id INTEGER NOT NULL,
   CONSTRAINT fk_category
     FOREIGN KEY(category_id)
       REFERENCES categories(category_id)
 );
-\COPY todoitems (id, title, description, duration, start, end, in_calendar, category_id) FROM './items.csv' DELIMITER ',' CSV HEADER;
+\COPY todoitems (id, title, description, duration, start, end_date, in_calendar, category_id) FROM './items.csv' DELIMITER ',' CSV HEADER;
 
 CREATE INDEX ON "users" ("user_id");
 CREATE INDEX ON "calendars" ("calendar_id");
 CREATE INDEX ON "categories" ("category_id");
-CREATE INDEX ON "todoitems" ("item_id");
+CREATE INDEX ON "todoitems" ("id");
 
 SELECT setval('users_user_id_seq', max(user_id)) from users;
 
@@ -62,5 +62,5 @@ SELECT setval('calendars_calendar_id_seq', max(calendar_id)) from calendars;
 
 SELECT setval('categories_category_id_seq', max(category_id)) from categories;
 
-SELECT setval('todoitems_item_id_seq', max(item_id)) from todoitems;
+SELECT setval('todoitems_id_seq', max(id)) from todoitems;
 

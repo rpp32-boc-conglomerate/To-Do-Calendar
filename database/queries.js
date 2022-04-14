@@ -1,5 +1,5 @@
 module.exports = {
-  
+
   getInfo: `select user_id, user_email,
   (
     select array_to_json(array_agg(row_to_json(d)))
@@ -17,11 +17,11 @@ module.exports = {
               select array_to_json(array_agg(row_to_json(z)))
               from(
                 SELECT
-                todoitems.item_id,
-                todoitems.item_title,
-                todoitems.item_description,
-                todoitems.item_duration,
-                todoitems.start_date,
+                todoitems.id,
+                todoitems.title,
+                todoitems.description,
+                todoitems.duration,
+                todoitems.start,
                 todoitems.end_date,
                 todoitems.in_calendar
                 FROM todoitems
