@@ -32,16 +32,7 @@ function Home (
   const myCalender = (<MyCalendar myEvents={myEvents} moveEvent={moveEvent} resizeEvent={resizeEvent} changeTitle={changeTitle} onDropFromOutside={onDropFromOutside}/>)
   const testToDo = (<TestToDo draggedEvent={draggedEvent} setDraggedEvent={setDraggedEvent} handleDragStart={handleDragStart}/>)
 
-  // useEffect(async () => {
-  //   axios.get('http://localhost:3000/auth/isLoggedIn', {withCredentials: true})
-  //   .then((result) => {
-  //     setIsLoggedIn(result.data);
-  //   })
-  //   .catch((err) => {
-  //     console.log(err);
-  //   })
-  // }, [])
-  // condition redering base on device
+  // conditional rendering based on device
   const renderContent = () => {
     // view for mobile and in to do list page
     if (isMobile && !onCalendar) {
@@ -54,7 +45,7 @@ function Home (
         </div>
       )
     } else if (isMobile && onCalendar) {
-      // // view for mobile and in calendar page
+      // view for mobile and in calendar page
       return (
         <div>
           {naviBar}
@@ -69,8 +60,8 @@ function Home (
         <div>
           {naviBar}
           {myCalender}
-          {testToDo}
-          {/* {toDoList} */}
+          {/* {testToDo} */}
+          {toDoList}
         </div>
       )
     }

@@ -16,7 +16,8 @@ const calendarRouter = require('./routes/calendarRouter.js');
 
 app.use(cors({
   credentials: true,
-  origin: "http://localhost:3001"
+  // origin: "http://localhost:3001",
+  origin: "http://192.168.1.87:3001"
 }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
