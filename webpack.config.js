@@ -73,7 +73,7 @@ module.exports = {
     hot: true,
     overlay: true,
     historyApiFallback: true,
-    host: process.env.HOST
+    host: 'localhost'
     // proxy: {
     //   '/api': {
     //     target: 'http://localhost:3000',
