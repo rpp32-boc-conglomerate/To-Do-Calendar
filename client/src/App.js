@@ -20,6 +20,7 @@ function App() {
       start: new Date(),
       end: new Date(moment().add(1, "hour")),
       allDay: false,
+      inCalendar: true
     },
   ]);
   const [onCalendar, setOnCalendar] = useState(false);
@@ -102,8 +103,13 @@ function App() {
 
   const onDropFromOutside = useCallback(
     () => {
+      setMyEvents((prev) => {
+        const existing = draggedEvent;
+        existing.inCalendar = !existing.inCalendar;
+        const filtered = prev.filter((ev) => ev.id !== draggedEvent.id);
+        return [...filtered, { ...existing }];
+      });
       setDraggedEvent(null)
-      newEvent(draggedEvent)
     },
     [draggedEvent, setDraggedEvent, newEvent]
   )
