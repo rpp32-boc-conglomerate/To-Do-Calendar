@@ -8,7 +8,7 @@ CREATE TABLE "users" (
   "user_id" SERIAL NOT NULL PRIMARY KEY,
   "user_email" TEXT NOT NULL UNIQUE
 );
-​
+
 DROP table IF EXISTS "calendars";
 CREATE TABLE "calendars" (
   "calendar_id" SERIAL NOT NULL PRIMARY KEY,
@@ -18,7 +18,7 @@ CREATE TABLE "calendars" (
       FOREIGN KEY("user_id")
         REFERENCES "users"("user_id")
 );
-​
+
 DROP table IF EXISTS "categories";
 CREATE TABLE "categories" (
   "category_id" SERIAL NOT NULL PRIMARY KEY,
@@ -43,19 +43,21 @@ CREATE TABLE "todoitems" (
     FOREIGN KEY("category_id")
       REFERENCES "categories"("category_id")
 );
-​
+
 CREATE INDEX ON "users" ("user_id");
 ​
 CREATE INDEX ON "todoitems" ("id");
 ​
 CREATE INDEX ON "categories" ("category_id");
-​
+
 CREATE INDEX ON "calendars" ("calendar_id");
-​
+
+
 SELECT setval('users_user_id_seq', max(user_id)) from users;
 ​
 SELECT setval('calendars_calendar_id_seq', max(calendar_id)) from calendars;
 ​
 SELECT setval('todoitems_item_id_seq', max(item_id)) from todoitems;
-​
+
 SELECT setval('categories_category_id_seq', max(category_id)) from categories;
+
