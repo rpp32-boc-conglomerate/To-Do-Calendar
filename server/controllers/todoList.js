@@ -1,13 +1,15 @@
 const Pool = require('pg').Pool;
+require ('dotenv').config();
 
-const postgresRole = 'main_user';
+const postgresRole = 'postgres';
+console.log('im here');
 
 const pool = new Pool({
   user: postgresRole,
-  host: 'localhost',
+  host: '54.209.199.189',
   port: '5432',
-  database: 'todocal',
-  password: 'main_1234'
+  database: 'tododb',
+  password: process.env.PGPASS
 });
 
 pool.on('error', (err, client) => {
