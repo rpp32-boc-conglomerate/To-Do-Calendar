@@ -12,11 +12,13 @@ module.exports = {
           title: 'Trip to China',
           description: '5-day business trip to meet with manufacturers',
           duration: '5 days',
-          start: 'Sat 9 April 2022 09:30:00 UT',
-          end: 'April 13, 2022 09:30:00 UT',
+          start: '',
+          end: '',
           category_id: 1,
           in_calendar: true
         },
+        // Sat 9 April 2022 09:30:00 UT
+        // April 13, 2022 09:30:00 UT
         {
           id: 2,
           title: 'Trip to Los Angeles',

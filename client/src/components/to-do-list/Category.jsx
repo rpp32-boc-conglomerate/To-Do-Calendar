@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-function Category({tasks, addTask, openModal, deleteTask, editClick, editing}) {
+function Category({tasks, addTask, openModal, isMobile, deleteTask}) {
   const classes = useStyles();
   const [totalTime, setTotalTime] = useState(0);
 
@@ -31,11 +31,11 @@ function Category({tasks, addTask, openModal, deleteTask, editClick, editing}) {
             // addTask()
           }}>Add Task</Button>
         </Container>
-        <Container sx={{ display: 'inline-block' }}>
-          <Tasks tasks={tasks.tasks} deleteTask={deleteTask} openModal={openModal} editClick={editClick} editing={editing} />
+        <Container sx={{ display: 'inline-block'}}>
+          <Tasks tasks={tasks.tasks} deleteTask={deleteTask} openModal={openModal} isMobile={isMobile}/>
         </Container>
-      </Paper>
-    </Container>
+    </Paper>
+  </Container>
 )}
 
 export default Category;
