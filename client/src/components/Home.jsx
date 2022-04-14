@@ -7,6 +7,7 @@ import MyCalendar from './calendar/MyCalendar.jsx';
 import ToDoList from './to-do-list/ToDoList.jsx';
 import TopBar from './TopBar.jsx';
 
+
 function Home (
   {isMobile={isMobile},
    isLoggedIn={isLoggedIn},
@@ -15,8 +16,10 @@ function Home (
    onCalendar={onCalendar},
    setOnCalendar={setOnCalendar},
    addToCalendar={addToCalendar},
+   sharedBy={sharedBy},
    myEvents={myEvents},
    moveEvent={moveEvent},
+   userEmail={userEmail},
    resizeEvent={resizeEvent}}){
 
   // useEffect(async () => {
