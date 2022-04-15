@@ -38,6 +38,7 @@ function ToDoList({addToCalendar, isMobile, draggedEvent, setDraggedEvent, handl
 
   const deleteTask = (e) => {
     console.log('deletetask called');
+    //send req to app.delete
   }
 
   var addTask = (e) => {

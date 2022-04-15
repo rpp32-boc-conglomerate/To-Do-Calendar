@@ -21,8 +21,30 @@ const useStyles = makeStyles({
   },
   card: {
     display: 'flex',
-    border: '1rem solid black',
+    border: '1rem solid black'
+  },
+  editableField: {
+    "&[contentEditable=true]:empty:not(:focus):before": {
+      content: "attr(data-text)"
   }
+},
+hover: {
+  "&:hover": {
+    backgroundColor: 'rgb(7, 177, 77, 0.42)'
+  }
+}
+  // editableField:hover {
+  //   display: 'block'
+  // },
+
+  // edit: {
+  //   padding-top: '1rem',
+  //   padding-right: '1rem',
+  //   position: 'absolute',
+  //   right: '0',
+  //   top: '0',
+  //   display: 'none'
+  // }
 });
 
 //only want task.in_calendar === false
@@ -46,11 +68,7 @@ function Task({task, openModal, isMobile, deleteTask, draggedEvent, setDraggedEv
   }
 
   const updateTaskTime = (startTime) => {
-    console.log('startTime', typeof startTime)
     const momentTime = new Date(moment(startTime))
-    console.log('momentTime', momentTime)
-    // let newStart = new Intl.DateTimeFormat('en-US',
-    // {dateStyle: 'full', timeStyle: 'long', }).format(startTime)
     const taskCopy = userTask
     taskCopy.start = momentTime
     setUserTask(taskCopy)
@@ -59,6 +77,7 @@ function Task({task, openModal, isMobile, deleteTask, draggedEvent, setDraggedEv
 
   const handleEdit = () => {
     setIsEditing(!isEditing);
+    console.log('isediting')
   };
 
   const handleContentEditable = (e, field) => {
@@ -83,17 +102,18 @@ function Task({task, openModal, isMobile, deleteTask, draggedEvent, setDraggedEv
       <Card onDragStart={() => handleDragStart(task)} draggable='true'>
           <CardContent>
             <div style={{display: 'flex', flexDirection: 'row', gap: '5%'}}>
-              <ContentEditable variant="body1" contentEditable={isEditing}
+              <Typography classes={{hover: classes.hover}} variant="body1" contentEditable={isEditing}
               onChange={(e)=>handleContentEditable(e, 'title')} html={task.title}
-              />
+              >{task.title}
+              </Typography>
               {isMobile && addToCal}
             </div>
-            <ContentEditable variant="body1" contentEditable={isEditing}
+            <ContentEditable className={classes.editableField} variant="body1" contentEditable={isEditing}
             onChange={(e)=>handleContentEditable(e, 'description')} html={task.description}
             />
             <CardActions>
               <ExpandMoreIcon/>
-              <Button variant="contained" size="small" onClick={() => openModal(task)}>Edit</Button>
+              <Button variant="contained" size="small" onClick={() => openModal(task)}>Set Time</Button>
               <Button variant="contained" size="small" onClick={deleteTask}>Delete</Button>
             </CardActions>
           </CardContent>
