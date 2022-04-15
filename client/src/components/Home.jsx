@@ -8,25 +8,6 @@ import ToDoList from './to-do-list/ToDoList.jsx';
 import TopBar from './TopBar.jsx';
 import TestToDo from './calendar/TestToDo.jsx';
 
-
-// function Home (
-//   {isMobile={isMobile},
-//   isLoggedIn={isLoggedIn},
-//   isLoading={isLoading},
-//   setIsLoggedIn={setIsLoggedIn},
-//   userEmail={userEmail},
-//   sharedBy={sharedBy},
-//   onCalendar={onCalendar},
-//   setOnCalendar={setOnCalendar},
-//   myEvents={myEvents},
-//   moveEvent={moveEvent},
-//   resizeEvent={resizeEvent},
-//   changeTitle={changeTitle},
-//   handleDragStart={handleDragStart},
-//   draggedEvent={draggedEvent},
-//   setDraggedEvent={setDraggedEvent},
-//   onDropFromOutside={onDropFromOutside}}){
-
 function Home ({isMobile, isLoggedIn, isLoading, setIsLoggedIn, userEmail, sharedBy, onCalendar, setOnCalendar,
   myEvents, moveEvent, resizeEvent, changeTitle, handleDragStart, draggedEvent, setDraggedEvent, onDropFromOutside}) {
 

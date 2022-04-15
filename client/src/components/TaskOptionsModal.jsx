@@ -34,7 +34,7 @@ const useStyles = makeStyles({
     margin: '0.5rem 0.5rem 0.5rem 0rem'
   },
   delete: {
-    backgroundColor: 'red',
+    backgroundColor: '#1976d2',
     color: 'white',
     margin: '0.5rem'
   }
@@ -59,7 +59,7 @@ var TaskOptionsModal = (props) => {
             value={props.task.end || endTime} onChange={(newValue) => {setEndTime(newValue)}}/>
           <Container className={classes.container}>
             <Button className={classes.done} variant="contained" size="medium">Done</Button>
-            <Button className={classes.delete} variant="contained" size="medium">Delete</Button>
+            <Button className={classes.delete} variant="contained" size="medium">{props.task.in_calendar ? 'Add to TodoList' : 'Add to Calendar'}</Button>
           </Container>
         </Container>
       </Modal>
