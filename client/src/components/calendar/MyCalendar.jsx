@@ -8,16 +8,12 @@ const DragAndDropCalendar = withDragAndDrop(Calendar)
 const localizer = momentLocalizer(moment);
 
 const MyCalendar = (props) => {
-  var calEvents = props.myEvents.filter(item => { if (item.inCalender === true) {
-    return item
-  }})
-  console.log(calEvents)
   return (
     <DragAndDropCalendar
       className='calendar'
       localizer={localizer}
       defaultView="week"
-      events={calEvents}
+      events={props.myEvents.filter(item => {return item.in_calendar === true})}
       startAccessor="start"
       endAccessor="end"
       onSelectEvent={(event) => {

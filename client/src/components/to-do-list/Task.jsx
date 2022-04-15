@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDrag } from 'react-dnd';
+import moment from 'moment';
 import ContentEditable from 'react-contenteditable';
 import { Button, Grid, Card, CardHeader, CardContent, CardActions, Collapse, makeStyles, Typography, Toolbar, TextField,  TextareaAutosize, Stack } from '@material-ui/core';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -24,16 +25,9 @@ const useStyles = makeStyles({
   }
 });
 
-// drag div, need to call hook
-// isDragging returns t or f
-// drag reference which element you want to make draggable
-// every element requires a type
-<<<<<<< HEAD
-function Task({task, openModal, isMobile, deleteTask, draggedEvent, setDraggedEvent, handleDragStart}) {
+//only want task.in_calendar === false
+function Task({task, openModal, isMobile, deleteTask, draggedEvent, setDraggedEvent, handleDragStart, myEvents}) {
   // console.log('task in task', task )
-=======
-function Task({task, openModal, isMobile, deleteTask}) {
->>>>>>> a4660ebbdc138108f111200d615a32ced4139c5f
   const [userTask, setUserTask] = useState(task);
   const [expanded, setExpanded] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -52,7 +46,6 @@ function Task({task, openModal, isMobile, deleteTask}) {
   }
 
   const updateTaskTime = (startTime) => {
-<<<<<<< HEAD
     console.log('startTime', typeof startTime)
     const momentTime = new Date(moment(startTime))
     console.log('momentTime', momentTime)
@@ -62,17 +55,6 @@ function Task({task, openModal, isMobile, deleteTask}) {
     taskCopy.start = momentTime
     setUserTask(taskCopy)
     console.log('userTask', userTask)
-=======
-    console.log('startTime', typeof startTime);
-    const momentTime = moment(startTime).format();
-    console.log('momentTime', momentTime);
-    let newStart = new Intl.DateTimeFormat('en-US', {dateStyle: 'full', timeStyle: 'long', }).format(startTime);
-    console.log('momentized', newStart);
-    const taskCopy = userTask;
-    taskCopy.start = newStart;
-    setUserTask(taskCopy);
-    console.log('userTask', userTask);
->>>>>>> a4660ebbdc138108f111200d615a32ced4139c5f
   };
 
   const handleEdit = () => {

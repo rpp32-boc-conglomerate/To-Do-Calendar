@@ -21,7 +21,7 @@ const useStyles = makeStyles({
   }
 })
 
-function ToDoList({addToCalendar, isMobile, draggedEvent, setDraggedEvent, handleDragStart}) {
+function ToDoList({addToCalendar, isMobile, draggedEvent, setDraggedEvent, handleDragStart, myEvents}) {
   //a state prop that's an array that has an element for everytime + task or + category is clicked
   const [categorizedTasks, setCategorizedTasks] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
@@ -29,7 +29,7 @@ function ToDoList({addToCalendar, isMobile, draggedEvent, setDraggedEvent, handl
   //mui width/height based on screen size
   //make outdiv scrollable/overflow
   //replace divs w containers
-
+  console.log('categorizedTasks', categorizedTasks)
   const classes = useStyles()
 
   useEffect(() => {
@@ -62,6 +62,8 @@ function ToDoList({addToCalendar, isMobile, draggedEvent, setDraggedEvent, handl
     setEditing(!editing)
   }
 
+  const events = myEvents.filter(item => {return !item.in_calendar})
+  console.log('events in todolist', events)
   return (
     <Container className={isMobile ? classes.mobileMain : classes.desktopMain}>
       <Container sx={{display: 'flex', height: '50px', width: '100%'}}>
@@ -69,17 +71,13 @@ function ToDoList({addToCalendar, isMobile, draggedEvent, setDraggedEvent, handl
         {modalOpen === true && <TaskOptionsModal handleOpen={modalOpen} handleClose={setModalOpen} task={modalInfo}/>}
         <Button variant="contained" onClick={() => setNewCategories(newCategories => newCategories.concat('New'))}>New Category</Button>
         <Button variant="contained" onClick={() => setNewTasks(newTasks => newTasks.concat('New task'))}>New Task</Button>
-<<<<<<< HEAD
-      </div>
+      </Container>
       <div>
         <Categories deleteTask={deleteTask} categorizedTasks={categorizedTasks}
-        openModal={openModal} isMobile={isMobile} draggedEvent={draggedEvent} setDraggedEvent={setDraggedEvent} handleDragStart={handleDragStart}/>
+        openModal={openModal} isMobile={isMobile} draggedEvent={draggedEvent}
+        setDraggedEvent={setDraggedEvent}
+        handleDragStart={handleDragStart} events={events}/>
       </div>
-=======
-      </Container>
-      <Categories deleteTask={deleteTask} categorizedTasks={categorizedTasks}
-        openModal={openModal} isMobile={isMobile}/>
->>>>>>> a4660ebbdc138108f111200d615a32ced4139c5f
     </Container>
   )
 };

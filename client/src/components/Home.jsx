@@ -11,14 +11,11 @@ import TestToDo from './calendar/TestToDo.jsx';
 
 function Home (
   {isMobile={isMobile},
-<<<<<<< HEAD
-=======
   isLoggedIn={isLoggedIn},
   isLoading={isLoading},
   setIsLoggedIn={setIsLoggedIn},
   userEmail={userEmail},
   sharedBy={sharedBy},
->>>>>>> a4660ebbdc138108f111200d615a32ced4139c5f
   onCalendar={onCalendar},
   setOnCalendar={setOnCalendar},
   myEvents={myEvents},
@@ -31,7 +28,7 @@ function Home (
   onDropFromOutside={onDropFromOutside}}){
 
   const naviBar = (<TopBar isMobile={isMobile} onCalendar={onCalendar} setOnCalendar={setOnCalendar}/>)
-  const toDoList = (<ToDoList draggedEvent={draggedEvent} setDraggedEvent={setDraggedEvent} handleDragStart={handleDragStart}/>)
+  const toDoList = (<ToDoList draggedEvent={draggedEvent} setDraggedEvent={setDraggedEvent} handleDragStart={handleDragStart} myEvents={myEvents}/>)
   const myCalender = (<MyCalendar myEvents={myEvents} moveEvent={moveEvent} resizeEvent={resizeEvent} changeTitle={changeTitle} onDropFromOutside={onDropFromOutside}/>)
   const testToDo = (<TestToDo draggedEvent={draggedEvent} setDraggedEvent={setDraggedEvent} handleDragStart={handleDragStart}/>)
   // condition redering base on device

@@ -1,3 +1,4 @@
+var moment = require('moment')
 module.exports = {
   example: [
     {
@@ -6,12 +7,21 @@ module.exports = {
       user_email: 'todocal@gmail.com',
       tasks: [
         {
+          id: 0,
+          title: "Sample Event",
+          description: 'this is a practice',
+          start: new Date(),
+          end: new Date(moment().add(1, "hour")),
+          allDay: false,
+          in_calendar: true
+        },
+        {
           id: 1,
           title: 'Trip to China',
           description: '5-day business trip to meet with manufacturers',
           duration: '5 days',
-          start: 'Sat 9 April 2022 09:30:00 UT',
-          end: 'Wed 13 April 2022 09:30:00 UT',
+          start: new Date(),
+          end: new Date(moment().add(1, "hour")),
           category_id: 1,
           in_calendar: true
         },

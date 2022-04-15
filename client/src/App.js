@@ -10,6 +10,7 @@ import MyCalendar from './components/calendar/MyCalendar.jsx';
 import ToDoList from './components/to-do-list/ToDoList.jsx';
 import TopBar from './components/TopBar.jsx';
 import Home from './components/Home.jsx';
+import { example } from './../../database/example.js'
 
 function App() {
   const [currentPage, changePage] = useState("home");
@@ -20,8 +21,28 @@ function App() {
       start: new Date(),
       end: new Date(moment().add(1, "hour")),
       allDay: false,
-      inCalendar: true
+      in_calendar: true
     },
+    {
+      id: 1,
+      title: 'Trip to China',
+      description: '5-day business trip to meet with manufacturers',
+      duration: '5 days',
+      start: new Date(),
+      end: new Date(moment().add(5, "days")),
+      category_id: 1,
+      in_calendar: false
+    },
+    {
+      id: 2,
+      title: 'Trip to Los Angeles',
+      description: 'Meeting with Executives',
+      duration: '6 hours',
+      start: new Date(moment('14 Apr 2022 09:30:00 UT')),
+      end: new Date(moment('14 Apr 2022 15:30:00 UT')),
+      category_id: 1,
+      in_calendar: false
+    }
   ]);
   const [onCalendar, setOnCalendar] = useState(false);
   const [draggedEvent, setDraggedEvent] = useState()
@@ -107,11 +128,18 @@ function App() {
 
   const onDropFromOutside = useCallback(
     () => {
+      setMyEvents((prev) => {
+        const existing = draggedEvent;
+        console.log('existing', existing)
+        existing.in_calendar = !existing.in_calendar;
+        const filtered = prev.filter((ev) => ev.id !== draggedEvent.id);
+        return [...filtered, { ...existing }];
+      });
       setDraggedEvent(null)
-      newEvent(draggedEvent)
     },
     [draggedEvent, setDraggedEvent, newEvent]
   )
+
   // const naviBar = (<TopBar isMobile={isMobile} onCalendar={onCalendar} setOnCalendar={setOnCalendar}/>)
   // const toDoList = (<ToDoList addToCalendar={addToCalendar}/>)
   // const myCalender = (<MyCalendar myEvents={myEvents} moveEvent={moveEvent} resizeEvent={resizeEvent}/>)
