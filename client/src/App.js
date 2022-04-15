@@ -44,6 +44,8 @@ function App() {
       setEmail(result.data.username);
     })
     .catch((err) => {
+      // Default email for DEMO Landing Page
+      setEmail('1@qq.com');
       console.log(err);
     })
   }, [userEmail])

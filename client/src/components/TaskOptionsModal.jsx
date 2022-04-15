@@ -33,19 +33,20 @@ const useStyles = makeStyles({
   done: {
     margin: '0.5rem 0.5rem 0.5rem 0rem'
   },
-  delete: {
+  addTo: {
     backgroundColor: '#1976d2',
+    color: 'white',
+    margin: '0.5rem'
+  },
+  delete: {
+    backgroundColor: 'red',
     color: 'white',
     margin: '0.5rem'
   }
 });
 
-// display: flex; justify-content: flex-end
-
 var TaskOptionsModal = (props) => {
   const classes = useStyles();
-
-  console.log(props);
 
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -54,12 +55,13 @@ var TaskOptionsModal = (props) => {
           <TextField label="Title" className={classes.input} defaultValue={props.task.title} />
           <TextField multiline label="Description" className={classes.input} defaultValue={props.task.description} />
           <DesktopDateTimePicker renderInput={(props) => <TextField className={classes.input} {...props} />} label="Start Time"
-            value={props.task.start || startTime} onChange={(newValue) => {setStartTime(newValue)}} />
+            value={props.task.start} onChange={(newValue) => {setStartTime(newValue)}} />
           <DesktopDateTimePicker renderInput={(props) => <TextField className={classes.input} {...props} />} label="End Time"
-            value={props.task.end || endTime} onChange={(newValue) => {setEndTime(newValue)}}/>
+            value={props.task.end} onChange={(newValue) => {setEndTime(newValue)}}/>
           <Container className={classes.container}>
             <Button className={classes.done} variant="contained" size="medium">Done</Button>
-            <Button className={classes.delete} variant="contained" size="medium">{props.task.in_calendar ? 'Add to TodoList' : 'Add to Calendar'}</Button>
+            <Button className={classes.addTo} variant="contained" size="medium">{props.task.in_calendar ? 'Add to TodoList' : 'Add to Calendar'}</Button>
+            <Button className={classes.delete} variant="contained" size="medium">Delete</Button>
           </Container>
         </Container>
       </Modal>

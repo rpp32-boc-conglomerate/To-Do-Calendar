@@ -5,7 +5,6 @@ import Tasks from './Tasks.jsx';
 import TestModal from './testModal.jsx';
 import TaskOptionsModal from '../TaskOptionsModal.jsx';
 import Home from '../Home.jsx'
-import { example } from '../../../../database/example.js';
 import { makeStyles, Container, Button } from '@material-ui/core';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { DndProvider } from 'react-dnd';
@@ -21,7 +20,7 @@ const useStyles = makeStyles({
   }
 })
 
-function ToDoList({isMobile}) {
+function ToDoList({isMobile, taskData}) {
   // unknown prop for todolist: addToCalendar
 
   //a state prop that's an array that has an element for everytime + task or + category is clicked
@@ -35,7 +34,7 @@ function ToDoList({isMobile}) {
   const classes = useStyles();
 
   useEffect(() => {
-    setCategorizedTasks(example);
+    setCategorizedTasks(taskData);
   }, []);
 
   const deleteTask = (todoItem) => {
@@ -72,7 +71,7 @@ function ToDoList({isMobile}) {
         <Button variant="contained" onClick={() => setNewTasks(newTasks => newTasks.concat('New task'))}>New Task</Button>
       </Container>
       <Categories handleModalOpen={setModalOpen} isOpen={modalOpen} clickedTask={modalInfo} deleteTask={deleteTask}
-        categorizedTasks={categorizedTasks} openModal={openModal} isMobile={isMobile}/>
+        categorizedTasks={taskData} openModal={openModal} isMobile={isMobile}/>
     </Container>
   )
 };

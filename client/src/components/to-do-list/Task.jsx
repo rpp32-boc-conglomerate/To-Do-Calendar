@@ -37,7 +37,9 @@ const Task = ({task, openModal, isMobile, deleteTask, handleModalOpen, isOpen, c
   const [startTime, setStartTime] = useState(new Date());
   const [endTime, setEndTime] = useState(new Date('2018-01-01T00:00:00.000Z'));
 
-  const addToCal = <Button variant="contained" size="small" touchstart={openModal} >Add To Calendar</Button>;
+  // For Modal opening and closing
+  // const [modalOpen, setModalOpen] = useState(false);
+  // const [modalInfo, setModalInfo] = useState();
 
   const isDateProvided = (task) => {
     if (!userTask.start) {
@@ -89,7 +91,6 @@ const Task = ({task, openModal, isMobile, deleteTask, handleModalOpen, isOpen, c
               <ContentEditable variant="body1" contentEditable={isEditing}
               onChange={(e)=>handleContentEditable(e, 'title')} html={task.title}
               />
-              {isMobile && addToCal}
             </div>
             <ContentEditable variant="body1" contentEditable={isEditing}
             onChange={(e)=>handleContentEditable(e, 'description')} html={task.description}
@@ -97,7 +98,6 @@ const Task = ({task, openModal, isMobile, deleteTask, handleModalOpen, isOpen, c
             <CardActions>
               <ExpandMoreIcon/>
               <Button variant="contained" size="small" onClick={() => openModal(task)}>Edit</Button>
-              <Button variant="contained" size="small" onClick={() => deleteTask(task)}>Delete</Button>
             </CardActions>
           </CardContent>
         </Card>
