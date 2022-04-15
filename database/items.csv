@@ -1,0 +1,11 @@
+﻿id,title,description,duration,start_date,end_date,in_calendar,category_id
+1,meeting with A,Discuss A,1 hours,2022-04-15 09:30:20-07,2022-04-15 10:30:20-07,TRUE,1
+2,meeting with B,Discuss B,3 hours,2022-04-15 09:30:20-07,2022-04-15 12:30:20-07,True,1
+3,meeting with C,Discuss C,4 hours,2022-04-15 09:30:20-07,2022-04-15 13:30:20-07,TRUE,1
+4,meeting with D,Discuss D,5 hours,2022-04-15 09:30:20-07,2022-04-15 14:30:20-07,TRUE,2
+5,meeting with E,Discuss E,6 hours,2022-04-15 09:30:20-07,2022-04-15 15:30:20-07,TRUE,2
+6,meeting with F,Discuss F,1 hours,2022-04-16 09:30:20-07,2022-04-15 10:30:20-07,false,3
+7,meeting with G,Discuss G,2 hours,2022-04-16 09:30:20-07,2022-04-15 11:30:20-07,TRUE,4
+8,meeting with H,Discuss H,3 hours,2022-04-16 09:30:20-07,2022-04-15 12:30:20-07,TRUE,5
+9,meeting with I,Discuss I,4 hours,2022-04-16 09:30:20-07,2022-04-15 13:30:20-07,false,6
+10,meeting with J,Discuss J,5 hours,2022-04-16 09:30:20-07,2022-04-15 14:30:20-07,TRUE,7
