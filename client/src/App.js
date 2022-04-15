@@ -17,8 +17,8 @@ function App() {
     {
       id: 0,
       title: "Sample Event",
-      start: new Date(),
-      end: new Date(moment().add(1, "hour")),
+      start_date: new Date(),
+      end_date: new Date(moment().add(1, "hour")),
       allDay: false,
       inCalendar: true
     },
