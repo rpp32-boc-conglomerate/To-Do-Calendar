@@ -6,7 +6,7 @@ CREATE DATABASE "tododb";
 DROP table IF EXISTS users;
 CREATE TABLE users (
   user_id SERIAL NOT NULL PRIMARY KEY,
-  user_email TEXT NOT NULL
+  user_email TEXT NOT NULL UNIQUE
 );
 \COPY users (user_id, user_email) FROM './user.csv' DELIMITER ',' CSV HEADER;
 
@@ -17,7 +17,7 @@ CREATE TABLE calendars (
   calendar_owner VARCHAR(64) NOT NULL,
   CONSTRAINT fk_user
     FOREIGN KEY("user_id")
-      REFERENCES users("user_id")
+      REFERENCES "users"("user_id")
 );
 \COPY calendars (calendar_id, user_id, calendar_owner) FROM './calendar.csv' DELIMITER ',' CSV HEADER;
 
@@ -27,8 +27,8 @@ CREATE TABLE categories (
   calendar_id INTEGER NOT NULL,
   category TEXT NOT NULL,
   CONSTRAINT fk_calendar
-    FOREIGN KEY(calendar_id)
-      REFERENCES calendars(calendar_id)
+    FOREIGN KEY("calendar_id")
+      REFERENCES "calendars"("calendar_id")
 );
 \COPY categories (category_id, calendar_id, category) FROM './category.csv' DELIMITER ',' CSV HEADER;
 
@@ -44,8 +44,8 @@ CREATE TABLE todoitems (
   in_calendar BOOLEAN NOT NULL,
   category_id INTEGER NOT NULL,
   CONSTRAINT fk_category
-    FOREIGN KEY(category_id)
-      REFERENCES categories(category_id)
+    FOREIGN KEY("category_id")
+      REFERENCES "categories"("category_id")
 );
 \COPY todoitems (id, title, description, duration, start, end_date, in_calendar, category_id) FROM './items.csv' DELIMITER ',' CSV HEADER;
 
