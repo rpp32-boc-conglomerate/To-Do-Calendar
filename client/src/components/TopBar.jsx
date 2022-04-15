@@ -18,7 +18,7 @@ import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
 import img from '../../dist/images/d1.png';
 import CircularProgress from '@mui/material/CircularProgress';
-import ShareBy from './sharing/SharedBy.jsx';
+import ShareWithOthers from './sharing/ShareDropDown.jsx';
 import ViewShares from './sharing/SharedWithUserDropdown.jsx';
 
 var pages = [];
@@ -67,7 +67,7 @@ const TopBar = ({isLoading, setIsLoggedIn, isLoggedIn, isMobile, onCalendar, set
       <AppBar style={{ background: 'white', marginBottom:'20px' }} position='static'>
         <Toolbar >
           <Box style={{margin: '0 auto', display: "flex"}}>
-            <ShareBy />
+            <ShareWithOthers />
           </Box>
           <Box style={{margin: '0 auto', display: "flex"}}></Box>
             <ViewShares />

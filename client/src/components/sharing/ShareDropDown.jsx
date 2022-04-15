@@ -1,22 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { styled, alpha } from '@mui/material/styles';
 import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import Divider from '@mui/material/Divider';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import TextField from '@mui/material/TextField';
-import emailSchema from './EmailValidation.jsx';
+import CheckIcon from '@mui/icons-material/Check';
 import ShareList from './ShareList.jsx';
+import ShareWithEmail from './ShareWithEmail.jsx';
+import Divider from '@mui/material/Divider';
+
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
-import AddBoxIcon from '@mui/icons-material/AddBox';
+import Checkbox from '@mui/material/Checkbox';
+import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 
-
-const StyledMenu = styled((props) => (
+const ShareMenu = styled((props) => (
   <Menu
     elevation={0}
     anchorOrigin={{
@@ -40,12 +39,13 @@ const StyledMenu = styled((props) => (
       'rgb(255, 255, 255) 0px 0px 0px 0px, rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, ' +
       'rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px',
     '& .MuiMenu-list': {
-      padding: '0px 0',
+      padding: '4px 0',
     },
     '& .MuiMenuItem-root': {
       '& .MuiSvgIcon-root': {
         fontSize: 18,
         color: theme.palette.text.secondary,
+        marginRight: theme.spacing(1.5),
       },
       '&:active': {
         backgroundColor: alpha(
@@ -58,15 +58,16 @@ const StyledMenu = styled((props) => (
 }));
 
 
-
-export default function ShareWith() {
+export default function DisplaySharedWithUserDropdown() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [formErr, setFormErr] = useState('');
-  const [state, setState] = useState({'email': ''});
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
+  const [shares, setShares] = React.useState(['boc@isalmostdone.com', 'nate@conglomerate.com',
+  'excitedtobe@free.com']);
+
   const handleChange = (e) => {
     setFormErr('');
     const { name, value } = e.target;
@@ -75,24 +76,25 @@ export default function ShareWith() {
         [name]: value,
       }))
   };
-  const validation = async () => {
-    emailSchema.validate(formData).catch((err) => {
-      setFormErr(err.errors[0].split(' ')[0]);
-      setErrMsg(err.errors[0])
-    });
-    let isValid = await emailSchema.isValid(formData);
-    return isValid;
-  };
 
   const handleClose = () => {
     setAnchorEl(null);
   };
 
+  const handleEmailRemove = (email) => () => {
+    const currentIndex = shares.indexOf(email);
+    const newShares = [...shares];
+
+    newShares.splice(currentIndex, 1);
+
+    setShares(newShares);
+  };
+
   return (
     <div>
       <Button
-        id="share-button"
-        aria-controls={open ? 'share-menu' : undefined}
+        id="shared-with-user-button"
+        aria-controls={open ? 'shared-with-user-menu' : undefined}
         aria-haspopup="true"
         aria-expanded={open ? 'true' : undefined}
         variant="contained"
@@ -102,44 +104,17 @@ export default function ShareWith() {
       >
         Share
       </Button>
-      <StyledMenu
-        id="share-menu"
+      <ShareMenu
+        id="shared-with-user-menu"
         MenuListProps={{
-          'aria-labelledby': 'share-button',
+          'aria-labelledby': 'shared-with-user-button',
         }}
         anchorEl={anchorEl}
         open={open}
         onClose={handleClose}
       >
-
-      <MenuItem onClick={handleClose} disableRipple>
-      <Divider sx={{ my: 0.5 }} />
-        <TextField
-          name='email'
-          error={formErr === 'email' ? true : false}
-          placeholder='Enter email address'
-          label="Email"
-          variant="outlined"
-          value={state["email"]}
-          require = 'true'
-          helperText={formErr === 'email' ? errMsg : ''}
-          fullWidth
-          // className={classes.fieldGap}
-          onChange={(e)=>(handleChange(e))}
-        />
-        <IconButton aria-label="add">
-        <AddBoxIcon />
-        </IconButton>
-      </MenuItem>
-      <Divider sx={{ my: 0.5 }} />
-      {/* <MenuItem onClick={handleClose} disableRipple>  */}
-      <MenuItem onClick={handleClose} disableRipple>
-        List of Shared users
-      </MenuItem>
-      <MenuItem disableRipple>
-        <ShareList />
-      </MenuItem>
-      </StyledMenu>
+        <ShareList emailArray={shares} removeEmail={handleEmailRemove}/>
+      </ShareMenu>
     </div>
   );
 }
