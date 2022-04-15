@@ -50,15 +50,11 @@ const Task = ({task, openModal, isMobile, deleteTask, handleModalOpen, isOpen, c
   }
 
   const updateTaskTime = (startTime) => {
-    console.log('startTime', typeof startTime);
     const momentTime = moment(startTime).format();
-    console.log('momentTime', momentTime);
     let newStart = new Intl.DateTimeFormat('en-US', {dateStyle: 'full', timeStyle: 'long'}).format(startTime);
-    console.log('momentized', newStart);
     const taskCopy = userTask;
     taskCopy.start = newStart;
     setUserTask(taskCopy);
-    console.log('userTask', userTask);
   };
 
   const handleEdit = () => {
