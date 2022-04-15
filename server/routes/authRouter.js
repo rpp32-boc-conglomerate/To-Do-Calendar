@@ -106,6 +106,19 @@ authRouter.get('/isLoggedIn', (req, res) => {
   res.status(200).send(isAuth)
 });
 
+// optimize later with middleware that verifies this and /isloggedin
+authRouter.get('/userEmail', (req, res) => {
+  let isAuth = req.isAuthenticated();
+  console.log('user:', req.user);
+  // res.locals.currentUser = req.user;
+  if (isAuth) {
+    res.status(200).send(req.user);
+  } else {
+    res.status(200).send(null);
+  }
+
+});
+
 authRouter.route('/failure').get((req, res) => {
   console.log('failure');
   res.sendStatus(200);

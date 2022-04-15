@@ -27,6 +27,8 @@ function App() {
   const [draggedEvent, setDraggedEvent] = useState()
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [userEmail, setEmail] = useState(null);
+
   useEffect(() => {
     axios.get('http://localhost:3000/auth/isLoggedIn', {withCredentials: true})
     .then((result) => {
@@ -38,6 +40,17 @@ function App() {
       console.log(err);
     })
   }, [isLoggedIn])
+
+  useEffect(() => {
+    axios.get('http://localhost:3000/auth/userEmail', {withCredentials: true})
+    .then((result) => {
+      console.log('result:', result);
+      setEmail(result.data.username);
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+  }, [userEmail])
 
   //Calendar helper functions
   const moveEvent = useCallback(
@@ -107,6 +120,8 @@ function App() {
   const homePage = (
     <Home
       isMobile={isMobile}
+      isLoggedIn={isLoggedIn}
+      setIsLoggedIn={setIsLoggedIn}
       onCalendar={onCalendar}
       setOnCalendar={setOnCalendar}
       myEvents={myEvents}
@@ -118,6 +133,8 @@ function App() {
       draggedEvent={draggedEvent}
       setDraggedEvent={setDraggedEvent}
       onDropFromOutside={onDropFromOutside}
+      isLoading={isLoading}
+      userEmail={userEmail}
     />
   );
 

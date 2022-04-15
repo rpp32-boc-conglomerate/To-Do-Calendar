@@ -16,4 +16,7 @@ function Tasks({tasks, openModal, isMobile, deleteTask, draggedEvent, setDragged
   )
 }
 
+// Will need for different functionality as a prop passed down to Task
+// editClick={editClick} editing={editing}
+
 export default Tasks;

@@ -5,7 +5,7 @@ const cors = require('cors');
 const session = require('express-session');
 const passport = require('passport');
 const passportLocalMongoose = require('passport-local-mongoose');
-const localStrategy		= require('passport-local').Strategy;
+const localStrategy = require('passport-local').Strategy;
 const bodyParser = require('body-parser');
 
 const authRouter = require('./routes/authRouter.js');
@@ -14,7 +14,7 @@ const calendarRouter = require('./routes/calendarRouter.js');
 
 app.use(cors({
   credentials: true,
-  origin: "http://localhost:3001"
+  origin: "http://localhost:3001",
 }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));

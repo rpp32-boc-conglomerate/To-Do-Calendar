@@ -8,8 +8,17 @@ import ToDoList from './to-do-list/ToDoList.jsx';
 import TopBar from './TopBar.jsx';
 import TestToDo from './calendar/TestToDo.jsx';
 
+
 function Home (
   {isMobile={isMobile},
+<<<<<<< HEAD
+=======
+  isLoggedIn={isLoggedIn},
+  isLoading={isLoading},
+  setIsLoggedIn={setIsLoggedIn},
+  userEmail={userEmail},
+  sharedBy={sharedBy},
+>>>>>>> a4660ebbdc138108f111200d615a32ced4139c5f
   onCalendar={onCalendar},
   setOnCalendar={setOnCalendar},
   myEvents={myEvents},
@@ -38,7 +47,7 @@ function Home (
         </div>
       )
     } else if (isMobile && onCalendar) {
-      // // view for mobile and in calendar page
+      // view for mobile and in calendar page
       return (
         <div>
           {naviBar}
