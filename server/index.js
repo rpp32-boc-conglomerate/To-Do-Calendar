@@ -7,6 +7,8 @@ const passport = require('passport');
 const passportLocalMongoose = require('passport-local-mongoose');
 const localStrategy = require('passport-local').Strategy;
 const bodyParser = require('body-parser');
+const queries = require('../database/pg.js');
+
 
 const authRouter = require('./routes/authRouter.js');
 const todoListRouter = require('./routes/todoListRouter.js');
@@ -23,8 +25,21 @@ app.use('/auth', authRouter);
 app.use('/todoList', todoListRouter);
 app.use('/calendar', calendarRouter);
 
-app.get('', (req, res) => {
-  res.send('GET request');
+app.get('/info', (req, res) => {
+  const email = '1@qq.com';
+  try {
+    queries.getInfo(email, async(err, response) => {
+      if (err) {
+        res.status(400).send('get info error');
+      } else {
+        const result = { result: response.rows };
+        res.status(200).send(result);
+      }
+    });
+  } catch(error) {
+    console.error(error);
+    res.send({data: error});
+  }
 });
 
 app.post('', (req, res) => {
