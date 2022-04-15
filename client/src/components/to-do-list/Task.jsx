@@ -3,7 +3,8 @@ import { useDrag } from 'react-dnd';
 import ContentEditable from 'react-contenteditable';
 import { Button, Grid, Card, CardHeader, CardContent, CardActions, Collapse, makeStyles, Typography, Toolbar, TextField,  TextareaAutosize, Stack } from '@material-ui/core';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-const TaskOptionsModal = require('../TaskOptionsModal.jsx');
+import TaskOptionsModal from '../TaskOptionsModal.jsx';
+
 //on hover over editable field -- pen icon or underline
 const useStyles = makeStyles({
   grid: {
@@ -28,7 +29,7 @@ const useStyles = makeStyles({
 // isDragging returns t or f
 // drag reference which element you want to make draggable
 // every element requires a type
-function Task({task, openModal, isMobile, deleteTask}) {
+const Task = ({task, openModal, isMobile, deleteTask, handleModalOpen, isOpen, clickedTask}) => {
   const [userTask, setUserTask] = useState(task);
   const [expanded, setExpanded] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -50,7 +51,7 @@ function Task({task, openModal, isMobile, deleteTask}) {
     console.log('startTime', typeof startTime);
     const momentTime = moment(startTime).format();
     console.log('momentTime', momentTime);
-    let newStart = new Intl.DateTimeFormat('en-US', {dateStyle: 'full', timeStyle: 'long', }).format(startTime);
+    let newStart = new Intl.DateTimeFormat('en-US', {dateStyle: 'full', timeStyle: 'long'}).format(startTime);
     console.log('momentized', newStart);
     const taskCopy = userTask;
     taskCopy.start = newStart;
@@ -81,7 +82,8 @@ function Task({task, openModal, isMobile, deleteTask}) {
   return (
     <Grid item xs={12} lg={12}>
       <Grid item xs={12}>
-      <Card>
+        <Card>
+          {isOpen === true && <TaskOptionsModal handleModalOpen={handleModalOpen} isOpen={isOpen} task={task}/>}
           <CardContent>
             <div style={{display: 'flex', flexDirection: 'row', gap: '5%'}}>
               <ContentEditable variant="body1" contentEditable={isEditing}
@@ -95,10 +97,10 @@ function Task({task, openModal, isMobile, deleteTask}) {
             <CardActions>
               <ExpandMoreIcon/>
               <Button variant="contained" size="small" onClick={() => openModal(task)}>Edit</Button>
-              <Button variant="contained" size="small" onClick={deleteTask}>Delete</Button>
+              <Button variant="contained" size="small" onClick={() => deleteTask(task)}>Delete</Button>
             </CardActions>
           </CardContent>
-      </Card>
+        </Card>
       </Grid>
     </Grid>
   );

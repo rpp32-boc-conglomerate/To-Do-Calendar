@@ -16,7 +16,7 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
-import img from '../../dist/images/d1.png';
+import img from '../../dist/images/todocal - logo.png';
 import CircularProgress from '@mui/material/CircularProgress';
 import ShareBy from './sharing/SharedBy.jsx';
 
@@ -80,7 +80,7 @@ const TopBar = ({isLoading, setIsLoggedIn, isLoggedIn, isMobile, onCalendar, set
             <ShareBy />
           </Box>
           <Box style={{margin: '0 auto', display: "flex"}}>
-            <Avatar variant="square" src={img} style={{width:'60px', height:'50px'}}/>
+            <Avatar variant="square" src={img} style={{width:'50px', height:'50px'}}/>
           </Box>
          <Box sx={{ flexGrow: 0 }}>
             {isLoading ? <CircularProgress /> : (isLoggedIn ?

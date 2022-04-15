@@ -8,7 +8,7 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DesktopDateTimePicker } from '@mui/x-date-pickers/DesktopDateTimePicker';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles({
   modal: {
     position: 'absolute',
     top: '50%',
@@ -22,22 +22,45 @@ const useStyles = makeStyles(theme => ({
     padding: '1rem'
   },
   input: {
+    width: '90%',
     margin: '1rem'
+  },
+  container: {
+    display: 'flex',
+    justifyContent: 'center',
+    padding: '0.5rem 0 0 0'
+  },
+  done: {
+    margin: '0.5rem 0.5rem 0.5rem 0rem'
+  },
+  delete: {
+    backgroundColor: 'red',
+    color: 'white',
+    margin: '0.5rem'
   }
-}));
+});
+
+// display: flex; justify-content: flex-end
 
 var TaskOptionsModal = (props) => {
   const classes = useStyles();
 
+  console.log(props);
+
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
-      <Modal open={props.handleOpen} onClose={() => props.handleClose(false)}>
+      <Modal open={props.isOpen} onClose={() => props.handleModalOpen(false)}>
         <Container className={classes.modal}>
-          <TextField className={classes.input} />
+          <TextField label="Title" className={classes.input} defaultValue={props.task.title} />
+          <TextField multiline label="Description" className={classes.input} defaultValue={props.task.description} />
           <DesktopDateTimePicker renderInput={(props) => <TextField className={classes.input} {...props} />} label="Start Time"
             value={props.task.start || startTime} onChange={(newValue) => {setStartTime(newValue)}} />
           <DesktopDateTimePicker renderInput={(props) => <TextField className={classes.input} {...props} />} label="End Time"
             value={props.task.end || endTime} onChange={(newValue) => {setEndTime(newValue)}}/>
+          <Container className={classes.container}>
+            <Button className={classes.done} variant="contained" size="medium">Done</Button>
+            <Button className={classes.delete} variant="contained" size="medium">Delete</Button>
+          </Container>
         </Container>
       </Modal>
     </LocalizationProvider>

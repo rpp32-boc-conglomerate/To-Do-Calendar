@@ -21,7 +21,9 @@ const useStyles = makeStyles({
   }
 })
 
-function ToDoList({addToCalendar, isMobile}) {
+function ToDoList({isMobile}) {
+  // unknown prop for todolist: addToCalendar
+
   //a state prop that's an array that has an element for everytime + task or + category is clicked
   const [categorizedTasks, setCategorizedTasks] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
@@ -30,14 +32,14 @@ function ToDoList({addToCalendar, isMobile}) {
   //make outdiv scrollable/overflow
   //replace divs w containers
 
-  const classes = useStyles()
+  const classes = useStyles();
 
   useEffect(() => {
     setCategorizedTasks(example);
   }, []);
 
-  const deleteTask = (e) => {
-    console.log('deletetask called');
+  const deleteTask = (todoItem) => {
+    console.log('delete: ', todoItem);
   }
 
   var addTask = (e) => {
@@ -53,7 +55,7 @@ function ToDoList({addToCalendar, isMobile}) {
   }
 
   const openModal = (todoItem) => {
-    console.log('openModal called');
+    console.log('openModal called: ', todoItem);
     setModalOpen(true);
     setModalInfo(todoItem);
   }
@@ -66,12 +68,11 @@ function ToDoList({addToCalendar, isMobile}) {
     <Container className={isMobile ? classes.mobileMain : classes.desktopMain}>
       <Container sx={{display: 'flex', height: '50px', width: '100%'}}>
         <div style={{width: '80%'}}>To-Do List</div>
-        {modalOpen === true && <TaskOptionsModal handleOpen={modalOpen} handleClose={setModalOpen} task={modalInfo}/>}
         <Button variant="contained" onClick={() => setNewCategories(newCategories => newCategories.concat('New'))}>New Category</Button>
         <Button variant="contained" onClick={() => setNewTasks(newTasks => newTasks.concat('New task'))}>New Task</Button>
       </Container>
-      <Categories deleteTask={deleteTask} categorizedTasks={categorizedTasks}
-        openModal={openModal} isMobile={isMobile}/>
+      <Categories handleModalOpen={setModalOpen} isOpen={modalOpen} clickedTask={modalInfo} deleteTask={deleteTask}
+        categorizedTasks={categorizedTasks} openModal={openModal} isMobile={isMobile}/>
     </Container>
   )
 };
