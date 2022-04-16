@@ -135,7 +135,7 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={homePage} />
-          <Route path="/signin" element={<Login />} />
+          <Route path="/signin" element={<Login isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>} />
           <Route path="/signup" element={<Registration />} />
         </Routes>
       </Router>
