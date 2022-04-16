@@ -6,19 +6,16 @@ import { makeStyles, Paper, Container, Grid, ButtonGroup, Button, TextField, Too
 const useStyles = makeStyles((theme) => ({
   paper: {
     display: 'inline-block',
-    padding: '2rem',
+    padding: '1rem',
     width: '100%',
-    color: 'grey'
+    color: 'black'
   }
 }))
 
-function Category({tasks, addTask, openModal, deleteTask, editClick, editing}) {
+function Category({tasks, addTask, openModal, isMobile, deleteTask}) {
   const classes = useStyles();
   const [totalTime, setTotalTime] = useState(0);
-
-  const {name} = tasks
-
-  // console.log('category: ', tasks);
+  const {name} = tasks;
 
   return (
     <Container>
@@ -31,11 +28,11 @@ function Category({tasks, addTask, openModal, deleteTask, editClick, editing}) {
             // addTask()
           }}>Add Task</Button>
         </Container>
-        <Container sx={{ display: 'inline-block' }}>
-          <Tasks tasks={tasks.tasks} deleteTask={deleteTask} openModal={openModal} editClick={editClick} editing={editing} />
+        <Container sx={{ display: 'inline-block'}}>
+          <Tasks tasks={tasks.tasks} deleteTask={deleteTask} openModal={openModal} isMobile={isMobile}/>
         </Container>
-      </Paper>
-    </Container>
+    </Paper>
+  </Container>
 )}
 
 export default Category;

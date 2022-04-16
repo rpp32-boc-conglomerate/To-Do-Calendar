@@ -8,7 +8,11 @@ const config = {
   port: 5432,
   host: 'localhost'
 }
-
+console.log(process.env.PGPASS)
+// let client = new pg.Client(config)
+// client.connect()
+// .then(() => console.log('connect to database'))
+// .catch((err) => console.log('error in connect to db', err))
 //drop db, if needed uncomment to use
 
 // pgtools.dropdb(config, 'tododb', function (err, res) {
@@ -18,25 +22,19 @@ const config = {
 //   }
 //   console.log(res);
 // });
-
+console.log('pgtools', pgtools)
 pgtools.createdb(config, 'tododb', function (err, res) {
   if (err) {
     console.error(err);
     process.exit(-1);
   }
-  console.log(res);
+  console.log(res, 'created tables');
   addTables();
 });
 
 let addTables = function() {
 
-  const db = new pg.Pool({
-    host: 'localhost',
-    database: 'tododb',
-    user: 'postgres',
-    password: process.env.PGPASS,
-    port: '5432'
-   });
+  const db = new pg.Pool(config);
 
    const execute = async (query) => {
     try {
