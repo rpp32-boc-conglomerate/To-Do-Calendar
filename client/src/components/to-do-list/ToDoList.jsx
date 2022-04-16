@@ -5,7 +5,6 @@ import Tasks from './Tasks.jsx';
 import TestModal from './testModal.jsx';
 import TaskOptionsModal from '../TaskOptionsModal.jsx';
 import Home from '../Home.jsx'
-import { example } from '../../../../database/example.js';
 import { makeStyles, Container, Button } from '@material-ui/core';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { DndProvider } from 'react-dnd';
@@ -21,7 +20,9 @@ const useStyles = makeStyles({
   }
 })
 
-function ToDoList({addToCalendar, isMobile}) {
+function ToDoList({isMobile, taskData}) {
+  // unknown prop for todolist: addToCalendar
+
   //a state prop that's an array that has an element for everytime + task or + category is clicked
   const [categorizedTasks, setCategorizedTasks] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
@@ -30,14 +31,14 @@ function ToDoList({addToCalendar, isMobile}) {
   //make outdiv scrollable/overflow
   //replace divs w containers
 
-  const classes = useStyles()
+  const classes = useStyles();
 
   useEffect(() => {
-    setCategorizedTasks(example);
+    setCategorizedTasks(taskData);
   }, []);
 
-  const deleteTask = (e) => {
-    console.log('deletetask called');
+  const deleteTask = (todoItem) => {
+    console.log('delete: ', todoItem);
   }
 
   var addTask = (e) => {
@@ -53,7 +54,7 @@ function ToDoList({addToCalendar, isMobile}) {
   }
 
   const openModal = (todoItem) => {
-    console.log('openModal called');
+    console.log('openModal called: ', todoItem);
     setModalOpen(true);
     setModalInfo(todoItem);
   }
@@ -66,12 +67,11 @@ function ToDoList({addToCalendar, isMobile}) {
     <Container className={isMobile ? classes.mobileMain : classes.desktopMain}>
       <Container sx={{display: 'flex', height: '50px', width: '100%'}}>
         <div style={{width: '80%'}}>To-Do List</div>
-        {modalOpen === true && <TaskOptionsModal handleOpen={modalOpen} handleClose={setModalOpen} task={modalInfo}/>}
         <Button variant="contained" onClick={() => setNewCategories(newCategories => newCategories.concat('New'))}>New Category</Button>
         <Button variant="contained" onClick={() => setNewTasks(newTasks => newTasks.concat('New task'))}>New Task</Button>
       </Container>
-      <Categories deleteTask={deleteTask} categorizedTasks={categorizedTasks}
-        openModal={openModal} isMobile={isMobile}/>
+      <Categories handleModalOpen={setModalOpen} isOpen={modalOpen} clickedTask={modalInfo} deleteTask={deleteTask}
+        categorizedTasks={taskData} openModal={openModal} isMobile={isMobile}/>
     </Container>
   )
 };

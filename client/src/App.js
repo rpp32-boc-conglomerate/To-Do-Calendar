@@ -1,14 +1,11 @@
 import React, {useState, useCallback, useEffect} from 'react';
-import { BrowserView, MobileView, isBrowser, isMobile} from 'react-device-detect';
+import { BrowserView, MobileView, isBrowser, isMobile } from 'react-device-detect';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import axios from 'axios'
 import ReactDOM from 'react-dom';
 import moment from 'moment';
 import Registration from './components/authentication/Registrationv2.jsx';
 import Login from './components/authentication/Login.jsx';
-import MyCalendar from './components/calendar/MyCalendar.jsx';
-import ToDoList from './components/to-do-list/ToDoList.jsx';
-import TopBar from './components/TopBar.jsx';
 import Home from './components/Home.jsx';
 
 function App() {
@@ -47,6 +44,8 @@ function App() {
       setEmail(result.data.username);
     })
     .catch((err) => {
+      // Default email for DEMO Landing Page
+      setEmail('1@qq.com');
       console.log(err);
     })
   }, [userEmail])
@@ -107,9 +106,6 @@ function App() {
     },
     [draggedEvent, setDraggedEvent, newEvent]
   )
-  // const naviBar = (<TopBar isMobile={isMobile} onCalendar={onCalendar} setOnCalendar={setOnCalendar}/>)
-  // const toDoList = (<ToDoList addToCalendar={addToCalendar}/>)
-  // const myCalender = (<MyCalendar myEvents={myEvents} moveEvent={moveEvent} resizeEvent={resizeEvent}/>)
 
   // all the props would pass to the homepage: './components/Home.jsx'
   const homePage = (

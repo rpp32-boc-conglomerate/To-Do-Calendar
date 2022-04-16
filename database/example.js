@@ -1,115 +1,132 @@
 module.exports = {
-  example: [
-    {
-      id: 1,
-      category: 'Travel',
-      user_email: 'todocal@gmail.com',
-      tasks: [
-        {
-          id: 1,
-          title: 'Trip to China',
-          description: '5-day business trip to meet with manufacturers',
-          duration: '5 days',
-          start: 'Sat 9 April 2022 09:30:00 UT',
-          end: 'Wed 13 April 2022 09:30:00 UT',
-          category_id: 1,
-          in_calendar: true
-        },
-        // Sat 9 April 2022 09:30:00 UT
-        // April 13, 2022 09:30:00 UT
-        {
-          id: 2,
-          title: 'Trip to Los Angeles',
-          description: 'Meeting with Executives',
-          duration: '6 hours',
-          start: 'Thu 14 April 2022 09:30:00 UT',
-          end: 'Thu 14 April 2022 15:30:00 UT',
-          category_id: 1,
-          in_calendar: false
-        },
-      ]
-    },
-    {
-      id: 2,
-      category: 'Meetings',
-      user_email: 'todocal@gmail.com',
-      tasks: [
-        {
-          id: 3,
-          title: 'Meeting with John',
-          description: 'Discuss product design',
-          duration: '3 hours',
-          start: 'Sun 17 April 2022 11:30:00 UT',
-          end: 'Sun 17 April 2022 14:30:00 UT',
-          category_id: 2,
-          in_calendar: false
-        },
-        {
-          id: 4,
-          title: 'Meeting with JP Morgan',
-          description: 'Discuss marketing strategy',
-          duration: '2 hours',
-          start: 'Fri 15 April 2022 09:30:00 UT',
-          end: 'Fri 15 April 2022 11:30:00 UT',
-          category_id: 2,
-          in_calendar: true
-        },
-        {
-          id: 5,
-          title: 'Meeting with Nike',
-          description: 'Initial business introduction meeting',
-          duration: '2 hours',
-          start: 'Sat 16 April 2022 13:30:00 UT',
-          end: 'Sat 16 April 2022 15:30:00 UT',
-          category_id: 2,
-          in_calendar: false
-        },
-      ]
-    },
-    {
-      id: 3,
-      category: 'Housework',
-      user_email: 'todocal@gmail.com',
-      tasks: [
-        {
-          id: 6,
-          title: 'Dry-cleaning',
-          description: 'Take clothes to dry-cleaners',
-          duration: '30 minutes',
-          start: 'Thu 14 April 2022 18:30:00 UT',
-          end: 'Thu 14 April 2022 19:00:00 UT',
-          category_id: 3,
-          in_calendar: false
-        },
-        {
-          id: 7,
-          title: 'Grocery Shopping',
-          description: 'Shop for groceries at Whole Foods',
-          duration: '2 hours',
-          start: 'Fri 15 April 2022 15:30:00 UT',
-          end: 'Fri 15 April 2022 17:30:00 UT',
-          category_id: 3,
-          in_calendar: true
-        },
-      ]
-    },
-    {
-      id: 4,
-      category: 'Backlog',
-      user_email: 'todocal@gmail.com',
-      tasks: [
-        {
-          id: 8,
-          title: 'Work on App',
-          description: 'Note-taking app for iOS',
-          duration: '4 hours',
-          start: 'Fri 15 April 2022 18:30:00 UT',
-          end: 'Fri 15 April 2022 22:30:00 UT',
-          category_id: 4,
-          in_calendar: false
-        },
-      ]
-    },
-  ],
+  result: {
+    "user_id": 1,
+    "user_email": "1@qq.com",
+    "calendars": [
+      {
+        "calendar_id": 1,
+        "user_id": 1,
+        "calendar_owner": "1@qq.com",
+        "categories": [
+          {
+            "category_id": 1,
+            "category": "Travel",
+            "todoitems": [
+              {
+                "item_id": 1,
+                "title": "meeting with A",
+                "description": "Discuss A",
+                "duration": "01:00:00",
+                "start": "2022-04-15T09:30:20",
+                "end_date": "2022-04-15T10:30:20",
+                "in_calendar": false
+              },
+              {
+                "item_id": 2,
+                "title": "meeting with B",
+                "description": "Discuss B",
+                "duration": "03:00:00",
+                "start": "2022-04-15T09:30:20",
+                "end_date": "2022-04-15T12:30:20",
+                "in_calendar": false
+              },
+              {
+                "item_id": 3,
+                "title": "meeting with C",
+                "description": "Discuss C",
+                "duration": "04:00:00",
+                "start": "2022-04-15T09:30:20",
+                "end_date": "2022-04-15T13:30:20",
+                "in_calendar": true
+              }
+            ]
+          },
+          {
+            "category_id": 2,
+            "category": "housework",
+            "todoitems": [
+              {
+                "item_id": 4,
+                "title": "meeting with D",
+                "description": "Discuss D",
+                "duration": "05:00:00",
+                "start": "2022-04-15T09:30:20",
+                "end_date": "2022-04-15T14:30:20",
+                "in_calendar": true
+              },
+              {
+                "item_id": 5,
+                "title": "meeting with E",
+                "description": "Discuss E",
+                "duration": "06:00:00",
+                "start": "2022-04-15T09:30:20",
+                "end_date": "2022-04-15T15:30:20",
+                "in_calendar": false
+              }
+            ]
+          },
+          {
+            "category_id": 3,
+            "category": "study",
+            "todoitems": [
+              {
+                "item_id": 6,
+                "title": "meeting with F",
+                "description": "Discuss F",
+                "duration": "01:00:00",
+                "start": "2022-04-16T09:30:20",
+                "end_date": "2022-04-15T10:30:20",
+                "in_calendar": false
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "calendar_id": 2,
+        "user_id": 1,
+        "calendar_owner": "2@qq.com",
+        "categories": [
+          {
+            "category_id": 4,
+            "category": "gaming",
+            "todoitems": [
+              {
+                "item_id": 7,
+                "title": "meeting with G",
+                "description": "Discuss G",
+                "duration": "02:00:00",
+                "start": "2022-04-16T09:30:20",
+                "end_date": "2022-04-15T11:30:20",
+                "in_calendar": true
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "calendar_id": 3,
+        "user_id": 1,
+        "calendar_owner": "3@qq.com",
+        "categories": [
+          {
+            "category_id": 5,
+            "category": "school",
+            "todoitems": [
+              {
+                "item_id": 8,
+                "title": "meeting with H",
+                "description": "Discuss H",
+                "duration": "03:00:00",
+                "start": "2022-04-16T09:30:20",
+                "end_date": "2022-04-15T12:30:20",
+                "in_calendar": true
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
 }
 
