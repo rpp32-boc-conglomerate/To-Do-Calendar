@@ -76,7 +76,7 @@ function ToDoList({addToCalendar, isMobile, draggedEvent, setDraggedEvent, handl
         <div style={{width: '80%'}}>To-Do List</div>
         <Button variant="contained" onClick={() => {openSetNewCat(true)}}>New Category</Button>
         <AddCategoryModal open={newCatModalOpen} closeCat={openSetNewCat}/>
-        <Button variant="contained" onClick={() => {openSetNewToDo(true)}}>New Category</Button>
+        <Button variant="contained" onClick={() => {openSetNewToDo(true)}}>New Task</Button>
         <AddToDoModal open={newToDoModalOpen} closeCat={openSetNewToDo}/>
       </Container>
       <div>
