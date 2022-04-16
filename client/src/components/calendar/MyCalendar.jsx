@@ -15,9 +15,9 @@ const MyCalendar = (props) => {
       className='calendar'
       localizer={localizer}
       defaultView="week"
-      events={props.myEvents}
-      startAccessor="start_date"
-      endAccessor="end_date"
+      events={props.myEvents.filter(item => {return item.in_calendar === true})}
+      startAccessor="start"
+      endAccessor="end"
       onSelectEvent={(event) => {
         props.changeTitle(event);
       }}
