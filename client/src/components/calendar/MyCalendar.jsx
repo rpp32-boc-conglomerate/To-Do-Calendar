@@ -4,6 +4,7 @@ import moment from 'moment';
 import './CalendarStyle.scss';
 import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop';
 
+
 const DragAndDropCalendar = withDragAndDrop(Calendar)
 const localizer = momentLocalizer(moment);
 
