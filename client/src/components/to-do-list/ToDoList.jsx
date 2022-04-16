@@ -23,7 +23,7 @@ const useStyles = makeStyles({
   }
 })
 
-function ToDoList({addToCalendar, isMobile, draggedEvent, setDraggedEvent, handleDragStart, myEvents}) {
+function ToDoList({addToCalendar, isMobile, draggedEvent, setDraggedEvent, handleDragStart, taskData}) {
   //a state prop that's an array that has an element for everytime + task or + category is clicked
   const [categorizedTasks, setCategorizedTasks] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
@@ -81,9 +81,8 @@ function ToDoList({addToCalendar, isMobile, draggedEvent, setDraggedEvent, handl
   const handleEditClick = () => {
     setEditing(!editing)
   }
-
-  const events = myEvents.filter(item => {return !item.in_calendar})
-  console.log('events in todolist', events)
+  console.log('taskdata', taskData)
+  // const events = myEvents.filter(item => {return !item.in_calendar})
   return (
     <Container className={isMobile ? classes.mobileMain : classes.desktopMain}>
       <Container sx={{display: 'flex', height: '50px', width: '100%'}}>
@@ -94,17 +93,12 @@ function ToDoList({addToCalendar, isMobile, draggedEvent, setDraggedEvent, handl
         <Button variant="contained" onClick={() => {openSetNewToDo(true)}}>New Category</Button>
         < AddToDoModal open={newToDoModalOpen} closeCat={openSetNewToDo}/>
       </Container>
-<<<<<<< HEAD
       <div>
         <Categories deleteTask={deleteTask} categorizedTasks={categorizedTasks}
         openModal={openModal} isMobile={isMobile} draggedEvent={draggedEvent}
         setDraggedEvent={setDraggedEvent}
-        handleDragStart={handleDragStart} events={events}/>
+        handleDragStart={handleDragStart}/>
       </div>
-=======
-      <Categories handleModalOpen={setModalOpen} isOpen={modalOpen} clickedTask={modalInfo} deleteTask={deleteTask}
-        categorizedTasks={taskData} openModal={openModal} isMobile={isMobile}/>
->>>>>>> f22e95f6c3427b3bb345d76a8cdfcf430fdc7b16
     </Container>
   )
 };

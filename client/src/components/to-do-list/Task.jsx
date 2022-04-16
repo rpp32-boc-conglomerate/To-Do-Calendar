@@ -23,42 +23,14 @@ const useStyles = makeStyles({
   card: {
     display: 'flex',
     border: '1rem solid black'
-  },
-  editableField: {
-    "&[contentEditable=true]:empty:not(:focus):before": {
-      content: "attr(data-text)"
   }
-},
-hover: {
-  "&:hover": {
-    backgroundColor: 'rgb(7, 177, 77, 0.42)'
-  }
-}
-  // editableField:hover {
-  //   display: 'block'
-  // },
+  })
 
-  // edit: {
-  //   padding-top: '1rem',
-  //   padding-right: '1rem',
-  //   position: 'absolute',
-  //   right: '0',
-  //   top: '0',
-  //   display: 'none'
-  // }
-});
 
-<<<<<<< HEAD
 //only want task.in_calendar === false
 function Task({task, openModal, isMobile, deleteTask, draggedEvent, setDraggedEvent, handleDragStart, myEvents}) {
   // console.log('task in task', task )
-=======
-// drag div, need to call hook
-// isDragging returns t or f
-// drag reference which element you want to make draggable
-// every element requires a type
-const Task = ({task, openModal, isMobile, deleteTask, handleModalOpen, isOpen, clickedTask}) => {
->>>>>>> f22e95f6c3427b3bb345d76a8cdfcf430fdc7b16
+
   const [userTask, setUserTask] = useState(task);
   const [expanded, setExpanded] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -70,42 +42,13 @@ const Task = ({task, openModal, isMobile, deleteTask, handleModalOpen, isOpen, c
   // const [modalOpen, setModalOpen] = useState(false);
   // const [modalInfo, setModalInfo] = useState();
 
-  const isDateProvided = (task) => {
-    if (!userTask.start) {
-      setHasDates(false)
-    } else {
-      setHasDates(true)
-    }
-  }
-
-  const updateTaskTime = (startTime) => {
-    const momentTime = new Date(moment(startTime))
-    const taskCopy = userTask
-    taskCopy.start = momentTime
-    setUserTask(taskCopy)
-    console.log('userTask', userTask)
-  };
-
   const handleEdit = () => {
     setIsEditing(!isEditing);
     console.log('isediting')
-  };
-
-  const handleContentEditable = (e, field) => {
-    const taskCopy = userTask;
-    taskCopy[field] = e.target.value;
-    setUserTask(taskCopy);
-  };
-
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
+    //setOpen modal to true
   };
 
   const classes = useStyles();
-
-  useEffect(() => {
-    isDateProvided(task);
-  }, []);
 
   return (
     <Grid item xs={12} lg={12}>
@@ -113,19 +56,17 @@ const Task = ({task, openModal, isMobile, deleteTask, handleModalOpen, isOpen, c
       <Card onDragStart={() => handleDragStart(task)} draggable='true'>
           <CardContent>
             <div style={{display: 'flex', flexDirection: 'row', gap: '5%'}}>
-              <Typography classes={{hover: classes.hover}} variant="body1" contentEditable={isEditing}
-              onChange={(e)=>handleContentEditable(e, 'title')} html={task.title}
-              >{task.title}
+              <Typography>
+                {task.title}
               </Typography>
               {isMobile && addToCal}
             </div>
-            <ContentEditable className={classes.editableField} variant="body1" contentEditable={isEditing}
-            onChange={(e)=>handleContentEditable(e, 'description')} html={task.description}
-            />
+            <Typography>
+                {task.description}
+              </Typography>
             <CardActions>
               <ExpandMoreIcon/>
-              <Button variant="contained" size="small" onClick={() => openModal(task)}>Set Time</Button>
-              <Button variant="contained" size="small" onClick={deleteTask}>Delete</Button>
+              <Button variant="contained" size="small" onClick={() => openModal(task)}>Edit</Button>
             </CardActions>
           </CardContent>
         </Card>

@@ -138,13 +138,10 @@ function App() {
     },
     [draggedEvent, setDraggedEvent, newEvent]
   )
-<<<<<<< HEAD
 
   // const naviBar = (<TopBar isMobile={isMobile} onCalendar={onCalendar} setOnCalendar={setOnCalendar}/>)
   // const toDoList = (<ToDoList addToCalendar={addToCalendar}/>)
   // const myCalender = (<MyCalendar myEvents={myEvents} moveEvent={moveEvent} resizeEvent={resizeEvent}/>)
-=======
->>>>>>> f22e95f6c3427b3bb345d76a8cdfcf430fdc7b16
 
   // all the props would pass to the homepage: './components/Home.jsx'
   const homePage = (
