@@ -4,7 +4,6 @@ import axios from 'axios';
 import MyCalendar from './calendar/MyCalendar.jsx';
 import ToDoList from './to-do-list/ToDoList.jsx';
 import TopBar from './TopBar.jsx';
-import TestToDo from './calendar/TestToDo.jsx';
 
 // For example data:
 import { result } from '../../../database/example.js';
@@ -18,36 +17,73 @@ import { result } from '../../../database/example.js';
 const Home = ({isMobile, isLoggedIn, isLoading, setIsLoggedIn, userEmail, sharedBy, onCalendar, setOnCalendar,
   myEvents, moveEvent, resizeEvent, changeTitle, handleDragStart, draggedEvent, setDraggedEvent, onDropFromOutside}) => {
 
+  const [allTodos, setAllTodos] = useState([]);
 
-
-  // Needs axios requests to get data when first rendering
   // Requires logic and transforming of data to appropriate form to pass down data to calendar and todoList with required information from the appropriate user's calendar
   // All Components lose functionality if "isLoggedIn" is false
 
   // API Request Routes:
-  // GET '/todoList/:userEmail' -> For all data
-  // POST '/todoList/:userEmail' -> Adding or Upserting a "todoList item"
-  // PATCH '/todoList/:userEmail' -> For updating the data -> ex. Moving around item in Calendar / Lengthening item in Calendar / Clicking on "Done" in Modal for Calendar/TodoList
-  // DELETE '/todoList/:userEmail' -> For deleting the data -> Clicking on "Delete" button in Modal
 
-  // The above list is also in server/routes/todoListRouter.js
+  // GET '/todoList/:userEmail' -> For all data
+  const getAllTodos = () => {
+    console.log('Get All Todo Data');
+    // axios.get('/todoList', { params: { userEmail: userEmail } })
+    //   .then((result) => {
+      //     console.log(result);
+      //     setAllTodos(result);
+      //   })
+      //   .catch(err => console.error(err));
+  }
+
+  // POST '/todoList/:userEmail' -> Adding or Upserting a "todoList item"
+  const addTodo = (todo) => {
+    console.log('Add todo: ', todo);
+    // axios.post('/todoList', { params: { userEmail: userEmail }, data: todo })
+    //   .then((result) => {
+    //     console.log(result);
+    //   })
+    //   .catch(err => console.error(err));
+  }
+
+  // PATCH '/todoList/:userEmail' -> For updating the data -> ex. Moving around item in Calendar / Lengthening item in Calendar / Clicking on "Done" in Modal for Calendar/TodoList
+  const updateTodo = (todo) => {
+    console.log('Update Todo: ', todo);
+    // axios.patch('/todoList', { params: { userEmail: userEmail }, data: todo })
+    //   .then((result) => {
+      //     console.log(result);
+      //   })
+      //   .catch(err => console.error(err));
+  }
+
+  // DELETE '/todoList/:userEmail' -> For deleting the data -> Clicking on "Delete" button in Modal
+  const deleteTodo = (todo) => {
+    console.log('Delete Todo: ', todo);
+    // axios.delete('/todoList', { params: { userEmail: userEmail }, data: todo })
+    //   .then((result) => {
+    //     console.log(result);
+    //   })
+    //   .catch(err => console.error(err));
+  }
 
   // For example data / demo landing page if not logged in
   var exampleData = null;
 
+  // if (isLoggedIn === false) {}
   for (var i = 0; i < result.calendars.length; i++) {
     if (result.calendars[i].calendar_owner === '1@qq.com') {
       exampleData = result.calendars[i].categories;
     }
   }
 
-  // if (isLoggedIn === false) {}
+  // For getting all data when rendering
+  // useEffect(() => {
+  //   getAllTodos();
+  // })
 
   // All Components
   const naviBar = (<TopBar isLoading={isLoading} setIsLoggedIn={setIsLoggedIn} isLoggedIn={isLoggedIn} isMobile={isMobile} onCalendar={onCalendar} setOnCalendar={setOnCalendar}/>);
   const toDoList = (<ToDoList isMobile={isMobile} taskData={exampleData} draggedEvent={draggedEvent} setDraggedEvent={setDraggedEvent} handleDragStart={handleDragStart}/>);
   const myCalender = (<MyCalendar myEvents={myEvents} moveEvent={moveEvent} resizeEvent={resizeEvent} changeTitle={changeTitle} onDropFromOutside={onDropFromOutside}/>);
-  const testToDo = (<TestToDo draggedEvent={draggedEvent} setDraggedEvent={setDraggedEvent} handleDragStart={handleDragStart}/>);
 
   // Conditional Rendering based on device
   const renderContent = () => {
@@ -77,12 +113,12 @@ const Home = ({isMobile, isLoggedIn, isLoading, setIsLoggedIn, userEmail, shared
         <div>
           {naviBar}
           {myCalender}
-          {/* {testToDo} */}
           {toDoList}
         </div>
       )
     }
- }
+  }
+
   return (
     <div>
       {renderContent()}

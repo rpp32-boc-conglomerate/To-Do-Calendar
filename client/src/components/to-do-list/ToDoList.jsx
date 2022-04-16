@@ -5,7 +5,6 @@ import Tasks from './Tasks.jsx';
 import TestModal from './testModal.jsx';
 import TaskOptionsModal from '../TaskOptionsModal.jsx';
 import Home from '../Home.jsx'
-import { example } from '../../../../database/example.js';
 import { makeStyles, Container, Button, Modal } from '@material-ui/core';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { DndProvider } from 'react-dnd';
@@ -24,25 +23,15 @@ const useStyles = makeStyles({
 })
 
 function ToDoList({addToCalendar, isMobile, draggedEvent, setDraggedEvent, handleDragStart, taskData}) {
-  //a state prop that's an array that has an element for everytime + task or + category is clicked
   const [categorizedTasks, setCategorizedTasks] = useState([]);
-  const [modalOpen, setModalOpen] = useState(false);
-  const [modalInfo, setModalInfo] = useState();
   const [newCatModalOpen, setNewCatModalOpen] = useState(false);
   const [newToDoModalOpen, setNewToDoModalOpen] = useState(false);
-  //mui width/height based on screen size
-  //make outdiv scrollable/overflow
-  //replace divs w containers
 
   const classes = useStyles();
 
   useEffect(() => {
     setCategorizedTasks(taskData);
   }, []);
-
-  const deleteTask = (todoItem) => {
-    console.log('delete: ', todoItem);
-  }
 
   var addTask = (e) => {
     console.log('addTask');
@@ -54,12 +43,6 @@ function ToDoList({addToCalendar, isMobile, draggedEvent, setDraggedEvent, handl
 
   const setNewTasks = () => {
     console.log('click');
-  }
-
-  const openModal = (todoItem) => {
-    console.log('openModal called: ', todoItem);
-    setModalOpen(true);
-    setModalInfo(todoItem);
   }
 
   const openSetNewCat = (boo) => {
@@ -87,15 +70,14 @@ function ToDoList({addToCalendar, isMobile, draggedEvent, setDraggedEvent, handl
     <Container className={isMobile ? classes.mobileMain : classes.desktopMain}>
       <Container sx={{display: 'flex', height: '50px', width: '100%'}}>
         <div style={{width: '80%'}}>To-Do List</div>
-        {modalOpen === true && <TaskOptionsModal handleOpen={modalOpen} handleClose={setModalOpen} task={modalInfo}/>}
         <Button variant="contained" onClick={() => {openSetNewCat(true)}}>New Category</Button>
-        < AddCategoryModal open={newCatModalOpen} closeCat={openSetNewCat}/>
+        <AddCategoryModal open={newCatModalOpen} closeCat={openSetNewCat}/>
         <Button variant="contained" onClick={() => {openSetNewToDo(true)}}>New Category</Button>
-        < AddToDoModal open={newToDoModalOpen} closeCat={openSetNewToDo}/>
+        <AddToDoModal open={newToDoModalOpen} closeCat={openSetNewToDo}/>
       </Container>
       <div>
-        <Categories deleteTask={deleteTask} categorizedTasks={categorizedTasks}
-        openModal={openModal} isMobile={isMobile} draggedEvent={draggedEvent}
+        <Categories categorizedTasks={categorizedTasks}
+        isMobile={isMobile} draggedEvent={draggedEvent}
         setDraggedEvent={setDraggedEvent}
         handleDragStart={handleDragStart}/>
       </div>

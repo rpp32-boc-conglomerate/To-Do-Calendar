@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-function Category({tasks, addTask, openModal, isMobile, deleteTask, draggedEvent, setDraggedEvent, handleDragStart}) {
+function Category({tasks, addTask, isMobile, draggedEvent, setDraggedEvent, handleDragStart}) {
   const classes = useStyles();
   const [totalTime, setTotalTime] = useState(0);
   const {name} = tasks;
@@ -29,9 +29,8 @@ function Category({tasks, addTask, openModal, isMobile, deleteTask, draggedEvent
           }}>Add Task</Button>
         </Container>
         <Container sx={{ display: 'inline-block'}}>
-          <Tasks tasks={tasks} deleteTask={deleteTask} openModal={openModal} isMobile={isMobile}
-          draggedEvent={draggedEvent}
-          setDraggedEvent={setDraggedEvent} handleDragStart={handleDragStart}/>
+          <Tasks tasks={tasks} isMobile={isMobile}
+          draggedEvent={draggedEvent} setDraggedEvent={setDraggedEvent} handleDragStart={handleDragStart}/>
         </Container>
     </Paper>
   </Container>
