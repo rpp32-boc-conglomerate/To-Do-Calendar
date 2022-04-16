@@ -4,7 +4,8 @@ import moment from 'moment';
 import ContentEditable from 'react-contenteditable';
 import { Button, Grid, Card, CardHeader, CardContent, CardActions, Collapse, makeStyles, Typography, Toolbar, TextField,  TextareaAutosize, Stack } from '@material-ui/core';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-const TaskOptionsModal = require('../TaskOptionsModal.jsx');
+import TaskOptionsModal from '../TaskOptionsModal.jsx';
+
 //on hover over editable field -- pen icon or underline
 const useStyles = makeStyles({
   grid: {
@@ -47,9 +48,17 @@ hover: {
   // }
 });
 
+<<<<<<< HEAD
 //only want task.in_calendar === false
 function Task({task, openModal, isMobile, deleteTask, draggedEvent, setDraggedEvent, handleDragStart, myEvents}) {
   // console.log('task in task', task )
+=======
+// drag div, need to call hook
+// isDragging returns t or f
+// drag reference which element you want to make draggable
+// every element requires a type
+const Task = ({task, openModal, isMobile, deleteTask, handleModalOpen, isOpen, clickedTask}) => {
+>>>>>>> f22e95f6c3427b3bb345d76a8cdfcf430fdc7b16
   const [userTask, setUserTask] = useState(task);
   const [expanded, setExpanded] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -57,7 +66,9 @@ function Task({task, openModal, isMobile, deleteTask, draggedEvent, setDraggedEv
   const [startTime, setStartTime] = useState(new Date());
   const [endTime, setEndTime] = useState(new Date(moment(Date.now()).add(2, 'hours')));
 
-  const addToCal = <Button variant="contained" size="small" touchstart={openModal} >Add To Calendar</Button>;
+  // For Modal opening and closing
+  // const [modalOpen, setModalOpen] = useState(false);
+  // const [modalInfo, setModalInfo] = useState();
 
   const isDateProvided = (task) => {
     if (!userTask.start) {
@@ -117,7 +128,7 @@ function Task({task, openModal, isMobile, deleteTask, draggedEvent, setDraggedEv
               <Button variant="contained" size="small" onClick={deleteTask}>Delete</Button>
             </CardActions>
           </CardContent>
-      </Card>
+        </Card>
       </Grid>
     </Grid>
   );
