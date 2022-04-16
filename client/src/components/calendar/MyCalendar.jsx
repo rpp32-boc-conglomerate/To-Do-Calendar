@@ -11,23 +11,23 @@ const localizer = momentLocalizer(moment);
 
 const MyCalendar = (props) => {
   return (
-    <Container>
-      <DragAndDropCalendar
-        className='calendar'
-        localizer={localizer}
-        defaultView="week"
-        events={props.myEvents}
-        startAccessor="start"
-        endAccessor="end"
-        onSelectEvent={(event) => {
-          props.changeTitle(event);
-        }}
-        onEventDrop={props.moveEvent}
-        onEventResize={props.resizeEvent}
-        onDropFromOutside={props.onDropFromOutside}
-        style={{ height: 1000 }}
-      />
-    </Container>
+    <DragAndDropCalendar
+      className='calendar'
+      localizer={localizer}
+      defaultView="week"
+      events={props.myEvents.filter(item => {return item.in_calendar === true})}
+      startAccessor="start_date"
+      endAccessor="end_date"
+      onSelectEvent={(event) => {
+        props.changeTitle(event);
+      }}
+      min={new Date(moment().hour(6).minute(0))}
+      max={new Date(moment().hour(23).minute(0))}
+      onEventDrop={props.moveEvent}
+      onEventResize={props.resizeEvent}
+      onDropFromOutside={props.onDropFromOutside}
+      style={{ height: 1000 }}
+    />
   )
 }
 
