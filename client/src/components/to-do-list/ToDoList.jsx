@@ -74,13 +74,12 @@ function ToDoList({isMobile, taskData, updateTodo, deleteTodo, addTodo}) {
     <Container className={isMobile ? classes.mobileMain : classes.desktopMain}>
       <Container sx={{display: 'flex', height: '50px', width: '100%'}}>
         <div style={{width: '80%'}}>To-Do List</div>
-        {modalOpen === true && <TaskOptionsModal handleOpen={modalOpen} handleClose={setModalOpen} task={modalInfo}/>}
         <Button variant="contained" onClick={() => {openSetNewCat(true)}}>New Category</Button>
         <AddCategoryModal open={newCatModalOpen} closeCat={openSetNewCat}/>
         <Button variant="contained" onClick={() => {openSetNewToDo(true)}}>New Category</Button>
         <AddToDoModal open={newToDoModalOpen} closeCat={openSetNewToDo}/>
       </Container>
-      <Categories clickedTask={modalInfo} updateTodo={updateTodo} deleteTodo={deleteTodo} categorizedTasks={taskData} isMobile={isMobile}/>
+      <Categories clickedTask={categorizedTasks} updateTodo={updateTodo} deleteTodo={deleteTodo} categorizedTasks={taskData} isMobile={isMobile}/>
     </Container>
   )
 };
