@@ -15,6 +15,7 @@ todoListRouter.route('/:userEmail').get((req, res) => {
   console.log('toDO route');
   res.send('userEmail');
 })
+//email will be parameter of call
 
 todoListRouter.get((req, res) => {
   console.log('toDo route');
