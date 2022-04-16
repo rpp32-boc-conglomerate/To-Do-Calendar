@@ -43,5 +43,3 @@ where user_email = $1;
 `
 
 }
-
-//just trying to get git to recognize this file

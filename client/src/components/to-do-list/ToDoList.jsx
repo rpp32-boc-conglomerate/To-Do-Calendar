@@ -91,7 +91,7 @@ function ToDoList({isMobile, taskData}) {
         {modalOpen === true && <TaskOptionsModal handleOpen={modalOpen} handleClose={setModalOpen} task={modalInfo}/>}
         <Button variant="contained" onClick={() => {openSetNewCat(true)}}>New Category</Button>
         < AddCategoryModal open={newCatModalOpen} closeCat={openSetNewCat}/>
-        <Button variant="contained" onClick={() => {openSetNewToDo(true)}}>New Category</Button>
+        <Button variant="contained" onClick={() => {openSetNewToDo(true)}}>New Task</Button>
         < AddToDoModal open={newToDoModalOpen} closeCat={openSetNewToDo}/>
       </Container>
       <Categories handleModalOpen={setModalOpen} isOpen={modalOpen} clickedTask={modalInfo} deleteTask={deleteTask}
