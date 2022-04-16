@@ -29,25 +29,12 @@ const useStyles = makeStyles({
 // isDragging returns t or f
 // drag reference which element you want to make draggable
 // every element requires a type
-const Task = ({task, openModal, isMobile, deleteTask, handleModalOpen, isOpen, clickedTask}) => {
+const Task = ({task, isMobile, clickedTask, updateTodo, deleteTodo}) => {
   const [userTask, setUserTask] = useState(task);
-  const [expanded, setExpanded] = useState(false);
-  const [isEditing, setIsEditing] = useState(false);
-  const [hasDates, setHasDates] = useState(false);
-  const [startTime, setStartTime] = useState(new Date());
-  const [endTime, setEndTime] = useState(new Date('2018-01-01T00:00:00.000Z'));
 
   // For Modal opening and closing
-  // const [modalOpen, setModalOpen] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
   // const [modalInfo, setModalInfo] = useState();
-
-  const isDateProvided = (task) => {
-    if (!userTask.start) {
-      setHasDates(false)
-    } else {
-      setHasDates(true)
-    }
-  }
 
   const updateTaskTime = (startTime) => {
     const momentTime = moment(startTime).format();
@@ -57,43 +44,22 @@ const Task = ({task, openModal, isMobile, deleteTask, handleModalOpen, isOpen, c
     setUserTask(taskCopy);
   };
 
-  const handleEdit = () => {
-    setIsEditing(!isEditing);
-  };
-
-  const handleContentEditable = (e, field) => {
-    const taskCopy = userTask;
-    taskCopy[field] = e.target.value;
-    setUserTask(taskCopy);
-  };
-
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
-  };
-
   const classes = useStyles();
-
-  useEffect(() => {
-    isDateProvided(task);
-  }, []);
 
   return (
     <Grid item xs={12} lg={12}>
       <Grid item xs={12}>
         <Card>
-          {isOpen === true && <TaskOptionsModal handleModalOpen={handleModalOpen} isOpen={isOpen} task={task}/>}
+          {modalOpen === true && <TaskOptionsModal setModalOpen={setModalOpen} modalOpen={modalOpen} task={task} updateTodo={updateTodo} deleteTodo={deleteTodo} />}
           <CardContent>
             <div style={{display: 'flex', flexDirection: 'row', gap: '5%'}}>
-              <ContentEditable variant="body1" contentEditable={isEditing}
-              onChange={(e)=>handleContentEditable(e, 'title')} html={task.title}
+              <ContentEditable variant="body1" html={task.title}
               />
             </div>
-            <ContentEditable variant="body1" contentEditable={isEditing}
-            onChange={(e)=>handleContentEditable(e, 'description')} html={task.description}
+            <ContentEditable variant="body1" html={task.description}
             />
             <CardActions>
-              <ExpandMoreIcon/>
-              <Button variant="contained" size="small" onClick={() => openModal(task)}>Edit</Button>
+              <Button variant="contained" size="small" onClick={() => setModalOpen(true)}>Edit</Button>
             </CardActions>
           </CardContent>
         </Card>
