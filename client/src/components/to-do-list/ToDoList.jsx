@@ -20,7 +20,7 @@ const useStyles = makeStyles({
   }
 })
 
-function ToDoList({isMobile, taskData}) {
+function ToDoList({isMobile, taskData, updateTodo, deleteTodo}) {
   // unknown prop for todolist: addToCalendar
 
   //a state prop that's an array that has an element for everytime + task or + category is clicked
@@ -37,10 +37,6 @@ function ToDoList({isMobile, taskData}) {
     setCategorizedTasks(taskData);
   }, []);
 
-  const deleteTask = (todoItem) => {
-    console.log('delete: ', todoItem);
-  }
-
   var addTask = (e) => {
     console.log('addTask');
   }
@@ -51,12 +47,6 @@ function ToDoList({isMobile, taskData}) {
 
   const setNewTasks = () => {
     console.log('click');
-  }
-
-  const openModal = (todoItem) => {
-    console.log('openModal called: ', todoItem);
-    setModalOpen(true);
-    setModalInfo(todoItem);
   }
 
   const handleEditClick = () => {
@@ -70,8 +60,7 @@ function ToDoList({isMobile, taskData}) {
         <Button variant="contained" onClick={() => setNewCategories(newCategories => newCategories.concat('New'))}>New Category</Button>
         <Button variant="contained" onClick={() => setNewTasks(newTasks => newTasks.concat('New task'))}>New Task</Button>
       </Container>
-      <Categories handleModalOpen={setModalOpen} isOpen={modalOpen} clickedTask={modalInfo} deleteTask={deleteTask}
-        categorizedTasks={taskData} openModal={openModal} isMobile={isMobile}/>
+      <Categories clickedTask={modalInfo} updateTodo={updateTodo} deleteTodo={deleteTodo} categorizedTasks={taskData} isMobile={isMobile}/>
     </Container>
   )
 };
