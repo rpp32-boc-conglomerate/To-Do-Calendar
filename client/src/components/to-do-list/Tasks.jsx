@@ -1,11 +1,11 @@
 import React from 'react';
 import Task from './Task.jsx';
 
-function Tasks ({tasks, openModal, isMobile, deleteTask, handleModalOpen, isOpen, clickedTask}) {
+function Tasks ({tasks, isMobile, updateTodo, deleteTodo, clickedTask}) {
   return (
     tasks.map((task, i) => {
       if (task.in_calendar === false) {
-        return (<Task key={i} task={task} openModal={openModal} deleteTask={deleteTask} handleModalOpen={handleModalOpen} isOpen={isOpen} clickedTask={clickedTask}/>)
+        return (<Task key={i} task={task} clickedTask={clickedTask} updateTodo={updateTodo} deleteTodo={deleteTodo} />)
       }
     })
   )
