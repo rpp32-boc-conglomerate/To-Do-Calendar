@@ -106,3 +106,6 @@ typings/
 *.woff
 
 *.pem
+
+.DS_Store
+
