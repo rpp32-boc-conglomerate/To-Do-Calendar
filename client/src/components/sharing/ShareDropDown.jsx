@@ -62,21 +62,12 @@ export default function DisplaySharedWithUserDropdown() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [formErr, setFormErr] = useState('');
   const open = Boolean(anchorEl);
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
   const [shares, setShares] = React.useState(['boc@isalmostdone.com', 'nate@conglomerate.com',
   'excitedtobe@free.com']);
 
-  const handleChange = (e) => {
-    setFormErr('');
-    const { name, value } = e.target;
-      setState((prevState) => ({
-        ...prevState,
-        [name]: value,
-      }))
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
   };
-
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -89,6 +80,19 @@ export default function DisplaySharedWithUserDropdown() {
 
     setShares(newShares);
   };
+
+
+  const handleEmailAdd = (email) => {
+    const newShares = [...shares];
+
+    console.log('email:', email);
+
+    newShares.push(email);
+
+    setShares(newShares);
+  };
+
+
 
   return (
     <div>
@@ -104,6 +108,7 @@ export default function DisplaySharedWithUserDropdown() {
       >
         Share
       </Button>
+
       <ShareMenu
         id="shared-with-user-menu"
         MenuListProps={{
@@ -113,7 +118,9 @@ export default function DisplaySharedWithUserDropdown() {
         open={open}
         onClose={handleClose}
       >
-        <ShareList emailArray={shares} removeEmail={handleEmailRemove}/>
+        <ShareWithEmail emailArray={shares} email={handleEmailAdd}/>
+        <Divider sx={{ my: 0.8 }} />
+        <ShareList emailArray={shares} email={handleEmailRemove}/>
       </ShareMenu>
     </div>
   );

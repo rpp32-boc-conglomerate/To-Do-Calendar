@@ -7,27 +7,12 @@ import ListItemText from '@mui/material/ListItemText';
 import Checkbox from '@mui/material/Checkbox';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 
-export default function DisplaySharedWithUserItem() {
-  const [shares, setShares] = React.useState(['boc@isalmostdone.com', 'nate@conglomerate.com',
-  'excitedtobe@free.com']);
-
-  // array of shared emails
-
-
-  const handleEmailRemove = (email) => () => {
-    const currentIndex = shares.indexOf(email);
-    const newShares = [...shares];
-
-    newShares.splice(currentIndex, 1);
-
-    setShares(newShares);
-  };
-
+export default function DisplaySharedWithUserItem(props) {
 
   return (
     <div>
       <List dense sx={{ width: '100%', maxWidth: '100%', bgcolor: 'background.paper' }}>
-      {shares.map((email) => {
+      {props.emailArray.map((email) => {
         const labelId = `shared-list-label-${email}`;
         return (
           <ListItem
@@ -35,7 +20,7 @@ export default function DisplaySharedWithUserItem() {
             secondaryAction={
               <RemoveCircleIcon
                 edge="end"
-                onClick={handleEmailRemove(email)}
+                onClick={props.email(email)}
 
               />
             }

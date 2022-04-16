@@ -6,7 +6,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import Checkbox from '@mui/material/Checkbox';
 
-export default function DisplaySharedWithUserItem() {
+export default function DisplaySharedWithUserItem(props) {
   const [checked, setChecked] = React.useState([0]);
 
   // array of shared emails
