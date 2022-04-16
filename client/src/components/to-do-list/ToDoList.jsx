@@ -20,7 +20,7 @@ const useStyles = makeStyles({
     width: '45%',
     display: 'inline-block'
   }
-})
+});
 
 function ToDoList({isMobile, taskData, updateTodo, deleteTodo, addTodo}) {
   // unknown prop for todolist: addToCalendar

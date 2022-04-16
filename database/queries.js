@@ -38,8 +38,8 @@ module.exports = {
         where calendars.user_id = users.user_id
     ) d
   ) as calendars
-from users
-where user_email = $1;
-`
+  from users
+  where user_email = $1;
+  `
 
 }
