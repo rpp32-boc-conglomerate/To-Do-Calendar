@@ -75,5 +75,18 @@ where user_email = $1;
   in_calendar = $6
   where id = $7;
   `,
-
+  deleteItem: `
+  DELETE FROM todoItems
+  WHERE id = $1;
+  `,
+  alterItem: `
+  ALTER TABLE todoitems
+  DROP CONSTRAINT fk_category,
+  ADD CONSTRAINT fk_category FOREIGN KEY (category_id)
+      REFERENCES categories (category_id) ON DELETE CASCADE
+  `,
+  deleteCategory: `
+  DELETE FROM categories
+  WHERE category_id = $1;
+  `,
 }

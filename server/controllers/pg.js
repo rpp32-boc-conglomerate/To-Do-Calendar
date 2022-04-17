@@ -85,10 +85,41 @@ const updateItem = (title, description, duration, start, end_date, in_calendar, 
   })
 };
 
+const deleteItem = (itemId, callback) => {
+  (async () => {
+    const client = await pool.connect()
+    try {
+      const result = await client.query(query.deleteItem, [itemId]);
+      callback(null, result);
+    } finally {
+      client.release();
+    }
+  })().catch((err) => {
+    console.log(err.stack)
+  })
+};
+
+const deleteCategory = (categoryId, callback) => {
+  (async () => {
+    const client = await pool.connect()
+    try {
+      await client.query(query.alterItem);
+      const result = await client.query(query.deleteCategory, [categoryId]);
+      callback(null, result);
+    } finally {
+      client.release();
+    }
+  })().catch((err) => {
+    console.log(err.stack)
+  })
+};
+
 module.exports = {
   getInfo,
   postCategory,
   postItem,
   updateCategory,
-  updateItem
+  updateItem,
+  deleteItem,
+  deleteCategory
 }
