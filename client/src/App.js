@@ -11,7 +11,7 @@ import { example } from './../../database/example.js'
 function App() {
   const [currentPage, changePage] = useState("home");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [userEmail, setEmail] = useState(null);
 
   useEffect(() => {
