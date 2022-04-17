@@ -3,7 +3,7 @@
 import React from 'react';
 import Category from './Category.jsx';
 
-function Categories({addTask, isMobile, categorizedTasks,
+function Categories({addTask, openModal, isMobile, categorizedTasks, deleteTask,
   draggedEvent, setDraggedEvent, handleDragStart, events}) {
 
   return(

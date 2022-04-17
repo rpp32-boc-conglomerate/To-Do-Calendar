@@ -64,20 +64,18 @@ function ToDoList({addToCalendar, isMobile, draggedEvent, setDraggedEvent, handl
   const handleEditClick = () => {
     setEditing(!editing)
   }
-  console.log('taskdata', taskData)
-  // const events = myEvents.filter(item => {return !item.in_calendar})
+  // console.log('taskdata', taskData)
   return (
     <Container className={isMobile ? classes.mobileMain : classes.desktopMain}>
       <Container sx={{display: 'flex', height: '50px', width: '100%'}}>
         <div style={{width: '80%'}}>To-Do List</div>
         <Button variant="contained" onClick={() => {openSetNewCat(true)}}>New Category</Button>
         <AddCategoryModal open={newCatModalOpen} closeCat={openSetNewCat}/>
-        <Button variant="contained" onClick={() => {openSetNewToDo(true)}}>New Category</Button>
+        <Button variant="contained" onClick={() => {openSetNewToDo(true)}}>New Task</Button>
         <AddToDoModal open={newToDoModalOpen} closeCat={openSetNewToDo}/>
       </Container>
       <div>
-        <Categories categorizedTasks={categorizedTasks}
-        isMobile={isMobile} draggedEvent={draggedEvent}
+        <Categories categorizedTasks={categorizedTasks} isMobile={isMobile} draggedEvent={draggedEvent}
         setDraggedEvent={setDraggedEvent}
         handleDragStart={handleDragStart}/>
       </div>

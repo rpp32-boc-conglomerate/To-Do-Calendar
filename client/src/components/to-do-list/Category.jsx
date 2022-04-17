@@ -16,7 +16,7 @@ function Category({tasks, addTask, isMobile, draggedEvent, setDraggedEvent, hand
   const classes = useStyles();
   const [totalTime, setTotalTime] = useState(0);
   const {name} = tasks;
-  console.log('tasks in category', tasks)
+  // console.log('tasks in category', tasks)
   return (
     <Container>
       <Paper elevation={2} className={classes.paper}>

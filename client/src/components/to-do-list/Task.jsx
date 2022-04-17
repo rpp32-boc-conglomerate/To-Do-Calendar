@@ -26,39 +26,31 @@ const useStyles = makeStyles({
   }
   })
 
-
-//only want task.in_calendar === false
-function Task({task, isMobile, draggedEvent, setDraggedEvent, handleDragStart, myEvents}) {
-  // console.log('task in task', task )
+function Task({task, isMobile, deleteTask, draggedEvent, setDraggedEvent, handleDragStart, clickedTask, updateTodo, deleteTodo}) {
+  // console.log('task in task', task)
+  const [userTask, setUserTask] = useState(task);
 
   // For Modal opening and closing
   const [modalOpen, setModalOpen] = useState(false);
   // const [modalInfo, setModalInfo] = useState();
-
-  const updateTaskTime = (startTime) => {
-    const momentTime = moment(startTime).format();
-    let newStart = new Intl.DateTimeFormat('en-US', {dateStyle: 'full', timeStyle: 'long'}).format(startTime);
-    const taskCopy = userTask;
-    taskCopy.start = newStart;
-    setUserTask(taskCopy);
-  };
-
-
 
   const classes = useStyles();
 
   return (
     <Grid item xs={12} lg={12}>
       <Grid item xs={12}>
-        <Card>
+        <Card onDragStart={() => handleDragStart(task)} draggable='true'>
           {modalOpen === true && <TaskOptionsModal setModalOpen={setModalOpen} modalOpen={modalOpen} task={task} updateTodo={updateTodo} deleteTodo={deleteTodo} />}
           <CardContent>
             <div style={{display: 'flex', flexDirection: 'row', gap: '5%'}}>
-              <ContentEditable variant="body1" html={task.title}
-              />
+              <Typography>
+                {task.title}
+              </Typography>
+              {isMobile && addToCal}
             </div>
-            <ContentEditable variant="body1" html={task.description}
-            />
+            <Typography>
+                {task.description}
+              </Typography>
             <CardActions>
               <Button variant="contained" size="small" onClick={() => setModalOpen(true)}>Edit</Button>
             </CardActions>
