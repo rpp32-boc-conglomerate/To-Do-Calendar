@@ -37,10 +37,6 @@ var findUserByEmail = async function (email, cb) {
 }
 
 
-var findUserById = function (id) {
-  return User.findOne( {googleId: id} );
-}
-
 var addNewUser = async function (data, cb) {
     var newUser = new User(data);
     newUser.save(function (err) {
