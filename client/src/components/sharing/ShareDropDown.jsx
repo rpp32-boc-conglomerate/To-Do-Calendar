@@ -14,6 +14,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import Checkbox from '@mui/material/Checkbox';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
+import axios from 'axios';
 
 const ShareMenu = styled((props) => (
   <Menu
@@ -58,12 +59,38 @@ const ShareMenu = styled((props) => (
 }));
 
 
-export default function DisplaySharedWithUserDropdown() {
+function DisplaySharedWithUserDropdown({userEmail}) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [formErr, setFormErr] = useState('');
   const open = Boolean(anchorEl);
-  const [shares, setShares] = React.useState(['boc@isalmostdone.com', 'nate@conglomerate.com',
-  'excitedtobe@free.com']);
+  var sharedEmailsArray = ['boc@isalmostdone.com', 'nate@conglomerate.com',
+  'excitedtobe@free.com'];
+  const [shares, setShares] = useState(sharedEmailsArray);
+  const [sharesCheck, setSharesCheck] = useState(sharedEmailsArray.toString());
+  const [currentUser, setCurrentUser] = useState('');
+
+  if (currentUser !== userEmail) {
+    setCurrentUser(userEmail);
+  }
+
+  useEffect(async () => {
+    await axios.get('http://localhost:3000/share/sharedByUser', {
+      params: {email: userEmail},
+      withCredentials: true
+
+    }).then((values) => {
+      console.log('sharedByUser values:', values);
+      setShares(values.data);
+      setSharesCheck((values.data).toString());
+
+    }).catch((err) => {
+      console.log('err');
+      console.log(err);
+      setSharesCheck(sharedEmailsArray.toString());
+      setCurrentUser(null);
+    });
+    return () => {};
+  }, [sharesCheck, currentUser]);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -72,26 +99,31 @@ export default function DisplaySharedWithUserDropdown() {
     setAnchorEl(null);
   };
 
-  const handleEmailRemove = (email) => () => {
-    const currentIndex = shares.indexOf(email);
-    const newShares = [...shares];
+  const handleEmailRemove = (e) => async () => {
+    const currentIndex = shares.indexOf(e);
+    console.log('in handleEmailRemove');
+    console.log('expecting email: ', e);
 
-    newShares.splice(currentIndex, 1);
+    await axios.delete('http://localhost:3000/share/deleteFromShares', {
+      params: {email: e},
+      withCredentials: true
+    }).then((result) => {
+      const newShares = [...shares];
+      newShares.splice(currentIndex, 1);
 
-    setShares(newShares);
+      setShares(newShares);
+    }).catch((err) => {
+      console.log(err);
+    });
   };
 
 
-  const handleEmailAdd = (email) => {
+  const handleEmailAdd = (e) => {
     const newShares = [...shares];
-
-    console.log('email:', email);
-
-    newShares.push(email);
+    newShares.push(e);
 
     setShares(newShares);
   };
-
 
 
   return (
@@ -120,8 +152,10 @@ export default function DisplaySharedWithUserDropdown() {
       >
         <ShareWithEmail emailArray={shares} email={handleEmailAdd}/>
         <Divider sx={{ my: 0.8 }} />
-        <ShareList emailArray={shares} email={handleEmailRemove}/>
+        <ShareList emailArray={shares} emailRemove={handleEmailRemove}/>
       </ShareMenu>
     </div>
   );
 }
+
+export default DisplaySharedWithUserDropdown;

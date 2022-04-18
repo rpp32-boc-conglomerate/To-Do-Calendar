@@ -12,22 +12,22 @@ export default function DisplaySharedWithUserItem(props) {
   return (
     <div>
       <List dense sx={{ width: '100%', maxWidth: '100%', bgcolor: 'background.paper' }}>
-      {props.emailArray.map((email) => {
-        const labelId = `shared-list-label-${email}`;
+      {props.emailArray.map((val, index) => {
+        const labelId = `shared-list-label-${val.shared_to}`;
         return (
           <ListItem
-            key={email}
+            key={index}
             secondaryAction={
               <RemoveCircleIcon
                 edge="end"
-                onClick={props.email(email)}
+                onClick={props.emailRemove(val)}
 
               />
             }
             disablePadding
           >
           <ListItemButton dense>
-            <ListItemText id={labelId} primary={`${email}`} />
+            <ListItemText id={labelId} primary={`${val.shared_to}`} />
           </ListItemButton>
           </ListItem>
         );
