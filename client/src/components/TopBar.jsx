@@ -30,7 +30,7 @@ const TopBar = ({isLoading, setIsLoggedIn, isLoggedIn, isMobile, onCalendar, set
   const navigate = useNavigate();
   const ShareMenu = (<ShareWithOthers userEmail={userEmail}/>);
   const ViewShared = (<ViewShares userEmail={userEmail}/>);
-  console.log('>>>>>TOP:', userEmail);
+  // console.log('>>>>>TOP:', userEmail);
 
   if (!isMobile) {
     pages = []

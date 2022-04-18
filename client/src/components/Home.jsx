@@ -15,13 +15,6 @@ import { result } from '../../../database/example.js';
   // const testToDo = (<TestToDo draggedEvent={draggedEvent} setDraggedEvent={setDraggedEvent} handleDragStart={handleDragStart}/>)
   // condition redering base on device
 const Home = ({isMobile, isLoggedIn, isLoading, setIsLoggedIn, userEmail, sharedBy}) => {
-  var exampleData = null;
-  for (var i = 0; i < result.calendars.length; i++) {
-    if (result.calendars[i].calendar_owner === '1@qq.com') {
-      exampleData = result.calendars[i].categories;
-    }
-  }
-
   const [allTodos, setAllTodos] = useState([]);
   const [myEvents, setMyEvents] = useState([]);
   const [onCalendar, setOnCalendar] = useState(false);
@@ -33,19 +26,11 @@ const Home = ({isMobile, isLoggedIn, isLoading, setIsLoggedIn, userEmail, shared
     return item.calendar_owner === '1@qq.com'
   }).map(calendar => {
     return calendar.categories.map(category =>
-      {return category.todoitems})
+      {return category})
     })
-  console.log('toDos', toDos)
-  const items = toDos.map(item => return {
-    const startTime = item.start
-    item.start = new Date(moment(startTime))
-    console.log('starttime', item)
-    const endTime = item.end_date
-    item.end_date = new Date(moment(endTime))
-  })
-  console.log('items', items)
-  setMyEvents(items)
+  setMyEvents(toDos)
   }, [])
+
   // [
   //   {
   //     id: 0,
@@ -200,7 +185,7 @@ const Home = ({isMobile, isLoggedIn, isLoading, setIsLoggedIn, userEmail, shared
 
   // All Components
   const naviBar = (<TopBar isLoading={isLoading} setIsLoggedIn={setIsLoggedIn} isLoggedIn={isLoggedIn} isMobile={isMobile} onCalendar={onCalendar} setOnCalendar={setOnCalendar} userEmail={userEmail}/>);
-  const toDoList = (<ToDoList isMobile={isMobile} taskData={exampleData} draggedEvent={draggedEvent} setDraggedEvent={setDraggedEvent} handleDragStart={handleDragStart}/>);
+  const toDoList = (<ToDoList isMobile={isMobile} taskData={myEvents} draggedEvent={draggedEvent} setDraggedEvent={setDraggedEvent} handleDragStart={handleDragStart}/>);
   const myCalender = (<MyCalendar myEvents={myEvents} moveEvent={moveEvent} resizeEvent={resizeEvent} changeTitle={changeTitle} onDropFromOutside={onDropFromOutside}/>);
 
   // Conditional Rendering based on device

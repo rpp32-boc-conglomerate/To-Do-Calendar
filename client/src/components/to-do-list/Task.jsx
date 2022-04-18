@@ -27,8 +27,11 @@ const useStyles = makeStyles({
   })
 
 function Task({task, isMobile, deleteTask, draggedEvent, setDraggedEvent, handleDragStart, clickedTask, updateTodo, deleteTodo}) {
-  // console.log('task in task', task)
-  const [userTask, setUserTask] = useState(task);
+  // console.log('task in task', ...task)
+  const [userTask, setUserTask] = useState(...task);
+  console.log(userTask)
+
+
 
   // For Modal opening and closing
   const [modalOpen, setModalOpen] = useState(false);
@@ -44,12 +47,12 @@ function Task({task, isMobile, deleteTask, draggedEvent, setDraggedEvent, handle
           <CardContent>
             <div style={{display: 'flex', flexDirection: 'row', gap: '5%'}}>
               <Typography>
-                {task.title}
+                {userTask.title}
               </Typography>
               {isMobile && addToCal}
             </div>
             <Typography>
-                {task.description}
+                {userTask.description}
               </Typography>
             <CardActions>
               <Button variant="contained" size="small" onClick={() => setModalOpen(true)}>Edit</Button>
