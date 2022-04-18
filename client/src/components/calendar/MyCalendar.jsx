@@ -5,24 +5,10 @@ import moment from 'moment';
 import './CalendarStyle.scss';
 import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop';
 
-
 const DragAndDropCalendar = withDragAndDrop(Calendar)
 const localizer = momentLocalizer(moment);
 
-const useStyles = makeStyles({
-  mobileMain: {
-    width: '100%',
-    display: 'inline-block'
-  },
-  desktopMain: {
-    width: '45%',
-    display: 'inline-block'
-  }
-});
-
 const MyCalendar = (props) => {
-  const classes = useStyles();
-
   return (
     <DragAndDropCalendar
       className='calendar'

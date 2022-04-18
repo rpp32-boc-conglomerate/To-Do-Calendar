@@ -45,19 +45,12 @@ const useStyles = makeStyles({
   }
 });
 
-description: "Discuss A"
-duration: "01:00:00"
-end_date: "2022-04-15T10:30:20"
-in_calendar: false
-item_id: 1
-start: "2022-04-15T09:30:20"
-title: "meeting with A"
-
 var TaskOptionsModal = (props) => {
   const [todoTitle, setTodoTitle] = useState(props.task.title);
   const [todoDescription, setTodoDescription] = useState(props.task.description);
   const [startTime, setStartTime] = useState(props.task.start);
   const [endTime, setEndTime] = useState(props.task.end_date);
+  const [inCalendar, setInCalendar] = useState(props.task.in_calendar);
 
   const classes = useStyles();
 
@@ -66,7 +59,8 @@ var TaskOptionsModal = (props) => {
       title: todoTitle,
       description: todoDescription,
       start: startTime,
-      end_date: endTime
+      end_date: endTime,
+      in_calendar: inCalendar
     };
     props.updateTodo(todoToUpdate);
     props.setModalOpen(false);
