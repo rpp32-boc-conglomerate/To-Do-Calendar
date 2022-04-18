@@ -45,4 +45,53 @@ where user_email = $1;
   getSharedWithUser: `SELECT user_email FROM sharedCals WHERE shared_to = $1;`,
   deleteFromShares: `DELETE FROM sharedCals WHERE user_email = $1 AND shared_to = $2 RETURNING *;`,
   userExists: `SELECT user_email FROM users WHERE user_email = $1;`,
+
+  postCategory: `
+    insert into categories (
+      calendar_id,
+      category
+   )
+    VALUES ($1, $2);
+    `,
+  postItem: `
+    insert into todoitems (
+      title,
+      description,
+      duration,
+      start,
+      end_date,
+      in_calendar,
+      category_id
+    )
+    VALUES ($1, $2, $3, $4, $5, $6, $7);
+    `,
+  updateCategory: `
+    update categories
+    set category = $2 where category_id = $1;
+  `,
+  updateItem: `
+    update todoitems
+    set
+    title = $1,
+    description = $2,
+    duration = $3,
+    start = $4,
+    end_date = $5,
+    in_calendar = $6
+    where id = $7;
+    `,
+  deleteItem: `
+    DELETE FROM todoItems
+    WHERE id = $1;
+    `,
+  alterItem: `
+    ALTER TABLE todoitems
+    DROP CONSTRAINT fk_category,
+    ADD CONSTRAINT fk_category FOREIGN KEY (category_id)
+        REFERENCES categories (category_id) ON DELETE CASCADE
+    `,
+  deleteCategory: `
+    DELETE FROM categories
+    WHERE category_id = $1;
+    `,
 }
