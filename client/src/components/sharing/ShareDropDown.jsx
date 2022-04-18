@@ -63,8 +63,7 @@ function DisplaySharedWithUserDropdown({userEmail}) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [formErr, setFormErr] = useState('');
   const open = Boolean(anchorEl);
-  var sharedEmailsArray = ['boc@isalmostdone.com', 'nate@conglomerate.com',
-  'excitedtobe@free.com'];
+  var sharedEmailsArray = ['boc@isalmostdone.com', 'nate@conglomerate.com', 'excitedtobe@free.com'];
   const [shares, setShares] = useState(sharedEmailsArray);
   const [sharesCheck, setSharesCheck] = useState(sharedEmailsArray.toString());
   const [currentUser, setCurrentUser] = useState('');
@@ -102,13 +101,14 @@ function DisplaySharedWithUserDropdown({userEmail}) {
   const handleEmailRemove = (e) => async () => {
     const currentIndex = shares.indexOf(e);
     console.log('in handleEmailRemove');
-    console.log('expecting email: ', e);
+    console.log('expecting email: ', e); // is object
 
     await axios.delete('http://localhost:3000/share/deleteFromShares', {
-      params: {email: e},
+      params: {email: [userEmail, e.shared_to]},
       withCredentials: true
     }).then((result) => {
       const newShares = [...shares];
+      console.log('delete from shares result:', result);
       newShares.splice(currentIndex, 1);
 
       setShares(newShares);

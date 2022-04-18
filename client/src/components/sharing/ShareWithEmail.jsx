@@ -45,7 +45,8 @@ export default function ShareWithEmail(props) {
         [name]: value,
       }))
   };
-  const validation = async (emailVal) => {
+
+  const emailFormValidation = async (emailVal) => {
     console.log(emailVal);
     emailSchema.validate(emailVal).catch((err) => {
       setFormErr(err.errors[0].split(' ')[0]);
@@ -58,13 +59,23 @@ export default function ShareWithEmail(props) {
 
   const updateEmail = (e) => {
     e.preventDefault();
-    if (validation(email.email)) {
+    if (emailFormValidation(email.email)) {
       props.email(email.email);
     } else {
       console.log('invalid email');
     }
-
   }
+
+  // will work on soon
+  // const emailDBValidation = async (emailVal) => {
+  //   emailSchema.validate(emailVal).catch((err) => {
+  //     setFormErr(err.errors[0].split(' ')[0]);
+  //     setErrMsg(err.errors[0])
+  //   });
+  //   let isValid = await emailSchema.isValid(emailVal);
+  //   console.log('isValid:', isValid);
+  //   return isValid;
+  // };
 
   return (
     <>

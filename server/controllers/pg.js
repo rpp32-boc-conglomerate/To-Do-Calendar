@@ -51,10 +51,10 @@ const getSharedByUser = async function (email) {
   }
 };
 
-const deleteFromShares = async function (email) {
+const deleteFromShares = async function (userEmail, emailToDelete) {
   const client = await pool.connect()
   try {
-    return await client.query(query.deleteFromShares, [email]);
+    return await client.query(query.deleteFromShares, userEmail, emailToDelete);
   } catch (err) {
     throw (err);
   } finally {
