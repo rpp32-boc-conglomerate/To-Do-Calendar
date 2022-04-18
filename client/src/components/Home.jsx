@@ -28,23 +28,24 @@ const Home = ({isMobile, isLoggedIn, isLoading, setIsLoggedIn, userEmail, shared
   const [draggedEvent, setDraggedEvent] = useState()
 
 
-  // useEffect(() => {
-  // const toDos = result.calendars.filter(item => {
-  //   return item.calendar_owner === '1@qq.com'
-  // }).map(calendar => {
-  //   return calendar.categories.map(category =>
-  //     {return category.todoitems.flat()})
-  //   })
-  // console.log('toDos', toDos)
-  // const items = toDos.map(item => {
-  //   const startTime = item.start
-  //   item.start = new Date(moment(startTime))
-  //   const endTime = item.end_date
-  //   item.end_date = new Date(moment(endTime))
-  // })
-  // cosole.log('items', items)
-  // setMyEvents(items)
-  // }, [])
+  useEffect(() => {
+  const toDos = result.calendars.filter(item => {
+    return item.calendar_owner === '1@qq.com'
+  }).map(calendar => {
+    return calendar.categories.map(category =>
+      {return category.todoitems})
+    })
+  console.log('toDos', toDos)
+  const items = toDos.map(item => {
+    const startTime = item.start
+    item.start = new Date(moment(startTime))
+    console.log('starttime', item)
+    const endTime = item.end_date
+    item.end_date = new Date(moment(endTime))
+  })
+  console.log('items', items)
+  setMyEvents(items)
+  }, [])
   // [
   //   {
   //     id: 0,

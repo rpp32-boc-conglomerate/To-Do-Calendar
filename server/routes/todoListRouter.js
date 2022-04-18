@@ -23,6 +23,7 @@ todoListRouter.route('/:userEmail').get((req, res) => {
 todoListRouter.route('/:userEmail').post((req, res) => {
   console.log(req.params);
   const userEmail = req.params
+  const item = req.body
   res.send('Todo List Router GET');
 })
 
