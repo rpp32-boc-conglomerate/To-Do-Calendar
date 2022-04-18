@@ -43,6 +43,7 @@ where user_email = $1;
 `,
   getSharedByUser: `SELECT shared_to FROM sharedCals WHERE user_email = $1;`,
   getSharedWithUser: `SELECT user_email FROM sharedCals WHERE shared_to = $1;`,
+  insertToShares: `INSERT INTO sharedCals (user_email, shared_to) VALUES ($1, $2);`,
   deleteFromShares: `DELETE FROM sharedCals WHERE user_email = $1 AND shared_to = $2 RETURNING *;`,
   userExists: `SELECT user_email FROM users WHERE user_email = $1;`,
 

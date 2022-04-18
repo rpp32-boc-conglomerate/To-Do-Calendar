@@ -29,53 +29,34 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 export default function ShareWithEmail(props) {
-  // const [anchorEl, setAnchorEl] = React.useState(null);
   const [formErr, setFormErr] = useState('');
-  const [email, setState] = useState({'email': ''});
+  const [email, setEmail] = useState({'email': ''});
   const [errMsg, setErrMsg] = useState('');
 
-  // const handleClick = (event) => {
-  //   setAnchorEl(event.currentTarget);
-  // };
   const handleChange = (e) => {
     setFormErr('');
     const { name, value } = e.target;
-      setState((prevState) => ({
+      setEmail((prevState) => ({
         ...prevState,
         [name]: value,
       }))
   };
 
   const emailFormValidation = async (emailVal) => {
-    console.log(emailVal);
     emailSchema.validate(emailVal).catch((err) => {
       setFormErr(err.errors[0].split(' ')[0]);
       setErrMsg(err.errors[0])
     });
     let isValid = await emailSchema.isValid(emailVal);
-    console.log('isValid:', isValid);
     return isValid;
   };
 
   const updateEmail = (e) => {
     e.preventDefault();
-    if (emailFormValidation(email.email)) {
-      props.email(email.email);
-    } else {
-      console.log('invalid email');
-    }
+    emailFormValidation(email).then((res) => {
+      props.emailAdd(email.email);
+    });
   }
-
-  // will work on soon
-  // const emailDBValidation = async (emailVal) => {
-  //   emailSchema.validate(emailVal).catch((err) => {
-  //     setFormErr(err.errors[0].split(' ')[0]);
-  //     setErrMsg(err.errors[0])
-  //   });
-  //   let isValid = await emailSchema.isValid(emailVal);
-  //   console.log('isValid:', isValid);
-  //   return isValid;
-  // };
 
   return (
     <>
@@ -92,7 +73,7 @@ export default function ShareWithEmail(props) {
       />
       <IconButton
         aria-label="add"
-        onClick={updateEmail}
+        onClick={(e) => (updateEmail(e))}
       >
         <AddBoxIcon />
       </IconButton>
