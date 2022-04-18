@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const bcrypt = require("bcrypt");
-const findOrCreate = require('mongoose-findorcreate');
 
 const bocAuth = 'mongodb://localhost:27017/boc-auth';
 const bocAuthOptions = {
@@ -37,19 +36,6 @@ var findUserByEmail = async function (email, cb) {
     }
 }
 
-// const findUserByEmail = async (email, callback) => {
-//   (async () => {
-//     const client = await pool.connect()
-//     try {
-//       const result = await client.query(query.getInfo, [email]);
-//       callback(null, result);
-//     } finally {
-//       client.release();
-//     }
-//   })().catch((err) => {
-//     console.log(err.stack)
-//   })
-// };
 
 var findUserById = function (id) {
   return User.findOne( {googleId: id} );
@@ -67,27 +53,9 @@ var addNewUser = async function (data, cb) {
       }
     });
 }
-var addNewId = function (data) {
-  findUserById(data.googleId).then((user) => {
-    if (!user) {
-      var newUser = new User(data);
-      newUser.save(function (err) {
-        if (err) {
-          console.log(err);
-        };
-      });
-      console.log('new id user created:', newUser);
-    }
-    if (user) {
-      console.log('user already exists with that id:', user);
-      return user;
-    }
-  });
-}
 
 module.exports.connection = connection;
 module.exports.user = User;
 module.exports.addNewUser = addNewUser;
-module.exports.addNewId = addNewId;
 module.exports.findUserByEmail = findUserByEmail;
 

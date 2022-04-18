@@ -55,33 +55,66 @@ passport.use(new GoogleStrategy({
   userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo",
   proxy:true
 },
- function(accessToken, refreshToken, profile, email, cb) {
-  auth.user.findOne({ email: email.emails[0].value }, function (err, result) {
-    if (!result) {
-      console.log('no result')
-      let data = {
-        email: email.emails[0].value,
-        password: null,
-        firstName: email.name.familyName,
-        lastName: email.name.givenName,
-        googleId: email.id
-      };
-      var newUser = new auth.user(data);
-      newUser.save(function (err, result) {
-        if (err) {
-          console.log(err);
-          cb(err);
+ async function(accessToken, refreshToken, profile, email, cb) {
+  try {
+    await auth.findUserByEmail(email.emails[0].value, async (err, response) => {
+      if (err) {
+        console.log('google login err:', err)
+        return cb(err);
+      } else {
+        if (response === null) {
+            let newData = {
+              email: email.emails[0].value,
+              password: null,
+              firstName: email.name.familyName,
+              lastName: email.name.givenName,
+              googleId: email.id
+            };
+            const insertResult = await auth.addNewUser(newData, (err, response) => {
+              if (err) {
+                console.log(err);
+                cb(err);
+              } else {
+                cb(null, response);
+              }
+          });
         } else {
-          cb(null, result);
+          console.log('user already existed:', response);
+          cb(null, response);
         }
-      });
-    } else {
-      console.log('user already existed:', result);
-      cb(null, result);
-    }
-  });
+      }
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Internal Server error Occured");
+  }
 }
 ));
+  // auth.user.findOne({ email: email.emails[0].value }, function (err, result) {
+  //   if (!result) {
+  //     console.log('no result')
+  //     let data = {
+  //       email: email.emails[0].value,
+  //       password: null,
+  //       firstName: email.name.familyName,
+  //       lastName: email.name.givenName,
+  //       googleId: email.id
+  //     };
+  //     var newUser = new auth.user(data);
+  //     newUser.save(function (err, result) {
+  //       if (err) {
+  //         console.log(err);
+  //         cb(err);
+  //       } else {
+  //         cb(null, result);
+  //       }
+  //     });
+  //   } else {
+  //     console.log('user already existed:', result);
+  //     cb(null, result);
+  //   }
+  // });
+
 
 passport.serializeUser(function(user, cb) {
   process.nextTick(function() {
