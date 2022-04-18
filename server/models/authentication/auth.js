@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const bcrypt = require("bcrypt");
 const findOrCreate = require('mongoose-findorcreate');
 
-const bocAuth = 'mongodb://localhost:27017/boc';
+const bocAuth = 'mongodb://localhost:27017/boc-auth';
 const bocAuthOptions = {
   useNewUrlParser: true,
   useUnifiedTopology: true
