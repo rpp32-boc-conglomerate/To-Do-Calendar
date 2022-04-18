@@ -28,6 +28,9 @@ const TopBar = ({userEmail, isLoading, setIsLoggedIn, isLoggedIn, isMobile, onCa
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
   const navigate = useNavigate();
+  const ShareMenu = (<ShareWithOthers userEmail={userEmail}/>);
+  const ViewShared = (<ViewShares userEmail={userEmail}/>);
+  console.log('>>>>>TOP:', userEmail);
 
   if (!isMobile) {
     pages = []
@@ -68,10 +71,10 @@ const TopBar = ({userEmail, isLoading, setIsLoggedIn, isLoggedIn, isMobile, onCa
       <AppBar style={{ background: 'white', marginBottom:'20px'}} position='static'>
         <Toolbar >
           <Box style={{margin: '0 auto', display: "flex", alignItems: 'right' }}>
-            <ShareWithOthers />
+            {ShareMenu}
           </Box>
           <Box sx={{display: "flex", alignItems: 'left'}}>
-            <ViewShares />
+            {ViewShared}
           </Box>
           <Box style={{margin: '0 auto', display: "flex"}}></Box>
           <Box>

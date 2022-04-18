@@ -29,6 +29,54 @@ const getInfo = async (email, callback) => {
   })
 };
 
+const getSharedWithUser = async function (email) {
+  const client = await pool.connect()
+  try {
+    return await client.query(query.getSharedWithUser, [email]);
+  } catch (err) {
+    throw (err);
+  } finally {
+    client.release();
+  }
+};
+
+const getSharedByUser = async function (email) {
+  const client = await pool.connect()
+  try {
+    return await client.query(query.getSharedByUser, [email]);
+  } catch (err) {
+    throw (err);
+  } finally {
+    client.release();
+  }
+};
+
+const deleteFromShares = async function (email) {
+  const client = await pool.connect()
+  try {
+    return await client.query(query.deleteFromShares, [email]);
+  } catch (err) {
+    throw (err);
+  } finally {
+    client.release();
+  }
+};
+
+
+const getSharedTo = async (email) => {
+  (async () => {
+    const client = await pool.connect()
+    try {
+      const result = await client.query(query.getSharedTo, [email]);
+      return result;
+    } finally {
+      client.release();
+    }
+  })().catch((err) => {
+    console.log(err.stack);
+  })
+};
+
 const postCategory = (calendarId, category, callback) => {
   (async () => {
     const client = await pool.connect()

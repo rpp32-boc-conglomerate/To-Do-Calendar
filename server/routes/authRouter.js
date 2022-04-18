@@ -139,7 +139,19 @@ authRouter.route('/success').get((req, res) => {
 
 authRouter.get('/isLoggedIn', (req, res) => {
   let isAuth = req.isAuthenticated();
+<<<<<<< HEAD
   console.log('isLoggedIn auth:', isAuth,  req.session);
+=======
+  // console.log('isLoggedIn auth:', isAuth,  req.session);
+  res.status(200).send(isAuth)
+});
+
+// optimize later with middleware that verifies this and /isloggedin
+authRouter.get('/userEmail', (req, res) => {
+  let isAuth = req.isAuthenticated();
+  // console.log('user:', req.user);
+  // res.locals.currentUser = req.user;
+>>>>>>> 44577b0d6b8e4369762031c78234cf10db652c0a
   if (isAuth) {
     res.status(200).send({loggedIn: isAuth, info: req.session.passport.user.username})
   } else {
@@ -155,8 +167,24 @@ authRouter.route('/failure').get((req, res) => {
 });
 
 
+<<<<<<< HEAD
+=======
+authRouter.route('/').post((req, res) => {
+  // console.log('auth / route');
+  // console.log(req.body);
+  res.send('Login Router POST');
+});
+
+
+
+authRouter.route('/').get((req, res) => {
+  console.log('get signup route');
+  res.send('Signup List Router GET');
+});
+
+>>>>>>> 44577b0d6b8e4369762031c78234cf10db652c0a
 authRouter.get('/logout', function(req, res) {
-  console.log('logout auth:', req.isAuthenticated(), req.session);
+  // console.log('logout auth:', req.isAuthenticated(), req.session);
    req.session.destroy(function (err) {
     res.send(false);
   });
