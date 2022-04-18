@@ -1,3 +1,4 @@
+var moment = require('moment')
 module.exports = {
   result: {
     "user_id": 1,
