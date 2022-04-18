@@ -16,9 +16,10 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
-import img from '../../dist/images/d1.png';
+import img from '../../dist/images/todocal - logo.png';
 import CircularProgress from '@mui/material/CircularProgress';
-import ShareBy from './sharing/SharedBy.jsx';
+import ShareWithOthers from './sharing/ShareDropDown.jsx';
+import ViewShares from './sharing/SharedWithUserDropdown.jsx';
 
 var pages = [];
 const settings = ['Profile','Logout'];
@@ -64,8 +65,15 @@ const TopBar = ({userEmail, isLoading, setIsLoggedIn, isLoggedIn, isMobile, onCa
   return (
     <div>
       <CssBaseline />
-      <AppBar style={{ background: 'white', marginBottom:'20px' }} position='static'>
+      <AppBar style={{ background: 'white', marginBottom:'20px'}} position='static'>
         <Toolbar >
+          <Box style={{margin: '0 auto', display: "flex", alignItems: 'right' }}>
+            <ShareWithOthers />
+          </Box>
+          <Box sx={{display: "flex", alignItems: 'left'}}>
+            <ViewShares />
+          </Box>
+          <Box style={{margin: '0 auto', display: "flex"}}></Box>
           <Box>
             {isMobile && <IconButton
               name={pages[0]}
@@ -77,10 +85,7 @@ const TopBar = ({userEmail, isLoading, setIsLoggedIn, isLoggedIn, isMobile, onCa
               </IconButton>}
           </Box>
           <Box style={{margin: '0 auto', display: "flex"}}>
-            <ShareBy />
-          </Box>
-          <Box style={{margin: '0 auto', display: "flex"}}>
-            <Avatar variant="square" src={img} style={{width:'60px', height:'50px'}}/>
+            <Avatar variant="square" src={img} style={{width:'50px', height:'50px'}}/>
           </Box>
          <Box sx={{ flexGrow: 0 }}>
             {isLoading ? <CircularProgress /> : (isLoggedIn ?
