@@ -34,9 +34,20 @@ shareRouter.route('/sharedByUser').get((req, res) => {
 
 shareRouter.route('/deleteFromShares').delete((req, res) => {
   var email = req.query.email;
-  console.log('delete from shares:', email);
 
   shareDB.deleteFromShares(email).then((result) => {
+    res.send(result.rows);
+  })
+  .catch((err) => {
+    res.sendStatus(500);
+  })
+});
+
+
+shareRouter.route('/insertToShares').post((req, res) => {
+  var email = req.query.email;
+
+  shareDB.insertToShares(email).then((result) => {
     console.log(result);
     res.send(result.rows);
   })
