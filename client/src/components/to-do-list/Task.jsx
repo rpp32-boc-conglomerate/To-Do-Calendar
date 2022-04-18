@@ -29,7 +29,16 @@ const useStyles = makeStyles({
 function Task({task, isMobile, deleteTask, draggedEvent, setDraggedEvent, handleDragStart, clickedTask, updateTodo, deleteTodo}) {
   // console.log('task in task', ...task)
   const [userTask, setUserTask] = useState(...task);
-  console.log(userTask)
+  // console.log('userTask', userTask)
+
+  useEffect(() => {
+    const taskCopy = userTask
+    const startTime = userTask.start
+    const endTime = userTask.end_date
+    taskCopy.start = new Date(startTime)
+    taskCopy.end_date = new Date(endTime)
+    setUserTask(taskCopy)
+  })
 
 
 
@@ -42,8 +51,8 @@ function Task({task, isMobile, deleteTask, draggedEvent, setDraggedEvent, handle
   return (
     <Grid item xs={12} lg={12}>
       <Grid item xs={12}>
-        <Card onDragStart={() => handleDragStart(task)} draggable='true'>
-          {modalOpen === true && <TaskOptionsModal setModalOpen={setModalOpen} modalOpen={modalOpen} task={task} updateTodo={updateTodo} deleteTodo={deleteTodo} />}
+        <Card onDragStart={() => handleDragStart(userTask)} draggable='true'>
+          {modalOpen === true && <TaskOptionsModal setModalOpen={setModalOpen} modalOpen={modalOpen} task={userTask} updateTodo={updateTodo} deleteTodo={deleteTodo} />}
           <CardContent>
             <div style={{display: 'flex', flexDirection: 'row', gap: '5%'}}>
               <Typography>

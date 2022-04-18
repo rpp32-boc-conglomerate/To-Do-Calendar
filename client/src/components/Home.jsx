@@ -30,7 +30,6 @@ const Home = ({isMobile, isLoggedIn, isLoading, setIsLoggedIn, userEmail, shared
     })
   setMyEvents(toDos)
   }, [])
-
   // [
   //   {
   //     id: 0,
@@ -163,20 +162,27 @@ const Home = ({isMobile, isLoggedIn, isLoading, setIsLoggedIn, userEmail, shared
       return newList
     });
   };
+
   const handleDragStart = useCallback((event) => {
-    console.log('dragged event', event)
+    // console.log('dragged event', event)
     setDraggedEvent(event), []
   })
-
 
   const onDropFromOutside = useCallback(
     () => {
       setMyEvents((prev) => {
         const existing = draggedEvent;
-        console.log('existing', existing)
-        existing.in_calendar = !existing.in_calendar;
-        const filtered = prev.filter((ev) => ev.id !== draggedEvent.id);
-        return [...filtered, { ...existing }];
+        const list = prev
+        list.forEach(items => {
+          items.forEach(item => {
+            item.todoitems.forEach(el => {
+              if (el === existing) {
+                el.in_calendar = !el.in_calendar
+              }
+            })
+          })
+        })
+        return list;
       });
       setDraggedEvent(null)
     },
