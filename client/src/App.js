@@ -32,24 +32,17 @@ function App() {
     axios.get('http://localhost:3000/auth/isLoggedIn', {withCredentials: true})
     .then((result) => {
       console.log('is login auth:', result.data)
-      setIsLoggedIn(result.data);
       setIsLoading(false);
+      if (result.data) {
+        console.log('is login auth:', result.data)
+        setIsLoggedIn(result.data.loggedIn);
+        setEmail(result.data.info)
+      }
     })
     .catch((err) => {
       console.log(err);
     })
   }, [isLoggedIn])
-
-  useEffect(() => {
-    axios.get('http://localhost:3000/auth/userEmail', {withCredentials: true})
-    .then((result) => {
-      console.log('result:', result);
-      setEmail(result.data.username);
-    })
-    .catch((err) => {
-      console.log(err);
-    })
-  }, [userEmail])
 
   //Calendar helper functions
   const moveEvent = useCallback(
@@ -139,7 +132,7 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={homePage} />
-          <Route path="/signin" element={<Login />} />
+          <Route path="/signin" element={<Login setEmail={setEmail} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>} />
           <Route path="/signup" element={<Registration />} />
         </Routes>
       </Router>

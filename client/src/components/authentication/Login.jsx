@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const Login = ({isLoggedIn, setIsLoggedIn}) => {
+const Login = ({setEmail, isLoggedIn, setIsLoggedIn}) => {
   const navigate = useNavigate();
   const classes = useStyles();
   const [state, setState] = useState({'email': '', 'password': ''})
@@ -83,9 +83,9 @@ const Login = ({isLoggedIn, setIsLoggedIn}) => {
     } else {
       await axios.post('http://localhost:3000/auth/login', {'email': state['email'], 'password': state['password']}, {withCredentials: true})
       .then((res) => {
-        console.log('response:', res.data);
         if(res.data === true) {
           setIsLoggedIn(true);
+          setEmail(state['email']);
           navigate('/')
         } else if (res.data === 'incorrect') {
           setFormErr('email');
@@ -96,6 +96,9 @@ const Login = ({isLoggedIn, setIsLoggedIn}) => {
         console.log('login err:', err);
       })
     }
+  }
+  const handleGoogleLogin = async () => {
+    window.open('http://localhost:3000/auth/google')
   }
 
   return (
@@ -150,6 +153,7 @@ const Login = ({isLoggedIn, setIsLoggedIn}) => {
                 type='submit' color='primary'
                 variant="contained"
                 fullWidth
+                onClick={() => (handleGoogleLogin())}
                 >
                  Sign in with google
                </Button>
