@@ -83,11 +83,12 @@ const Login = ({setEmail, isLoggedIn, setIsLoggedIn}) => {
     } else {
       await axios.post('http://localhost:3000/auth/login', {'email': state['email'], 'password': state['password']}, {withCredentials: true})
       .then((res) => {
+        console.log('login response:', res.data)
         if(res.data === true) {
           setIsLoggedIn(true);
           setEmail(state['email']);
           navigate('/')
-        } else if (res.data === 'incorrect') {
+        } else {
           setFormErr('email');
           setErrMsg("Email doesn't exist or Incorrect password")
         }

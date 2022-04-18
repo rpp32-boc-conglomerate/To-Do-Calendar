@@ -8,10 +8,9 @@ const bcrypt        = require('bcrypt');
 const auth          = require('../models/authentication/auth.js');
 const saltStrength  = 10;
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
-// const findOrCreate = require('mongoose-findorcreate');
 
 const congolmerateSecret = 'superSecretSecrets';
-const mongoStoreUrl = 'mongodb://localhost:27017/boc1';
+const mongoStoreUrl = 'mongodb://localhost:27017/boc-auth-store';
 const loginFailurePath = '/auth/failure';
 const loginSuccessPath = '/auth/success';
 
@@ -29,19 +28,21 @@ authRouter.use(passport.session());
 passport.use(new LocalStrategy(
   {usernameField:"email", passwordField:"password"},
   function(usernameField, passwordField, cb) {
-    console.log('local:', usernameField)
-    auth.findUserByEmail(usernameField).then((info, err) => {
-      console.log('info: ', info);
-      if (err)    { return cb(err)};
-      if (!info)  { return cb(null, false)};
-      // password verification
-      var hash = info.password;
-      return bcrypt.compare(passwordField, hash, function(err, result) {
-        if (!result) {
-          return cb(null, false, { message: 'Incorrect username or password.' })
-        }
-        return cb(null, info)
-      })
+    auth.findUserByEmail(usernameField, async (err, info) => {
+        console.log('info: ', info);
+        if (err)    { return cb(err, false)};
+        if (!info)  { return cb(null, true, { message: 'Incorrect username or password.' })};
+        // password verification
+        var hash = info.password;
+        return bcrypt.compare(passwordField, hash, (err, result) => {
+          if (err) {
+            return cb(err, false);
+          }
+          if (!result) {
+            return cb(null, true, { message: 'Incorrect username or password.' })
+          }
+          return cb(null, info)
+        })
     })
   }
 ));
@@ -49,6 +50,7 @@ passport.use(new LocalStrategy(
 passport.use(new GoogleStrategy({
   clientID: '384082777651-3e339admf544k9oeu2bohree85k2uqrt.apps.googleusercontent.com',
   clientSecret: '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',
+  // callback to backend server port
   callbackURL: "http://localhost:3000/auth/google/home",
   userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo",
   proxy:true
@@ -110,14 +112,30 @@ authRouter.get("/google/home",
 
 authRouter.post("/register", async (req, res) => {
   try {
-    const hashedPw = await bcrypt.hash(req.body.password, saltStrength);
-    const insertResult = await auth.addNewUser({
-      email: req.body.email,
-      password: hashedPw,
-      firstName: req.body.firstName,
-      lastName: req.body.lastName
+    let user = await auth.findUserByEmail(req.body.email, async (err, response) => {
+      if (err) {
+        console.log('register err:', err)
+        return err;
+      } else {
+        if (response === null) {
+            const hashedPw = await bcrypt.hash(req.body.password, saltStrength);
+            const insertResult = await auth.addNewUser({
+            email: req.body.email,
+            password: hashedPw,
+            firstName: req.body.firstName,
+            lastName: req.body.lastName
+          }, (err, response) => {
+              if (err) {
+                console.log(err);
+              } else {
+                res.send(true);
+              }
+          });
+        } else {
+          res.send(false);
+        }
+      }
     });
-    res.send(insertResult);
   } catch (error) {
     console.log(error);
     res.status(500).send("Internal Server error Occured");
@@ -133,25 +151,17 @@ authRouter.post('/login', passport.authenticate('local', {
 
 
 authRouter.route('/success').get((req, res) => {
-  console.log('success');
-  res.status(200).send(true);
+  console.log('success:', req.session);
+  if (req.session.passport.user.username) {
+      res.status(200).send(true);
+  } else {
+    res.status(200).send(false);
+  }
 });
 
 authRouter.get('/isLoggedIn', (req, res) => {
   let isAuth = req.isAuthenticated();
-<<<<<<< HEAD
   console.log('isLoggedIn auth:', isAuth,  req.session);
-=======
-  // console.log('isLoggedIn auth:', isAuth,  req.session);
-  res.status(200).send(isAuth)
-});
-
-// optimize later with middleware that verifies this and /isloggedin
-authRouter.get('/userEmail', (req, res) => {
-  let isAuth = req.isAuthenticated();
-  // console.log('user:', req.user);
-  // res.locals.currentUser = req.user;
->>>>>>> 44577b0d6b8e4369762031c78234cf10db652c0a
   if (isAuth) {
     res.status(200).send({loggedIn: isAuth, info: req.session.passport.user.username})
   } else {
@@ -167,22 +177,6 @@ authRouter.route('/failure').get((req, res) => {
 });
 
 
-<<<<<<< HEAD
-=======
-authRouter.route('/').post((req, res) => {
-  // console.log('auth / route');
-  // console.log(req.body);
-  res.send('Login Router POST');
-});
-
-
-
-authRouter.route('/').get((req, res) => {
-  console.log('get signup route');
-  res.send('Signup List Router GET');
-});
-
->>>>>>> 44577b0d6b8e4369762031c78234cf10db652c0a
 authRouter.get('/logout', function(req, res) {
   // console.log('logout auth:', req.isAuthenticated(), req.session);
    req.session.destroy(function (err) {
