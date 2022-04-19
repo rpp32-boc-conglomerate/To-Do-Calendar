@@ -20,8 +20,9 @@ todoListRouter.get('/info', (req, res) => {
 });
 
 todoListRouter.post('/category', async (req, res) => {
-  var calendar_id = req.body.calendar_id;
-  var category = req.body.category;
+  console.log('received by server:', req.body);
+  var calendar_id = req.body.params.calendar_id;
+  var category = req.body.params.category;
   query.postCategory(calendar_id, category, async (err, response) => {
     if (err) {
       res.status(400).send('post category error');

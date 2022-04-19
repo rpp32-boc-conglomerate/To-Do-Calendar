@@ -23,7 +23,7 @@ CREATE TABLE calendars (
 
 DROP table IF EXISTS categories;
 CREATE TABLE categories (
-  category_id SERIAL NOT NULL PRIMARY KEY,
+  category_id SERIAL PRIMARY KEY,
   calendar_id INTEGER NOT NULL,
   category TEXT NOT NULL,
   CONSTRAINT fk_calendar
@@ -64,7 +64,7 @@ CREATE INDEX ON "calendars" ("calendar_id");
 CREATE INDEX ON "categories" ("category_id");
 CREATE INDEX ON "todoitems" ("id");
 
-SELECT setval('users_user_id_seq', max(user_id)) from users;
-SELECT setval('calendars_calendar_id_seq', max(calendar_id)) from calendars;
-SELECT setval('categories_category_id_seq', max(category_id)) from categories;
-SELECT setval('todoitems_id_seq', max(id)) from todoitems;
+SELECT setval('users_user_id_seq', max(user_id) + 1) from users;
+SELECT setval('calendars_calendar_id_seq', max(calendar_id) + 1) from calendars;
+SELECT setval('categories_category_id_seq', max(category_id) + 1) from categories;
+SELECT setval('todoitems_id_seq', max(id) + 1) from todoitems;

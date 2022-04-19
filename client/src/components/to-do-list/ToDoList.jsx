@@ -22,27 +22,16 @@ const useStyles = makeStyles({
   }
 })
 
-function ToDoList({addToCalendar, isMobile, draggedEvent, setDraggedEvent, handleDragStart, taskData}) {
-  const [categorizedTasks, setCategorizedTasks] = useState([]);
+function ToDoList({addToCalendar, isMobile, draggedEvent, setDraggedEvent, handleDragStart, taskData, addCategory}) {
   const [newCatModalOpen, setNewCatModalOpen] = useState(false);
   const [newToDoModalOpen, setNewToDoModalOpen] = useState(false);
 
-  const classes = useStyles();
+  // console.log('taskData', taskData)
 
-  useEffect(() => {
-    setCategorizedTasks(...taskData);
-  }, []);
+  const classes = useStyles();
 
   var addTask = (e) => {
     console.log('addTask');
-  }
-
-  const setNewCategories = () => {
-    console.log('click');
-  }
-
-  const setNewTasks = () => {
-    console.log('click');
   }
 
   const openSetNewCat = (boo) => {
@@ -61,21 +50,18 @@ function ToDoList({addToCalendar, isMobile, draggedEvent, setDraggedEvent, handl
     }
   }
 
-  const handleEditClick = () => {
-    setEditing(!editing)
-  }
 
   return (
     <Container className={isMobile ? classes.mobileMain : classes.desktopMain}>
       <Container sx={{display: 'flex', height: '50px', width: '100%'}}>
         <div style={{width: '80%'}}>To-Do List</div>
         <Button variant="contained" onClick={() => {openSetNewCat(true)}}>New Category</Button>
-        <AddCategoryModal open={newCatModalOpen} closeCat={openSetNewCat} addCategory={Home.addCategory} />
+        <AddCategoryModal open={newCatModalOpen} closeCat={openSetNewCat} addCategory={addCategory} />
         <Button variant="contained" onClick={() => {openSetNewToDo(true)}}>New Task</Button>
-        <AddToDoModal open={newToDoModalOpen} closeCat={openSetNewToDo} addTodo={Home.addTodo} />
+        <AddToDoModal open={newToDoModalOpen} closeCat={openSetNewToDo}/>
       </Container>
       <div>
-        <Categories categorizedTasks={taskData} isMobile={isMobile} draggedEvent={draggedEvent}
+        <Categories taskData={taskData} isMobile={isMobile} draggedEvent={draggedEvent}
         setDraggedEvent={setDraggedEvent}
         handleDragStart={handleDragStart}/>
       </div>
