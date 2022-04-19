@@ -7,7 +7,7 @@ const LocalStrategy = require('passport-local').Strategy;
 const bcrypt        = require('bcrypt');
 const auth          = require('../models/authentication/auth.js');
 const saltStrength  = 10;
-const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const GoogleStrategy = require('passport-google-oauth2').Strategy;
 
 const congolmerateSecret = 'superSecretSecrets';
 const mongoStoreUrl = 'mongodb://localhost:27017/boc-auth-store';

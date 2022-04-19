@@ -27,8 +27,7 @@ const useStyles = makeStyles({
   })
 
 function Task({task, isMobile, deleteTask, draggedEvent, setDraggedEvent, handleDragStart, clickedTask, updateTodo, deleteTodo}) {
-
-  const [userTask, setUserTask] = useState(task);
+  // console.log('task in task', task)
 
   // For Modal opening and closing
   const [modalOpen, setModalOpen] = useState(false);

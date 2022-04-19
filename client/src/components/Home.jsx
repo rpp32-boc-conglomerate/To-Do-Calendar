@@ -9,7 +9,6 @@ import moment from 'moment';
 // For example data:
 import { result } from '../../../database/example.js';
 
-
   // const naviBar = (<TopBar isMobile={isMobile} onCalendar={onCalendar} setOnCalendar={setOnCalendar}/>)
   // const toDoList = (<ToDoList draggedEvent={draggedEvent} setDraggedEvent={setDraggedEvent} handleDragStart={handleDragStart} myEvents={myEvents}/>)
   // const myCalender = (<MyCalendar myEvents={myEvents} moveEvent={moveEvent} resizeEvent={resizeEvent} changeTitle={changeTitle} onDropFromOutside={onDropFromOutside}/>)
@@ -18,36 +17,7 @@ import { result } from '../../../database/example.js';
 const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sharedBy}) => {
 
   const [allTodos, setAllTodos] = useState([]);
-  const [myEvents, setMyEvents] = useState([
-    {
-      id: 0,
-      title: "Sample Event",
-      start_date: new Date(),
-      end_date: new Date(moment().add(1, "hour")),
-      allDay: false,
-      in_calendar: true
-    },
-    {
-      id: 1,
-      title: 'Trip to China',
-      description: '5-day business trip to meet with manufacturers',
-      duration: '5 days',
-      start: new Date(),
-      end: new Date(moment().add(5, "days")),
-      category_id: 1,
-      in_calendar: false
-    },
-    {
-      id: 2,
-      title: 'Trip to Los Angeles',
-      description: 'Meeting with Executives',
-      duration: '6 hours',
-      start: new Date(moment('14 Apr 2022 09:30:00 UT')),
-      end: new Date(moment('14 Apr 2022 15:30:00 UT')),
-      category_id: 1,
-      in_calendar: false
-    }
-  ]);
+  const [myEvents, setMyEvents] = useState([]);
   const [onCalendar, setOnCalendar] = useState(false);
   const [draggedEvent, setDraggedEvent] = useState()
   const [userEmail, setEmail] = useState(null);
@@ -79,26 +49,66 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
     })
   }, [isLoggedIn])
 
+
+  useEffect(() => {
+  const toDos = result.calendars.filter(item => {
+    return item.calendar_owner === '1@qq.com'
+  }).map(calendar => {
+    return calendar.categories.map(category =>
+      {return category})
+    })
+  setMyEvents(toDos)
+  }, [])
+  // [
+  //   {
+  //     id: 0,
+  //     title: "Sample Event",
+  //     start_date: new Date(),
+  //     end_date: new Date(moment().add(1, "hour")),
+  //     allDay: false,
+  //     in_calendar: true
+  //   },
+  //   {
+  //     id: 1,
+  //     title: 'Trip to China',
+  //     description: '5-day business trip to meet with manufacturers',
+  //     duration: '5 days',
+  //     start: new Date(),
+  //     end: new Date(moment().add(5, "days")),
+  //     category_id: 1,
+  //     in_calendar: false
+  //   },
+  //   {
+  //     id: 2,
+  //     title: 'Trip to Los Angeles',
+  //     description: 'Meeting with Executives',
+  //     duration: '6 hours',
+  //     start: new Date(moment('14 Apr 2022 09:30:00 UT')),
+  //     end: new Date(moment('14 Apr 2022 15:30:00 UT')),
+  //     category_id: 1,
+  //     in_calendar: false
+  //   }
+  // ]
   // Requires logic and transforming of data to appropriate form to pass down data to calendar and todoList with required information from the appropriate user's calendar
   // All Components lose functionality if "isLoggedIn" is false
 
   // API Request Routes:
-
+  //
   // GET '/todoList/:userEmail' -> For all data
-  const getAllTodos = () => {
+  const getAllTodos = (user) => {
     console.log('Get All Todo Data');
     // axios.get('/todoList/info', { params: { userEmail: userEmail } })
     //   .then((result) => {
-      //     console.log(result);
-      //     setAllTodos(result);
-      //   })
-      //   .catch(err => console.error(err));
+    //       console.log(result);
+    //       setAllTodos(result);
+    //     })
+    //     .catch(err => console.error(err));
   }
 
   // POST '/todoList/:userEmail' -> Adding or Upserting a "todoList item"
   const addTodo = (todo) => {
     console.log('Add todo: ', todo);
-    axios.post('/todoList', { params: { userEmail: userEmail }, data: todo })
+    axios.post('http://localhost:3000/category/todoList', { params: { userEmail: userEmail }, data: todo })
       .then((result) => {
         console.log(result);
       })
@@ -135,8 +145,9 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
   }
 
   const addCategory = (category) => {
-    console.log('Add Category: ', category);
-    axios.post('/category', {  data: category })
+    let incomingId = info.calendars[0].calendar_id;
+
+    axios.post('http://localhost:3000/todoList/category', {  params: { calendar_id: incomingId, category: category} })
       .then((result) => {
         console.log(result);
       })
@@ -144,14 +155,9 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
   }
 
   // For example data / demo landing page if not logged in
-  var exampleData = null;
 
   // if (isLoggedIn === false) {}
-  for (var i = 0; i < result.calendars.length; i++) {
-    if (result.calendars[i].calendar_owner === '1@qq.com') {
-      exampleData = result.calendars[i].categories;
-    }
-  }
+
 
   // For getting all data when rendering
   // useEffect(() => {
@@ -204,20 +210,27 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
       return newList
     });
   };
+
   const handleDragStart = useCallback((event) => {
-    console.log('dragged event', event)
+    // console.log('dragged event', event)
     setDraggedEvent(event), []
   })
-
 
   const onDropFromOutside = useCallback(
     () => {
       setMyEvents((prev) => {
         const existing = draggedEvent;
-        console.log('existing', existing)
-        existing.in_calendar = !existing.in_calendar;
-        const filtered = prev.filter((ev) => ev.id !== draggedEvent.id);
-        return [...filtered, { ...existing }];
+        const list = prev
+        list.forEach(items => {
+          items.forEach(item => {
+            item.todoitems.forEach(el => {
+              if (el === existing) {
+                el.in_calendar = !el.in_calendar
+              }
+            })
+          })
+        })
+        return list;
       });
       setDraggedEvent(null)
     },
@@ -226,7 +239,7 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
 
   // All Components
   const naviBar = (<TopBar isLoading={isLoading} setIsLoggedIn={setIsLoggedIn} isLoggedIn={isLoggedIn} isMobile={isMobile} onCalendar={onCalendar} setOnCalendar={setOnCalendar} userEmail={userEmail}/>);
-  const toDoList = (<ToDoList isMobile={isMobile} taskData={exampleData} draggedEvent={draggedEvent} setDraggedEvent={setDraggedEvent} handleDragStart={handleDragStart}/>);
+  const toDoList = (<ToDoList isMobile={isMobile} taskData={myEvents.flat()} draggedEvent={draggedEvent} setDraggedEvent={setDraggedEvent} handleDragStart={handleDragStart}/>);
   const myCalender = (<MyCalendar myEvents={myEvents} moveEvent={moveEvent} resizeEvent={resizeEvent} changeTitle={changeTitle} onDropFromOutside={onDropFromOutside}/>);
 
   // Conditional Rendering based on device

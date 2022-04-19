@@ -9,13 +9,22 @@ const DragAndDropCalendar = withDragAndDrop(Calendar)
 const localizer = momentLocalizer(moment);
 
 const MyCalendar = (props) => {
+  const eventList = props.myEvents.flat().map(item => {return item.todoitems}).flat().map(item => {
+    const taskCopy = item;
+    const startTime = new Date(item.start);
+    const endTime = new Date(item.end_date);
+    taskCopy.start = startTime;
+    taskCopy.end_date = endTime;
+    return taskCopy;
+  })
+  // console.log('eventList', eventList)
   return (
     <DragAndDropCalendar
       className='calendar'
       localizer={localizer}
       defaultView="week"
-      events={props.myEvents.filter(item => {return item.in_calendar === true})}
-      startAccessor="start_date"
+      events={eventList.filter(event => {return event.in_calendar})}
+      startAccessor="start"
       endAccessor="end_date"
       onSelectEvent={(event) => {
         props.changeTitle(event);
