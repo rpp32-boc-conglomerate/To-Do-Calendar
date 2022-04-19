@@ -30,7 +30,7 @@ function Category({tasks, addTask, isMobile, draggedEvent, setDraggedEvent, hand
           }}>Add Task</Button>
         </Container>
         <Container sx={{ display: 'inline-block'}}>
-          <Tasks tasks={tasks} isMobile={isMobile}
+          <Tasks tasks={todos} isMobile={isMobile}
           draggedEvent={draggedEvent} setDraggedEvent={setDraggedEvent} handleDragStart={handleDragStart}/>
         </Container>
     </Paper>
