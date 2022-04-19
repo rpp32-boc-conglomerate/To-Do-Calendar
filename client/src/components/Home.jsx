@@ -125,9 +125,9 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
     //   .catch(err => console.error(err));
   }
 
-  const addCategory = (category) => {
+  const addCategory = (calendar_id, category) => {
     console.log('Add Category: ', category);
-    axios.post('/category', {  data: category })
+    axios.post('/category', {  params: { calendar_id: calendar_id, data: category} })
       .then((result) => {
         console.log(result);
       })
