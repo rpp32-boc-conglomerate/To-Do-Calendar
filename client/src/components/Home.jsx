@@ -35,7 +35,7 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
         await axios.get('http://localhost:3000/todoList/info',{ params: { email: result.data.info } })
         .then((response) => {
           console.log('info response:', response.data.results[0])
-          setInfo(response.data.results[0]);
+          setMyEvents(response.data.results[0]);
         })
         .catch((err) => {
           console.log('info err:', err);
