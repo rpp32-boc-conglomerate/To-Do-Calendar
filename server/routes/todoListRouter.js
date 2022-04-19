@@ -48,6 +48,22 @@ todoListRouter.post('/item', async (req, res) => {
   });
 });
 
+// Feel free to make any changes, additions, subtractions to the above list of routes we should be writing for the database queries. These are all that I could think of at the moment.
+todoListRouter.route('/:userEmail').get((req, res) => {
+  console.log('toDO route', req.params);
+  const userEmail = req.params.email
+  res.send(userEmail);
+})
+
+
+//email will be parameter of call
+
+todoListRouter.route('/:userEmail').post((req, res) => {
+  console.log(req.params);
+  const userEmail = req.params
+  const item = req.body
+  res.send('Todo List Router GET');
+})
 todoListRouter.put('/updateCategory', async (req, res) => {
   var category_id = req.body.category_id;
   var category = req.body.category;
