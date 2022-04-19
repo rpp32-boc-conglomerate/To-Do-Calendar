@@ -23,18 +23,14 @@ const useStyles = makeStyles({
 })
 
 function ToDoList({addToCalendar, isMobile, draggedEvent, setDraggedEvent, handleDragStart, taskData}) {
-  //a state prop that's an array that has an element for everytime + task or + category is clicked
   const [categorizedTasks, setCategorizedTasks] = useState([]);
   const [newCatModalOpen, setNewCatModalOpen] = useState(false);
   const [newToDoModalOpen, setNewToDoModalOpen] = useState(false);
-  //mui width/height based on screen size
-  //make outdiv scrollable/overflow
-  //replace divs w containers
 
   const classes = useStyles();
 
   useEffect(() => {
-    setCategorizedTasks(taskData);
+    setCategorizedTasks(...taskData);
   }, []);
 
   var addTask = (e) => {
@@ -68,8 +64,7 @@ function ToDoList({addToCalendar, isMobile, draggedEvent, setDraggedEvent, handl
   const handleEditClick = () => {
     setEditing(!editing)
   }
-  console.log('taskdata', taskData)
-  // const events = myEvents.filter(item => {return !item.in_calendar})
+
   return (
     <Container className={isMobile ? classes.mobileMain : classes.desktopMain}>
       <Container sx={{display: 'flex', height: '50px', width: '100%'}}>
@@ -80,7 +75,7 @@ function ToDoList({addToCalendar, isMobile, draggedEvent, setDraggedEvent, handl
         <AddToDoModal open={newToDoModalOpen} closeCat={openSetNewToDo} addTodo={Home.addTodo} />
       </Container>
       <div>
-        <Categories categorizedTasks={categorizedTasks} isMobile={isMobile} draggedEvent={draggedEvent}
+        <Categories categorizedTasks={taskData} isMobile={isMobile} draggedEvent={draggedEvent}
         setDraggedEvent={setDraggedEvent}
         handleDragStart={handleDragStart}/>
       </div>
