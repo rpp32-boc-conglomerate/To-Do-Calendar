@@ -98,11 +98,11 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
   // POST '/todoList/:userEmail' -> Adding or Upserting a "todoList item"
   const addTodo = (todo) => {
     console.log('Add todo: ', todo);
-    // axios.post('/todoList', { params: { userEmail: userEmail }, data: todo })
-    //   .then((result) => {
-    //     console.log(result);
-    //   })
-    //   .catch(err => console.error(err));
+    axios.post('/todoList', { params: { userEmail: userEmail }, data: todo })
+      .then((result) => {
+        console.log(result);
+      })
+      .catch(err => console.error(err));
   }
 
   // PATCH '/todoList/:userEmail' -> For updating the data -> ex. Moving around item in Calendar / Lengthening item in Calendar / Clicking on "Done" in Modal for Calendar/TodoList
@@ -123,6 +123,15 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
     //     console.log(result);
     //   })
     //   .catch(err => console.error(err));
+  }
+
+  const addCategory = (category) => {
+    console.log('Add Category: ', category);
+    axios.post('/category', {  data: category })
+      .then((result) => {
+        console.log(result);
+      })
+      .catch(err => console.error(err));
   }
 
   // For example data / demo landing page if not logged in

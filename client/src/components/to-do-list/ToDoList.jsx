@@ -75,9 +75,9 @@ function ToDoList({addToCalendar, isMobile, draggedEvent, setDraggedEvent, handl
       <Container sx={{display: 'flex', height: '50px', width: '100%'}}>
         <div style={{width: '80%'}}>To-Do List</div>
         <Button variant="contained" onClick={() => {openSetNewCat(true)}}>New Category</Button>
-        <AddCategoryModal open={newCatModalOpen} closeCat={openSetNewCat}/>
+        <AddCategoryModal open={newCatModalOpen} closeCat={openSetNewCat} addCategory={Home.addCategory} />
         <Button variant="contained" onClick={() => {openSetNewToDo(true)}}>New Task</Button>
-        <AddToDoModal open={newToDoModalOpen} closeCat={openSetNewToDo}/>
+        <AddToDoModal open={newToDoModalOpen} closeCat={openSetNewToDo} addTodo={Home.addTodo} />
       </Container>
       <div>
         <Categories categorizedTasks={categorizedTasks} isMobile={isMobile} draggedEvent={draggedEvent}
