@@ -262,10 +262,8 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
   const formatForCalendar = (list) => {
     return list.flat().map(item => { return item.todoitems }).flat().map(item => {
       const taskCopy = item;
-      const startTime = new Date(item.start);
-      const endTime = new Date(item.end_date);
-      taskCopy.start = startTime;
-      taskCopy.end_date = endTime;
+      taskCopy.start =  new Date(item.start);
+      taskCopy.end_date = new Date(item.end_date);
       return taskCopy;
     })
   }
