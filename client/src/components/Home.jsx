@@ -158,12 +158,26 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
       if (!allDay && droppedOnAllDaySlot) {
         event.allDay = true;
       }
-
       setMyEvents((prev) => {
-        const existing = prev.find((ev) => ev.id === event.id) ?? {};
-        const filtered = prev.filter((ev) => ev.id !== event.id);
-        return [...filtered, { ...existing, start, end, allDay }];
+        const existing = event;
+        const list = prev
+        list.forEach(items => {
+          items.forEach(item => {
+            item.todoitems.forEach(el => {
+              if (el === existing) {
+                el.start = start;
+                el.end_date = end;
+              }
+            })
+          })
+        })
+        return list;
       });
+      // setMyEvents((prev) => {
+      //   const existing = prev.find((ev) => ev.id === event.id) ?? {};
+      //   const filtered = prev.filter((ev) => ev.id !== event.id);
+      //   return [...filtered, { ...existing, start, end, allDay }];
+      // });
     },
     [setMyEvents]
   );
@@ -182,9 +196,19 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
   const resizeEvent = useCallback(
     ({ event, start, end }) => {
       setMyEvents((prev) => {
-        const existing = prev.find((ev) => ev.id === event.id) ?? {};
-        const filtered = prev.filter((ev) => ev.id !== event.id);
-        return [...filtered, { ...existing, start, end }];
+        const existing = event;
+        const list = prev
+        list.forEach(items => {
+          items.forEach(item => {
+            item.todoitems.forEach(el => {
+              if (el === existing) {
+                el.start = start;
+                el.end_date = end;
+              }
+            })
+          })
+        })
+        return list;
       });
     },
     [setMyEvents]
@@ -192,10 +216,19 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
 
   const changeTitle = (event) => {
     var title = prompt("Change title", event.title);
-    var newList = myEvents;
     setMyEvents((prev) => {
-      newList[prev.indexOf(event)].title = title;
-      return newList
+      const existing = event;
+      const list = prev
+      list.forEach(items => {
+        items.forEach(item => {
+          item.todoitems.forEach(el => {
+            if (el === existing) {
+              el.title = title;
+            }
+          })
+        })
+      })
+      return list;
     });
   };
 
