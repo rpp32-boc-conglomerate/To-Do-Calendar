@@ -51,10 +51,24 @@ const getSharedByUser = async function (email) {
   }
 };
 
-const deleteFromShares = async function (email) {
+const insertToShares = async function (userEmail, emailToAdd) {
+  const client = await pool.connect();
+  var values = [...userEmail];
+  console.log('attempting to add these values: ', values);
+  console.log('with this query: ', query.insertToShares);
+  try {
+    return await client.query(query.insertToShares, [values[0], values[1]]);
+  } catch (err) {
+    throw (err);
+  } finally {
+    client.release();
+  }
+};
+
+const deleteFromShares = async function (userEmail, emailToDelete) {
   const client = await pool.connect()
   try {
-    return await client.query(query.deleteFromShares, [email]);
+    return await client.query(query.deleteFromShares, userEmail, emailToDelete);
   } catch (err) {
     throw (err);
   } finally {
@@ -169,5 +183,9 @@ module.exports = {
   updateCategory,
   updateItem,
   deleteItem,
-  deleteCategory
+  deleteCategory,
+  getSharedWithUser,
+  getSharedByUser,
+  insertToShares,
+  deleteFromShares
 }

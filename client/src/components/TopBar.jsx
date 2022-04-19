@@ -24,7 +24,7 @@ import ViewShares from './sharing/SharedWithUserDropdown.jsx';
 var pages = [];
 const settings = ['Profile','Logout'];
 
-const TopBar = ({isLoading, setIsLoggedIn, isLoggedIn, isMobile, onCalendar, setOnCalendar, userEmail}) => {
+const TopBar = ({userEmail, isLoading, setIsLoggedIn, isLoggedIn, isMobile, onCalendar, setOnCalendar}) => {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
   const navigate = useNavigate();
@@ -94,7 +94,7 @@ const TopBar = ({isLoading, setIsLoggedIn, isLoggedIn, isMobile, onCalendar, set
             {isLoading ? <CircularProgress /> : (isLoggedIn ?
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Yanlin" src="/" />
+                <Avatar alt={userEmail} src="/" />
               </IconButton>
             </Tooltip>
             :

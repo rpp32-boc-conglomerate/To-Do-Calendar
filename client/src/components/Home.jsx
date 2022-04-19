@@ -15,7 +15,7 @@ import { result } from '../../../database/example.js';
   // const myCalender = (<MyCalendar myEvents={myEvents} moveEvent={moveEvent} resizeEvent={resizeEvent} changeTitle={changeTitle} onDropFromOutside={onDropFromOutside}/>)
   // const testToDo = (<TestToDo draggedEvent={draggedEvent} setDraggedEvent={setDraggedEvent} handleDragStart={handleDragStart}/>)
   // condition redering base on device
-const Home = ({isMobile, isLoggedIn, isLoading, setIsLoggedIn, userEmail, sharedBy}) => {
+const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sharedBy}) => {
 
   const [allTodos, setAllTodos] = useState([]);
   const [myEvents, setMyEvents] = useState([
@@ -50,6 +50,34 @@ const Home = ({isMobile, isLoggedIn, isLoading, setIsLoggedIn, userEmail, shared
   ]);
   const [onCalendar, setOnCalendar] = useState(false);
   const [draggedEvent, setDraggedEvent] = useState()
+  const [userEmail, setEmail] = useState(null);
+
+  const [info, setInfo] = useState([]);
+  useEffect(async () => {
+    await axios.get('http://localhost:3000/auth/isLoggedIn', {withCredentials: true})
+    .then( async (result) => {
+      console.log('is login auth:', result.data)
+      setIsLoading(false);
+      if (result.data) {
+        console.log('is login auth:', result.data)
+        setIsLoggedIn(result.data.loggedIn);
+        setEmail(result.data.info)
+        await axios.get('http://localhost:3000/todoList/info',{ params: { email: result.data.info } })
+        .then((response) => {
+          console.log('info response:', response.data.results[0])
+          setInfo(response.data.results[0]);
+        })
+        .catch((err) => {
+          console.log('info err:', err);
+          return err;
+        })
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+      return err;
+    })
+  }, [isLoggedIn])
 
   // Requires logic and transforming of data to appropriate form to pass down data to calendar and todoList with required information from the appropriate user's calendar
   // All Components lose functionality if "isLoggedIn" is false
@@ -70,20 +98,11 @@ const Home = ({isMobile, isLoggedIn, isLoading, setIsLoggedIn, userEmail, shared
   // POST '/todoList/:userEmail' -> Adding or Upserting a "todoList item"
   const addTodo = (todo) => {
     console.log('Add todo: ', todo);
-    // axios.post('/todoList/item', { params: { userEmail: userEmail }, data: todo })
-    //   .then((result) => {
-    //     console.log(result);
-    //   })
-    //   .catch(err => console.error(err));
-  }
-
-  const addCategory = (category) => {
-    console.log('Add todo: ', todo);
-    // axios.post('/todoList/category', { params: { userEmail: userEmail }, data: category })
-    //   .then((result) => {
-    //     console.log(result);
-    //   })
-    //   .catch(err => console.error(err));
+    axios.post('/todoList', { params: { userEmail: userEmail }, data: todo })
+      .then((result) => {
+        console.log(result);
+      })
+      .catch(err => console.error(err));
   }
 
   // PATCH '/todoList/:userEmail' -> For updating the data -> ex. Moving around item in Calendar / Lengthening item in Calendar / Clicking on "Done" in Modal for Calendar/TodoList
@@ -115,13 +134,13 @@ const Home = ({isMobile, isLoggedIn, isLoading, setIsLoggedIn, userEmail, shared
     //   .catch(err => console.error(err));
   }
 
-  const deleteCategory = (category) => {
-    console.log('Delete Todo: ', category);
-    // axios.delete('/todoList', { params: { userEmail: userEmail }, data: category })
-    //   .then((result) => {
-    //     console.log(result);
-    //   })
-    //   .catch(err => console.error(err));
+  const addCategory = (category) => {
+    console.log('Add Category: ', category);
+    axios.post('/category', {  data: category })
+      .then((result) => {
+        console.log(result);
+      })
+      .catch(err => console.error(err));
   }
 
   // For example data / demo landing page if not logged in

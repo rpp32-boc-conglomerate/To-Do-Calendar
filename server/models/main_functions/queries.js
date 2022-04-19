@@ -45,7 +45,8 @@ module.exports = {
 
   getSharedByUser: `SELECT shared_to FROM sharedCals WHERE user_email = $1;`,
   getSharedWithUser: `SELECT user_email FROM sharedCals WHERE shared_to = $1;`,
-  deleteFromShares: `DELETE FROM sharedCals WHERE shared_to = $1 RETURNING *;`,
+  insertToShares: `INSERT INTO sharedCals (user_email, shared_to) VALUES ($1, $2);`,
+  deleteFromShares: `DELETE FROM sharedCals WHERE user_email = $1 AND shared_to = $2 RETURNING *;`,
   userExists: `SELECT user_email FROM users WHERE user_email = $1;`,
 
   postCategory: `

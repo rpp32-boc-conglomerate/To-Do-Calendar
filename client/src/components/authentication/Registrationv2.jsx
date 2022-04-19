@@ -79,15 +79,20 @@ const Login = () => {
   const handleRegister = async () => {
     let isValid = await validation();
     if (!isValid) {
-      console.log('cannot submit')
+      // console.log('cannot submit')
     } else {
-      console.log(state['email'], state['password'], isValid)
+      // console.log(state['email'], state['password'], isValid)
       await axios.post('http://localhost:3000/auth/register', {
         'firstName': state['firstName'], 'lastName': state['lastName'],
         'email': state['email'], 'password': state['password']
       }, {withCredentials: true}).then((res) => {
-        console.log('response:', res);
-        navigate('/signin')
+        // if res.data = true which mean successfully create a new user, otherwise user already existed or err
+        if(res.data) {
+          navigate('/signin')
+        } else {
+          setFormErr('email');
+          setErrMsg('email already existed')
+        }
       })
       .catch((err) => {
         console.log('login errors:', err);

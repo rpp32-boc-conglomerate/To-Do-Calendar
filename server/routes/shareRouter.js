@@ -36,10 +36,23 @@ shareRouter.route('/deleteFromShares').delete((req, res) => {
   var email = req.query.email;
 
   shareDB.deleteFromShares(email).then((result) => {
-    console.log(result.rows);
     res.send(result.rows);
   })
   .catch((err) => {
+    res.sendStatus(500);
+  })
+});
+
+
+shareRouter.route('/insertToShares').post((req, res) => {
+  var newDBEntry = req.body.email;
+  console.log(newDBEntry);
+  shareDB.insertToShares(newDBEntry).then((result) => {
+    console.log(result);
+    res.send(result.rows);
+  })
+  .catch((err) => {
+    console.log(err);
     res.sendStatus(500);
   })
 });
