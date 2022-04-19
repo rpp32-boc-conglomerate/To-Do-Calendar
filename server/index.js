@@ -22,8 +22,5 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use('/auth', authRouter);
 app.use('/todoList', todoListRouter);
 app.use('/share', shareRouter);
-app.use('/category', todoListRouter);
-
-
 
 module.exports = app;
