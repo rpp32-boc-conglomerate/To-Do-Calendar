@@ -15,8 +15,9 @@ const useStyles = makeStyles((theme) => ({
 function Category({tasks, addTask, isMobile, draggedEvent, setDraggedEvent, handleDragStart}) {
   const classes = useStyles();
   const [totalTime, setTotalTime] = useState(0);
-  const {name} = tasks;
-  // console.log('tasks in category', tasks)
+  console.log('tasks in category', tasks)
+  const todos = tasks.todoitems
+  console.log('todos', todos)
   return (
     <Container>
       <Paper elevation={2} className={classes.paper}>
