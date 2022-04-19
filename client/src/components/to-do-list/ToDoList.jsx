@@ -22,13 +22,7 @@ const useStyles = makeStyles({
   }
 })
 
-<<<<<<< HEAD
-function ToDoList({addToCalendar, isMobile, draggedEvent, setDraggedEvent, handleDragStart, taskData}) {
-  const [categorizedTasks, setCategorizedTasks] = useState(taskData);
-=======
 function ToDoList({addToCalendar, isMobile, draggedEvent, setDraggedEvent, handleDragStart, taskData, addCategory}) {
-  const [categorizedTasks, setCategorizedTasks] = useState([]);
->>>>>>> b29882fe2b135c2b5098062b9b9ef8be943e19fc
   const [newCatModalOpen, setNewCatModalOpen] = useState(false);
   const [newToDoModalOpen, setNewToDoModalOpen] = useState(false);
 
@@ -56,9 +50,6 @@ function ToDoList({addToCalendar, isMobile, draggedEvent, setDraggedEvent, handl
     }
   }
 
-  const handleEditClick = () => {
-    setEditing(!editing)
-  }
 
   return (
     <Container className={isMobile ? classes.mobileMain : classes.desktopMain}>
