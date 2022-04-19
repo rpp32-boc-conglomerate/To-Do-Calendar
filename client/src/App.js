@@ -12,32 +12,20 @@ function App() {
   const [currentPage, changePage] = useState("home");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [userEmail, setEmail] = useState(null);
 
-  useEffect(() => {
-    axios.get('http://localhost:3000/auth/isLoggedIn', {withCredentials: true})
-    .then((result) => {
-      console.log('is login auth:', result.data)
-      setIsLoggedIn(result.data);
-      setIsLoading(false);
-    })
-    .catch((err) => {
-      console.log(err);
-    })
-  }, [isLoggedIn])
 
-  useEffect(() => {
-    axios.get('http://localhost:3000/auth/userEmail', {withCredentials: true})
-    .then((result) => {
-      console.log('result:', result);
-      setEmail(result.data.username);
-    })
-    .catch((err) => {
-      // Default email for DEMO Landing Page
-      setEmail('1@qq.com');
-      console.log(err);
-    })
-  }, [userEmail])
+  // useEffect(() => {
+  //   axios.get('http://localhost:3000/auth/userEmail', {withCredentials: true})
+  //   .then((result) => {
+  //     console.log('result:', result);
+  //     setEmail(result.data.username);
+  //   })
+  //   .catch((err) => {
+  //     // Default email for DEMO Landing Page
+  //     setEmail('1@qq.com');
+  //     console.log(err);
+  //   })
+  // }, [userEmail])
 
 
   // const naviBar = (<TopBar isMobile={isMobile} onCalendar={onCalendar} setOnCalendar={setOnCalendar}/>)
@@ -47,11 +35,11 @@ function App() {
   // all the props would pass to the homepage: './components/Home.jsx'
   const homePage = (
     <Home
+      setIsLoading={setIsLoading}
       isMobile={isMobile}
       isLoggedIn={isLoggedIn}
       setIsLoggedIn={setIsLoggedIn}
       isLoading={isLoading}
-      userEmail={userEmail}
     />
   );
 

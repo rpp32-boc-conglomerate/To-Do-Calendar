@@ -169,5 +169,8 @@ module.exports = {
   updateCategory,
   updateItem,
   deleteItem,
-  deleteCategory
+  deleteCategory,
+  getSharedWithUser,
+  getSharedByUser,
+  deleteFromShares
 }
