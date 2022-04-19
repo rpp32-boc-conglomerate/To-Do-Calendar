@@ -14,11 +14,40 @@ import { result } from '../../../database/example.js';
   // const myCalender = (<MyCalendar myEvents={myEvents} moveEvent={moveEvent} resizeEvent={resizeEvent} changeTitle={changeTitle} onDropFromOutside={onDropFromOutside}/>)
   // const testToDo = (<TestToDo draggedEvent={draggedEvent} setDraggedEvent={setDraggedEvent} handleDragStart={handleDragStart}/>)
   // condition redering base on device
-const Home = ({isMobile, isLoggedIn, isLoading, setIsLoggedIn, userEmail, sharedBy}) => {
+const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sharedBy}) => {
+
   const [allTodos, setAllTodos] = useState([]);
   const [myEvents, setMyEvents] = useState([]);
   const [onCalendar, setOnCalendar] = useState(false);
   const [draggedEvent, setDraggedEvent] = useState()
+  const [userEmail, setEmail] = useState(null);
+
+  const [info, setInfo] = useState([]);
+  useEffect(async () => {
+    await axios.get('http://localhost:3000/auth/isLoggedIn', {withCredentials: true})
+    .then( async (result) => {
+      console.log('is login auth:', result.data)
+      setIsLoading(false);
+      if (result.data) {
+        console.log('is login auth:', result.data)
+        setIsLoggedIn(result.data.loggedIn);
+        setEmail(result.data.info)
+        await axios.get('http://localhost:3000/todoList/info',{ params: { email: result.data.info } })
+        .then((response) => {
+          console.log('info response:', response.data.results[0])
+          setInfo(response.data.results[0]);
+        })
+        .catch((err) => {
+          console.log('info err:', err);
+          return err;
+        })
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+      return err;
+    })
+  }, [isLoggedIn])
 
 
   useEffect(() => {
