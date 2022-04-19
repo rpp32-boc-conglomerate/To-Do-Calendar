@@ -79,9 +79,9 @@ const Login = () => {
   const handleRegister = async () => {
     let isValid = await validation();
     if (!isValid) {
-      console.log('cannot submit')
+      // console.log('cannot submit')
     } else {
-      console.log(state['email'], state['password'], isValid)
+      // console.log(state['email'], state['password'], isValid)
       await axios.post('http://localhost:3000/auth/register', {
         'firstName': state['firstName'], 'lastName': state['lastName'],
         'email': state['email'], 'password': state['password']

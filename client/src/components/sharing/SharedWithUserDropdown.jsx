@@ -57,14 +57,6 @@ export default function DisplaySharedWithUserDropdown({userEmail}) {
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
-  const handleChange = (e) => {
-    setFormErr('');
-    const { name, value } = e.target;
-      setState((prevState) => ({
-        ...prevState,
-        [name]: value,
-      }))
-  };
 
   const handleClose = () => {
     setAnchorEl(null);

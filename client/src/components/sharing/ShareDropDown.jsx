@@ -63,8 +63,7 @@ function DisplaySharedWithUserDropdown({userEmail}) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [formErr, setFormErr] = useState('');
   const open = Boolean(anchorEl);
-  var sharedEmailsArray = ['boc@isalmostdone.com', 'nate@conglomerate.com',
-  'excitedtobe@free.com'];
+  var sharedEmailsArray = ['boc@isalmostdone.com', 'nate@conglomerate.com', 'excitedtobe@free.com'];
   const [shares, setShares] = useState(sharedEmailsArray);
   const [sharesCheck, setSharesCheck] = useState(sharedEmailsArray.toString());
   const [currentUser, setCurrentUser] = useState('');
@@ -79,13 +78,10 @@ function DisplaySharedWithUserDropdown({userEmail}) {
       withCredentials: true
 
     }).then((values) => {
-      console.log('sharedByUser values:', values);
       setShares(values.data);
       setSharesCheck((values.data).toString());
 
     }).catch((err) => {
-      console.log('err');
-      console.log(err);
       setSharesCheck(sharedEmailsArray.toString());
       setCurrentUser(null);
     });
@@ -101,16 +97,12 @@ function DisplaySharedWithUserDropdown({userEmail}) {
 
   const handleEmailRemove = (e) => async () => {
     const currentIndex = shares.indexOf(e);
-    console.log('in handleEmailRemove');
-    console.log('expecting email: ', e);
-
     await axios.delete('http://localhost:3000/share/deleteFromShares', {
-      params: {email: e},
+      params: {email: [userEmail, e.shared_to]},
       withCredentials: true
     }).then((result) => {
       const newShares = [...shares];
       newShares.splice(currentIndex, 1);
-
       setShares(newShares);
     }).catch((err) => {
       console.log(err);
@@ -118,11 +110,17 @@ function DisplaySharedWithUserDropdown({userEmail}) {
   };
 
 
-  const handleEmailAdd = (e) => {
-    const newShares = [...shares];
-    newShares.push(e);
-
-    setShares(newShares);
+  const handleEmailAdd = async (emailToAdd) => {
+    await axios.post('http://localhost:3000/share/insertToShares', {
+      email: [userEmail, emailToAdd],
+      withCredentials: true
+    }).then((result) => {
+      const newShares = [...shares];
+      newShares.push(emailToAdd);
+      setShares(newShares);
+    }).catch((err) => {
+      console.log('err in emailAdd:', err);
+    });
   };
 
 
@@ -150,7 +148,7 @@ function DisplaySharedWithUserDropdown({userEmail}) {
         open={open}
         onClose={handleClose}
       >
-        <ShareWithEmail emailArray={shares} email={handleEmailAdd}/>
+        <ShareWithEmail emailArray={shares} emailAdd={handleEmailAdd}/>
         <Divider sx={{ my: 0.8 }} />
         <ShareList emailArray={shares} emailRemove={handleEmailRemove}/>
       </ShareMenu>
