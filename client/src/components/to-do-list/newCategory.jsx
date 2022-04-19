@@ -21,13 +21,22 @@ const useStyles = makeStyles(theme => ({
 }));
 
 var AddCategoryModal = (props) => {
+
+  const [category, setCategory] = useState('');
+
   const classes = useStyles();
+
+  const handleAddCategory = () => {
+    console.log('category:', category);
+    props.addCategory(category);
+    props.closeCat(false);
+  }
 
   return (
       <Modal open={props.open} >
         <Container className={classes.modal}>
-          <TextField id="new_category" type="text" label="New Category" className={classes.input} />
-          <Button variant="contained" onClick={() => props.closeCat(false)}>Submit</Button>
+          <TextField id="new_category" type="text" label="New Category" className={classes.input} defaultValue={''} onChange={(newValue) => setCategory(newValue.target.value)} />
+          <Button variant="contained" onClick={() => handleAddCategory()}>Submit</Button>
         </Container>
       </Modal>
   );

@@ -22,7 +22,7 @@ const useStyles = makeStyles({
   }
 })
 
-function ToDoList({addToCalendar, isMobile, draggedEvent, setDraggedEvent, handleDragStart, taskData}) {
+function ToDoList({addToCalendar, isMobile, draggedEvent, setDraggedEvent, handleDragStart, taskData, addCategory}) {
   const [categorizedTasks, setCategorizedTasks] = useState([]);
   const [newCatModalOpen, setNewCatModalOpen] = useState(false);
   const [newToDoModalOpen, setNewToDoModalOpen] = useState(false);
@@ -35,14 +35,6 @@ function ToDoList({addToCalendar, isMobile, draggedEvent, setDraggedEvent, handl
 
   var addTask = (e) => {
     console.log('addTask');
-  }
-
-  const setNewCategories = () => {
-    console.log('click');
-  }
-
-  const setNewTasks = () => {
-    console.log('click');
   }
 
   const openSetNewCat = (boo) => {
@@ -70,7 +62,7 @@ function ToDoList({addToCalendar, isMobile, draggedEvent, setDraggedEvent, handl
       <Container sx={{display: 'flex', height: '50px', width: '100%'}}>
         <div style={{width: '80%'}}>To-Do List</div>
         <Button variant="contained" onClick={() => {openSetNewCat(true)}}>New Category</Button>
-        <AddCategoryModal open={newCatModalOpen} closeCat={openSetNewCat} addCategory={Home.addCategory} />
+        <AddCategoryModal open={newCatModalOpen} closeCat={openSetNewCat} addCategory={addCategory} />
         <Button variant="contained" onClick={() => {openSetNewToDo(true)}}>New Task</Button>
         <AddToDoModal open={newToDoModalOpen} closeCat={openSetNewToDo} addTodo={Home.addTodo} />
       </Container>
