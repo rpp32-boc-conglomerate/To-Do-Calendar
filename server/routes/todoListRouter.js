@@ -77,7 +77,7 @@ todoListRouter.put('/updateItem', async (req, res) => {
   });
 });
 
-todoListRouter.put('/deleteItem', async (req, res) => {
+todoListRouter.delete('/deleteItem', async (req, res) => {
   var itemId = req.body.itemId || 1;
   query.deleteItem(itemId, async (err, response) => {
     if (err) {
@@ -88,7 +88,7 @@ todoListRouter.put('/deleteItem', async (req, res) => {
   });
 });
 
-todoListRouter.put('/deleteCategory', async (req, res) => {
+todoListRouter.delete('/deleteCategory', async (req, res) => {
   var categoryId = req.body.categoryId || 11;
   query.deleteCategory(categoryId, async (err, response) => {
     if (err) {

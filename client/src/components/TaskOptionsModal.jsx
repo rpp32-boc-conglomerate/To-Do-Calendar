@@ -83,7 +83,7 @@ var TaskOptionsModal = (props) => {
             value={props.task.end_date || new Date()} onChange={(newValue) => {setEndTime(newValue)}}/>
           <Container className={classes.container}>
             <Button className={classes.done} variant="contained" size="medium" onClick={() => handleEditDone()}>Done</Button>
-            <Button className={classes.addTo} variant="contained" size="medium">{props.task.in_calendar ? 'Add to TodoList' : 'Add to Calendar'}</Button>
+            <Button className={classes.addTo} variant="contained" size="medium" onClick={() => handleAdd()}>{props.task.in_calendar ? 'Add to TodoList' : 'Add to Calendar'}</Button>
             <Button className={classes.delete} variant="contained" size="medium" onClick={() => handleTodoDelete()}>Delete</Button>
           </Container>
         </Container>

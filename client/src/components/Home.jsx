@@ -108,7 +108,7 @@ const Home = ({isMobile, isLoggedIn, isLoading, setIsLoggedIn, userEmail, shared
   // DELETE '/todoList/:userEmail' -> For deleting the data -> Clicking on "Delete" button in Modal
   const deleteTodo = (todo) => {
     console.log('Delete Todo: ', todo);
-    // axios.put('/todoList', { params: { userEmail: userEmail }, data: todo })
+    // axios.delete('/todoList', { params: { userEmail: userEmail }, data: todo })
     //   .then((result) => {
     //     console.log(result);
     //   })
@@ -117,7 +117,7 @@ const Home = ({isMobile, isLoggedIn, isLoading, setIsLoggedIn, userEmail, shared
 
   const deleteCategory = (category) => {
     console.log('Delete Todo: ', category);
-    // axios.put('/todoList', { params: { userEmail: userEmail }, data: category })
+    // axios.delete('/todoList', { params: { userEmail: userEmail }, data: category })
     //   .then((result) => {
     //     console.log(result);
     //   })
