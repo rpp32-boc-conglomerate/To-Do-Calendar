@@ -13,6 +13,7 @@ const shareRouter = require('./routes/shareRouter.js');
 
 app.use(cors({
   credentials: true,
+  methods: 'GET,POST,PUT,DELETE',
   origin: "http://localhost:3001",
 }));
 app.use(bodyParser.json());

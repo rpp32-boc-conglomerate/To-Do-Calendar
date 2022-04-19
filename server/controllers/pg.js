@@ -187,5 +187,5 @@ module.exports = {
   getSharedWithUser,
   getSharedByUser,
   insertToShares,
-  deleteFromShares,
+  deleteFromShares
 }
