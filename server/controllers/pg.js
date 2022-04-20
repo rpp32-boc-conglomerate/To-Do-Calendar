@@ -96,7 +96,9 @@ const postCategory = (calendarId, category, callback) => {
     const client = await pool.connect()
     try {
       const result = await client.query(query.postCategory, [calendarId, category]);
-      callback(null, 'Category Posted');
+      let category_id = result.rows[0].category_id;
+      console.log('at controller: ', category_id);
+      callback(null, category_id);
     } finally {
       client.release();
     }

@@ -52,7 +52,7 @@ where user_email = $1;
       calendar_id,
       category
    )
-    VALUES ($1, $2);
+    VALUES ($1, $2) RETURNING category_id;
     `,
   postItem: `
     insert into todoitems (
