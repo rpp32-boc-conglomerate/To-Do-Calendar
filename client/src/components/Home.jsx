@@ -21,8 +21,10 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
   const [onCalendar, setOnCalendar] = useState(false);
   const [draggedEvent, setDraggedEvent] = useState()
   const [userEmail, setEmail] = useState(null);
-
   const [info, setInfo] = useState([]);
+  const [sharedEvents, setSharedEvents] = useState([]);
+  const [viewingShared, setViewingShared] = useState(false);
+
   useEffect(async () => {
     await axios.get('http://localhost:3000/auth/isLoggedIn', {withCredentials: true})
     .then( async (result) => {
@@ -31,7 +33,7 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
       if (result.data) {
         console.log('is login auth:', result.data)
         setIsLoggedIn(result.data.loggedIn);
-        setEmail(result.data.info)
+        setEmail(result.data.info);
         await axios.get('http://localhost:3000/todoList/info',{ params: { email: result.data.info } })
         .then((response) => {
           console.log('info response:', response.data.results[0])
@@ -47,18 +49,21 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
       console.log(err);
       return err;
     })
-  }, [isLoggedIn])
+  }, [isLoggedIn]);
+
+
+
 
 
   useEffect(() => {
-  const toDos = result.calendars.filter(item => {
-    return item.calendar_owner === '1@qq.com'
-  }).map(calendar => {
-    return calendar.categories.map(category =>
-      {return category})
-    })
-  setMyEvents(toDos)
-  }, [])
+    const toDos = result.calendars.filter(item => {
+      return item.calendar_owner === '1@qq.com'
+    }).map(calendar => {
+      return calendar.categories.map(category =>
+        {return category})
+      })
+    setMyEvents(toDos)
+  }, []);
   // [
   //   {
   //     id: 0,
@@ -228,10 +233,49 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
     [draggedEvent, setDraggedEvent, newEvent]
   )
 
+  const viewSharedCal = async function (sharedEmail) {
+    var viewThisEmail = sharedEmail[1]['user_email'];
+
+    if (sharedEmail.length === 1) {
+      setSharedEvents([]);
+      setViewingShared(false);
+    }
+    if (sharedEmail.length === 2) {
+      await axios.get('http://localhost:3000/todoList/info',{ params: { email: viewThisEmail } })
+      .then((response) => {
+        var result = response.data.results[0];
+
+        if (result.calendars.length === 0) {
+          setSharedEvents([]);
+        } else {
+          var toDos = result.calendars.filter(item => {
+            return item.calendar_owner === viewThisEmail
+          }).map(calendar => {
+            return calendar.categories.map(category =>
+              {return category})
+          })
+          setViewingShared(true);
+          setSharedEvents(toDos);
+        }
+      })
+      .catch((err) => {
+        console.log('info err:', err);
+        setSharedEvents([]);
+        setViewingShared(false);
+        return err;
+      })
+    }
+  }
   // All Components
-  const naviBar = (<TopBar isLoading={isLoading} setIsLoggedIn={setIsLoggedIn} isLoggedIn={isLoggedIn} isMobile={isMobile} onCalendar={onCalendar} setOnCalendar={setOnCalendar} userEmail={userEmail}/>);
+  const naviBar = (<TopBar isLoading={isLoading} setIsLoggedIn={setIsLoggedIn} isLoggedIn={isLoggedIn} isMobile={isMobile} onCalendar={onCalendar} setOnCalendar={setOnCalendar} userEmail={userEmail} viewSharedCal={viewSharedCal}/>);
   const toDoList = (<ToDoList isMobile={isMobile} taskData={myEvents.flat()} draggedEvent={draggedEvent} setDraggedEvent={setDraggedEvent} handleDragStart={handleDragStart}/>);
-  const myCalender = (<MyCalendar myEvents={myEvents} moveEvent={moveEvent} resizeEvent={resizeEvent} changeTitle={changeTitle} onDropFromOutside={onDropFromOutside}/>);
+
+  var myCalender;
+  if (viewingShared) {
+    myCalender = (<MyCalendar myEvents={sharedEvents} moveEvent={moveEvent} resizeEvent={resizeEvent} changeTitle={changeTitle} onDropFromOutside={onDropFromOutside} viewingShared={viewingShared}/>);
+  } else {
+    myCalender = (<MyCalendar myEvents={myEvents} moveEvent={moveEvent} resizeEvent={resizeEvent} changeTitle={changeTitle} onDropFromOutside={onDropFromOutside} viewingShared={viewingShared}/>);
+  }
 
   // Conditional Rendering based on device
   const renderContent = () => {

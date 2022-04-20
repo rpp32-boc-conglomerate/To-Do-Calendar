@@ -8,7 +8,7 @@ import Checkbox from '@mui/material/Checkbox';
 import axios from 'axios';
 
 
-export default function DisplaySharedWithUserItem({userEmail}) {
+export default function DisplaySharedWithUserItem({userEmail, viewSharedCal}) {
   const [checked, setChecked] = React.useState([0]);
   var sharedEmailsArray = ['boc@isalmostdone.com', 'nate@conglomerate.com',
   'excitedtobe@free.com'];
@@ -27,6 +27,12 @@ export default function DisplaySharedWithUserItem({userEmail}) {
     });
   }, [sharedCheck]);
 
+
+  const handleViewShared = (ofThisEmail) => {
+    viewSharedCal(ofThisEmail);
+  }
+
+
   const handleToggle = (value) => () => {
     const currentIndex = checked.indexOf(value);
     const newChecked = [0]; // adjustment to have only one checked at a time
@@ -36,6 +42,7 @@ export default function DisplaySharedWithUserItem({userEmail}) {
       newChecked.splice(currentIndex, 1);
     }
     setChecked(newChecked);
+    handleViewShared(newChecked);
   };
 
   return (
