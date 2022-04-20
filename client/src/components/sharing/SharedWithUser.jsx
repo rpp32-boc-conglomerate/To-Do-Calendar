@@ -29,8 +29,7 @@ export default function DisplaySharedWithUserItem({userEmail}) {
 
   const handleToggle = (value) => () => {
     const currentIndex = checked.indexOf(value);
-    const newChecked = [...checked];
-
+    const newChecked = [0]; // adjustment to have only one checked at a time
     if (currentIndex === -1) {
       newChecked.push(value);
     } else {
