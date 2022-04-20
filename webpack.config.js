@@ -1,9 +1,15 @@
 const path = require("path");
 const webpack = require('webpack');
 const dotenv = require('dotenv').config();
-
+const TerserPlugin = require("terser-webpack-plugin");
+const BrotliPlugin = require('brotli-webpack-plugin');
+const CompressionPlugin = require('compression-webpack-plugin');
 
 module.exports = {
+  optimization: {
+    minimize: true,
+    minimizer: [new TerserPlugin()],
+  },
   entry: ['regenerator-runtime/runtime.js', path.resolve(__dirname, "client", "src", 'index.js')],
   output: { path: path.resolve(__dirname, "client", "dist") },
   mode: 'development',
@@ -66,12 +72,27 @@ module.exports = {
       }
     ]
   },
+  plugins: [
+    new CompressionPlugin({
+    algorithm: 'gzip',
+    test: /\.js$|\.css$|\.html$/,
+    threshold: 10240,
+    minRatio: 0.8
+    }),
+    new BrotliPlugin({
+    asset: '[path].br[query]',
+    test: /\.js$|\.css$|\.html$/,
+    threshold: 10240,
+    minRatio: 0.8
+    })
+   ],
   devServer: {
     port: 3001,
     watchContentBase: true,
     contentBase: path.join(__dirname, 'client','/dist'),
     hot: true,
     overlay: true,
+    compress: true,
     historyApiFallback: true,
     // host: '10.0.0.90'
 
@@ -82,8 +103,13 @@ module.exports = {
     //   }
     // }
   },
+  externals: {
+    'sharp': 'commonjs sharp'
+  },
   output: {
     filename: 'bundle.js',
     path: __dirname + '/client/dist'
   }
 };
+
+
