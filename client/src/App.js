@@ -13,7 +13,6 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
-<<<<<<< HEAD
 
   // useEffect(() => {
   //   axios.get('http://localhost:3000/auth/userEmail', {withCredentials: true})
@@ -27,29 +26,6 @@ function App() {
   //     console.log(err);
   //   })
   // }, [userEmail])
-=======
-  useEffect(() => {
-    axios.get('http://localhost:3000/auth/isLoggedIn', {withCredentials: true})
-    .then((result) => {
-      setIsLoggedIn(result.data);
-      setIsLoading(false);
-    })
-    .catch((err) => {
-      console.log(err);
-    })
-  }, [isLoggedIn])
-
-  useEffect(() => {
-    axios.get('http://localhost:3000/auth/userEmail', {withCredentials: true})
-    .then((result) => {
-      setEmail(result.data.username);
-    })
-    .catch((err) => {
-      setEmail('1@qq.com');
-      console.log(err);
-    })
-  }, [userEmail])
->>>>>>> sharedCalV2
 
 
 
