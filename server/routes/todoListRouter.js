@@ -3,7 +3,6 @@ const query = require('../controllers/pg.js');
 
 
 todoListRouter.get('/info', (req, res) => {
-  console.log('get called')
   const email = req.query.email;
   try {
     query.getInfo(email, async(err, response) => {

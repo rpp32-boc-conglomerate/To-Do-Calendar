@@ -20,7 +20,7 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
   const [myEvents, setMyEvents] = useState([]);
   const [onCalendar, setOnCalendar] = useState(false);
   const [draggedEvent, setDraggedEvent] = useState()
-  const [userEmail, setEmail] = useState(null);
+  const [userEmail, setEmail] = useState('meredith.white91@gmail.com');
 
   const [info, setInfo] = useState([]);
   useEffect(async () => {
@@ -28,6 +28,7 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
     .then( async (result) => {
       console.log('is login auth:', result.data)
       setIsLoading(false);
+      console.log('result', result)
       if (result.data) {
         console.log('is login auth:', result.data)
         setIsLoggedIn(result.data.loggedIn);
