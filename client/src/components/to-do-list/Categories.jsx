@@ -15,12 +15,6 @@ function Categories({addTask, openModal, isMobile, categorizedTasks, deleteTask,
     setDraggedEvent={setDraggedEvent} handleDragStart={handleDragStart}/>
     })
   )
-
-    // return <Category
-    // tasks={categorizedTasks}
-    // addTask={addTask} openModal={openModal}
-    // isMobile={isMobile} deleteTask={deleteTask} draggedEvent={draggedEvent}
-    // setDraggedEvent={setDraggedEvent} handleDragStart={handleDragStart}/>
-    }
+}
 
 export default Categories;

@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { makeStyles, IconButton, Link, Avatar, TextField, Box, Paper, Typography, AppBar, Button, Card, Container, CardActions, CardContent, CardMedia, CssBaseline, Grid, Toolbar } from '@material-ui/core';
+import { makeStyles, Link, Avatar, TextField, Paper, Typography, Container, Grid } from '@material-ui/core';
 import GoogleIcon from '@mui/icons-material/Google';
 import loginSchema from './LoginValidation.js';
 import axios from 'axios'
-import img from '../../../dist/images/d1.png';
+// import img from 'http://localhost:3001/images/x-icon/todocal - logo.ico';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -105,7 +105,7 @@ const Login = ({isLoggedIn, setIsLoggedIn}) => {
               <Grid item align='center'>
                 <Avatar
                   variant="square"
-                  src={img}
+                  src={'http://localhost:3001/images/x-icon/todocal - logo.ico'}
                   style={{width:'120px', height:'100px'}}/>
                 <h1 style={{color:'#545863'}}><i>Sign In</i></h1>
               </Grid>
