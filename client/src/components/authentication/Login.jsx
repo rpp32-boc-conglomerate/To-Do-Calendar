@@ -44,7 +44,7 @@ const Login = ({isLoggedIn, setIsLoggedIn}) => {
     'email': state['email'],
   }
   useEffect(() => {
-    console.log('is log in:', isLoggedIn)
+    // console.log('is log in:', isLoggedIn)
     if (isLoggedIn) {
       navigate('/')
     }
@@ -79,11 +79,11 @@ const Login = ({isLoggedIn, setIsLoggedIn}) => {
   const handleLogin = async () => {
     let isValid = await validation();
     if (!isValid) {
-      console.log('cannot submit')
+      // console.log('cannot submit')
     } else {
       await axios.post('http://localhost:3000/auth/login', {'email': state['email'], 'password': state['password']}, {withCredentials: true})
       .then((res) => {
-        console.log('response:', res.data);
+        // console.log('response:', res.data);
         if(res.data === true) {
           setIsLoggedIn(true);
           navigate('/')

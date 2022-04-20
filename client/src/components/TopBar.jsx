@@ -16,7 +16,7 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
-import img from '../../dist/images/todocal - logo.png';
+// import img from '../../dist/images/todocal - logo.png';
 import CircularProgress from '@mui/material/CircularProgress';
 import ShareWithOthers from './sharing/ShareDropDown.jsx';
 import ViewShares from './sharing/SharedWithUserDropdown.jsx';
@@ -30,7 +30,6 @@ const TopBar = ({isLoading, setIsLoggedIn, isLoggedIn, isMobile, onCalendar, set
   const navigate = useNavigate();
   const ShareMenu = (<ShareWithOthers userEmail={userEmail}/>);
   const ViewShared = (<ViewShares userEmail={userEmail}/>);
-  console.log('>>>>>TOP:', userEmail);
 
   if (!isMobile) {
     pages = []
@@ -40,7 +39,7 @@ const TopBar = ({isLoading, setIsLoggedIn, isLoggedIn, isMobile, onCalendar, set
     pages = ['Calendar']
   }
   const handleOpenUserMenu = (event) => {
-    console.log('trigger open menu:', event.currentTarget)
+    // console.log('trigger open menu:', event.currentTarget)
     setAnchorElUser(event.currentTarget);
   };
 
@@ -49,12 +48,12 @@ const TopBar = ({isLoading, setIsLoggedIn, isLoggedIn, isMobile, onCalendar, set
   };
 
   const handleCloseUserMenu = (e) => {
-    console.log('trigger close menu:', e.target.innerHTML)
+    // console.log('trigger close menu:', e.target.innerHTML)
     setAnchorElUser(null);
     if (e.target.innerHTML === 'Logout') {
       axios.get('http://localhost:3000/auth/logout', {withCredentials: true})
       .then((res) => {
-        console.log('log out res:', res.data)
+        // console.log('log out res:', res.data)
         if (res.data === false) {
           setIsLoggedIn(false)
         }
@@ -88,7 +87,8 @@ const TopBar = ({isLoading, setIsLoggedIn, isLoggedIn, isMobile, onCalendar, set
               </IconButton>}
           </Box>
           <Box style={{margin: '0 auto', display: "flex"}}>
-            <Avatar variant="square" src={img} style={{width:'50px', height:'50px'}}/>
+            <Avatar variant="square" src={'http://localhost:3001/images/x-icon/todocal - logo.ico'}
+                style={{width:'50px', height:'50px'}}/>
           </Box>
          <Box sx={{ flexGrow: 0 }}>
             {isLoading ? <CircularProgress /> : (isLoggedIn ?
