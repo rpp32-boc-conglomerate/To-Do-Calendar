@@ -22,6 +22,8 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
   const [draggedEvent, setDraggedEvent] = useState()
   const [userEmail, setEmail] = useState(null);
 
+  console.log('events: ', myEvents);
+
   const [info, setInfo] = useState([]);
   useEffect(async () => {
     await axios.get('http://localhost:3000/auth/isLoggedIn', {withCredentials: true})
@@ -136,9 +138,14 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
   }
 
   const addCategory = (category) => {
-    //disabling actual data until login is fixed
-    //let incomingId = info.calendars[0].calendar_id;
-    let incomingId = 11;
+
+    let incomingId;
+
+    if (info.length > 0) {
+      incomingId = info.calendars[0].calendar_id;
+    } else {
+      incomingId = 11;
+    }
 
     axios.post('http://localhost:3000/todoList/category', {  params: { calendar_id: incomingId, category: category} })
       .then((result) => {
