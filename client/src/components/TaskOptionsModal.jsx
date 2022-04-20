@@ -69,12 +69,16 @@ var TaskOptionsModal = (props) => {
     taskCopy.description = todoDescription;
     taskCopy.start = startTime;
     taskCopy.end_date = endTime
-    const hours = endTime.getHours() - startTime.getHours()
-    const minutes = endTime.getMinutes() - startTime.getMinutes()
+    let hours = endTime.getHours() - startTime.getHours()
+    let minutes = endTime.getMinutes() - startTime.getMinutes()
+    if (minutes < 0) {
+      const convertedHours = (hours * 60) + minutes;
+      hours = Math.floor(convertedHours/60)
+      minutes = convertedHours % 60
+
+    }
     const duration = hours + ':' + minutes
     taskCopy.duration = duration
-    // console.log('duration', duration)
-    // console.log('taskCoyp', taskCopy)
     setUserTask(taskCopy)
     props.updateTask(taskCopy)
 
@@ -90,10 +94,8 @@ var TaskOptionsModal = (props) => {
   }
 
   const handleTimeChange = (time, frame) => {
-    console.log('newvalue', time, frame)
     const taskCopy = userTask;
     taskCopy[frame] = time;
-    console.log('taskcopy', taskCopy)
     setUserTask(taskCopy)
   }
   const handleTodoDelete = () => {

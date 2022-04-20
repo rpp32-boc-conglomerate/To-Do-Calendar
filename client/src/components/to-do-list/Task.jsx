@@ -39,15 +39,23 @@ function Task({task, isMobile, deleteTask, draggedEvent, setDraggedEvent, handle
 
   const convertDuration = (duration) => {
     const splitDuration = duration.split(':')
-    const hours = splitDuration[0]
-    const minutes = splitDuration[1]
+    let hours = splitDuration[0]
+    const hoursDigits = hours.split('')
+    if (hoursDigits[0] === '0' && hoursDigits.length === 2) {
+      hours = hoursDigits[1]
+    }
+    let minutes = splitDuration[1]
+    const minutesDigits = minutes.split('')
+    if (minutesDigits[0] === '0') {
+      minutes = minutesDigits[1]
+    }
     setHours(hours)
     setMinutes(minutes)
   }
 
   const updateTask = (task) => {
-    console.log('update task', task)
     setTodo(task)
+    newTodo()
   }
 
   const classes = useStyles();
@@ -56,7 +64,7 @@ function Task({task, isMobile, deleteTask, draggedEvent, setDraggedEvent, handle
     convertDuration(todo.duration)
   }, [])
 
-  useCallback(() => {
+  const newTodo = useCallback(() => {
     convertDuration(todo.duration)
   }, [todo])
 
@@ -68,15 +76,15 @@ function Task({task, isMobile, deleteTask, draggedEvent, setDraggedEvent, handle
           <CardContent>
             <div style={{display: 'flex', flexDirection: 'row', gap: '5%'}}>
               <Typography>
-                {todo.title}
+                {task.title}
               </Typography>
               <div>Duration:</div>
-              <Box>{hours} {hours === '01' ? 'hour' : 'hours'}</Box>
-              <Box>{minutes} {minutes === '01' ? 'minute' : 'minutes'}</Box>
+              <Box>{hours} {hours === '1' ? 'hour' : 'hours'}</Box>
+              <Box>{minutes} {minutes === '1' ? 'minute' : 'minutes'}</Box>
               {isMobile && addToCal}
             </div>
             <Typography>
-                {todo.description}
+                {task.description}
               </Typography>
             <CardActions>
               <Button variant="contained" size="small" onClick={() => setModalOpen(true)}>Edit</Button>

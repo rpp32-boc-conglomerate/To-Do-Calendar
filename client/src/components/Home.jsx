@@ -55,8 +55,7 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
   const toDos = result.calendars.filter(item => {
     return item.calendar_owner === '1@qq.com'
   }).map(calendar => {
-    return calendar.categories.map(category =>
-      {return category})
+    return calendar.categories
     })
   setMyEvents(toDos)
   }, [])
@@ -118,6 +117,7 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
 
   // PATCH '/todoList/:userEmail' -> For updating the data -> ex. Moving around item in Calendar / Lengthening item in Calendar / Clicking on "Done" in Modal for Calendar/TodoList
   const updateTodo = (todo) => {
+
     console.log('Update Todo: ', todo);
     // axios.patch('/todoList', { params: { userEmail: userEmail }, data: todo })
     //   .then((result) => {
@@ -204,7 +204,7 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
   };
 
   const handleDragStart = useCallback((event) => {
-    // console.log('dragged event', event)
+    console.log('dragged event', event)
     setDraggedEvent(event), []
   })
 

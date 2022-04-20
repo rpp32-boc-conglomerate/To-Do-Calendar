@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import Task from './Task.jsx';
 import Tasks from './Tasks.jsx';
 import { makeStyles, Paper, Container, Grid, ButtonGroup, Button, TextField, Toolbar } from '@material-ui/core';
@@ -17,6 +17,10 @@ function Category({tasks, addTask, isMobile, draggedEvent, setDraggedEvent, hand
   const [totalTime, setTotalTime] = useState(0);
   // console.log('tasks in category', tasks)
   const todos = tasks.todoitems
+
+  const onCalendarTasks = todos.filter(task => task.in_calendar)
+  // console.log('oncal', onCalendarTasks)
+
   // console.log('todos', todos)
   return (
     <Container>
@@ -31,7 +35,8 @@ function Category({tasks, addTask, isMobile, draggedEvent, setDraggedEvent, hand
         </Container>
         <Container sx={{ display: 'inline-block'}}>
           <Tasks tasks={todos} isMobile={isMobile}
-          draggedEvent={draggedEvent} setDraggedEvent={setDraggedEvent} handleDragStart={handleDragStart}/>
+          draggedEvent={draggedEvent} setDraggedEvent={setDraggedEvent}
+          handleDragStart={handleDragStart}/>
         </Container>
     </Paper>
   </Container>
