@@ -54,24 +54,48 @@ start: "2022-04-15T09:30:20"
 title: "meeting with A"
 
 var TaskOptionsModal = (props) => {
+  const [userTask, setUserTask] = useState(props.task)
   const [todoTitle, setTodoTitle] = useState(props.task.title);
   const [todoDescription, setTodoDescription] = useState(props.task.description);
-  const [startTime, setStartTime] = useState(props.task.start);
-  const [endTime, setEndTime] = useState(props.task.end_date);
+  const [startTime, setStartTime] = useState(userTask.start);
+  const [endTime, setEndTime] = useState(userTask.end_date);
 
   const classes = useStyles();
 
   const handleEditDone = () => {
+    //front end update
+    const taskCopy = userTask
+    taskCopy.title = todoTitle;
+    taskCopy.description = todoDescription;
+    taskCopy.start = startTime;
+    taskCopy.end_date = endTime
+    const hours = endTime.getHours() - startTime.getHours()
+    const minutes = endTime.getMinutes() - startTime.getMinutes()
+    const duration = hours + ':' + minutes
+    taskCopy.duration = duration
+    // console.log('duration', duration)
+    // console.log('taskCoyp', taskCopy)
+    setUserTask(taskCopy)
+    props.updateTask(taskCopy)
+
+    //back end update
     var todoToUpdate = {
       title: todoTitle,
       description: todoDescription,
       start: startTime,
       end_date: endTime
     };
-    props.updateTodo(todoToUpdate);
+    // props.updateTodo(todoToUpdate);
     props.setModalOpen(false);
   }
 
+  const handleTimeChange = (time, frame) => {
+    console.log('newvalue', time, frame)
+    const taskCopy = userTask;
+    taskCopy[frame] = time;
+    console.log('taskcopy', taskCopy)
+    setUserTask(taskCopy)
+  }
   const handleTodoDelete = () => {
     props.deleteTodo(props.task);
     props.setModalOpen(false);
@@ -84,9 +108,13 @@ var TaskOptionsModal = (props) => {
           <TextField label="Title" className={classes.input} defaultValue={props.task.title} onChange={(newValue) => setTodoTitle(newValue)} />
           <TextField multiline label="Description" className={classes.input} defaultValue={props.task.description} onChange={(newValue) => setTodoDescription(newValue)}/>
           <DesktopDateTimePicker renderInput={(props) => <TextField className={classes.input} {...props} />} label="Start Time"
-            value={props.task.start || new Date()} onChange={(newValue) => {setStartTime(newValue)}} />
+            value={props.task.start || new Date()} onChange={(newValue) => {
+              handleTimeChange(newValue, 'start')
+              setStartTime(newValue)}} />
           <DesktopDateTimePicker renderInput={(props) => <TextField className={classes.input} {...props} />} label="End Time"
-            value={props.task.end_date || new Date()} onChange={(newValue) => {setEndTime(newValue)}}/>
+            value={props.task.end_date || new Date()} onChange={(newValue) => {
+              handleTimeChange(newValue, 'end_date')
+              setEndTime(newValue)}}/>
           <Container className={classes.container}>
             <Button className={classes.done} variant="contained" size="medium" onClick={() => handleEditDone()}>Done</Button>
             <Button className={classes.addTo} variant="contained" size="medium">{props.task.in_calendar ? 'Add to TodoList' : 'Add to Calendar'}</Button>
