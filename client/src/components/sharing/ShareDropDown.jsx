@@ -1,20 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import { styled, alpha } from '@mui/material/styles';
-import Button from '@mui/material/Button';
-import Menu from '@mui/material/Menu';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import CheckIcon from '@mui/icons-material/Check';
-import ShareList from './ShareList.jsx';
-import ShareWithEmail from './ShareWithEmail.jsx';
-import Divider from '@mui/material/Divider';
-
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemText from '@mui/material/ListItemText';
-import Checkbox from '@mui/material/Checkbox';
-import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import axios from 'axios';
+import Button from '@mui/material/Button';
+import Menu from'@mui/material/Menu';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+const Divider = React.lazy(() => import('@mui/material/Divider'));
+const ShareList = React.lazy(() => import('./ShareList.jsx'));
+const ShareWithEmail = React.lazy(() => import('./ShareWithEmail.jsx'));
 
 const ShareMenu = styled((props) => (
   <Menu
@@ -63,7 +55,7 @@ function DisplaySharedWithUserDropdown({userEmail}) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [formErr, setFormErr] = useState('');
   const open = Boolean(anchorEl);
-  var sharedEmailsArray = ['boc@isalmostdone.com', 'nate@conglomerate.com', 'excitedtobe@free.com'];
+  const sharedEmailsArray = ['boc@isalmostdone.com', 'nate@conglomerate.com', 'excitedtobe@free.com'];
   const [shares, setShares] = useState(sharedEmailsArray);
   const [sharesCheck, setSharesCheck] = useState(sharedEmailsArray.toString());
   const [currentUser, setCurrentUser] = useState('');
@@ -116,7 +108,7 @@ function DisplaySharedWithUserDropdown({userEmail}) {
       withCredentials: true
     }).then((result) => {
       const newShares = [...shares];
-      newShares.push(emailToAdd);
+      newShares.push({shared_to: emailToAdd});
       setShares(newShares);
     }).catch((err) => {
       console.log('err in emailAdd:', err);
@@ -148,9 +140,15 @@ function DisplaySharedWithUserDropdown({userEmail}) {
         open={open}
         onClose={handleClose}
       >
-        <ShareWithEmail emailArray={shares} emailAdd={handleEmailAdd}/>
-        <Divider sx={{ my: 0.8 }} />
-        <ShareList emailArray={shares} emailRemove={handleEmailRemove}/>
+        <Suspense fallback={<div>Loading...</div>}>
+          <ShareWithEmail emailArray={shares} emailAdd={handleEmailAdd}/>
+        </Suspense>
+        <Suspense fallback={<div>Loading...</div>}>
+          <Divider sx={{ my: 0.8 }} />
+        </Suspense>
+        <Suspense fallback={<div>Loading...</div>}>
+          <ShareList emailArray={shares} emailRemove={handleEmailRemove}/>
+        </Suspense>
       </ShareMenu>
     </div>
   );
