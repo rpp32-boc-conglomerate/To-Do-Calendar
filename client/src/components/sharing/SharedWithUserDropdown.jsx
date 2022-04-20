@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import { styled, alpha } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import CheckIcon from '@mui/icons-material/Check';
-import ViewList from './SharedWithUser.jsx';
+const ViewList = React.lazy(() => import( './SharedWithUser.jsx'));
 
 const StyledMenu = styled((props) => (
   <Menu
@@ -76,18 +75,20 @@ export default function DisplaySharedWithUserDropdown({userEmail}) {
       >
         Views
       </Button>
-      <StyledMenu
-        id="shared-with-user-menu"
-        MenuListProps={{
-          'aria-labelledby': 'shared-with-user-button',
-        }}
-        anchorEl={anchorEl}
-        open={open}
-        onClose={handleClose}
-      >
-      <ViewList userEmail={userEmail}/>
+      <Suspense fallback={<div>Loading...</div>}>
+        <StyledMenu
+          id="shared-with-user-menu"
+          MenuListProps={{
+            'aria-labelledby': 'shared-with-user-button',
+          }}
+          anchorEl={anchorEl}
+          open={open}
+          onClose={handleClose}
+        >
+        <ViewList userEmail={userEmail}/>
 
-      </StyledMenu>
+        </StyledMenu>
+      </Suspense>
     </div>
   );
 }

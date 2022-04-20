@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, Suspense } from 'react';
 import { useDrag } from 'react-dnd';
 import moment from 'moment';
 import ContentEditable from 'react-contenteditable';
 import { Button, Box, Grid, Card, CardHeader, CardContent, CardActions, Collapse, makeStyles, Typography, Toolbar, TextField,  TextareaAutosize, Stack } from '@material-ui/core';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import TaskOptionsModal from '../TaskOptionsModal.jsx';
+const TaskOptionsModal = React.lazy(() => import('../TaskOptionsModal.jsx'));
 
 //on hover over editable field -- pen icon or underline
 const useStyles = makeStyles({
