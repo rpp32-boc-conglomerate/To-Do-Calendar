@@ -111,7 +111,8 @@ const postItem = (title, description, duration, start, end_date, in_calendar, ca
     const client = await pool.connect()
     try {
       const result = await client.query(query.postItem, [title, description, duration, start, end_date, in_calendar, category_id]);
-      callback(null, 'Item Posted');
+      let taskId = result.rows[0].id;
+      callback(null, taskId);
     } finally {
       client.release();
     }

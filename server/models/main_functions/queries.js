@@ -64,7 +64,7 @@ where user_email = $1;
       in_calendar,
       category_id
     )
-    VALUES ($1, $2, $3, $4, $5, $6, $7);
+    VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id;
     `,
   updateCategory: `
     update categories

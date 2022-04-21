@@ -43,7 +43,7 @@ todoListRouter.post('/item', async (req, res) => {
     if (err) {
       res.status(400).send('post item error');
     } else {
-      res.status(201).send('item posted');
+      res.status(201).send( { id: response } );
     }
   });
 });
