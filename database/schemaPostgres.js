@@ -6,7 +6,7 @@ const config = {
   user: 'postgres',
   password: process.env.PGPASS,
   port: 5432,
-  host: 'localhost'
+  host: '54.209.199.189'
 }
 console.log(process.env.PGPASS)
 // let client = new pg.Client(config)

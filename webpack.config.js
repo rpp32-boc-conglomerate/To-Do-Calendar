@@ -1,9 +1,7 @@
 const path = require("path");
 const webpack = require('webpack');
 const dotenv = require('dotenv').config();
-const TerserPlugin = require("terser-webpack-plugin");
-const BrotliPlugin = require('brotli-webpack-plugin');
-const CompressionPlugin = require('compression-webpack-plugin');
+
 
 module.exports = {
   entry: ['regenerator-runtime/runtime.js', path.resolve(__dirname, "client", "src", 'index.js')],
@@ -90,5 +88,3 @@ module.exports = {
     path: __dirname + '/client/dist'
   }
 };
-
-
