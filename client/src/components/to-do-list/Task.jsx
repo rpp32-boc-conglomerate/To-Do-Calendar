@@ -80,7 +80,6 @@ const Task = ({task, isMobile, clickedTask, updateTodo, deleteTodo}) => {
               <div>Duration:</div>
               <Box>{hours} {hours === '1' ? 'hour' : 'hours'}</Box>
               <Box>{minutes} {minutes === '1' ? 'minute' : 'minutes'}</Box>
-              {isMobile && addToCal}
             </div>
             <ContentEditable variant="body1" html={task.description}
             />

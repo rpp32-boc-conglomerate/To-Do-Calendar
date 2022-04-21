@@ -41,7 +41,7 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
               console.log('info err:', err);
               return err;
             })
-        }
+        }}
       })
       .catch((err) => {
         console.log(err);

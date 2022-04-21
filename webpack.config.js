@@ -94,6 +94,7 @@ module.exports = {
     overlay: true,
     compress: true,
     historyApiFallback: true,
+    host: process.env.HOST,
     // host: '10.0.0.90'
 
     // proxy: {

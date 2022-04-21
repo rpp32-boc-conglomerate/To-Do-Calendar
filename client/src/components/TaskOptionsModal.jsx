@@ -67,7 +67,6 @@ var TaskOptionsModal = (props) => {
       const convertedHours = (hours * 60) + minutes;
       hours = Math.floor(convertedHours/60)
       minutes = convertedHours % 60
-
     }
     const duration = hours + ':' + minutes
     taskCopy.duration = duration
