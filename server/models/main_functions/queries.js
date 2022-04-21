@@ -53,10 +53,9 @@ module.exports = {
     insert into categories (
       calendar_id,
       category
-    )
-    VALUES ($1, $2);
-  `,
-
+   )
+    VALUES ($1, $2) RETURNING category_id;
+    `,
   postItem: `
     insert into todoitems (
       title,
@@ -67,9 +66,8 @@ module.exports = {
       in_calendar,
       category_id
     )
-    VALUES ($1, $2, $3, $4, $5, $6, $7);
-  `,
-
+    VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id;
+    `,
   updateCategory: `
     update categories
     set category = $2 where category_id = $1;

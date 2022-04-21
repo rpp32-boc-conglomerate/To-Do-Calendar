@@ -25,16 +25,13 @@ const useStyles = makeStyles({
   }
 });
 
-const Task = ({task, isMobile, clickedTask, updateTodo, deleteTodo}) => {
-  const [userTask, setUserTask] = useState(task);
+function Task({task, isMobile, deleteTask, draggedEvent, setDraggedEvent, handleDragStart, clickedTask, updateTodo, deleteTodo}) {
+  console.log('task in task', task)
 
-  // For Modal opening and closing
   const [todo, setTodo] = useState(task);
   const [modalOpen, setModalOpen] = useState(false);
   const [hours, setHours] = useState();
   const [minutes, setMinutes] = useState();
-
-  // const [modalInfo, setModalInfo] = useState();
 
   const convertDuration = (duration) => {
     const splitDuration = duration.split(':')
@@ -68,12 +65,21 @@ const Task = ({task, isMobile, clickedTask, updateTodo, deleteTodo}) => {
   }, [todo])
 
   return (
-    <Grid item xs={12} lg={12}>
-      <Grid item xs={12}>
-        <Card onDragStart={() => handleDragStart(task)} draggable='true'>
-          {modalOpen === true && <TaskOptionsModal setModalOpen={setModalOpen} modalOpen={modalOpen} task={task} updateTodo={updateTodo} deleteTodo={deleteTodo} updateTask={updateTask}/>}
-          <CardContent>
-            <div style={{display: 'flex', flexDirection: 'row', gap: '5%'}}>
+    <Suspense fallback={<div>Loading...</div>}>
+      <Grid item xs={12} lg={12}>
+        <Grid item xs={12}>
+          <Card onDragStart={() => handleDragStart(task)} draggable='true'>
+            {modalOpen === true && <TaskOptionsModal setModalOpen={setModalOpen} modalOpen={modalOpen} task={task} updateTodo={updateTodo} deleteTodo={deleteTodo} updateTask={updateTask}/>}
+            <CardContent>
+              <div style={{display: 'flex', flexDirection: 'row', gap: '5%'}}>
+                <Typography>
+                  {task.title}
+                </Typography>
+                <div>Duration:</div>
+                <Box>{hours} {hours === '1' ? 'hour' : 'hours'}</Box>
+                <Box>{minutes} {minutes === '1' ? 'minute' : 'minutes'}</Box>
+                {isMobile && addToCal}
+              </div>
               <Typography>
                 {task.title}
               </Typography>
@@ -89,7 +95,7 @@ const Task = ({task, isMobile, clickedTask, updateTodo, deleteTodo}) => {
           </CardContent>
         </Card>
       </Grid>
-    </Grid>
+    </Suspense>
   );
 };
 

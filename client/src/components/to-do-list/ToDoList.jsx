@@ -22,18 +22,28 @@ const useStyles = makeStyles({
   }
 });
 
-function ToDoList({addToCalendar, isMobile, draggedEvent, setDraggedEvent, handleDragStart, taskData, addCategory}) {
+function ToDoList({addToCalendar, isMobile, draggedEvent, setDraggedEvent, handleDragStart, taskData, addCategory, addTodo, info}) {
   const [newCatModalOpen, setNewCatModalOpen] = useState(false);
   const [newToDoModalOpen, setNewToDoModalOpen] = useState(false);
+  // const [categories, setCategories] = useState([])
 
-  // console.log('taskData', taskData)
+const [categories] = taskData
+
+  // useEffect(() => {
+  //   console.log('taskdata', taskData)
+  //   if (taskData?.length) {
+  //     const [categorizedTasks] = taskData
+  //     console.log('categories', categorizedTasks)
+  //     taskData = categorizedTasks?.categories
+  //     setCategories(taskData)
+  //   }
+  // }, [])
 
   const classes = useStyles();
 
   var addTask = (e) => {
     console.log('addTask');
   }
-
 
   const openSetNewCat = (boo) => {
     if (boo === false) {
@@ -44,7 +54,6 @@ function ToDoList({addToCalendar, isMobile, draggedEvent, setDraggedEvent, handl
   }
 
   const openSetNewToDo = (boo) => {
-    console.log('opensetnewtodo')
     if (boo === false) {
       setNewToDoModalOpen(false);
     } else {
@@ -52,23 +61,23 @@ function ToDoList({addToCalendar, isMobile, draggedEvent, setDraggedEvent, handl
     }
   }
 
-
   return (
+
     <Container className={isMobile ? classes.mobileMain : classes.desktopMain}>
       <Container sx={{display: 'flex', height: '50px', width: '100%'}}>
         <div style={{width: '80%'}}>To-Do List</div>
         <Button variant="contained" onClick={() => {openSetNewCat(true)}}>New Category</Button>
         <AddCategoryModal open={newCatModalOpen} closeCat={openSetNewCat} addCategory={addCategory} />
         <Button variant="contained" onClick={() => {openSetNewToDo(true)}}>New Task</Button>
-        <AddToDoModal open={newToDoModalOpen} closeCat={openSetNewToDo}/>
+        <AddToDoModal open={newToDoModalOpen} closeCat={openSetNewToDo} addTodo={addTodo} info={info}/>
       </Container>
       <div>
-        <Categories taskData={taskData} isMobile={isMobile} draggedEvent={draggedEvent}
+        <Categories taskData={categories} isMobile={isMobile} draggedEvent={draggedEvent}
         setDraggedEvent={setDraggedEvent}
         handleDragStart={handleDragStart}/>
       </div>
     </Container>
-  )
+    )
 };
 
 export default ToDoList;
