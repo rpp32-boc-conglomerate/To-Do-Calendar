@@ -1,17 +1,17 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, Suspense} from 'react';
 import { BrowserView, MobileView, isBrowser, isMobile } from 'react-device-detect';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import axios from 'axios'
-import ReactDOM from 'react-dom';
-import Registration from './components/authentication/Registrationv2.jsx';
-import Login from './components/authentication/Login.jsx';
+// import ReactDOM from 'react-dom';
+const Registration  = React.lazy(() => import('./components/authentication/Registrationv2.jsx'));
+const Login  = React.lazy(() => import('./components/authentication/Login.jsx'));
 import Home from './components/Home.jsx';
 import { example } from './../../database/example.js'
 
 function App() {
   const [currentPage, changePage] = useState("home");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   // useEffect(() => {
   //   axios.get('http://localhost:3000/auth/userEmail', {withCredentials: true})
@@ -26,9 +26,6 @@ function App() {
   //   })
   // }, [userEmail])
 
-  // const naviBar = (<TopBar isMobile={isMobile} onCalendar={onCalendar} setOnCalendar={setOnCalendar}/>)
-  // const toDoList = (<ToDoList addToCalendar={addToCalendar}/>)
-  // const myCalender = (<MyCalendar myEvents={myEvents} moveEvent={moveEvent} resizeEvent={resizeEvent}/>)
 
   // all the props would pass to the homepage: './components/Home.jsx'
   const homePage = (
@@ -47,8 +44,16 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={homePage} />
-          <Route path="/signin" element={<Login isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>} />
-          <Route path="/signup" element={<Registration />} />
+          <Route path="/signin" element={
+            <Suspense fallback={<div>Loading...</div>}>
+              <Login isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>
+            </Suspense>
+          } />
+          <Route path="/signup" element={
+            <Suspense fallback={<div>Loading...</div>}>
+              <Registration />
+            </Suspense>
+          } />
         </Routes>
       </Router>
     </div>

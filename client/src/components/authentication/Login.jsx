@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { makeStyles, IconButton, Link, Avatar, TextField, Box, Paper, Typography, AppBar, Button, Card, Container, CardActions, CardContent, CardMedia, CssBaseline, Grid, Toolbar } from '@material-ui/core';
+import { Button, makeStyles, Link, Avatar, TextField, Paper, Typography, Container, Grid } from '@material-ui/core';
 import GoogleIcon from '@mui/icons-material/Google';
 import loginSchema from './LoginValidation.js';
 import axios from 'axios'
-import img from '../../../dist/images/d1.png';
+// import img from 'http://localhost:3001/images/x-icon/todocal - logo.ico';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -44,7 +44,7 @@ const Login = ({setEmail, isLoggedIn, setIsLoggedIn}) => {
     'email': state['email'],
   }
   useEffect(() => {
-    console.log('is log in:', isLoggedIn)
+    // console.log('is log in:', isLoggedIn)
     if (isLoggedIn) {
       navigate('/')
     }
@@ -79,11 +79,11 @@ const Login = ({setEmail, isLoggedIn, setIsLoggedIn}) => {
   const handleLogin = async () => {
     let isValid = await validation();
     if (!isValid) {
-      console.log('cannot submit')
+      // console.log('cannot submit')
     } else {
       await axios.post('http://localhost:3000/auth/login', {'email': state['email'], 'password': state['password']}, {withCredentials: true})
       .then((res) => {
-        console.log('login response:', res.data)
+        // console.log('response:', res.data);
         if(res.data === true) {
           setIsLoggedIn(true);
           setEmail(state['email']);
@@ -109,7 +109,7 @@ const Login = ({setEmail, isLoggedIn, setIsLoggedIn}) => {
               <Grid item align='center'>
                 <Avatar
                   variant="square"
-                  src={img}
+                  src={'http://localhost:3001/images/x-icon/todocal - logo.ico'}
                   style={{width:'120px', height:'100px'}}/>
                 <h1 style={{color:'#545863'}}><i>Sign In</i></h1>
               </Grid>

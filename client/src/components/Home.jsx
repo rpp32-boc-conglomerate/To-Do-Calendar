@@ -15,12 +15,17 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
   const [myEvents, setMyEvents] = useState([]);
   const [onCalendar, setOnCalendar] = useState(false);
   const [draggedEvent, setDraggedEvent] = useState()
-  const [userEmail, setEmail] = useState(null);
+  const [userEmail, setEmail] = useState('meredith.white91@gmail.com');
+
   const [info, setInfo] = useState([]);
 
   useEffect(async () => {
     await axios.get('http://localhost:3000/auth/isLoggedIn', {withCredentials: true})
-      .then( async (result) => {
+    .then( async (result) => {
+      console.log('is login auth:', result.data)
+      setIsLoading(false);
+      console.log('result', result)
+      if (result.data) {
         console.log('is login auth:', result.data)
         setIsLoading(false);
         if (result.data) {
@@ -45,11 +50,12 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
   }, [isLoggedIn])
 
   useEffect(() => {
-    const toDos = result.calendars.filter(item => {
-      return item.calendar_owner === '1@qq.com'
-      }).map(calendar => {
-        return calendar.categories.map(category => {return category});
-        })
+    console.log('setting events')
+  const toDos = result.calendars.filter(item => {
+    return item.calendar_owner === '1@qq.com'
+  }).map(calendar => {
+    return calendar.categories
+    })
   setMyEvents(toDos)
   }, [])
   // [
@@ -110,6 +116,7 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
 
   // PATCH '/todoList/:userEmail' -> For updating the data -> ex. Moving around item in Calendar / Lengthening item in Calendar / Clicking on "Done" in Modal for Calendar/TodoList
   const updateTodo = (todo) => {
+
     console.log('Update Todo: ', todo);
     // axios.put('/todoList/updateItem', { params: { userEmail: userEmail }, data: todo })
     //   .then((result) => {
@@ -205,7 +212,7 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
   };
 
   const handleDragStart = useCallback((event) => {
-    // console.log('dragged event', event)
+    console.log('dragged event', event)
     setDraggedEvent(event), []
   })
 

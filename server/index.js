@@ -11,6 +11,14 @@ const authRouter = require('./routes/authRouter.js');
 const todoListRouter = require('./routes/todoListRouter.js');
 const shareRouter = require('./routes/shareRouter.js');
 
+// const compression = require('compression');
+// var expressStaticGzip = require('express-static-gzip');
+
+// app.use(compression());
+// app.use(expressStaticGzip(__dirname + '/../client/dist', {
+//   enableBrotli: true
+// }));
+
 app.use(cors({
   credentials: true,
   methods: 'GET,POST,PUT,DELETE',
