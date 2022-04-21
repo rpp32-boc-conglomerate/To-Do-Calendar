@@ -265,15 +265,7 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
   )
   // All Components
   const naviBar = (<TopBar isLoading={isLoading} setIsLoggedIn={setIsLoggedIn} isLoggedIn={isLoggedIn} isMobile={isMobile} onCalendar={onCalendar} setOnCalendar={setOnCalendar} userEmail={userEmail}/>);
-<<<<<<< HEAD
-<<<<<<< HEAD
-  const toDoList = (<ToDoList isMobile={isMobile} taskData={myEvents} draggedEvent={draggedEvent} setDraggedEvent={setDraggedEvent} handleDragStart={handleDragStart} addCategory={addCategory}/>);
-=======
-  const toDoList = (<ToDoList isMobile={isMobile} taskData={myEvents.flat()} draggedEvent={draggedEvent} setDraggedEvent={setDraggedEvent} handleDragStart={handleDragStart} addCategory={addCategory} addTodo={addTodo} info={info} />);
->>>>>>> d372eb1ee6ec011448612fed925fdb717c3d791b
-=======
-  const toDoList = (<ToDoList isMobile={isMobile} taskData={myEvents.flat()} draggedEvent={draggedEvent} setDraggedEvent={setDraggedEvent} handleDragStart={handleDragStart} addCategory={addCategory} addTodo={addTodo} info={info} />);
->>>>>>> 73a0e38a141dc1af985004981e9ad6187afebce1
+  const toDoList = (<ToDoList isMobile={isMobile} taskData={myEvents.flat()} draggedEvent={draggedEvent} setDraggedEvent={setDraggedEvent} handleDragStart={handleDragStart} addCategory={addCategory} addTodo={addTodo} info={myEvents} />);
   const myCalender = (<MyCalendar myEvents={myEvents} moveEvent={moveEvent} resizeEvent={resizeEvent} changeTitle={changeTitle} onDropFromOutside={onDropFromOutside}/>);
 
   // Conditional Rendering based on device

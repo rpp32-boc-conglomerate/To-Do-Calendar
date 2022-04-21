@@ -25,9 +25,7 @@ const useStyles = makeStyles({
 function ToDoList({addToCalendar, isMobile, draggedEvent, setDraggedEvent, handleDragStart, taskData, addCategory, addTodo, info}) {
   const [newCatModalOpen, setNewCatModalOpen] = useState(false);
   const [newToDoModalOpen, setNewToDoModalOpen] = useState(false);
-  // const [categories, setCategories] = useState([])
-
-const [categories] = taskData
+console.log('taskData in todolist', taskData)
 
   // useEffect(() => {
   //   console.log('taskdata', taskData)
@@ -72,7 +70,7 @@ const [categories] = taskData
         <AddToDoModal open={newToDoModalOpen} closeCat={openSetNewToDo} addTodo={addTodo} info={info}/>
       </Container>
       <div>
-        <Categories taskData={categories} isMobile={isMobile} draggedEvent={draggedEvent}
+        <Categories taskData={taskData} isMobile={isMobile} draggedEvent={draggedEvent}
         setDraggedEvent={setDraggedEvent}
         handleDragStart={handleDragStart}/>
       </div>
