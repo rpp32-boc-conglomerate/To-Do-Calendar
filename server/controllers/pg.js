@@ -96,7 +96,8 @@ const postCategory = (calendarId, category, callback) => {
     const client = await pool.connect()
     try {
       const result = await client.query(query.postCategory, [calendarId, category]);
-      callback(null, 'Category Posted');
+      let category_id = result.rows[0].category_id;
+      callback(null, category_id);
     } finally {
       client.release();
     }
@@ -110,7 +111,8 @@ const postItem = (title, description, duration, start, end_date, in_calendar, ca
     const client = await pool.connect()
     try {
       const result = await client.query(query.postItem, [title, description, duration, start, end_date, in_calendar, category_id]);
-      callback(null, 'Item Posted');
+      let taskId = result.rows[0].id;
+      callback(null, taskId);
     } finally {
       client.release();
     }

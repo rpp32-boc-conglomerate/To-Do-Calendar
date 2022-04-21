@@ -20,8 +20,12 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
   const [myEvents, setMyEvents] = useState([]);
   const [onCalendar, setOnCalendar] = useState(false);
   const [draggedEvent, setDraggedEvent] = useState()
+
+  // Data present in 'a@a.com
   const [userEmail, setEmail] = useState(null);
   const [hasData, setHasData] = useState(false)
+
+
 
   useEffect(async () => {
     await axios.get('http://localhost:3000/auth/isLoggedIn', { withCredentials: true })
@@ -93,11 +97,20 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
   }
 
   // POST '/todoList/:userEmail' -> Adding or Upserting a "todoList item"
+  //modified to use actual user email
   const addTodo = (todo) => {
     console.log('Add todo: ', todo);
-    axios.post('http://localhost:3000/category/todoList', { params: { userEmail: userEmail }, data: todo })
+    const incomingEmail = info.user_email;
+    axios.post('http://localhost:3000/todoList/item', { params: { userEmail: incomingEmail }, data: todo })
       .then((result) => {
         console.log(result);
+        let catId = result.data.id;
+        console.log('all todos before: ', myEvents);
+        let newTask = {item_id: catId, title: todo.title, description: todo.description, duration: todo.duration, start: todo.start, end_time: todo.end_date, in_calendar: todo.in_calendar};
+        // let newEventsList = myEvents[0];
+        // newEventsList.push(newCat);
+        // setMyEvents(newEventsList);
+        console.log('all todos after: ', myEvents);
       })
       .catch(err => console.error(err));
   }
@@ -124,11 +137,24 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
   }
 
   const addCategory = (category) => {
-    let incomingId = info.calendars[0].calendar_id;
+
+    let incomingId;
+
+    if (info.length > 0) {
+      incomingId = info.calendars[0].calendar_id;
+    } else {
+      incomingId = 11;
+    }
 
     axios.post('http://localhost:3000/todoList/category', { params: { calendar_id: incomingId, category: category } })
       .then((result) => {
-        console.log(result);
+        console.log('cat post result: ', result);
+        let catId = result.data.category_id;
+        let newCat = {category_id: catId, category: category, todoitems: []};
+        let newEventsList = myEvents[0];
+        newEventsList.push(newCat);
+        setMyEvents(newEventsList);
+        console.log('new event list: ', myEvents);
       })
       .catch(err => console.error(err));
   }
@@ -241,9 +267,9 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
     [draggedEvent, setDraggedEvent, newEvent]
   )
   // All Components
-  const naviBar = (<TopBar isLoading={isLoading} setIsLoggedIn={setIsLoggedIn} isLoggedIn={isLoggedIn} isMobile={isMobile} onCalendar={onCalendar} setOnCalendar={setOnCalendar} userEmail={userEmail} />);
-  const toDoList = (<ToDoList isMobile={isMobile} taskData={myEvents} draggedEvent={draggedEvent} setDraggedEvent={setDraggedEvent} handleDragStart={handleDragStart} addCategory={addCategory} />);
-  const myCalender = (<MyCalendar myEvents={myEvents ?? []} moveEvent={moveEvent} resizeEvent={resizeEvent} changeTitle={changeTitle} onDropFromOutside={onDropFromOutside} />);
+  const naviBar = (<TopBar isLoading={isLoading} setIsLoggedIn={setIsLoggedIn} isLoggedIn={isLoggedIn} isMobile={isMobile} onCalendar={onCalendar} setOnCalendar={setOnCalendar} userEmail={userEmail}/>);
+  const toDoList = (<ToDoList isMobile={isMobile} taskData={myEvents.flat()} draggedEvent={draggedEvent} setDraggedEvent={setDraggedEvent} handleDragStart={handleDragStart} addCategory={addCategory} addTodo={addTodo} info={info} />);
+  const myCalender = (<MyCalendar myEvents={myEvents} moveEvent={moveEvent} resizeEvent={resizeEvent} changeTitle={changeTitle} onDropFromOutside={onDropFromOutside}/>);
 
   // Conditional Rendering based on device
   const renderContent = () => {
