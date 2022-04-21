@@ -3,7 +3,6 @@ import { styled, alpha } from '@mui/material/styles';
 import axios from 'axios';
 import Button from '@mui/material/Button';
 import Menu from'@mui/material/Menu';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 const Divider = React.lazy(() => import('@mui/material/Divider'));
 const ShareList = React.lazy(() => import('./ShareList.jsx'));
 const ShareWithEmail = React.lazy(() => import('./ShareWithEmail.jsx'));
@@ -126,7 +125,6 @@ function DisplaySharedWithUserDropdown({userEmail}) {
         variant="contained"
         disableElevation
         onClick={handleClick}
-        endIcon={<KeyboardArrowDownIcon />}
       >
         Share
       </Button>

@@ -1,6 +1,7 @@
 const { Pool, Client } = require('pg');
 const query = require('.././models/main_functions/queries.js');
-require('dotenv').config();
+const path = require('path');
+require('dotenv').config({ path: path.resolve(__dirname, '../../.env') })
 
 // user: postgres
 // host: '54.209.199.189',

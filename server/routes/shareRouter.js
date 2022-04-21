@@ -46,7 +46,7 @@ shareRouter.route('/deleteFromShares').delete((req, res) => {
 
 shareRouter.route('/insertToShares').post((req, res) => {
   var newDBEntry = req.body.email;
-  console.log(newDBEntry);
+
   shareDB.insertToShares(newDBEntry).then((result) => {
     console.log(result);
     res.send(result.rows);
