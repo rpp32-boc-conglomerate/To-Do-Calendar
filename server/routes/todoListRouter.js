@@ -26,7 +26,6 @@ todoListRouter.post('/category', async (req, res) => {
     if (err) {
       res.status(400).send('post category error');
     } else {
-      console.log('at router: ', response);
       res.status(201).send( { category_id: response } );
     }
   });

@@ -149,7 +149,13 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
 
     axios.post('http://localhost:3000/todoList/category', {  params: { calendar_id: incomingId, category: category} })
       .then((result) => {
-        console.log(result);
+        console.log('cat post result: ', result);
+        let catId = result.data.category_id;
+        let newCat = {category_id: catId, category: category, todoitems: []};
+        let newEventsList = myEvents[0];
+        newEventsList.push(newCat);
+        setMyEvents(newEventsList);
+        console.log('new event list: ', myEvents);
       })
       .catch(err => console.error(err));
   }
