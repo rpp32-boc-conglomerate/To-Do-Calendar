@@ -40,6 +40,6 @@ module.exports = {
   ) as calendars
   from users
   where user_email = $1;
-  `
+  `,
 
 }

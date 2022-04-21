@@ -66,6 +66,15 @@ var TaskOptionsModal = (props) => {
     props.setModalOpen(false);
   }
 
+  const handleAdd = () => {
+
+    if (props.task.in_calendar === true) {
+
+    } else if (props.task.in_calendar === false) {
+
+    }
+  }
+
   const handleTodoDelete = () => {
     props.deleteTodo(props.task);
     props.setModalOpen(false);

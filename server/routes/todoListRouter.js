@@ -1,5 +1,5 @@
 const todoListRouter = require('express').Router();
-const query = require('../controllers/pg.js');
+const query = require('../models/main_functions/queries.js');
 
 
 todoListRouter.get('/info', (req, res) => {

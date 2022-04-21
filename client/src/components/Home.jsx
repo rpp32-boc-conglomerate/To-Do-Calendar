@@ -9,11 +9,6 @@ import moment from 'moment';
 // For example data:
 import { result } from '../../../database/example.js';
 
-  // const naviBar = (<TopBar isMobile={isMobile} onCalendar={onCalendar} setOnCalendar={setOnCalendar}/>)
-  // const toDoList = (<ToDoList draggedEvent={draggedEvent} setDraggedEvent={setDraggedEvent} handleDragStart={handleDragStart} myEvents={myEvents}/>)
-  // const myCalender = (<MyCalendar myEvents={myEvents} moveEvent={moveEvent} resizeEvent={resizeEvent} changeTitle={changeTitle} onDropFromOutside={onDropFromOutside}/>)
-  // const testToDo = (<TestToDo draggedEvent={draggedEvent} setDraggedEvent={setDraggedEvent} handleDragStart={handleDragStart}/>)
-  // condition redering base on device
 const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sharedBy}) => {
 
   const [allTodos, setAllTodos] = useState([]);
@@ -21,42 +16,40 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
   const [onCalendar, setOnCalendar] = useState(false);
   const [draggedEvent, setDraggedEvent] = useState()
   const [userEmail, setEmail] = useState(null);
-
   const [info, setInfo] = useState([]);
+
   useEffect(async () => {
     await axios.get('http://localhost:3000/auth/isLoggedIn', {withCredentials: true})
-    .then( async (result) => {
-      console.log('is login auth:', result.data)
-      setIsLoading(false);
-      if (result.data) {
+      .then( async (result) => {
         console.log('is login auth:', result.data)
-        setIsLoggedIn(result.data.loggedIn);
-        setEmail(result.data.info)
-        await axios.get('http://localhost:3000/todoList/info',{ params: { email: result.data.info } })
-        .then((response) => {
-          console.log('info response:', response.data.results[0])
-          setInfo(response.data.results[0]);
-        })
-        .catch((err) => {
-          console.log('info err:', err);
-          return err;
-        })
-      }
-    })
-    .catch((err) => {
-      console.log(err);
-      return err;
-    })
+        setIsLoading(false);
+        if (result.data) {
+          console.log('is login auth:', result.data)
+          setIsLoggedIn(result.data.loggedIn);
+          setEmail(result.data.info);
+          await axios.get('http://localhost:3000/todoList/info',{ params: { email: result.data.info } })
+            .then((response) => {
+              console.log('info response:', response.data.results[0])
+              setInfo(response.data.results[0]);
+            })
+            .catch((err) => {
+              console.log('info err:', err);
+              return err;
+            })
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        return err;
+      })
   }, [isLoggedIn])
 
-
   useEffect(() => {
-  const toDos = result.calendars.filter(item => {
-    return item.calendar_owner === '1@qq.com'
-  }).map(calendar => {
-    return calendar.categories.map(category =>
-      {return category})
-    })
+    const toDos = result.calendars.filter(item => {
+      return item.calendar_owner === '1@qq.com'
+      }).map(calendar => {
+        return calendar.categories.map(category => {return category});
+        })
   setMyEvents(toDos)
   }, [])
   // [

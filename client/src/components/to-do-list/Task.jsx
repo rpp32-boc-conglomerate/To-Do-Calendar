@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useDrag } from 'react-dnd';
-import moment from 'moment';
 import ContentEditable from 'react-contenteditable';
 import { Button, Grid, Card, CardHeader, CardContent, CardActions, Collapse, makeStyles, Typography, Toolbar, TextField,  TextareaAutosize, Stack } from '@material-ui/core';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -22,12 +21,12 @@ const useStyles = makeStyles({
   },
   card: {
     display: 'flex',
-    border: '1rem solid black'
+    border: '1rem solid black',
   }
-  })
+});
 
-function Task({task, isMobile, deleteTask, draggedEvent, setDraggedEvent, handleDragStart, clickedTask, updateTodo, deleteTodo}) {
-  // console.log('task in task', task)
+const Task = ({task, isMobile, clickedTask, updateTodo, deleteTodo}) => {
+  const [userTask, setUserTask] = useState(task);
 
   // For Modal opening and closing
   const [modalOpen, setModalOpen] = useState(false);
@@ -38,18 +37,15 @@ function Task({task, isMobile, deleteTask, draggedEvent, setDraggedEvent, handle
   return (
     <Grid item xs={12} lg={12}>
       <Grid item xs={12}>
-        <Card onDragStart={() => handleDragStart(task)} draggable='true'>
+        <Card>
           {modalOpen === true && <TaskOptionsModal setModalOpen={setModalOpen} modalOpen={modalOpen} task={task} updateTodo={updateTodo} deleteTodo={deleteTodo} />}
           <CardContent>
             <div style={{display: 'flex', flexDirection: 'row', gap: '5%'}}>
-              <Typography>
-                {task.title}
-              </Typography>
-              {isMobile && addToCal}
+              <ContentEditable variant="body1" html={task.title}
+              />
             </div>
-            <Typography>
-                {task.description}
-              </Typography>
+            <ContentEditable variant="body1" html={task.description}
+            />
             <CardActions>
               <Button variant="contained" size="small" onClick={() => setModalOpen(true)}>Edit</Button>
             </CardActions>
