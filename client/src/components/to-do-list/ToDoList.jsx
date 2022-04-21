@@ -43,7 +43,6 @@ function ToDoList({addToCalendar, isMobile, draggedEvent, setDraggedEvent, handl
   }
 
   const openSetNewToDo = (boo) => {
-    console.log('opensetnewtodo')
     if (boo === false) {
       setNewToDoModalOpen(false);
     } else {
