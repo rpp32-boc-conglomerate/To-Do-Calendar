@@ -10,15 +10,17 @@ const DragAndDropCalendar = withDragAndDrop(Calendar)
 const localizer = momentLocalizer(moment);
 
 const MyCalendar = (props) => {
-  const eventList = props.myEvents.flat().map(item => {return item.todoitems}).flat().map(item => {
+  console.log('myEvents in calendar', props.myEvents)
+  const eventList = props.myEvents?.flat().map(item => {return item.todoitems}).flat().map(item => {
     const taskCopy = item;
-    const startTime = new Date(item.start);
-    const endTime = new Date(item.end_date);
+    const startTime = new Date(item?.start);
+    const endTime = new Date(item?.end_date);
     taskCopy.start = startTime;
     taskCopy.end_date = endTime;
     return taskCopy;
+
   })
-  // console.log('eventList', eventList)
+  console.log('eventList', eventList)
   return (
     <DragAndDropCalendar
       className='calendar'
