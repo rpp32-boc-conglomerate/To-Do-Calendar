@@ -9,59 +9,47 @@ import moment from 'moment';
 // For example data:
 import { result } from '../../../database/example.js';
 
-  // const naviBar = (<TopBar isMobile={isMobile} onCalendar={onCalendar} setOnCalendar={setOnCalendar}/>)
-  // const toDoList = (<ToDoList draggedEvent={draggedEvent} setDraggedEvent={setDraggedEvent} handleDragStart={handleDragStart} myEvents={myEvents}/>)
-  // const myCalender = (<MyCalendar myEvents={myEvents} moveEvent={moveEvent} resizeEvent={resizeEvent} changeTitle={changeTitle} onDropFromOutside={onDropFromOutside}/>)
-  // const testToDo = (<TestToDo draggedEvent={draggedEvent} setDraggedEvent={setDraggedEvent} handleDragStart={handleDragStart}/>)
-  // condition redering base on device
-const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sharedBy}) => {
+// const naviBar = (<TopBar isMobile={isMobile} onCalendar={onCalendar} setOnCalendar={setOnCalendar}/>)
+// const toDoList = (<ToDoList draggedEvent={draggedEvent} setDraggedEvent={setDraggedEvent} handleDragStart={handleDragStart} myEvents={myEvents}/>)
+// const myCalender = (<MyCalendar myEvents={myEvents} moveEvent={moveEvent} resizeEvent={resizeEvent} changeTitle={changeTitle} onDropFromOutside={onDropFromOutside}/>)
+// const testToDo = (<TestToDo draggedEvent={draggedEvent} setDraggedEvent={setDraggedEvent} handleDragStart={handleDragStart}/>)
+// condition redering base on device
+const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sharedBy }) => {
 
   const [allTodos, setAllTodos] = useState([]);
   const [myEvents, setMyEvents] = useState([]);
   const [onCalendar, setOnCalendar] = useState(false);
   const [draggedEvent, setDraggedEvent] = useState()
-  const [userEmail, setEmail] = useState('a@a.com');
 
-  console.log('events: ', myEvents);
+  // Data present in 'a@a.com
+  const [userEmail, setEmail] = useState(null);
+  const [hasData, setHasData] = useState(false)
 
-  const [info, setInfo] = useState([]);
+
+
   useEffect(async () => {
-    await axios.get('http://localhost:3000/auth/isLoggedIn', {withCredentials: true})
-    .then( async (result) => {
-      console.log('is login auth:', result.data)
-      setIsLoading(false);
-      console.log('result', result)
-      if (result.data) {
-        console.log('is login auth:', result.data)
-        setIsLoggedIn(result.data.loggedIn);
-        setEmail(result.data.info)
-        await axios.get('http://localhost:3000/todoList/info',{ params: { email: result.data.info } })
-        .then((response) => {
-          console.log('info response:', response.data.results[0])
-          setInfo(response.data.results[0]);
-        })
-        .catch((err) => {
-          console.log('info err:', err);
-          return err;
-        })
-      }
-    })
-    .catch((err) => {
-      console.log(err);
-      return err;
-    })
+    await axios.get('http://localhost:3000/auth/isLoggedIn', { withCredentials: true })
+      .then(async (result) => {
+        setIsLoading(false);
+        if (result.data) {
+          setIsLoggedIn(result.data.loggedIn);
+          setEmail(result.data.info)
+          await axios.get('http://localhost:3000/todoList/info', { params: { email: result.data.info } })
+            .then((response) => {
+              setMyEvents(response.data.results[0].calendars[0].categories)
+            })
+            .then(() => setHasData(true))
+            .catch((err) => {
+              console.log('info err:', err);
+              return err;
+            })
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        return err;
+      })
   }, [isLoggedIn])
-
-
-  useEffect(() => {
-    console.log('setting events')
-  const toDos = result.calendars.filter(item => {
-    return item.calendar_owner === '1@qq.com'
-  }).map(calendar => {
-    return calendar.categories
-    })
-  setMyEvents(toDos)
-  }, [])
   // [
   //   {
   //     id: 0,
@@ -133,9 +121,9 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
     console.log('Update Todo: ', todo);
     // axios.patch('/todoList', { params: { userEmail: userEmail }, data: todo })
     //   .then((result) => {
-      //     console.log(result);
-      //   })
-      //   .catch(err => console.error(err));
+    //     console.log(result);
+    //   })
+    //   .catch(err => console.error(err));
   }
 
   // DELETE '/todoList/:userEmail' -> For deleting the data -> Clicking on "Delete" button in Modal
@@ -158,7 +146,7 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
       incomingId = 11;
     }
 
-    axios.post('http://localhost:3000/todoList/category', {  params: { calendar_id: incomingId, category: category} })
+    axios.post('http://localhost:3000/todoList/category', { params: { calendar_id: incomingId, category: category } })
       .then((result) => {
         console.log('cat post result: ', result);
         let catId = result.data.category_id;
@@ -187,12 +175,24 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
       if (!allDay && droppedOnAllDaySlot) {
         event.allDay = true;
       }
-
       setMyEvents((prev) => {
-        const existing = prev.find((ev) => ev.id === event.id) ?? {};
-        const filtered = prev.filter((ev) => ev.id !== event.id);
-        return [...filtered, { ...existing, start, end, allDay }];
+        const existing = event;
+        const list = prev
+        list.forEach(category => {
+          category.items.forEach(item => {
+            if (item === existing) {
+              item.start = start;
+              item.end_date = end;
+            }
+          })
+        })
+        return list;
       });
+      // setMyEvents((prev) => {
+      //   const existing = prev.find((ev) => ev.id === event.id) ?? {};
+      //   const filtered = prev.filter((ev) => ev.id !== event.id);
+      //   return [...filtered, { ...existing, start, end, allDay }];
+      // });
     },
     [setMyEvents]
   );
@@ -211,9 +211,17 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
   const resizeEvent = useCallback(
     ({ event, start, end }) => {
       setMyEvents((prev) => {
-        const existing = prev.find((ev) => ev.id === event.id) ?? {};
-        const filtered = prev.filter((ev) => ev.id !== event.id);
-        return [...filtered, { ...existing, start, end }];
+        const existing = event;
+        const list = prev
+        list.forEach(category => {
+          category.items.forEach(item => {
+            if (item === existing) {
+              item.start = start;
+              item.end_date = end;
+            }
+          })
+        })
+        return list;
       });
     },
     [setMyEvents]
@@ -221,11 +229,18 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
 
   const changeTitle = (event) => {
     var title = prompt("Change title", event.title);
-    var newList = myEvents;
     setMyEvents((prev) => {
-      newList[prev.indexOf(event)].title = title;
-      return newList
-    });
+      const existing = event;
+      const list = prev
+      list.forEach(category => {
+        category.items.forEach(item => {
+          if (item === existing) {
+            item.title = title;
+          }
+        })
+      })
+      return list;
+    })
   };
 
   const handleDragStart = useCallback((event) => {
@@ -238,13 +253,11 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
       setMyEvents((prev) => {
         const existing = draggedEvent;
         const list = prev
-        list.forEach(items => {
-          items.forEach(item => {
-            item.todoitems.forEach(el => {
-              if (el === existing) {
-                el.in_calendar = !el.in_calendar
-              }
-            })
+        list.forEach(category => {
+          category.items.forEach(item => {
+            if (item === existing) {
+              item.in_calendar = !item.in_calendar
+            }
           })
         })
         return list;
@@ -253,7 +266,6 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
     },
     [draggedEvent, setDraggedEvent, newEvent]
   )
-
   // All Components
   const naviBar = (<TopBar isLoading={isLoading} setIsLoggedIn={setIsLoggedIn} isLoggedIn={isLoggedIn} isMobile={isMobile} onCalendar={onCalendar} setOnCalendar={setOnCalendar} userEmail={userEmail}/>);
   const toDoList = (<ToDoList isMobile={isMobile} taskData={myEvents.flat()} draggedEvent={draggedEvent} setDraggedEvent={setDraggedEvent} handleDragStart={handleDragStart} addCategory={addCategory} addTodo={addTodo} info={info} />);
@@ -261,13 +273,14 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
 
   // Conditional Rendering based on device
   const renderContent = () => {
+
     // view for mobile and in to do list page
     if (isMobile && !onCalendar) {
       return (
         <div>
           {naviBar}
           <div className="">
-            {toDoList}
+            {hasData ? toDoList : null}
           </div>
         </div>
       )
@@ -277,7 +290,7 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
         <div>
           {naviBar}
           <div>
-            {myCalender}
+            {hasData ? myCalender : null}
           </div>
         </div>
       )
@@ -287,7 +300,7 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
         <div>
           {naviBar}
           {myCalender}
-          {toDoList}
+          {myEvents.length ? toDoList : null}
         </div>
       )
     }

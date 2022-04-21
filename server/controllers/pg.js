@@ -6,15 +6,15 @@ require('dotenv').config();
 // host: '54.209.199.189',
 // port: '5432',
 // database: 'tododb',
-
 const pool = new Pool({
   user: process.env.PGUSER,
   password: process.env.PGPASS,
   database: process.env.PGDB,
   port: process.env.PGPORT,
-  host: process.env.PGHost
+  host: process.env.PGHOST
 });
 
+console.log('should be host', process.env.PGHOST)
 const getInfo = async (email, callback) => {
   (async () => {
     const client = await pool.connect()

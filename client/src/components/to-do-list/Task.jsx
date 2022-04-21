@@ -27,7 +27,7 @@ const useStyles = makeStyles({
   })
 
 function Task({task, isMobile, deleteTask, draggedEvent, setDraggedEvent, handleDragStart, clickedTask, updateTodo, deleteTodo}) {
-  // console.log('task in task', task)
+  console.log('task in task', task)
 
   // For Modal opening and closing
   const [todo, setTodo] = useState(task);
@@ -81,7 +81,6 @@ function Task({task, isMobile, deleteTask, draggedEvent, setDraggedEvent, handle
               <div>Duration:</div>
               <Box>{hours} {hours === '1' ? 'hour' : 'hours'}</Box>
               <Box>{minutes} {minutes === '1' ? 'minute' : 'minutes'}</Box>
-              {isMobile && addToCal}
             </div>
             <Typography>
                 {task.description}
