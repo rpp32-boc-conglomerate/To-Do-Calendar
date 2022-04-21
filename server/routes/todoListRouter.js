@@ -32,13 +32,13 @@ todoListRouter.post('/category', async (req, res) => {
 });
 
 todoListRouter.post('/item', async (req, res) => {
-  var title = req.body.title;
-  var description =  req.body.description;
-  var duration =  req.body.duration;
-  var start =  req.body.start;
-  var end_date =  req.body.end_date;
-  var in_calendar =  req.body.in_calendar;
-  var category_id =  req.body.category_id;
+  var title = req.body.data.title;
+  var description =  req.body.data.description;
+  var duration =  req.body.data.duration;
+  var start =  req.body.data.start;
+  var end_date =  req.body.data.end_date;
+  var in_calendar =  req.body.data.in_calendar;
+  var category_id =  req.body.data.category_id;
   query.postItem(title, description, duration, start, end_date, in_calendar, category_id, async (err, response) => {
     if (err) {
       res.status(400).send('post item error');

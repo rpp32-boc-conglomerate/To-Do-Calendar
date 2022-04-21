@@ -111,7 +111,8 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
   // POST '/todoList/:userEmail' -> Adding or Upserting a "todoList item"
   const addTodo = (todo) => {
     console.log('Add todo: ', todo);
-    axios.post('http://localhost:3000/category/todoList', { params: { userEmail: userEmail }, data: todo })
+    const incomingEmail = info.user_email;
+    axios.post('http://localhost:3000/todoList/item', { params: { userEmail: incomingEmail }, data: todo })
       .then((result) => {
         console.log(result);
       })

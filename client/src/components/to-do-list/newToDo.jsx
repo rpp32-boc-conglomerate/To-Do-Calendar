@@ -52,22 +52,17 @@ var AddToDoModal = (props) => {
     newItem.category_id = category;
     newItem.in_calendar = false;
 
-    let hours = endDate.getHours() - startDate.getHours()
-    let minutes = endDate.getMinutes() - startDate.getMinutes()
+    let hours = endDate.getHours() - startDate.getHours();
+    let minutes = endDate.getMinutes() - startDate.getMinutes();
     if (minutes < 0) {
       const convertedHours = (hours * 60) + minutes;
       hours = Math.floor(convertedHours/60)
       minutes = convertedHours % 60
-    }
-    const duration = hours + ':' + minutes
-    newItem.duration = duration
+    };
+    const duration = hours + ':' + minutes;
+    newItem.duration = duration;
 
-    console.log('start date: ', startDate);
-
-    console.log('duration: ', newItem.duration);
-    console.log('end date: ', endDate);
-
-    //props.addTodo(newItem);
+    props.addTodo(newItem);
     props.closeCat(false)
   }
 
