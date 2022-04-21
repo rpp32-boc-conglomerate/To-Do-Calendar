@@ -27,11 +27,7 @@ function ToDoList({addToCalendar, isMobile, draggedEvent, setDraggedEvent, handl
   const [newToDoModalOpen, setNewToDoModalOpen] = useState(false);
   // const [categories, setCategories] = useState([])
 
-  console.log('taskData', taskData)
-
 const [categories] = taskData
-
-console.log('categories', categories)
 
   // useEffect(() => {
   //   console.log('taskdata', taskData)

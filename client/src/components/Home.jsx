@@ -32,8 +32,9 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
         setEmail(result.data.info)
         await axios.get('http://localhost:3000/todoList/info',{ params: { email: result.data.info } })
         .then((response) => {
-          setMyEvents(response.data.results[0].calendars);
+          setMyEvents(response.data.results[0].calendars[0].categories)
         })
+        .then(() => setHasData(true))
         .catch((err) => {
           console.log('info err:', err);
           return err;
@@ -44,16 +45,7 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
       console.log(err);
       return err;
     })
-  }, [myEvents, setMyEvents, isLoggedIn])
-
-  useEffect(() => {
-    const toDos = result.filter(item => {
-      return item.calendar_owner === userEmail
-    }).map(calendar => {
-      return calendar.categories
-      })
-      setMyEvents(toDos)
-  }, [])
+  }, [isLoggedIn])
   // [
   //   {
   //     id: 0,
@@ -256,31 +248,21 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
     },
     [draggedEvent, setDraggedEvent, newEvent]
   )
-
-  const formatForCalendar = (list) => {
-    return list.flat().map(item => { return item.todoitems }).flat().map(item => {
-      const taskCopy = item;
-      taskCopy.start =  new Date(item.start);
-      taskCopy.end_date = new Date(item.end_date);
-      return taskCopy;
-    })
-  }
   // All Components
-
   const naviBar = (<TopBar isLoading={isLoading} setIsLoggedIn={setIsLoggedIn} isLoggedIn={isLoggedIn} isMobile={isMobile} onCalendar={onCalendar} setOnCalendar={setOnCalendar} userEmail={userEmail}/>);
   const toDoList = (<ToDoList isMobile={isMobile} taskData={myEvents} draggedEvent={draggedEvent} setDraggedEvent={setDraggedEvent} handleDragStart={handleDragStart} addCategory={addCategory}/>);
-  const myCalender = (<MyCalendar myEvents={myEvents?? formatForCalendar(myEvents)} moveEvent={moveEvent} resizeEvent={resizeEvent} changeTitle={changeTitle} onDropFromOutside={onDropFromOutside} />);
+  const myCalender = (<MyCalendar myEvents={myEvents?? []} moveEvent={moveEvent} resizeEvent={resizeEvent} changeTitle={changeTitle} onDropFromOutside={onDropFromOutside} />);
 
   // Conditional Rendering based on device
   const renderContent = () => {
 
     // view for mobile and in to do list page
-    if (isMobile && !onCalendar && hasData) {
+    if (isMobile && !onCalendar) {
       return (
         <div>
           {naviBar}
           <div className="">
-            {hasData ? toDoList: ''}
+            {hasData ? toDoList: null}
           </div>
         </div>
       )
@@ -290,7 +272,7 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
         <div>
           {naviBar}
           <div>
-            {hasData ? myCalender: ''}
+            {hasData ? myCalender: null}
           </div>
         </div>
       )
@@ -299,8 +281,8 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
         // view for desktop display both calendar and to do list
         <div>
           {naviBar}
-          {hasData? myCalender : ''}
-          {hasData? toDoList : ''}
+          {myCalender}
+          {myEvents.length ? toDoList : null}
         </div>
       )
     }
