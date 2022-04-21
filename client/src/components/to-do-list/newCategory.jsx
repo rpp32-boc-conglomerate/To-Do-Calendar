@@ -27,7 +27,6 @@ var AddCategoryModal = (props) => {
   const classes = useStyles();
 
   const handleAddCategory = () => {
-    console.log('category:', category);
     props.addCategory(category);
     props.closeCat(false);
   }
