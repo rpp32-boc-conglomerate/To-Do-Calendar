@@ -45,7 +45,7 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
               return err;
             })
         }
-      })
+      }})
       .catch((err) => {
         console.log(err);
         return err;
@@ -56,7 +56,7 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
   useEffect(() => {
     console.log('setting events')
   const toDos = result.calendars.filter(item => {
-    return item.calendar_owner === '1@qq.com'
+    return item.calendar_owner === userEmail
   }).map(calendar => {
     return calendar.categories
     })
