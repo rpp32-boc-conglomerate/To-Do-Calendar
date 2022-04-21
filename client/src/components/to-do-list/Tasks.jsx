@@ -4,7 +4,7 @@ import Task from './Task.jsx';
 function Tasks({tasks, openModal, isMobile, deleteTask, draggedEvent, setDraggedEvent, handleDragStart}) {
   // console.log('tasks in tasks', tasks)
   const onListTasks = tasks.filter(task => !task.in_calendar)
-  // console.log('filteredTasks', filteredTasks)
+  console.log('onListTasks', onListTasks)
 
   const formatTask = (task) => {
     const taskCopy = task
@@ -15,7 +15,7 @@ function Tasks({tasks, openModal, isMobile, deleteTask, draggedEvent, setDragged
     return taskCopy
   }
   return(
-    onListTasks.map((task, i) => {
+    onListTasks?.map((task, i) => {
     return (<Task style={{display: 'inline-block'}}
     key={i} task={formatTask(task)} isMobile={isMobile} draggedEvent={draggedEvent}
     setDraggedEvent={setDraggedEvent} handleDragStart={handleDragStart}/>)
