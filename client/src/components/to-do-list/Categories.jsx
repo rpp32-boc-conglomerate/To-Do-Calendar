@@ -5,9 +5,11 @@ import Category from './Category.jsx';
 
 function Categories({addTask, openModal, isMobile, taskData, deleteTask,
   draggedEvent, setDraggedEvent, handleDragStart}) {
-    // console.log('tasks in categories', taskData)
+    console.log('tasks in categories', taskData)
+    const categorizedTasks = taskData.categories
+    console.log('categortasks', categorizedTasks)
   return(
-    taskData.map((category, i) => {
+    categorizedTasks?.map((category, i) => {
     return <Category key={i}
     tasks={category}
     addTask={addTask}

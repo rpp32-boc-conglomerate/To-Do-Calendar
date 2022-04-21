@@ -81,7 +81,6 @@ function Task({task, isMobile, deleteTask, draggedEvent, setDraggedEvent, handle
               <div>Duration:</div>
               <Box>{hours} {hours === '1' ? 'hour' : 'hours'}</Box>
               <Box>{minutes} {minutes === '1' ? 'minute' : 'minutes'}</Box>
-              {isMobile && addToCal}
             </div>
             <Typography>
                 {task.description}
