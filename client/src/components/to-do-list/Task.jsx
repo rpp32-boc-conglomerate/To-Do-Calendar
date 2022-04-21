@@ -6,6 +6,7 @@ import { Button, Box, Grid, Card, CardHeader, CardContent, CardActions, Collapse
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 const TaskOptionsModal = React.lazy(() => import('../TaskOptionsModal.jsx'));
 
+
 //on hover over editable field -- pen icon or underline
 const useStyles = makeStyles({
   grid: {
@@ -27,15 +28,11 @@ const useStyles = makeStyles({
   })
 
 function Task({task, isMobile, deleteTask, draggedEvent, setDraggedEvent, handleDragStart, clickedTask, updateTodo, deleteTodo}) {
-  // console.log('task in task', task)
 
-  // For Modal opening and closing
   const [todo, setTodo] = useState(task);
   const [modalOpen, setModalOpen] = useState(false);
   const [hours, setHours] = useState();
   const [minutes, setMinutes] = useState();
-
-  // const [modalInfo, setModalInfo] = useState();
 
   const convertDuration = (duration) => {
     const splitDuration = duration.split(':')
@@ -69,30 +66,32 @@ function Task({task, isMobile, deleteTask, draggedEvent, setDraggedEvent, handle
   }, [todo])
 
   return (
-    <Grid item xs={12} lg={12}>
-      <Grid item xs={12}>
-        <Card onDragStart={() => handleDragStart(task)} draggable='true'>
-          {modalOpen === true && <TaskOptionsModal setModalOpen={setModalOpen} modalOpen={modalOpen} task={task} updateTodo={updateTodo} deleteTodo={deleteTodo} updateTask={updateTask}/>}
-          <CardContent>
-            <div style={{display: 'flex', flexDirection: 'row', gap: '5%'}}>
+    <Suspense fallback={<div>Loading...</div>}>
+      <Grid item xs={12} lg={12}>
+        <Grid item xs={12}>
+          <Card onDragStart={() => handleDragStart(task)} draggable='true'>
+            {modalOpen === true && <TaskOptionsModal setModalOpen={setModalOpen} modalOpen={modalOpen} task={task} updateTodo={updateTodo} deleteTodo={deleteTodo} updateTask={updateTask}/>}
+            <CardContent>
+              <div style={{display: 'flex', flexDirection: 'row', gap: '5%'}}>
+                <Typography>
+                  {task.title}
+                </Typography>
+                <div>Duration:</div>
+                <Box>{hours} {hours === '1' ? 'hour' : 'hours'}</Box>
+                <Box>{minutes} {minutes === '1' ? 'minute' : 'minutes'}</Box>
+                {isMobile && addToCal}
+              </div>
               <Typography>
-                {task.title}
-              </Typography>
-              <div>Duration:</div>
-              <Box>{hours} {hours === '1' ? 'hour' : 'hours'}</Box>
-              <Box>{minutes} {minutes === '1' ? 'minute' : 'minutes'}</Box>
-              {isMobile && addToCal}
-            </div>
-            <Typography>
-                {task.description}
-              </Typography>
-            <CardActions>
-              <Button variant="contained" size="small" onClick={() => setModalOpen(true)}>Edit</Button>
-            </CardActions>
-          </CardContent>
-        </Card>
+                  {task.description}
+                </Typography>
+              <CardActions>
+                <Button variant="contained" size="small" onClick={() => setModalOpen(true)}>Edit</Button>
+              </CardActions>
+            </CardContent>
+          </Card>
+        </Grid>
       </Grid>
-    </Grid>
+    </Suspense>
   );
 };
 
