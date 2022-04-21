@@ -20,7 +20,8 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
   const [myEvents, setMyEvents] = useState([]);
   const [onCalendar, setOnCalendar] = useState(false);
   const [draggedEvent, setDraggedEvent] = useState()
-  const [userEmail, setEmail] = useState('meredith.white91@gmail.com');
+  const [userEmail, setEmail] = useState(null);
+  const [hasData, setHasData] = useState(false)
 
   useEffect(async () => {
     await axios.get('http://localhost:3000/auth/isLoggedIn', {withCredentials: true})
@@ -30,28 +31,27 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
       console.log('result', result)
       if (result.data) {
         console.log('is login auth:', result.data)
-        setIsLoading(false);
-        if (result.data) {
-          console.log('is login auth:', result.data)
-          setIsLoggedIn(result.data.loggedIn);
-          setEmail(result.data.info)
-          await axios.get('http://localhost:3000/todoList/info', { params: { email: result.data.info } })
-            .then((response) => {
-              console.log('info response:', response.data.results[0])
-              setMyEvents(response.data.results[0]);
-            })
-            .catch((err) => {
-              console.log('info err:', err);
-              return err;
-            })
-        }
-      }})
-      .catch((err) => {
-        console.log(err);
-        return err;
-      })
+        setIsLoggedIn(result.data.loggedIn);
+        setEmail(result.data.info)
+        await axios.get('http://localhost:3000/todoList/info',{ params: { email: result.data.info } })
+        .then((response) => {
+          console.log('info response:', response.data.results[0])
+          setMyEvents(response.data.results[0]);
+          setHasData(true)
+        })
+        .catch((err) => {
+          console.log('info err:', err);
+          return err;
+        })
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+      return err;
+    })
   }, [isLoggedIn])
 
+  console.log('myEvents', myEvents)
 
   useEffect(() => {
     console.log('setting events')
@@ -275,19 +275,21 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
   }
 
   // All Components
+
   const naviBar = (<TopBar isLoading={isLoading} setIsLoggedIn={setIsLoggedIn} isLoggedIn={isLoggedIn} isMobile={isMobile} onCalendar={onCalendar} setOnCalendar={setOnCalendar} userEmail={userEmail}/>);
-  const toDoList = (<ToDoList isMobile={isMobile} taskData={myEvents.flat()} draggedEvent={draggedEvent} setDraggedEvent={setDraggedEvent} handleDragStart={handleDragStart}/>);
+  const toDoList = (<ToDoList isMobile={isMobile} taskData={myEvents} draggedEvent={draggedEvent} setDraggedEvent={setDraggedEvent} handleDragStart={handleDragStart} addCategory={addCategory}/>);
   const myCalender = (<MyCalendar myEvents={formatForCalendar(myEvents)} moveEvent={moveEvent} resizeEvent={resizeEvent} changeTitle={changeTitle} onDropFromOutside={onDropFromOutside} />);
 
   // Conditional Rendering based on device
   const renderContent = () => {
+
     // view for mobile and in to do list page
-    if (isMobile && !onCalendar) {
+    if (isMobile && !onCalendar && hasData) {
       return (
         <div>
           {naviBar}
           <div className="">
-            {toDoList}
+            {hasData ? toDoList: ''}
           </div>
         </div>
       )
@@ -297,7 +299,7 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
         <div>
           {naviBar}
           <div>
-            {myCalender}
+            {hasData ? myCalender: ''}
           </div>
         </div>
       )
@@ -306,8 +308,8 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
         // view for desktop display both calendar and to do list
         <div>
           {naviBar}
-          {myCalender}
-          {toDoList}
+          {hasData? myCalender : ''}
+          {hasData? toDoList : ''}
         </div>
       )
     }

@@ -72,6 +72,7 @@ module.exports = {
     contentBase: path.join(__dirname, 'client','/dist'),
     hot: true,
     overlay: true,
+    // compress: true,
     historyApiFallback: true,
     // host: '10.0.0.90'
 

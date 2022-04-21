@@ -12,7 +12,7 @@ const pool = new Pool({
   password: process.env.PGPASS,
   database: process.env.PGDB,
   port: process.env.PGPORT,
-  host: process.env.PGHost
+  host: process.env.PGHOST
 });
 
 const getInfo = async (email, callback) => {
