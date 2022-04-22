@@ -24,7 +24,7 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
   const navigate = useNavigate()
 
   useEffect(async () => {
-    if(!isLoggedIn) {
+    if (!isLoggedIn) {
       return setMyEvents(result.calendars[0].categories)
     }
     await axios.get('http://localhost:3000/auth/isLoggedIn', { withCredentials: true })
@@ -91,9 +91,9 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
     console.log('Update Todo: ', todo);
     // axios.put('/todoList/updateItem', { params: { userEmail: userEmail }, data: todo })
     //   .then((result) => {
-      //     console.log(result);
-      //   })
-      //   .catch(err => console.error(err));
+    //     console.log(result);
+    //   })
+    //   .catch(err => console.error(err));
   }
 
   const updateCategory = (category) => {
@@ -139,12 +139,12 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
   }
 
   //Calendar helper functions
-  const moveEvent = useCallback (
+  const moveEvent = useCallback(
     ({ event, start, end, isAllDay: droppedOnAllDaySlot = false }) => {
+      const { allDay } = event;
       if (isLoggedIn === false) {
         navigate('/signin')
       } else {
-        const { allDay } = event;
         if (!allDay && droppedOnAllDaySlot) {
           event.allDay = true;
         }
@@ -152,17 +152,18 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
           const existing = event;
           const list = prev
           list.forEach(category => {
-            category.items.filter(item => {
+            category.items.forEach(item => {
               if (item === existing) {
                 item.start = start;
                 item.end_date = end;
               }
             })
           })
-        })
-        return list;
+          return list;
+        });
       }
-    }, [setMyEvents]
+    },
+    [setMyEvents]
   );
 
 
@@ -221,16 +222,7 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
   };
 
   const handleDragStart = useCallback((event) => {
-
-    console.log('dragged event', event)
-    setDraggedEvent(event)
-
-    if (isLoggedIn === false) {
-      navigate('/signin')
-    } else {
-      setDraggedEvent(event), []
-    }
-
+    setDraggedEvent(event), []
   })
 
   const onDropFromOutside = useCallback(
@@ -261,7 +253,7 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
     }
     if (sharedEmail.length === 2) {
       var viewThisEmail = sharedEmail[1]['user_email'];
-      await axios.get('http://localhost:3000/todoList/info',{ params: { email: viewThisEmail } })
+      await axios.get('http://localhost:3000/todoList/info', { params: { email: viewThisEmail } })
         .then((response) => {
           setSharedEvents(response.data.results[0].calendars[0].categories);
         })
@@ -275,19 +267,31 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
     }
   }
 
+  const formatForCalendar = (list) => {
+    if (list.length) {
+      return list.flat().map(item => { return item.items }).flat().map(item => {
+        const taskCopy = item;
+        taskCopy.start = new Date(item.start);
+        taskCopy.end_date = new Date(item.end_date);
+        return taskCopy;
+      })
+    } else {
+      return [];
+    }
+  }
 
   const naviBar = (<TopBar isLoading={isLoading} setIsLoggedIn={setIsLoggedIn}
     isLoggedIn={isLoggedIn} isMobile={isMobile} onCalendar={onCalendar}
-    setOnCalendar={setOnCalendar} userEmail={userEmail} viewSharedCal={viewSharedCal}/>);
+    setOnCalendar={setOnCalendar} userEmail={userEmail} viewSharedCal={viewSharedCal} />);
 
   const toDoList = (<ToDoList isMobile={isMobile} taskData={myEvents.flat()}
     draggedEvent={draggedEvent} setDraggedEvent={setDraggedEvent}
     handleDragStart={handleDragStart} addCategory={addCategory}
-    updateTodo={updateTodo} addTodo={addTodo} deleteTodo={deleteTodo}/>);
+    updateTodo={updateTodo} addTodo={addTodo} deleteTodo={deleteTodo} />);
 
-  const myCalendar = (<MyCalendar myEvents={myEvents} moveEvent={moveEvent} resizeEvent={resizeEvent}
+  const myCalendar = (<MyCalendar formatForCalendar={formatForCalendar} myEvents={myEvents} moveEvent={moveEvent} resizeEvent={resizeEvent}
     changeTitle={changeTitle} onDropFromOutside={onDropFromOutside} sharedEvents={sharedEvents}
-    viewingShared={viewingShared}/>);
+    viewingShared={viewingShared} />);
 
 
 
