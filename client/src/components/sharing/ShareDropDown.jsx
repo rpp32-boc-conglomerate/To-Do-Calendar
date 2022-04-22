@@ -3,7 +3,6 @@ import { styled, alpha } from '@mui/material/styles';
 import axios from 'axios';
 import Button from '@mui/material/Button';
 import Menu from'@mui/material/Menu';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 const Divider = React.lazy(() => import('@mui/material/Divider'));
 const ShareList = React.lazy(() => import('./ShareList.jsx'));
 const ShareWithEmail = React.lazy(() => import('./ShareWithEmail.jsx'));
@@ -65,19 +64,26 @@ function DisplaySharedWithUserDropdown({userEmail}) {
   }
 
   useEffect(async () => {
-    await axios.get('http://localhost:3000/share/sharedByUser', {
-      params: {email: userEmail},
-      withCredentials: true
+    // console.log(currentUser);
+    if (userEmail) {
+      console.log('share drop down use triggered');
+      await axios.get('http://localhost:3000/share/sharedByUser', {
+        params: {email: userEmail},
+        withCredentials: true
 
-    }).then((values) => {
-      setShares(values.data);
-      setSharesCheck((values.data).toString());
+      }).then((values) => {
+        setShares(values.data);
+        setSharesCheck((values.data).toString());
 
-    }).catch((err) => {
+      }).catch((err) => {
+        setSharesCheck(sharedEmailsArray.toString());
+        setCurrentUser(null);
+      });
+    }
+    else {
       setSharesCheck(sharedEmailsArray.toString());
       setCurrentUser(null);
-    });
-    return () => {};
+    }
   }, [sharesCheck, currentUser]);
 
   const handleClick = (event) => {
@@ -103,16 +109,21 @@ function DisplaySharedWithUserDropdown({userEmail}) {
 
 
   const handleEmailAdd = async (emailToAdd) => {
-    await axios.post('http://localhost:3000/share/insertToShares', {
-      email: [userEmail, emailToAdd],
-      withCredentials: true
-    }).then((result) => {
-      const newShares = [...shares];
-      newShares.push({shared_to: emailToAdd});
-      setShares(newShares);
-    }).catch((err) => {
-      console.log('err in emailAdd:', err);
-    });
+    if (emailToAdd === currentUser) {
+      alert('can not add yourself');
+    }
+    else {
+      await axios.post('http://localhost:3000/share/insertToShares', {
+        email: [userEmail, emailToAdd],
+        withCredentials: true
+      }).then((result) => {
+        const newShares = [...shares];
+        newShares.push({shared_to: emailToAdd});
+        setShares(newShares);
+      }).catch((err) => {
+        alert('Invalid email');
+      });
+    }
   };
 
 
@@ -126,7 +137,6 @@ function DisplaySharedWithUserDropdown({userEmail}) {
         variant="contained"
         disableElevation
         onClick={handleClick}
-        endIcon={<KeyboardArrowDownIcon />}
       >
         Share
       </Button>

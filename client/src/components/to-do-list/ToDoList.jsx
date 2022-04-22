@@ -26,25 +26,9 @@ function ToDoList({isMobile, draggedEvent, setDraggedEvent, handleDragStart, tas
 
   const [newCatModalOpen, setNewCatModalOpen] = useState(false);
   const [newToDoModalOpen, setNewToDoModalOpen] = useState(false);
-  // const [categories, setCategories] = useState([])
-
-  const [categories] = taskData;
-
-  // useEffect(() => {
-  //   console.log('taskdata', taskData)
-  //   if (taskData?.length) {
-  //     const [categorizedTasks] = taskData
-  //     console.log('categories', categorizedTasks)
-  //     taskData = categorizedTasks?.categories
-  //     setCategories(taskData)
-  //   }
-  // }, [])
+  // console.log('taskData in todolist', taskData)
 
   const classes = useStyles();
-
-  var addTask = (e) => {
-    console.log('addTask');
-  }
 
   const openSetNewCat = (boo) => {
     if (boo === false) {
@@ -55,6 +39,7 @@ function ToDoList({isMobile, draggedEvent, setDraggedEvent, handleDragStart, tas
   }
 
   const openSetNewToDo = (boo) => {
+    console.log('boo', boo)
     if (boo === false) {
       setNewToDoModalOpen(false);
     } else {
@@ -69,11 +54,12 @@ function ToDoList({isMobile, draggedEvent, setDraggedEvent, handleDragStart, tas
         <Button variant="contained" onClick={() => {openSetNewCat(true)}}>New Category</Button>
         <AddCategoryModal open={newCatModalOpen} closeCat={openSetNewCat} addCategory={addCategory} />
         <Button variant="contained" onClick={() => {openSetNewToDo(true)}}>New Task</Button>
-        <AddToDoModal open={newToDoModalOpen} closeCat={openSetNewToDo} addTodo={addTodo} info={taskData}/>
+        <AddToDoModal open={newToDoModalOpen} closeCat={openSetNewToDo} addTodo={addTodo} taskData={taskData}/>
       </Container>
       <div>
         <Categories taskData={taskData} isMobile={isMobile} draggedEvent={draggedEvent}
-          updateTodo={updateTodo} deleteTodo={deleteTodo} setDraggedEvent={setDraggedEvent} handleDragStart={handleDragStart}/>
+          setDraggedEvent={setDraggedEvent} handleDragStart={handleDragStart}
+          addTodo={addTodo} updateTodo={updateTodo} deleteTodo={deleteTodo}/>
       </div>
     </Container>
     )

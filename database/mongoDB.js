@@ -3,7 +3,7 @@ const encrypt = require('mongoose-encryption');
 const passportLocalMongoose = require('passport-local-mongoose');
 const passport = require('passport');
 
-mongoose.connect('mongodb://localhost/testdb', { useNewUrlParser: true,
+mongoose.connect('mongodb://localhost/bocauth', { useNewUrlParser: true,
   useUnifiedTopology: true,
   })
   .then(()=> {
