@@ -20,14 +20,15 @@ const useStyles = makeStyles({
     width: '45%',
     display: 'inline-block'
   }
-})
+});
 
-function ToDoList({addToCalendar, isMobile, draggedEvent, setDraggedEvent, handleDragStart, taskData, addCategory, addTodo, info}) {
+function ToDoList({isMobile, draggedEvent, setDraggedEvent, handleDragStart, taskData, addCategory, addTodo, updateTodo, deleteTodo}) {
+
   const [newCatModalOpen, setNewCatModalOpen] = useState(false);
   const [newToDoModalOpen, setNewToDoModalOpen] = useState(false);
   // const [categories, setCategories] = useState([])
 
-const [categories] = taskData
+  const [categories] = taskData;
 
   // useEffect(() => {
   //   console.log('taskdata', taskData)
@@ -62,19 +63,17 @@ const [categories] = taskData
   }
 
   return (
-
     <Container className={isMobile ? classes.mobileMain : classes.desktopMain}>
       <Container sx={{display: 'flex', height: '50px', width: '100%'}}>
         <div style={{width: '80%'}}>To-Do List</div>
         <Button variant="contained" onClick={() => {openSetNewCat(true)}}>New Category</Button>
         <AddCategoryModal open={newCatModalOpen} closeCat={openSetNewCat} addCategory={addCategory} />
         <Button variant="contained" onClick={() => {openSetNewToDo(true)}}>New Task</Button>
-        <AddToDoModal open={newToDoModalOpen} closeCat={openSetNewToDo} addTodo={addTodo} info={info}/>
+        <AddToDoModal open={newToDoModalOpen} closeCat={openSetNewToDo} addTodo={addTodo} info={taskData}/>
       </Container>
       <div>
-        <Categories taskData={categories} isMobile={isMobile} draggedEvent={draggedEvent}
-        setDraggedEvent={setDraggedEvent}
-        handleDragStart={handleDragStart}/>
+        <Categories taskData={taskData} isMobile={isMobile} draggedEvent={draggedEvent}
+          updateTodo={updateTodo} deleteTodo={deleteTodo} setDraggedEvent={setDraggedEvent} handleDragStart={handleDragStart}/>
       </div>
     </Container>
     )

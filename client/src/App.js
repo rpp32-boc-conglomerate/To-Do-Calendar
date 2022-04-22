@@ -13,7 +13,6 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-
   // useEffect(() => {
   //   axios.get('http://localhost:3000/auth/userEmail', {withCredentials: true})
   //   .then((result) => {
@@ -26,7 +25,6 @@ function App() {
   //     console.log(err);
   //   })
   // }, [userEmail])
-
 
 
   // all the props would pass to the homepage: './components/Home.jsx'
