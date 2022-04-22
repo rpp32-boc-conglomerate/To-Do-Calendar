@@ -249,16 +249,21 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
 
   // All Components
 
-  const naviBar = (<TopBar isLoading={isLoading} setIsLoggedIn={setIsLoggedIn} isLoggedIn={isLoggedIn} isMobile={isMobile} onCalendar={onCalendar} setOnCalendar={setOnCalendar} userEmail={userEmail}/>);
+  const naviBar = (<TopBar isLoading={isLoading} setIsLoggedIn={setIsLoggedIn} 
+    isLoggedIn={isLoggedIn} isMobile={isMobile} onCalendar={onCalendar} 
+    setOnCalendar={setOnCalendar} userEmail={userEmail}/>);
 
-  const toDoList = (<ToDoList isMobile={isMobile} taskData={myEvents.flat()} draggedEvent={draggedEvent} setDraggedEvent={setDraggedEvent} handleDragStart={handleDragStart} addCategory={addCategory} updateTodo={updateTodo} addTodo={addTodo} deleteTodo={deleteTodo}/>);
+  const toDoList = (<ToDoList isMobile={isMobile} taskData={myEvents.flat()} 
+    draggedEvent={draggedEvent} setDraggedEvent={setDraggedEvent} 
+    handleDragStart={handleDragStart} addCategory={addCategory} 
+    updateTodo={updateTodo} addTodo={addTodo} deleteTodo={deleteTodo}/>);
 
-  const myCalendar = (<MyCalendar myEvents={myEvents} moveEvent={moveEvent} resizeEvent={resizeEvent} changeTitle={changeTitle} onDropFromOutside={onDropFromOutside}/>);
+  const myCalendar = (<MyCalendar myEvents={myEvents} moveEvent={moveEvent} 
+    resizeEvent={resizeEvent} changeTitle={changeTitle} onDropFromOutside={onDropFromOutside}/>);
 
-  const naviBar = (<TopBar isLoading={isLoading} setIsLoggedIn={setIsLoggedIn} isLoggedIn={isLoggedIn} isMobile={isMobile} onCalendar={onCalendar} setOnCalendar={setOnCalendar} userEmail={userEmail} />);
-  const toDoList = (<ToDoList isMobile={isMobile} taskData={myEvents.flat()} draggedEvent={draggedEvent} setDraggedEvent={setDraggedEvent} handleDragStart={handleDragStart} addCategory={addCategory} addTodo={addTodo} info={myEvents} />);
-  const myCalender = (<MyCalendar myEvents={myEvents} moveEvent={moveEvent} resizeEvent={resizeEvent} changeTitle={changeTitle} onDropFromOutside={onDropFromOutside} />);
-
+  const naviBar = (<TopBar isLoading={isLoading} setIsLoggedIn={setIsLoggedIn} 
+    isLoggedIn={isLoggedIn} isMobile={isMobile} onCalendar={onCalendar} 
+    setOnCalendar={setOnCalendar} userEmail={userEmail} />);
 
   // Conditional Rendering based on device
   const renderContent = () => {
