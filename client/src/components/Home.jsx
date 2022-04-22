@@ -14,11 +14,12 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
   const [allTodos, setAllTodos] = useState([]);
   const [myEvents, setMyEvents] = useState([]);
   const [onCalendar, setOnCalendar] = useState(false);
-  const [draggedEvent, setDraggedEvent] = useState()
-
-  // Data present in 'a@a.com
+  const [draggedEvent, setDraggedEvent] = useState();
+  // Data present in 'a@a.com'
   const [userEmail, setEmail] = useState(null);
-  const [hasData, setHasData] = useState(false)
+  const [hasData, setHasData] = useState(false);
+  const [sharedEvents, setSharedEvents] = useState([]);
+  const [viewingShared, setViewingShared] = useState(false);
 
   const navigate = useNavigate()
 
@@ -31,14 +32,15 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
         setIsLoading(false);
         if (result.data) {
           setIsLoggedIn(result.data.loggedIn);
-          setEmail(result.data.info)
+          setEmail(result.data.info);
           await axios.get('http://localhost:3000/todoList/info', { params: { email: result.data.info } })
             .then((response) => {
-              setMyEvents(response.data.results[0].calendars[0].categories)
+              // console.log(response.data);
+              setMyEvents(response.data.results[0].calendars[0].categories);
             })
             .then(() => setHasData(true))
             .catch((err) => {
-              console.log('info err:', err);
+              // console.log('info err:', err);
               return err;
             })
         }
@@ -48,46 +50,19 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
         return err;
       })
   }, [isLoggedIn])
-  // [
-  //   {
-  //     id: 0,
-  //     title: "Sample Event",
-  //     start_date: new Date(),
-  //     end_date: new Date(moment().add(1, "hour")),
-  //     allDay: false,
-  //     in_calendar: true
-  //   },
-  //   {
-  //     id: 1,
-  //     title: 'Trip to China',
-  //     description: '5-day business trip to meet with manufacturers',
-  //     duration: '5 days',
-  //     start: new Date(),
-  //     end: new Date(moment().add(5, "days")),
-  //     category_id: 1,
-  //     in_calendar: false
-  //   },
-  //   {
-  //     id: 2,
-  //     title: 'Trip to Los Angeles',
-  //     description: 'Meeting with Executives',
-  //     duration: '6 hours',
-  //     start: new Date(moment('14 Apr 2022 09:30:00 UT')),
-  //     end: new Date(moment('14 Apr 2022 15:30:00 UT')),
-  //     category_id: 1,
-  //     in_calendar: false
-  //   }
-  // ]
+
+  // All Components lose functionality if "isLoggedIn" is false
 
   // API Request Routes:
   //
   // GET '/todoList/:userEmail' -> For all data
   const getAllTodos = (user) => {
     console.log('Get All Todo Data');
-    // axios.get('/todoList', { params: { userEmail: userEmail } })
+
+    // axios.get('/todoList/info', { params: { userEmail: userEmail } })
     //   .then((result) => {
     //       console.log(result);
-    //       setAllTodos(result);
+    //       setAllTodos(result.data);
     //     })
     //     .catch(err => console.error(err));
   }
@@ -113,9 +88,17 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
 
   // PATCH '/todoList/:userEmail' -> For updating the data -> ex. Moving around item in Calendar / Lengthening item in Calendar / Clicking on "Done" in Modal for Calendar/TodoList
   const updateTodo = (todo) => {
-
     console.log('Update Todo: ', todo);
-    // axios.patch('/todoList', { params: { userEmail: userEmail }, data: todo })
+    // axios.put('/todoList/updateItem', { params: { userEmail: userEmail }, data: todo })
+    //   .then((result) => {
+      //     console.log(result);
+      //   })
+      //   .catch(err => console.error(err));
+  }
+
+  const updateCategory = (category) => {
+    console.log('Update Category: ', category);
+    // axios.put('/todoList/updateCategory', { params: { userEmail: userEmail }, data: category })
     //   .then((result) => {
     //     console.log(result);
     //   })
@@ -155,17 +138,8 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
       .catch(err => console.error(err));
   }
 
-  // For example data / demo landing page if not logged in
-
-  // if (isLoggedIn === false) {}
-
-
-  // For getting all data when rendering
-  // useEffect(() => {
-  //   getAllTodos();
-  // })
   //Calendar helper functions
-  const moveEvent = useCallback(
+  const moveEvent = useCallback (
     ({ event, start, end, isAllDay: droppedOnAllDaySlot = false }) => {
       if (isLoggedIn === false) {
         navigate('/signin')
@@ -185,17 +159,12 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
               }
             })
           })
-          return list;
-        });
+        })
+        return list;
       }
-      // setMyEvents((prev) => {
-      //   const existing = prev.find((ev) => ev.id === event.id) ?? {};
-      //   const filtered = prev.filter((ev) => ev.id !== event.id);
-      //   return [...filtered, { ...existing, start, end, allDay }];
-      // });
-    },
-    [setMyEvents]
+    }, [setMyEvents]
   );
+
 
   const newEvent = useCallback(
     (event) => {
@@ -252,11 +221,16 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
   };
 
   const handleDragStart = useCallback((event) => {
+
+    console.log('dragged event', event)
+    setDraggedEvent(event)
+
     if (isLoggedIn === false) {
       navigate('/signin')
     } else {
       setDraggedEvent(event), []
     }
+
   })
 
   const onDropFromOutside = useCallback(
@@ -277,21 +251,55 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
     },
     [draggedEvent, setDraggedEvent, newEvent]
   )
+
   // All Components
-  const naviBar = (<TopBar isLoading={isLoading} setIsLoggedIn={setIsLoggedIn} isLoggedIn={isLoggedIn} isMobile={isMobile} onCalendar={onCalendar} setOnCalendar={setOnCalendar} userEmail={userEmail} />);
-  const toDoList = (<ToDoList isMobile={isMobile} taskData={myEvents.flat()} draggedEvent={draggedEvent} setDraggedEvent={setDraggedEvent} handleDragStart={handleDragStart} addCategory={addCategory} addTodo={addTodo} info={myEvents} />);
-  const myCalender = (<MyCalendar myEvents={myEvents} moveEvent={moveEvent} resizeEvent={resizeEvent} changeTitle={changeTitle} onDropFromOutside={onDropFromOutside} />);
+  const viewSharedCal = async function (sharedEmail) {
+
+    if (sharedEmail.length === 1) {
+      setSharedEvents([]);
+      setViewingShared(false);
+    }
+    if (sharedEmail.length === 2) {
+      var viewThisEmail = sharedEmail[1]['user_email'];
+      await axios.get('http://localhost:3000/todoList/info',{ params: { email: viewThisEmail } })
+        .then((response) => {
+          setSharedEvents(response.data.results[0].calendars[0].categories);
+        })
+        .then(() => setViewingShared(true))
+        .catch((err) => {
+          console.log('info err:', err);
+          setSharedEvents([]);
+          setViewingShared(false);
+          return err;
+        })
+    }
+  }
+
+
+  const naviBar = (<TopBar isLoading={isLoading} setIsLoggedIn={setIsLoggedIn}
+    isLoggedIn={isLoggedIn} isMobile={isMobile} onCalendar={onCalendar}
+    setOnCalendar={setOnCalendar} userEmail={userEmail} viewSharedCal={viewSharedCal}/>);
+
+  const toDoList = (<ToDoList isMobile={isMobile} taskData={myEvents.flat()}
+    draggedEvent={draggedEvent} setDraggedEvent={setDraggedEvent}
+    handleDragStart={handleDragStart} addCategory={addCategory}
+    updateTodo={updateTodo} addTodo={addTodo} deleteTodo={deleteTodo}/>);
+
+  const myCalendar = (<MyCalendar myEvents={myEvents} moveEvent={moveEvent} resizeEvent={resizeEvent}
+    changeTitle={changeTitle} onDropFromOutside={onDropFromOutside} sharedEvents={sharedEvents}
+    viewingShared={viewingShared}/>);
+
+
 
   // Conditional Rendering based on device
   const renderContent = () => {
-
     // view for mobile and in to do list page
     if (isMobile && !onCalendar) {
       return (
         <div>
           {naviBar}
           <div className="">
-            {hasData ? toDoList : null}
+            {myEvents.length ? toDoList : null}
           </div>
         </div>
       )
@@ -301,17 +309,19 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
         <div>
           {naviBar}
           <div>
-            {hasData ? myCalender : null}
+            {myEvents.length ? myCalendar : null}
           </div>
         </div>
       )
     } else {
+      console.log('help');
+      console.log(myEvents.length);
       return (
         // view for desktop display both calendar and to do list
         <div>
           {naviBar}
-          {myCalender}
-          {myEvents.length ? toDoList : null}
+          {myCalendar}
+          {hasData ? toDoList : null}
         </div>
       )
     }

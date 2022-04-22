@@ -1,10 +1,10 @@
 import React from 'react';
 import Task from './Task.jsx';
 
-function Tasks({tasks, openModal, isMobile, deleteTask, draggedEvent, setDraggedEvent, handleDragStart}) {
+function Tasks({tasks, isMobile, deleteTodo, updateTodo, draggedEvent, setDraggedEvent, handleDragStart}) {
   // console.log('tasks in tasks', tasks)
   const onListTasks = tasks.filter(task => !task.in_calendar)
-  console.log('onListTasks', onListTasks)
+  // console.log('onListTasks', onListTasks)
 
   const formatTask = (task) => {
     const taskCopy = task
@@ -16,7 +16,7 @@ function Tasks({tasks, openModal, isMobile, deleteTask, draggedEvent, setDragged
   }
   return(
     onListTasks?.map((task, i) => {
-    return (<Task style={{display: 'inline-block'}}
+    return (<Task style={{display: 'inline-block'}} updateTodo={updateTodo} deleteTodo={deleteTodo}
     key={i} task={formatTask(task)} isMobile={isMobile} draggedEvent={draggedEvent}
     setDraggedEvent={setDraggedEvent} handleDragStart={handleDragStart}/>)
     }

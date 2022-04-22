@@ -12,16 +12,15 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-function Category({tasks, addTask, isMobile, draggedEvent, setDraggedEvent, handleDragStart}) {
-  const classes = useStyles();
+function Category({tasks, addTask, isMobile, updateTodo, deleteTodo, draggedEvent, setDraggedEvent, handleDragStart}) {
+
   const [totalTime, setTotalTime] = useState(0);
-  // console.log('tasks in category', tasks)
-  const todos = tasks.items
 
-  const onCalendarTasks = todos.filter(task => task.in_calendar)
-  // console.log('oncal', onCalendarTasks)
+  const classes = useStyles();
+  const todos = tasks.items;
 
-  console.log('tasks in category', todos)
+  const onCalendarTasks = todos.filter(task => task.in_calendar);
+
   return (
     <Container>
       <Paper elevation={2} className={classes.paper}>
@@ -30,13 +29,12 @@ function Category({tasks, addTask, isMobile, draggedEvent, setDraggedEvent, hand
           <div>Time Spent So Far: 0</div>
           <Button onClick={() => {
             setTotalTime(totalTime + 1);
-            addTask()
+            addTask();
           }}>Add Task</Button>
         </Container>
         <Container sx={{ display: 'inline-block'}}>
-          <Tasks tasks={todos} isMobile={isMobile}
-          draggedEvent={draggedEvent} setDraggedEvent={setDraggedEvent}
-          handleDragStart={handleDragStart}/>
+          <Tasks tasks={todos} isMobile={isMobile} updateTodo={updateTodo} deleteTodo={deleteTodo}
+          draggedEvent={draggedEvent} setDraggedEvent={setDraggedEvent} handleDragStart={handleDragStart}/>
         </Container>
     </Paper>
   </Container>

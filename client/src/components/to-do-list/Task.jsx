@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useCallback, Suspense } from 'react';
 import { useDrag } from 'react-dnd';
-import moment from 'moment';
 import ContentEditable from 'react-contenteditable';
 import { Button, Box, Grid, Card, CardHeader, CardContent, CardActions, Collapse, makeStyles, Typography, Toolbar, TextField,  TextareaAutosize, Stack } from '@material-ui/core';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -22,20 +21,16 @@ const useStyles = makeStyles({
   },
   card: {
     display: 'flex',
-    border: '1rem solid black'
+    border: '1rem solid black',
   }
-  })
+});
 
-function Task({task, isMobile, deleteTask, draggedEvent, setDraggedEvent, handleDragStart, clickedTask, updateTodo, deleteTodo}) {
-  console.log('task in task', task)
+function Task({task, isMobile, draggedEvent, setDraggedEvent, handleDragStart, clickedTask, updateTodo, deleteTodo}) {
 
-  // For Modal opening and closing
   const [todo, setTodo] = useState(task);
   const [modalOpen, setModalOpen] = useState(false);
   const [hours, setHours] = useState();
   const [minutes, setMinutes] = useState();
-
-  // const [modalInfo, setModalInfo] = useState();
 
   const convertDuration = (duration) => {
     const splitDuration = duration.split(':')
@@ -54,8 +49,9 @@ function Task({task, isMobile, deleteTask, draggedEvent, setDraggedEvent, handle
   }
 
   const updateTask = (task) => {
-    setTodo(task)
-    newTodo()
+    console.log('updateTask: ', task);
+    setTodo(task);
+    newTodo(task);
   }
 
   const classes = useStyles();
@@ -64,7 +60,8 @@ function Task({task, isMobile, deleteTask, draggedEvent, setDraggedEvent, handle
     convertDuration(todo.duration)
   }, [])
 
-  const newTodo = useCallback(() => {
+  const newTodo = useCallback((todo) => {
+    console.log('newTodo: ', todo);
     convertDuration(todo.duration)
   }, [todo])
 
@@ -84,11 +81,11 @@ function Task({task, isMobile, deleteTask, draggedEvent, setDraggedEvent, handle
                 <Box>{minutes} {minutes === '1' ? 'minute' : 'minutes'}</Box>
               </div>
               <Typography>
-                  {task.description}
-                </Typography>
-              <CardActions>
-                <Button variant="contained" size="small" onClick={() => setModalOpen(true)}>Edit</Button>
-              </CardActions>
+                {task.description}
+              </Typography>
+            <CardActions>
+              <Button variant="contained" size="small" onClick={() => setModalOpen(true)}>Edit</Button>
+            </CardActions>
             </CardContent>
           </Card>
         </Grid>

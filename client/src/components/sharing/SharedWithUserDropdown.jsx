@@ -2,7 +2,6 @@ import React, { useState, useEffect, Suspense } from 'react';
 import { styled, alpha } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 const ViewList = React.lazy(() => import( './SharedWithUser.jsx'));
 
 const StyledMenu = styled((props) => (
@@ -48,7 +47,7 @@ const StyledMenu = styled((props) => (
 }));
 
 
-export default function DisplaySharedWithUserDropdown({userEmail}) {
+export default function DisplaySharedWithUserDropdown({userEmail, viewSharedCal}) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [formErr, setFormErr] = useState('');
   const open = Boolean(anchorEl);
@@ -61,6 +60,7 @@ export default function DisplaySharedWithUserDropdown({userEmail}) {
     setAnchorEl(null);
   };
 
+
   return (
     <div>
       <Button
@@ -71,7 +71,6 @@ export default function DisplaySharedWithUserDropdown({userEmail}) {
         variant="contained"
         disableElevation
         onClick={handleClick}
-        endIcon={<KeyboardArrowDownIcon />}
       >
         Views
       </Button>
@@ -85,7 +84,7 @@ export default function DisplaySharedWithUserDropdown({userEmail}) {
           open={open}
           onClose={handleClose}
         >
-        <ViewList userEmail={userEmail}/>
+        <ViewList userEmail={userEmail} viewSharedCal={viewSharedCal}/>
 
         </StyledMenu>
       </Suspense>
