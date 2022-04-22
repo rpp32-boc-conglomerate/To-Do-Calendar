@@ -25,7 +25,7 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
 
   useEffect(async () => {
     if (!isLoggedIn) {
-      return setMyEvents(result.calendars[0].categories)
+      return setMyEvents(result.calendars[0])
     }
     await axios.get('http://localhost:3000/auth/isLoggedIn', { withCredentials: true })
       .then(async (result) => {
@@ -35,7 +35,7 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
           setEmail(result.data.info);
           await axios.get('http://localhost:3000/todoList/info', { params: { email: result.data.info } })
             .then((response) => {
-              setMyEvents(response.data.results[0].calendars[0].categories);
+              setMyEvents(response.data.results[0].calendars[0]);
             })
             .then(() => setHasData(true))
             .catch((err) => {
@@ -108,22 +108,25 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
     let incomingId;
 
     if (info.length > 0) {
-      incomingId = info.calendars[0].calendar_id;
+      incomingId = myEvents.calendar_id;
     } else {
       incomingId = 11;
     }
 
-    axios.post('http://localhost:3000/todoList/category', { params: { calendar_id: incomingId, category: category } })
-      .then((result) => {
-        console.log('cat post result: ', result);
-        let catId = result.data.category_id;
-        let newCat = { category_id: catId, category: category, todoitems: [] };
-        let newEventsList = myEvents[0];
-        newEventsList.push(newCat);
-        setMyEvents(newEventsList);
-        console.log('new event list: ', myEvents);
-      })
-      .catch(err => console.error(err));
+    console.log(category)
+
+    // axios.post('http://localhost:3000/todoList/category', { params: { calendar_id: incomingId, category: category } })
+    //   .then((result) => {
+    //     // console.log('cat post result: ', result);
+
+    //     // let catId = result.data.category_id;
+    //     // let newCat = { category_id: catId, category: category, todoitems: [] };
+    //     // let newEventsList = myEvents[0];
+    //     // newEventsList.push(newCat);
+    //     // setMyEvents(newEventsList);
+    //     // console.log('new event list: ', myEvents);
+    //   })
+    //   .catch(err => console.error(err));
   }
 
   //Calendar helper functions
@@ -139,7 +142,7 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
         setMyEvents((prev) => {
           const existing = event;
           const list = prev
-          list.forEach(category => {
+          list.categories.forEach(category => {
             category.items.forEach(item => {
               if (item === existing) {
                 item.start = start;
@@ -174,7 +177,7 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
         setMyEvents((prev) => {
           const existing = event;
           const list = prev
-          list.forEach(category => {
+          list.categories.forEach(category => {
             category.items.forEach(item => {
               if (item === existing) {
                 item.start = start;
@@ -197,7 +200,7 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
       setMyEvents((prev) => {
         const existing = event;
         const list = prev
-        list.forEach(category => {
+        list.categories.forEach(category => {
           category.items.forEach(item => {
             if (item === existing) {
               item.title = title;
@@ -218,7 +221,7 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
       setMyEvents((prev) => {
         const existing = draggedEvent;
         const list = prev
-        list.forEach(category => {
+        list.categories.forEach(category => {
           category.items.forEach(item => {
             if (item === existing) {
               item.in_calendar = !item.in_calendar
@@ -256,8 +259,9 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
   }
 
   const formatForCalendar = (list) => {
-    if (list.length) {
-      return list.flat().map(item => { return item.items }).flat().map(item => {
+    console.log(list)
+    if (list.categories) {
+      return list.categories.flat().map(item => { return item.items }).flat().map(item => {
         const taskCopy = item;
         taskCopy.start = new Date(item.start);
         taskCopy.end_date = new Date(item.end_date);
@@ -272,7 +276,7 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
     isLoggedIn={isLoggedIn} isMobile={isMobile} onCalendar={onCalendar}
     setOnCalendar={setOnCalendar} userEmail={userEmail} viewSharedCal={viewSharedCal} />);
 
-  const toDoList = (<ToDoList isMobile={isMobile} taskData={myEvents.flat()}
+  const toDoList = (<ToDoList isMobile={isMobile} taskData={myEvents.categories ? myEvents.categories.flat(): []}
     draggedEvent={draggedEvent} setDraggedEvent={setDraggedEvent}
     handleDragStart={handleDragStart} addCategory={addCategory}
     updateTodo={updateTodo} addTodo={addTodo} deleteTodo={deleteTodo} />);
