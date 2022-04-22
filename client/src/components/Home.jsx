@@ -107,26 +107,22 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
 
     let incomingId;
 
-    if (info.length > 0) {
+    if (myEvents.categories.length > 0) {
       incomingId = myEvents.calendar_id;
     } else {
       incomingId = 11;
     }
 
-    console.log(category)
-
-    // axios.post('http://localhost:3000/todoList/category', { params: { calendar_id: incomingId, category: category } })
-    //   .then((result) => {
-    //     // console.log('cat post result: ', result);
-
-    //     // let catId = result.data.category_id;
-    //     // let newCat = { category_id: catId, category: category, todoitems: [] };
-    //     // let newEventsList = myEvents[0];
-    //     // newEventsList.push(newCat);
-    //     // setMyEvents(newEventsList);
-    //     // console.log('new event list: ', myEvents);
-    //   })
-    //   .catch(err => console.error(err));
+    axios.post('http://localhost:3000/todoList/category', { params: { calendar_id: incomingId, category: category } })
+      .then((result) => {
+        let catId = result.data.category_id;
+        let newCat = { category_id: catId, category: category, todoitems: [] };
+        let newEventsList = myEvents.categories;
+        newEventsList.push(newCat);
+        setMyEvents(newEventsList);
+        console.log('new event list: ', myEvents);
+      })
+      .catch(err => console.error(err));
   }
 
   //Calendar helper functions
@@ -259,7 +255,6 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
   }
 
   const formatForCalendar = (list) => {
-    console.log(list)
     if (list.categories) {
       return list.categories.flat().map(item => { return item.items }).flat().map(item => {
         const taskCopy = item;
