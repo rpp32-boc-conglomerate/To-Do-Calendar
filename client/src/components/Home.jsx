@@ -68,14 +68,14 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
   //modified to use actual user email
   const addTodo = (todo) => {
     console.log('Add todo: ', todo);
-    const incomingEmail = info.user_email;
+    const incomingEmail = userEmail;
     axios.post('http://localhost:3000/todoList/item', { params: { userEmail: incomingEmail }, data: todo })
       .then((result) => {
-        console.log(result);
         let catId = result.data.id;
+        console.log('catId: ', catId);
         console.log('all todos before: ', myEvents);
         let newTask = { item_id: catId, title: todo.title, description: todo.description, duration: todo.duration, start: todo.start, end_time: todo.end_date, in_calendar: todo.in_calendar };
-        // let newEventsList = myEvents[0];
+        let newEventsList = myEvents;
         // newEventsList.push(newCat);
         // setMyEvents(newEventsList);
         console.log('all todos after: ', myEvents);
@@ -113,21 +113,18 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
   }
 
   const addCategory = (category) => {
-    console.log('user calendars: ', userCalendar);
-    console.log('my events: ', myEvents);
+
     let incomingId;
 
     incomingId = userCalendar.calendar_id;
 
     axios.post('http://localhost:3000/todoList/category', { params: { calendar_id: incomingId, category: category } })
       .then((result) => {
-        console.log('cat post result: ', result);
         let catId = result.data.category_id;
         let newCat = { category_id: catId, category: category, todoitems: [] };
         let newEventsList = myEvents;
         newEventsList.push(newCat);
         setMyEvents(newEventsList);
-        console.log('new event list: ', myEvents);
       })
       .catch(err => console.error(err));
   }
@@ -247,6 +244,8 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
   )
 
   // All Components
+
+  console.log('task data: ', myEvents.flat());
 
   const naviBar = (<TopBar isLoading={isLoading} setIsLoggedIn={setIsLoggedIn}
     isLoggedIn={isLoggedIn} isMobile={isMobile} onCalendar={onCalendar}
