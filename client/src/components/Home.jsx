@@ -261,10 +261,6 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
   const myCalendar = (<MyCalendar myEvents={myEvents} moveEvent={moveEvent} 
     resizeEvent={resizeEvent} changeTitle={changeTitle} onDropFromOutside={onDropFromOutside}/>);
 
-  const naviBar = (<TopBar isLoading={isLoading} setIsLoggedIn={setIsLoggedIn} 
-    isLoggedIn={isLoggedIn} isMobile={isMobile} onCalendar={onCalendar} 
-    setOnCalendar={setOnCalendar} userEmail={userEmail} />);
-
   // Conditional Rendering based on device
   const renderContent = () => {
     // view for mobile and in to do list page
