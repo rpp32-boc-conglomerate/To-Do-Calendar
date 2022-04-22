@@ -12,7 +12,7 @@ import { result } from '../../../database/example.js';
 const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sharedBy }) => {
 
   const [allTodos, setAllTodos] = useState([]);
-  const [myEvents, setMyEvents] = useState(result.calendars[0].categories);
+  const [myEvents, setMyEvents] = useState([]);
   const [onCalendar, setOnCalendar] = useState(false);
   const [draggedEvent, setDraggedEvent] = useState()
 
@@ -23,6 +23,9 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
   const navigate = useNavigate()
 
   useEffect(async () => {
+    if(!isLoggedIn) {
+      return setMyEvents(result.calendars[0].categories)
+    }
     await axios.get('http://localhost:3000/auth/isLoggedIn', { withCredentials: true })
       .then(async (result) => {
         setIsLoading(false);
