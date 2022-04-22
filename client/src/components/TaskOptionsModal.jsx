@@ -86,7 +86,7 @@ var TaskOptionsModal = (props) => {
       end_date: endTime,
       in_calendar: inCalendar
     };
-    props.updateTodo(todoToUpdate);
+    // props.updateTodo(todoToUpdate);
     props.setModalOpen(false);
   }
 
@@ -117,14 +117,14 @@ var TaskOptionsModal = (props) => {
     <LocalizationProvider dateAdapter={AdapterDateFns}>
       <Modal open={props.modalOpen} onClose={() => props.setModalOpen(false)}>
         <Container className={classes.modal}>
-          <TextField label="Title" className={classes.input} defaultValue={props.task.title} onChange={(newValue) => setTodoTitle(newValue)} />
-          <TextField multiline label="Description" className={classes.input} defaultValue={props.task.description} onChange={(newValue) => setTodoDescription(newValue)}/>
-          <DesktopDateTimePicker renderInput={(props) => <TextField className={classes.input} {...props} />} label="Start Time"
-            value={props.task.start || new Date()} onChange={(newValue) => {
+          <TextField label="Title" className={classes.input} defaultValue={todoTitle} onChange={(e) => setTodoTitle(e.target.value)} />
+          <TextField multiline label="Description" className={classes.input} defaultValue={todoDescription} onChange={(e) => setTodoDescription(e.target.value)}/>
+          <DesktopDateTimePicker renderInput={(props) => <TextField className={classes.input} {...props} />}
+            label="Start Time" value={props.task.start || new Date()} onChange={(newValue) => {
               handleTimeChange(newValue, 'start')
               setStartTime(newValue)}} />
-          <DesktopDateTimePicker renderInput={(props) => <TextField className={classes.input} {...props} />} label="End Time"
-            value={props.task.end_date || new Date()} onChange={(newValue) => {
+          <DesktopDateTimePicker renderInput={(props) => <TextField className={classes.input} {...props} />}
+            label="End Time" value={props.task.end_date || new Date()} onChange={(newValue) => {
               handleTimeChange(newValue, 'end_date')
               setEndTime(newValue)}}/>
           <Container className={classes.container}>
