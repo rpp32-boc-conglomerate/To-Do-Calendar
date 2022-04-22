@@ -1,3 +1,4 @@
+const path          = require('path');
 const authRouter    = require('express').Router();
 const mongoose      = require('mongoose');
 const session       = require('express-session');
@@ -9,8 +10,18 @@ const auth          = require('../models/authentication/auth.js');
 const saltStrength  = 10;
 const GoogleStrategy = require('passport-google-oauth2').Strategy;
 
-const congolmerateSecret = 'superSecretSecrets';
-const mongoStoreUrl = 'mongodb://localhost:27017/boc-auth-store';
+require('dotenv').config({ path: path.resolve(__dirname, '../../.env') })
+const mongoURL = process.env.auth;
+const mongoAdmin = process.env.authuser;
+const mongoPW = process.env.authpw;
+const mongoStoreUrl = `mongodb://${mongoAdmin}:${mongoPW}@${mongoURL}:27017/bocauthstore`;
+const bocAuthOptions = {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+};
+const congolmerateSecret = process.env.loginsecret;
+
+
 const loginFailurePath = '/auth/failure';
 const loginSuccessPath = '/auth/success';
 

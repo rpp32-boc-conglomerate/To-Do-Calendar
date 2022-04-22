@@ -1,11 +1,21 @@
+const path = require('path');
 const mongoose = require('mongoose');
 const bcrypt = require("bcrypt");
-
-const bocAuth = 'mongodb://localhost:27017/boc-auth';
+require('dotenv').config({ path: path.resolve(__dirname, '../../../.env') })
+const mongoURL = process.env.auth;
+const mongoAdmin = process.env.authuser;
+const mongoPW = process.env.authpw;
+const bocAuth = `mongodb://${mongoAdmin}:${mongoPW}@${mongoURL}:27017/bocauth`;
 const bocAuthOptions = {
   useNewUrlParser: true,
   useUnifiedTopology: true
 };
+
+
+console.log('bocAuth test: ', bocAuth);
+
+console.log(path.resolve(__dirname, '../../../.env'));
+
 const connection = mongoose.createConnection(bocAuth, bocAuthOptions);
 
 mongoose.connect(bocAuth, bocAuthOptions);
