@@ -58,9 +58,9 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
   const getAllTodos = (user) => {
     axios.get('http://localhost:3000/todoList/info', { params: { email: userEmail } })
       .then((result) => {
-          setMyEvents(result.data.results[0].calendars[0].categories);
-        })
-        .catch(err => console.error(err));
+        setMyEvents(result.data.results[0].calendars[0].categories);
+      })
+      .catch(err => console.error(err));
   }
 
   // POST '/todoList/:userEmail' -> Adding or Upserting a "todoList item"
@@ -120,7 +120,6 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
         let newEventsList = myEvents.categories;
         newEventsList.push(newCat);
         setMyEvents(newEventsList);
-        console.log('new event list: ', myEvents);
       })
       .catch(err => console.error(err));
   }
@@ -214,19 +213,23 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
 
   const onDropFromOutside = useCallback(
     () => {
-      setMyEvents((prev) => {
-        const existing = draggedEvent;
-        const list = prev
-        list.categories.forEach(category => {
-          category.items.forEach(item => {
-            if (item === existing) {
-              item.in_calendar = !item.in_calendar
-            }
+      if (isLoggedIn === false) {
+        navigate('/signin')
+      } else {
+        setMyEvents((prev) => {
+          const existing = draggedEvent;
+          const list = prev
+          list.categories.forEach(category => {
+            category.items.forEach(item => {
+              if (item === existing) {
+                item.in_calendar = !item.in_calendar
+              }
+            })
           })
-        })
-        return list;
-      });
-      setDraggedEvent(null)
+          return list;
+        });
+        setDraggedEvent(null)
+      }
     },
     [draggedEvent, setDraggedEvent, newEvent]
   )
@@ -271,7 +274,7 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
     isLoggedIn={isLoggedIn} isMobile={isMobile} onCalendar={onCalendar}
     setOnCalendar={setOnCalendar} userEmail={userEmail} viewSharedCal={viewSharedCal} />);
 
-  const toDoList = (<ToDoList isMobile={isMobile} taskData={myEvents.categories ? myEvents.categories.flat(): []}
+  const toDoList = (<ToDoList isMobile={isMobile} taskData={myEvents.categories ? myEvents.categories.flat() : []}
     draggedEvent={draggedEvent} setDraggedEvent={setDraggedEvent}
     handleDragStart={handleDragStart} addCategory={addCategory}
     updateTodo={updateTodo} addTodo={addTodo} deleteTodo={deleteTodo} />);
@@ -310,7 +313,7 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
         <div>
           {naviBar}
           {myCalendar}
-          {hasData ? toDoList : null}
+          {toDoList ?? null}
         </div>
       )
     }

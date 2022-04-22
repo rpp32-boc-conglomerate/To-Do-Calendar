@@ -9,7 +9,6 @@ const DragAndDropCalendar = withDragAndDrop(Calendar)
 const localizer = momentLocalizer(moment);
 
 const MyCalendar = (props) => {
-  // console.log('eventList', eventList)
   if (props.viewingShared) {
     return (
       <DragAndDropCalendar
