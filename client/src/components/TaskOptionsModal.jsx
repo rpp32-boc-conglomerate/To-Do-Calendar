@@ -46,22 +46,29 @@ const useStyles = makeStyles({
 });
 
 var TaskOptionsModal = (props) => {
-  const [userTask, setUserTask] = useState(props.task)
-  const [todoTitle, setTodoTitle] = useState(props.task.title);
-  const [todoDescription, setTodoDescription] = useState(props.task.description);
+  const [userTask, setUserTask] = useState(props.task || {})
+  const [todoTitle, setTodoTitle] = useState(props.task.title || '');
+  const [todoDescription, setTodoDescription] = useState(props.task.description || '');
   const [startTime, setStartTime] = useState(props.task.start);
   const [endTime, setEndTime] = useState(props.task.end_date);
-  const [inCalendar, setInCalendar] = useState(props.task.in_calendar);
+  const [inCalendar, setInCalendar] = useState(props.task.in_calendar || false);
 
   const classes = useStyles();
 
+  const handleTextInput = (event, field) => {
+    const text = event.target.value
+    field === 'title' ? setTodoTitle(text) : setTodoDescription(text)
+  }
+
   const handleEditDone = () => {
-    //front end update
+    // front end update
     const taskCopy = userTask;
     taskCopy.title = todoTitle;
     taskCopy.description = todoDescription;
-    taskCopy.start = startTime;
-    taskCopy.end_date = endTime;
+    taskCopy.start = userTask.start || new Date();
+    taskCopy.end_date = userTask.end_date || new Date();
+    taskCopy.in_calendar = inCalendar;
+    taskCopy.category_id = props.categoryId
 
     let hours = endTime.getHours() - startTime.getHours()
     let minutes = endTime.getMinutes() - startTime.getMinutes()
@@ -76,17 +83,19 @@ var TaskOptionsModal = (props) => {
     taskCopy.duration = duration
 
     setUserTask(taskCopy)
-    props.updateTask(taskCopy)
+    // props.updateTask(taskCopy)
 
     //back end update
-    var todoToUpdate = {
-      title: todoTitle,
-      description: todoDescription,
-      start: startTime,
-      end_date: endTime,
-      in_calendar: inCalendar
-    };
-    props.updateTodo(todoToUpdate);
+
+    // var todoToUpdate = {
+    //   title: todoTitle,
+    //   description: todoDescription,
+    //   start: startTime,
+    //   end_date: endTime,
+    //   in_calendar: inCalendar
+    // };
+    props.newTodo ? props.addTodo(userTask) : props.updateTodo(userTask);
+
     props.setModalOpen(false);
   }
 
@@ -117,16 +126,18 @@ var TaskOptionsModal = (props) => {
     <LocalizationProvider dateAdapter={AdapterDateFns}>
       <Modal open={props.modalOpen} onClose={() => props.setModalOpen(false)}>
         <Container className={classes.modal}>
-          <TextField label="Title" className={classes.input} defaultValue={props.task.title} onChange={(newValue) => setTodoTitle(newValue)} />
-          <TextField multiline label="Description" className={classes.input} defaultValue={props.task.description} onChange={(newValue) => setTodoDescription(newValue)}/>
+          <TextField label="Title" className={classes.input} defaultValue={props.task.title} onChange={(newValue) => {handleTextInput(newValue, 'title')}} />
+          <TextField multiline label="Description" className={classes.input} defaultValue={props.task.description} onChange={(newValue) => handleTextInput(newValue, 'description')}/>
+
           <DesktopDateTimePicker renderInput={(props) => <TextField className={classes.input} {...props} />} label="Start Time"
-            value={props.task.start || new Date()} onChange={(newValue) => {
+            value={userTask.start} onChange={(newValue) => {
               handleTimeChange(newValue, 'start')
               setStartTime(newValue)}} />
           <DesktopDateTimePicker renderInput={(props) => <TextField className={classes.input} {...props} />} label="End Time"
-            value={props.task.end_date || new Date()} onChange={(newValue) => {
+            value={userTask.end_date} onChange={(newValue) => {
               handleTimeChange(newValue, 'end_date')
               setEndTime(newValue)}}/>
+
           <Container className={classes.container}>
             <Button className={classes.done} variant="contained" size="medium" onClick={() => handleEditDone()}>Done</Button>
             <Button className={classes.addTo} variant="contained" size="medium" onClick={() => handleAddTo()}>{props.task.in_calendar ? 'Add to TodoList' : 'Add to Calendar'}</Button>

@@ -3,14 +3,14 @@
 import React from 'react';
 import Category from './Category.jsx';
 
-function Categories({addTask, isMobile, taskData, updateTodo, deleteTodo, draggedEvent, setDraggedEvent, handleDragStart}) {
+function Categories({isMobile, taskData, draggedEvent, setDraggedEvent, handleDragStart, addTodo, updateTodo, deleteTodo}) {
   return (
     taskData.length ? taskData.map((category, i) => {
       return <Category key={i}
         tasks={category}
-        addTask={addTask} updateTodo={updateTodo} deleteTodo={deleteTodo}
         isMobile={isMobile} draggedEvent={draggedEvent}
-        setDraggedEvent={setDraggedEvent} handleDragStart={handleDragStart}/>
+        setDraggedEvent={setDraggedEvent} handleDragStart={handleDragStart}
+        addTodo={addTodo} updateTodo={updateTodo} deleteTodo={deleteTodo}/>
     }) : null
   )
 }
