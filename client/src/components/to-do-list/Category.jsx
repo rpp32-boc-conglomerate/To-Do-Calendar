@@ -16,12 +16,10 @@ function Category({tasks, addTodo, isMobile, draggedEvent, setDraggedEvent, hand
   const classes = useStyles();
   const [totalTime, setTotalTime] = useState(0);
   const [modalOpen, setModalOpen] = useState(false);
-  const todos = tasks.items
+  const todos = tasks.items;
 
-  const onCalendarTasks = todos.filter(task => task.in_calendar)
-  // console.log('oncal', onCalendarTasks)
+  const onCalendarTasks = todos.filter(task => task.in_calendar);
 
-  // console.log('tasks in category', todos)
   return (
     <Container>
       <Paper elevation={2} className={classes.paper}>

@@ -20,14 +20,13 @@ const useStyles = makeStyles({
     width: '45%',
     display: 'inline-block'
   }
-})
+});
 
-function ToDoList({addToCalendar, isMobile, draggedEvent, setDraggedEvent, handleDragStart, taskData, addCategory, addTodo}) {
+function ToDoList({isMobile, draggedEvent, setDraggedEvent, handleDragStart, taskData, addCategory, addTodo, updateTodo, deleteTodo}) {
+
   const [newCatModalOpen, setNewCatModalOpen] = useState(false);
   const [newToDoModalOpen, setNewToDoModalOpen] = useState(false);
   const [addTaskModal, setAddTaskModal] = useState(false)
-
-// console.log('taskData in todolist', taskData)
 
   // useEffect(() => {
   //   console.log('taskdata', taskData)
@@ -64,7 +63,6 @@ function ToDoList({addToCalendar, isMobile, draggedEvent, setDraggedEvent, handl
   }
 
   return (
-
     <Container className={isMobile ? classes.mobileMain : classes.desktopMain}>
       <Container sx={{display: 'flex', height: '50px', width: '100%'}}>
         <div style={{width: '80%'}}>To-Do List</div>
@@ -75,9 +73,7 @@ function ToDoList({addToCalendar, isMobile, draggedEvent, setDraggedEvent, handl
       </Container>
       <div>
         <Categories taskData={taskData} isMobile={isMobile} draggedEvent={draggedEvent}
-        setDraggedEvent={setDraggedEvent}
-        handleDragStart={handleDragStart}
-        addTodo={addTodo}/>
+          updateTodo={updateTodo} deleteTodo={deleteTodo} setDraggedEvent={setDraggedEvent} handleDragStart={handleDragStart}/>
       </div>
     </Container>
     )

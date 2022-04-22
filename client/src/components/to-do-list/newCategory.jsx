@@ -32,7 +32,7 @@ var AddCategoryModal = (props) => {
   }
 
   return (
-      <Modal open={props.open} >
+      <Modal open={props.open} onClose={() => props.closeCat(false)}>
         <Container className={classes.modal}>
           <TextField id="new_category" type="text" label="New Category" className={classes.input} defaultValue={''} onChange={(newValue) => setCategory(newValue.target.value)} />
           <Button variant="contained" onClick={() => handleAddCategory()}>Submit</Button>

@@ -3,17 +3,15 @@
 import React from 'react';
 import Category from './Category.jsx';
 
-function Categories({addTodo, openModal, isMobile, taskData, deleteTask,
-  draggedEvent, setDraggedEvent, handleDragStart, openSetNewToDo}) {
-  const categorizedTasks = taskData
-  return(
-    categorizedTasks.length ? categorizedTasks.map((category, i) => {
-    return <Category key={i}
-    tasks={category}
-    isMobile={isMobile} draggedEvent={draggedEvent}
-    setDraggedEvent={setDraggedEvent} handleDragStart={handleDragStart}
-    addTodo={addTodo}/>
-    }): null
+function Categories({addTask, isMobile, taskData, updateTodo, deleteTodo, draggedEvent, setDraggedEvent, handleDragStart}) {
+  return (
+    taskData.length ? taskData.map((category, i) => {
+      return <Category key={i}
+        tasks={category}
+        addTask={addTask} updateTodo={updateTodo} deleteTodo={deleteTodo}
+        isMobile={isMobile} draggedEvent={draggedEvent}
+        setDraggedEvent={setDraggedEvent} handleDragStart={handleDragStart}/>
+    }) : null
   )
 }
 
