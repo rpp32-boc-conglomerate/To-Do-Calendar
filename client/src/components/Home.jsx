@@ -156,8 +156,9 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
           })
         })
         return list;
-      }, [setMyEvents]
-    );
+      }
+    }, [setMyEvents]
+  );
 
 
   const newEvent = useCallback(
