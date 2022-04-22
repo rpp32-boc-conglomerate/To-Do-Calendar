@@ -45,40 +45,36 @@ const useStyles = makeStyles({
   }
 });
 
-description: "Discuss A"
-duration: "01:00:00"
-end_date: "2022-04-15T10:30:20"
-in_calendar: false
-item_id: 1
-start: "2022-04-15T09:30:20"
-title: "meeting with A"
-
 var TaskOptionsModal = (props) => {
   const [userTask, setUserTask] = useState(props.task)
   const [todoTitle, setTodoTitle] = useState(props.task.title);
   const [todoDescription, setTodoDescription] = useState(props.task.description);
-  const [startTime, setStartTime] = useState(userTask.start);
-  const [endTime, setEndTime] = useState(userTask.end_date);
+  const [startTime, setStartTime] = useState(props.task.start);
+  const [endTime, setEndTime] = useState(props.task.end_date);
+  const [inCalendar, setInCalendar] = useState(props.task.in_calendar);
 
   const classes = useStyles();
 
   const handleEditDone = () => {
     //front end update
-    const taskCopy = userTask
+    const taskCopy = userTask;
     taskCopy.title = todoTitle;
     taskCopy.description = todoDescription;
     taskCopy.start = startTime;
-    taskCopy.end_date = endTime
+    taskCopy.end_date = endTime;
+
     let hours = endTime.getHours() - startTime.getHours()
     let minutes = endTime.getMinutes() - startTime.getMinutes()
+
     if (minutes < 0) {
       const convertedHours = (hours * 60) + minutes;
       hours = Math.floor(convertedHours/60)
       minutes = convertedHours % 60
-
     }
+
     const duration = hours + ':' + minutes
     taskCopy.duration = duration
+
     setUserTask(taskCopy)
     props.updateTask(taskCopy)
 
@@ -87,10 +83,23 @@ var TaskOptionsModal = (props) => {
       title: todoTitle,
       description: todoDescription,
       start: startTime,
-      end_date: endTime
+      end_date: endTime,
+      in_calendar: inCalendar
     };
-    // props.updateTodo(todoToUpdate);
+    props.updateTodo(todoToUpdate);
     props.setModalOpen(false);
+  }
+
+  const handleAddTo = () => {
+    if (props.task.in_calendar === true) {
+      const taskCopy = userTask;
+      taskCopy.in_calendar = false;
+      props.updateTodo(taskCopy);
+    } else if (props.task.in_calendar === false) {
+      const taskCopy = userTask;
+      taskCopy.in_calendar = true;
+      props.updateTodo(taskCopy);
+    }
   }
 
   const handleTimeChange = (time, frame) => {
@@ -98,6 +107,7 @@ var TaskOptionsModal = (props) => {
     taskCopy[frame] = time;
     setUserTask(taskCopy)
   }
+
   const handleTodoDelete = () => {
     props.deleteTodo(props.task);
     props.setModalOpen(false);
@@ -119,7 +129,7 @@ var TaskOptionsModal = (props) => {
               setEndTime(newValue)}}/>
           <Container className={classes.container}>
             <Button className={classes.done} variant="contained" size="medium" onClick={() => handleEditDone()}>Done</Button>
-            <Button className={classes.addTo} variant="contained" size="medium">{props.task.in_calendar ? 'Add to TodoList' : 'Add to Calendar'}</Button>
+            <Button className={classes.addTo} variant="contained" size="medium" onClick={() => handleAddTo()}>{props.task.in_calendar ? 'Add to TodoList' : 'Add to Calendar'}</Button>
             <Button className={classes.delete} variant="contained" size="medium" onClick={() => handleTodoDelete()}>Delete</Button>
           </Container>
         </Container>
