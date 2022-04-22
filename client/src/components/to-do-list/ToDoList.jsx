@@ -26,7 +26,6 @@ function ToDoList({isMobile, draggedEvent, setDraggedEvent, handleDragStart, tas
 
   const [newCatModalOpen, setNewCatModalOpen] = useState(false);
   const [newToDoModalOpen, setNewToDoModalOpen] = useState(false);
-  const [addTaskModal, setAddTaskModal] = useState(false)
 
   // useEffect(() => {
   //   console.log('taskdata', taskData)
@@ -73,7 +72,8 @@ function ToDoList({isMobile, draggedEvent, setDraggedEvent, handleDragStart, tas
       </Container>
       <div>
         <Categories taskData={taskData} isMobile={isMobile} draggedEvent={draggedEvent}
-          updateTodo={updateTodo} deleteTodo={deleteTodo} setDraggedEvent={setDraggedEvent} handleDragStart={handleDragStart}/>
+          setDraggedEvent={setDraggedEvent} handleDragStart={handleDragStart}
+          addTodo={addTodo} updateTodo={updateTodo} deleteTodo={deleteTodo}/>
       </div>
     </Container>
     )

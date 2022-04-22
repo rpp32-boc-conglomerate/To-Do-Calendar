@@ -30,7 +30,6 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
           setEmail(result.data.info);
           await axios.get('http://localhost:3000/todoList/info', { params: { email: result.data.info } })
             .then((response) => {
-              console.log(response.data);
               setMyEvents(response.data.results[0].calendars[0].categories);
             })
             .then(() => setHasData(true))
@@ -66,19 +65,21 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
   //modified to use actual user email
   const addTodo = (todo) => {
     console.log('Add todo: ', todo);
-    // const incomingEmail = info.user_email;
-    // axios.post('http://localhost:3000/todoList/item', { params: { userEmail: incomingEmail }, data: todo })
-    //   .then((result) => {
-    //     console.log(result);
-    //     let catId = result.data.id;
-    //     console.log('all todos before: ', myEvents);
-    //     let newTask = { item_id: catId, title: todo.title, description: todo.description, duration: todo.duration, start: todo.start, end_time: todo.end_date, in_calendar: todo.in_calendar };
-    //     // let newEventsList = myEvents[0];
-    //     // newEventsList.push(newCat);
-    //     // setMyEvents(newEventsList);
-    //     console.log('all todos after: ', myEvents);
-    //   })
-    //   .catch(err => console.error(err));
+    const incomingEmail = userEmail
+    axios.post('http://localhost:3000/todoList/item', { params: { userEmail: userEmail }, data: todo })
+      .then((result) => {
+        console.log(result);
+
+        //rather than trying to push newly posted toTodo into state, just call getAllTodos which will update state
+        // let catId = result.data.id;
+        // console.log('all todos before: ', myEvents);
+        // let newTask = { item_id: catId, title: todo.title, description: todo.description, duration: todo.duration, start: todo.start, end_time: todo.end_date, in_calendar: todo.in_calendar };
+        // // let newEventsList = myEvents[0];
+        // // newEventsList.push(newCat);
+        // // setMyEvents(newEventsList);
+        // console.log('all todos after: ', myEvents);
+      })
+      .catch(err => console.error(err));
   }
 
 
@@ -285,8 +286,6 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
         </div>
       )
     } else {
-      console.log('help');
-      console.log(myEvents.length);
       return (
         // view for desktop display both calendar and to do list
         <div>

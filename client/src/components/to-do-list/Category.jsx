@@ -1,7 +1,8 @@
-import React, {useState, useEffect, useCallback} from 'react';
+import React, {useState, useEffect, useCallback, Suspense} from 'react';
 import Task from './Task.jsx';
 import Tasks from './Tasks.jsx';
 import { makeStyles, Paper, Container, Grid, ButtonGroup, Button, TextField, Toolbar } from '@material-ui/core';
+import TaskOptionsModal from '../TaskOptionsModal.jsx';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -12,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-function Category({tasks, addTodo, isMobile, draggedEvent, setDraggedEvent, handleDragStart}) {
+function Category({tasks, isMobile, draggedEvent, setDraggedEvent, handleDragStart, addTodo, updateTodo, deleteTodo}) {
   const classes = useStyles();
   const [totalTime, setTotalTime] = useState(0);
   const [modalOpen, setModalOpen] = useState(false);
@@ -28,13 +29,15 @@ function Category({tasks, addTodo, isMobile, draggedEvent, setDraggedEvent, hand
           <div>Time Spent So Far: 0</div>
           <Button onClick={() => {
             setTotalTime(totalTime + 1);
-            addTodo();
+            setModalOpen(true);
           }}>Add Task</Button>
+          {modalOpen === true && <TaskOptionsModal setModalOpen={setModalOpen} modalOpen={modalOpen} task={''} addTodo ={addTodo} updateTodo={updateTodo} deleteTodo={deleteTodo} newTodo={true}/>}
         </Container>
         <Container sx={{ display: 'inline-block'}}>
           <Tasks tasks={todos} isMobile={isMobile}
           draggedEvent={draggedEvent} setDraggedEvent={setDraggedEvent}
           handleDragStart={handleDragStart}
+          updateTodo={updateTodo} deleteTodo={deleteTodo}
           modalOpen={modalOpen} setModalOpen={setModalOpen}/>
         </Container>
     </Paper>
