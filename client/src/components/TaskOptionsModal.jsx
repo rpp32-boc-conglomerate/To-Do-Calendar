@@ -51,6 +51,7 @@ var TaskOptionsModal = (props) => {
   const [todoDescription, setTodoDescription] = useState(props.task.description);
   const [startTime, setStartTime] = useState(props.task.start);
   const [endTime, setEndTime] = useState(props.task.end_date);
+  const [inCalendar, setInCalendar] = useState(props.task.in_calendar);
 
   const classes = useStyles();
 
@@ -60,7 +61,7 @@ var TaskOptionsModal = (props) => {
     taskCopy.title = todoTitle;
     taskCopy.description = todoDescription;
     taskCopy.start = startTime;
-    taskCopy.end_date = endTime
+    taskCopy.end_date = endTime;
 
     let hours = endTime.getHours() - startTime.getHours()
     let minutes = endTime.getMinutes() - startTime.getMinutes()
@@ -93,11 +94,11 @@ var TaskOptionsModal = (props) => {
     if (props.task.in_calendar === true) {
       const taskCopy = userTask;
       taskCopy.in_calendar = false;
-      props.updateTodo(taskCopy)
+      props.updateTodo(taskCopy);
     } else if (props.task.in_calendar === false) {
       const taskCopy = userTask;
       taskCopy.in_calendar = true;
-      props.updateTodo(taskCopy)
+      props.updateTodo(taskCopy);
     }
   }
 
@@ -106,6 +107,7 @@ var TaskOptionsModal = (props) => {
     taskCopy[frame] = time;
     setUserTask(taskCopy)
   }
+
   const handleTodoDelete = () => {
     props.deleteTodo(props.task);
     props.setModalOpen(false);

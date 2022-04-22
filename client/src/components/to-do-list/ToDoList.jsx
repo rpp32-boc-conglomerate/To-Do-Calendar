@@ -72,7 +72,7 @@ function ToDoList({isMobile, draggedEvent, setDraggedEvent, handleDragStart, tas
         <AddToDoModal open={newToDoModalOpen} closeCat={openSetNewToDo} addTodo={addTodo} info={taskData}/>
       </Container>
       <div>
-        <Categories taskData={categories} isMobile={isMobile} draggedEvent={draggedEvent}
+        <Categories taskData={taskData} isMobile={isMobile} draggedEvent={draggedEvent}
           updateTodo={updateTodo} deleteTodo={deleteTodo} setDraggedEvent={setDraggedEvent} handleDragStart={handleDragStart}/>
       </div>
     </Container>

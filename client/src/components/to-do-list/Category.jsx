@@ -13,15 +13,14 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 function Category({tasks, addTask, isMobile, updateTodo, deleteTodo, draggedEvent, setDraggedEvent, handleDragStart}) {
-  const classes = useStyles();
+
   const [totalTime, setTotalTime] = useState(0);
-  // console.log('tasks in category', tasks)
-  const todos = tasks.items
 
-  const onCalendarTasks = todos.filter(task => task.in_calendar)
-  // console.log('oncal', onCalendarTasks)
+  const classes = useStyles();
+  const todos = tasks.items;
 
-  console.log('tasks in category', todos)
+  const onCalendarTasks = todos.filter(task => task.in_calendar);
+
   return (
     <Container>
       <Paper elevation={2} className={classes.paper}>

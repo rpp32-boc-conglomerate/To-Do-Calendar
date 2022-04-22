@@ -26,7 +26,6 @@ const useStyles = makeStyles({
 });
 
 function Task({task, isMobile, draggedEvent, setDraggedEvent, handleDragStart, clickedTask, updateTodo, deleteTodo}) {
-  console.log('task in task', task)
 
   const [todo, setTodo] = useState(task);
   const [modalOpen, setModalOpen] = useState(false);
@@ -50,8 +49,9 @@ function Task({task, isMobile, draggedEvent, setDraggedEvent, handleDragStart, c
   }
 
   const updateTask = (task) => {
-    setTodo(task)
-    newTodo()
+    console.log('updateTask: ', task);
+    setTodo(task);
+    newTodo(task);
   }
 
   const classes = useStyles();
@@ -60,7 +60,8 @@ function Task({task, isMobile, draggedEvent, setDraggedEvent, handleDragStart, c
     convertDuration(todo.duration)
   }, [])
 
-  const newTodo = useCallback(() => {
+  const newTodo = useCallback((todo) => {
+    console.log('newTodo: ', todo);
     convertDuration(todo.duration)
   }, [todo])
 
@@ -80,12 +81,8 @@ function Task({task, isMobile, draggedEvent, setDraggedEvent, handleDragStart, c
                 <Box>{minutes} {minutes === '1' ? 'minute' : 'minutes'}</Box>
               </div>
               <Typography>
-                {task.title}
+                {task.description}
               </Typography>
-              <div>Duration:</div>
-              <Box>{hours} {hours === '1' ? 'hour' : 'hours'}</Box>
-              <Box>{minutes} {minutes === '1' ? 'minute' : 'minutes'}</Box>
-            <ContentEditable variant="body1" html={task.description}/>
             <CardActions>
               <Button variant="contained" size="small" onClick={() => setModalOpen(true)}>Edit</Button>
             </CardActions>

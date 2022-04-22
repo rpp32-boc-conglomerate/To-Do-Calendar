@@ -22,14 +22,14 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
   useEffect(async () => {
     await axios.get('http://localhost:3000/auth/isLoggedIn', { withCredentials: true })
       .then(async (result) => {
-        console.log(result);
         setIsLoading(false);
         if (result.data) {
           setIsLoggedIn(result.data.loggedIn);
-          setEmail(result.data.info)
+          setEmail(result.data.info);
           await axios.get('http://localhost:3000/todoList/info', { params: { email: result.data.info } })
             .then((response) => {
-              setMyEvents(response.data.results[0].calendars[0].categories)
+              console.log(response.data);
+              setMyEvents(response.data.results[0].calendars[0].categories);
             })
             .then(() => setHasData(true))
             .catch((err) => {
@@ -51,10 +51,11 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
   // GET '/todoList/:userEmail' -> For all data
   const getAllTodos = (user) => {
     console.log('Get All Todo Data');
+
     // axios.get('/todoList/info', { params: { userEmail: userEmail } })
     //   .then((result) => {
     //       console.log(result);
-    //       setAllTodos(result);
+    //       setAllTodos(result.data);
     //     })
     //     .catch(err => console.error(err));
   }
@@ -128,7 +129,7 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
   }
 
   //Calendar helper functions
-  const moveEvent = useCallback(
+  const moveEvent = useCallback (
     ({ event, start, end, isAllDay: droppedOnAllDaySlot = false }) => {
       const { allDay } = event;
       if (!allDay && droppedOnAllDaySlot) {
@@ -199,7 +200,7 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
 
   const handleDragStart = useCallback((event) => {
     console.log('dragged event', event)
-    setDraggedEvent(event), []
+    setDraggedEvent(event)
   })
 
   const onDropFromOutside = useCallback(
@@ -223,15 +224,10 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
 
   // All Components
   const naviBar = (<TopBar isLoading={isLoading} setIsLoggedIn={setIsLoggedIn} isLoggedIn={isLoggedIn} isMobile={isMobile} onCalendar={onCalendar} setOnCalendar={setOnCalendar} userEmail={userEmail}/>);
-<<<<<<< HEAD
 
   const toDoList = (<ToDoList isMobile={isMobile} taskData={myEvents.flat()} draggedEvent={draggedEvent} setDraggedEvent={setDraggedEvent} handleDragStart={handleDragStart} addCategory={addCategory} updateTodo={updateTodo} addTodo={addTodo} deleteTodo={deleteTodo}/>);
 
   const myCalendar = (<MyCalendar myEvents={myEvents} moveEvent={moveEvent} resizeEvent={resizeEvent} changeTitle={changeTitle} onDropFromOutside={onDropFromOutside}/>);
-=======
-  const toDoList = (<ToDoList isMobile={isMobile} taskData={myEvents.flat()} draggedEvent={draggedEvent} setDraggedEvent={setDraggedEvent} handleDragStart={handleDragStart} addCategory={addCategory} addTodo={addTodo} info={myEvents} />);
-  const myCalender = (<MyCalendar myEvents={myEvents} moveEvent={moveEvent} resizeEvent={resizeEvent} changeTitle={changeTitle} onDropFromOutside={onDropFromOutside}/>);
->>>>>>> main
 
   // Conditional Rendering based on device
   const renderContent = () => {
@@ -256,12 +252,14 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
         </div>
       )
     } else {
+      console.log('help');
+      console.log(myEvents.length);
       return (
         // view for desktop display both calendar and to do list
         <div>
           {naviBar}
           {myCalendar}
-          {myEvents.length ? toDoList : null}
+          {hasData ? toDoList : null}
         </div>
       )
     }
