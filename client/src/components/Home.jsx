@@ -14,15 +14,15 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
   const [allTodos, setAllTodos] = useState([]);
   const [myEvents, setMyEvents] = useState([]);
   const [onCalendar, setOnCalendar] = useState(false);
-  const [draggedEvent, setDraggedEvent] = useState()
-
+  const [draggedEvent, setDraggedEvent] = useState();
   // Data present in 'a@a.com'
   const [userEmail, setEmail] = useState(null);
-  const [hasData, setHasData] = useState(false)
+  const [hasData, setHasData] = useState(false);
 
   useEffect(async () => {
     await axios.get('http://localhost:3000/auth/isLoggedIn', { withCredentials: true })
       .then(async (result) => {
+        console.log(result);
         setIsLoading(false);
         if (result.data) {
           setIsLoggedIn(result.data.loggedIn);
@@ -43,36 +43,6 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
         return err;
       })
   }, [isLoggedIn])
-  // [
-  //   {
-  //     id: 0,
-  //     title: "Sample Event",
-  //     start_date: new Date(),
-  //     end_date: new Date(moment().add(1, "hour")),
-  //     allDay: false,
-  //     in_calendar: true
-  //   },
-  //   {
-  //     id: 1,
-  //     title: 'Trip to China',
-  //     description: '5-day business trip to meet with manufacturers',
-  //     duration: '5 days',
-  //     start: new Date(),
-  //     end: new Date(moment().add(5, "days")),
-  //     category_id: 1,
-  //     in_calendar: false
-  //   },
-  //   {
-  //     id: 2,
-  //     title: 'Trip to Los Angeles',
-  //     description: 'Meeting with Executives',
-  //     duration: '6 hours',
-  //     start: new Date(moment('14 Apr 2022 09:30:00 UT')),
-  //     end: new Date(moment('14 Apr 2022 15:30:00 UT')),
-  //     category_id: 1,
-  //     in_calendar: false
-  //   }
-  // ]
 
   // All Components lose functionality if "isLoggedIn" is false
 
@@ -100,9 +70,6 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
         let catId = result.data.id;
         console.log('all todos before: ', myEvents);
         let newTask = {item_id: catId, title: todo.title, description: todo.description, duration: todo.duration, start: todo.start, end_time: todo.end_date, in_calendar: todo.in_calendar};
-        // let newEventsList = myEvents[0];
-        // newEventsList.push(newCat);
-        // setMyEvents(newEventsList);
         console.log('all todos after: ', myEvents);
       })
       .catch(err => console.error(err));
@@ -180,11 +147,6 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
         })
         return list;
       });
-      // setMyEvents((prev) => {
-      //   const existing = prev.find((ev) => ev.id === event.id) ?? {};
-      //   const filtered = prev.filter((ev) => ev.id !== event.id);
-      //   return [...filtered, { ...existing, start, end, allDay }];
-      // });
     },
     [setMyEvents]
   );
@@ -258,10 +220,13 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
     },
     [draggedEvent, setDraggedEvent, newEvent]
   )
+
   // All Components
   const naviBar = (<TopBar isLoading={isLoading} setIsLoggedIn={setIsLoggedIn} isLoggedIn={isLoggedIn} isMobile={isMobile} onCalendar={onCalendar} setOnCalendar={setOnCalendar} userEmail={userEmail}/>);
-  const toDoList = (<ToDoList isMobile={isMobile} taskData={myEvents.flat()} draggedEvent={draggedEvent} setDraggedEvent={setDraggedEvent} handleDragStart={handleDragStart} addCategory={addCategory} addTodo={addTodo} info={info} />);
-  const myCalender = (<MyCalendar myEvents={myEvents} moveEvent={moveEvent} resizeEvent={resizeEvent} changeTitle={changeTitle} onDropFromOutside={onDropFromOutside}/>);
+
+  const toDoList = (<ToDoList isMobile={isMobile} taskData={myEvents.flat()} draggedEvent={draggedEvent} setDraggedEvent={setDraggedEvent} handleDragStart={handleDragStart} addCategory={addCategory} updateTodo={updateTodo} addTodo={addTodo} deleteTodo={deleteTodo}/>);
+
+  const myCalendar = (<MyCalendar myEvents={myEvents} moveEvent={moveEvent} resizeEvent={resizeEvent} changeTitle={changeTitle} onDropFromOutside={onDropFromOutside}/>);
 
   // Conditional Rendering based on device
   const renderContent = () => {
@@ -271,7 +236,7 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
         <div>
           {naviBar}
           <div className="">
-            {hasData ? toDoList : null}
+            {myEvents.length ? toDoList : null}
           </div>
         </div>
       )
@@ -281,7 +246,7 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
         <div>
           {naviBar}
           <div>
-            {hasData ? myCalender : null}
+            {myEvents.length ? myCalendar : null}
           </div>
         </div>
       )
@@ -290,7 +255,7 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
         // view for desktop display both calendar and to do list
         <div>
           {naviBar}
-          {myCalender}
+          {myCalendar}
           {myEvents.length ? toDoList : null}
         </div>
       )

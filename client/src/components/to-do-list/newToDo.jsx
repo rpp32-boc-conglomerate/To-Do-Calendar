@@ -38,7 +38,7 @@ var AddToDoModal = (props) => {
   let userCats = [];
 
   if (props.info.calendars) {
-  userCats = props.info.calendars[0].categories;
+    userCats = props.info.calendars[0].categories;
   }
 
   const handleAddTodo = () => {
@@ -68,7 +68,7 @@ var AddToDoModal = (props) => {
 
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
-      <Modal open={props.open} >
+      <Modal open={props.open} onClose={() => props.closeCat(false)}>
         <Container className={classes.modal}>
           <TextField label="Title" id="title" type="text" className={classes.input} onChange={(newValue) => setTitle(newValue.target.value)} />
           <TextField label="Description" id="description" type="text" className={classes.input} onChange={(newValue) => setDescription(newValue.target.value)} />

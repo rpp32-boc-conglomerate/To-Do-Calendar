@@ -25,7 +25,7 @@ const useStyles = makeStyles({
   }
 });
 
-function Task({task, isMobile, deleteTask, draggedEvent, setDraggedEvent, handleDragStart, clickedTask, updateTodo, deleteTodo}) {
+function Task({task, isMobile, draggedEvent, setDraggedEvent, handleDragStart, clickedTask, updateTodo, deleteTodo}) {
   console.log('task in task', task)
 
   const [todo, setTodo] = useState(task);
@@ -78,7 +78,6 @@ function Task({task, isMobile, deleteTask, draggedEvent, setDraggedEvent, handle
                 <div>Duration:</div>
                 <Box>{hours} {hours === '1' ? 'hour' : 'hours'}</Box>
                 <Box>{minutes} {minutes === '1' ? 'minute' : 'minutes'}</Box>
-                {isMobile && addToCal}
               </div>
               <Typography>
                 {task.title}
@@ -86,14 +85,13 @@ function Task({task, isMobile, deleteTask, draggedEvent, setDraggedEvent, handle
               <div>Duration:</div>
               <Box>{hours} {hours === '1' ? 'hour' : 'hours'}</Box>
               <Box>{minutes} {minutes === '1' ? 'minute' : 'minutes'}</Box>
-            </div>
-            <ContentEditable variant="body1" html={task.description}
-            />
+            <ContentEditable variant="body1" html={task.description}/>
             <CardActions>
               <Button variant="contained" size="small" onClick={() => setModalOpen(true)}>Edit</Button>
             </CardActions>
-          </CardContent>
-        </Card>
+            </CardContent>
+          </Card>
+        </Grid>
       </Grid>
     </Suspense>
   );

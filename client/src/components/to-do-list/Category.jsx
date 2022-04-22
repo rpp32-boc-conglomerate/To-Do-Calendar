@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-function Category({tasks, addTask, isMobile, draggedEvent, setDraggedEvent, handleDragStart}) {
+function Category({tasks, addTask, isMobile, updateTodo, deleteTodo, draggedEvent, setDraggedEvent, handleDragStart}) {
   const classes = useStyles();
   const [totalTime, setTotalTime] = useState(0);
   // console.log('tasks in category', tasks)
@@ -30,13 +30,12 @@ function Category({tasks, addTask, isMobile, draggedEvent, setDraggedEvent, hand
           <div>Time Spent So Far: 0</div>
           <Button onClick={() => {
             setTotalTime(totalTime + 1);
-            addTask()
+            addTask();
           }}>Add Task</Button>
         </Container>
         <Container sx={{ display: 'inline-block'}}>
-          <Tasks tasks={todos} isMobile={isMobile}
-          draggedEvent={draggedEvent} setDraggedEvent={setDraggedEvent}
-          handleDragStart={handleDragStart}/>
+          <Tasks tasks={todos} isMobile={isMobile} updateTodo={updateTodo} deleteTodo={deleteTodo}
+          draggedEvent={draggedEvent} setDraggedEvent={setDraggedEvent} handleDragStart={handleDragStart}/>
         </Container>
     </Paper>
   </Container>
