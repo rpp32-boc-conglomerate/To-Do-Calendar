@@ -12,7 +12,7 @@ module.exports = {
           {
             "category_id": 1,
             "category": "Travel",
-            "todoitems": [
+            "items": [
               {
                 "item_id": 1,
                 "title": "meeting with A",
@@ -27,17 +27,17 @@ module.exports = {
                 "title": "meeting with B",
                 "description": "Discuss B",
                 "duration": "03:00:00",
-                "start": "2022-04-15T09:30:20",
-                "end_date": "2022-04-15T12:30:20",
-                "in_calendar": false
+                "start": "2022-04-21T09:30:20",
+                "end_date": "2022-04-21T12:30:20",
+                "in_calendar": true
               },
               {
                 "item_id": 3,
                 "title": "meeting with C",
                 "description": "Discuss C",
                 "duration": "04:00:00",
-                "start": "2022-04-15T09:30:20",
-                "end_date": "2022-04-15T13:30:20",
+                "start": "2022-04-18T09:30:20",
+                "end_date": "2022-04-18T13:30:20",
                 "in_calendar": true
               }
             ]
@@ -45,14 +45,14 @@ module.exports = {
           {
             "category_id": 2,
             "category": "housework",
-            "todoitems": [
+            "items": [
               {
                 "item_id": 4,
                 "title": "meeting with D",
                 "description": "Discuss D",
                 "duration": "05:00:00",
-                "start": "2022-04-15T09:30:20",
-                "end_date": "2022-04-15T14:30:20",
+                "start": "2022-04-22T09:30:20",
+                "end_date": "2022-04-22T14:30:20",
                 "in_calendar": true
               },
               {
@@ -60,8 +60,8 @@ module.exports = {
                 "title": "meeting with E",
                 "description": "Discuss E",
                 "duration": "06:00:00",
-                "start": "2022-04-15T09:30:20",
-                "end_date": "2022-04-15T15:30:20",
+                "start": "2022-04-22T09:30:20",
+                "end_date": "2022-04-22T15:30:20",
                 "in_calendar": false
               }
             ]
@@ -69,7 +69,7 @@ module.exports = {
           {
             "category_id": 3,
             "category": "study",
-            "todoitems": [
+            "items": [
               {
                 "item_id": 6,
                 "title": "meeting with F",
@@ -91,13 +91,13 @@ module.exports = {
           {
             "category_id": 4,
             "category": "gaming",
-            "todoitems": [
+            "items": [
               {
                 "item_id": 7,
                 "title": "meeting with G",
                 "description": "Discuss G",
                 "duration": "02:00:00",
-                "start": "2022-04-16T09:30:20",
+                "start": "2022-04-15T09:30:20",
                 "end_date": "2022-04-15T11:30:20",
                 "in_calendar": true
               }
@@ -113,14 +113,14 @@ module.exports = {
           {
             "category_id": 5,
             "category": "school",
-            "todoitems": [
+            "items": [
               {
                 "item_id": 8,
                 "title": "meeting with H",
                 "description": "Discuss H",
                 "duration": "03:00:00",
-                "start": "2022-04-16T09:30:20",
-                "end_date": "2022-04-15T12:30:20",
+                "start": "2022-04-20T09:30:20",
+                "end_date": "2022-04-20T12:30:20",
                 "in_calendar": true
               }
             ]
