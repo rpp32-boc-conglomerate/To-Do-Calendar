@@ -215,16 +215,16 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
   };
 
   const handleDragStart = useCallback((event) => {
-<<<<<<< HEAD
+
     console.log('dragged event', event)
     setDraggedEvent(event)
-=======
+
     if (isLoggedIn === false) {
       navigate('/signin')
     } else {
       setDraggedEvent(event), []
     }
->>>>>>> main
+
   })
 
   const onDropFromOutside = useCallback(
@@ -247,17 +247,17 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
   )
 
   // All Components
-<<<<<<< HEAD
+
   const naviBar = (<TopBar isLoading={isLoading} setIsLoggedIn={setIsLoggedIn} isLoggedIn={isLoggedIn} isMobile={isMobile} onCalendar={onCalendar} setOnCalendar={setOnCalendar} userEmail={userEmail}/>);
 
   const toDoList = (<ToDoList isMobile={isMobile} taskData={myEvents.flat()} draggedEvent={draggedEvent} setDraggedEvent={setDraggedEvent} handleDragStart={handleDragStart} addCategory={addCategory} updateTodo={updateTodo} addTodo={addTodo} deleteTodo={deleteTodo}/>);
 
   const myCalendar = (<MyCalendar myEvents={myEvents} moveEvent={moveEvent} resizeEvent={resizeEvent} changeTitle={changeTitle} onDropFromOutside={onDropFromOutside}/>);
-=======
+
   const naviBar = (<TopBar isLoading={isLoading} setIsLoggedIn={setIsLoggedIn} isLoggedIn={isLoggedIn} isMobile={isMobile} onCalendar={onCalendar} setOnCalendar={setOnCalendar} userEmail={userEmail} />);
   const toDoList = (<ToDoList isMobile={isMobile} taskData={myEvents.flat()} draggedEvent={draggedEvent} setDraggedEvent={setDraggedEvent} handleDragStart={handleDragStart} addCategory={addCategory} addTodo={addTodo} info={myEvents} />);
   const myCalender = (<MyCalendar myEvents={myEvents} moveEvent={moveEvent} resizeEvent={resizeEvent} changeTitle={changeTitle} onDropFromOutside={onDropFromOutside} />);
->>>>>>> main
+
 
   // Conditional Rendering based on device
   const renderContent = () => {
