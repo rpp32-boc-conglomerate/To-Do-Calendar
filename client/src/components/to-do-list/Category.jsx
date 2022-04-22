@@ -29,7 +29,7 @@ function Category({tasks, addTask, isMobile, draggedEvent, setDraggedEvent, hand
           <div>Time Spent So Far: 0</div>
           <Button onClick={() => {
             setTotalTime(totalTime + 1);
-            addTask()
+            addTask();
           }}>Add Task</Button>
         </Container>
         <Container sx={{ display: 'inline-block'}}>

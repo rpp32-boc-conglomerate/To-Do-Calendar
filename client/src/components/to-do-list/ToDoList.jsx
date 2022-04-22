@@ -22,9 +22,11 @@ const useStyles = makeStyles({
   }
 })
 
-function ToDoList({addToCalendar, isMobile, draggedEvent, setDraggedEvent, handleDragStart, taskData, addCategory, addTodo, info}) {
+function ToDoList({addToCalendar, isMobile, draggedEvent, setDraggedEvent, handleDragStart, taskData, addCategory, addTodo}) {
   const [newCatModalOpen, setNewCatModalOpen] = useState(false);
   const [newToDoModalOpen, setNewToDoModalOpen] = useState(false);
+  const [addTaskModal, setAddTaskModal] = useState(false)
+
 console.log('taskData in todolist', taskData)
 
   // useEffect(() => {
@@ -41,6 +43,7 @@ console.log('taskData in todolist', taskData)
 
   var addTask = (e) => {
     console.log('addTask');
+
   }
 
   const openSetNewCat = (boo) => {
@@ -52,6 +55,7 @@ console.log('taskData in todolist', taskData)
   }
 
   const openSetNewToDo = (boo) => {
+    console.log('boo', boo)
     if (boo === false) {
       setNewToDoModalOpen(false);
     } else {
@@ -67,12 +71,13 @@ console.log('taskData in todolist', taskData)
         <Button variant="contained" onClick={() => {openSetNewCat(true)}}>New Category</Button>
         <AddCategoryModal open={newCatModalOpen} closeCat={openSetNewCat} addCategory={addCategory} />
         <Button variant="contained" onClick={() => {openSetNewToDo(true)}}>New Task</Button>
-        <AddToDoModal open={newToDoModalOpen} closeCat={openSetNewToDo} addTodo={addTodo} info={info}/>
+        <AddToDoModal open={newToDoModalOpen} closeCat={openSetNewToDo} addTodo={addTodo} info={taskData}/>
       </Container>
       <div>
         <Categories taskData={taskData} isMobile={isMobile} draggedEvent={draggedEvent}
         setDraggedEvent={setDraggedEvent}
-        handleDragStart={handleDragStart}/>
+        handleDragStart={handleDragStart}
+        addTask={addTask}/>
       </div>
     </Container>
     )
