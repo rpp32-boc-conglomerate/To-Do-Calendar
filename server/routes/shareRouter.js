@@ -24,10 +24,13 @@ shareRouter.route('/sharedWithUser').get((req, res) => {
 shareRouter.route('/sharedByUser').get((req, res) => {
   var email = req.query.email;
 
+  console.log('in shared By User:', email);
   shareDB.getSharedByUser(email).then((result) => {
+    console.log('result is:', result);
     res.send(result.rows);
   })
   .catch((err) => {
+    console.log('err is: ', err)
     res.sendStatus(500);
   })
 });

@@ -1,9 +1,7 @@
 const path = require("path");
 const webpack = require('webpack');
 const dotenv = require('dotenv').config();
-const TerserPlugin = require("terser-webpack-plugin");
-const BrotliPlugin = require('brotli-webpack-plugin');
-const CompressionPlugin = require('compression-webpack-plugin');
+
 
 module.exports = {
   // optimization: {
@@ -103,13 +101,8 @@ module.exports = {
     //   }
     // }
   },
-  externals: {
-    'sharp': 'commonjs sharp'
-  },
   output: {
     filename: 'bundle.js',
     path: __dirname + '/client/dist'
   }
 };
-
-

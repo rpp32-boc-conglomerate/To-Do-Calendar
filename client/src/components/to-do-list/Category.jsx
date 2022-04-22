@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import Task from './Task.jsx';
 import Tasks from './Tasks.jsx';
 import { makeStyles, Paper, Container, Grid, ButtonGroup, Button, TextField, Toolbar } from '@material-ui/core';
@@ -16,8 +16,12 @@ function Category({tasks, addTask, isMobile, draggedEvent, setDraggedEvent, hand
   const classes = useStyles();
   const [totalTime, setTotalTime] = useState(0);
   // console.log('tasks in category', tasks)
-  const todos = tasks.todoitems
-  // console.log('todos', todos)
+  const todos = tasks.items
+
+  const onCalendarTasks = todos.filter(task => task.in_calendar)
+  // console.log('oncal', onCalendarTasks)
+
+  console.log('tasks in category', todos)
   return (
     <Container>
       <Paper elevation={2} className={classes.paper}>
@@ -26,12 +30,13 @@ function Category({tasks, addTask, isMobile, draggedEvent, setDraggedEvent, hand
           <div>Time Spent So Far: 0</div>
           <Button onClick={() => {
             setTotalTime(totalTime + 1);
-            // addTask()
+            addTask()
           }}>Add Task</Button>
         </Container>
         <Container sx={{ display: 'inline-block'}}>
           <Tasks tasks={todos} isMobile={isMobile}
-          draggedEvent={draggedEvent} setDraggedEvent={setDraggedEvent} handleDragStart={handleDragStart}/>
+          draggedEvent={draggedEvent} setDraggedEvent={setDraggedEvent}
+          handleDragStart={handleDragStart}/>
         </Container>
     </Paper>
   </Container>
