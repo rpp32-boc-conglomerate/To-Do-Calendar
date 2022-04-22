@@ -60,6 +60,7 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
   const getAllTodos = (user) => {
     axios.get('http://localhost:3000/todoList/info', { params: { email: userEmail } })
       .then((result) => {
+          console.log('result: ', result);
           setMyEvents(result.data.results[0].calendars[0].categories);
         })
         .catch(err => console.error(err));
