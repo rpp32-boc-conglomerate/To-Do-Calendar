@@ -18,7 +18,12 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
   // Data present in 'a@a.com'
   const [userEmail, setEmail] = useState(null);
   const [hasData, setHasData] = useState(false);
+
   const [userCalendar, setUserCalendar] = useState(false);
+
+  const [sharedEvents, setSharedEvents] = useState([]);
+  const [viewingShared, setViewingShared] = useState(false);
+
 
   const navigate = useNavigate()
 
@@ -31,13 +36,12 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
           setEmail(result.data.info);
           await axios.get('http://localhost:3000/todoList/info', { params: { email: result.data.info } })
             .then((response) => {
-              console.log(response.data);
               setMyEvents(response.data.results[0].calendars[0].categories);
               setUserCalendar(response.data.results[0].calendars[0]);
             })
             .then(() => setHasData(true))
             .catch((err) => {
-              console.log('info err:', err);
+              // console.log('info err:', err);
               return err;
             })
         }
@@ -63,13 +67,13 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
 
   // POST '/todoList/:userEmail' -> Adding or Upserting a "todoList item"
   const addTodo = (todo) => {
-
     axios.post('http://localhost:3000/todoList/item', { params: { userEmail: userEmail }, data: todo })
       .then((result) => {
-        getAllTodos(userEmail);
+        getAllTodos(userEmail)
       })
       .catch(err => console.error(err));
   }
+
 
   // PATCH '/todoList/:userEmail' -> For updating the data -> ex. Moving around item in Calendar / Lengthening item in Calendar / Clicking on "Done" in Modal for Calendar/TodoList
   const updateTodo = (todo) => {
@@ -232,20 +236,41 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
   )
 
   // All Components
+  const viewSharedCal = async function (sharedEmail) {
 
-  console.log('task data: ', myEvents.flat());
+    if (sharedEmail.length === 1) {
+      setSharedEvents([]);
+      setViewingShared(false);
+    }
+    if (sharedEmail.length === 2) {
+      var viewThisEmail = sharedEmail[1]['user_email'];
+      await axios.get('http://localhost:3000/todoList/info',{ params: { email: viewThisEmail } })
+        .then((response) => {
+          setSharedEvents(response.data.results[0].calendars[0].categories);
+        })
+        .then(() => setViewingShared(true))
+        .catch((err) => {
+          console.log('info err:', err);
+          setSharedEvents([]);
+          setViewingShared(false);
+          return err;
+        })
+    }
+  }
+
 
   const naviBar = (<TopBar isLoading={isLoading} setIsLoggedIn={setIsLoggedIn}
     isLoggedIn={isLoggedIn} isMobile={isMobile} onCalendar={onCalendar}
-    setOnCalendar={setOnCalendar} userEmail={userEmail}/>);
+    setOnCalendar={setOnCalendar} userEmail={userEmail} viewSharedCal={viewSharedCal}/>);
 
   const toDoList = (<ToDoList isMobile={isMobile} taskData={myEvents.flat()}
     draggedEvent={draggedEvent} setDraggedEvent={setDraggedEvent}
     handleDragStart={handleDragStart} addCategory={addCategory}
     updateTodo={updateTodo} addTodo={addTodo} deleteTodo={deleteTodo}/>);
 
-  const myCalendar = (<MyCalendar myEvents={myEvents} moveEvent={moveEvent}
-    resizeEvent={resizeEvent} changeTitle={changeTitle} onDropFromOutside={onDropFromOutside}/>);
+  const myCalendar = (<MyCalendar myEvents={myEvents} moveEvent={moveEvent} resizeEvent={resizeEvent}
+    changeTitle={changeTitle} onDropFromOutside={onDropFromOutside} sharedEvents={sharedEvents}
+    viewingShared={viewingShared}/>);
 
   // Conditional Rendering based on device
   const renderContent = () => {
@@ -270,8 +295,6 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
         </div>
       )
     } else {
-      console.log('help');
-      console.log(myEvents.length);
       return (
         // view for desktop display both calendar and to do list
         <div>
