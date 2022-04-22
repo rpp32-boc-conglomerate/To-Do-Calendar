@@ -67,9 +67,9 @@ var TaskOptionsModal = (props) => {
     taskCopy.description = todoDescription;
     taskCopy.start = userTask.start || new Date();
     taskCopy.end_date = userTask.end_date || new Date();
-    taskCopy.in_calendar = inCalendar
+    taskCopy.in_calendar = inCalendar;
+    taskCopy.category_id = props.categoryId
 
-    console.log('usertask in cal', inCalendar)
     let hours = endTime.getHours() - startTime.getHours()
     let minutes = endTime.getMinutes() - startTime.getMinutes()
 
@@ -94,7 +94,6 @@ var TaskOptionsModal = (props) => {
     //   end_date: endTime,
     //   in_calendar: inCalendar
     // };
-    console.log('userTask', userTask)
     props.newTodo ? props.addTodo(userTask) : props.updateTodo(userTask);
 
     props.setModalOpen(false);

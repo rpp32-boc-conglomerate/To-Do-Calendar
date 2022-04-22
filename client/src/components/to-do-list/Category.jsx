@@ -18,7 +18,7 @@ function Category({tasks, isMobile, draggedEvent, setDraggedEvent, handleDragSta
   const [totalTime, setTotalTime] = useState(0);
   const [modalOpen, setModalOpen] = useState(false);
   const todos = tasks.items;
-
+  const categoryId = tasks.category_id
   const onCalendarTasks = todos.filter(task => task.in_calendar);
 
   return (
@@ -31,7 +31,10 @@ function Category({tasks, isMobile, draggedEvent, setDraggedEvent, handleDragSta
             setTotalTime(totalTime + 1);
             setModalOpen(true);
           }}>Add Task</Button>
-          {modalOpen === true && <TaskOptionsModal setModalOpen={setModalOpen} modalOpen={modalOpen} task={''} addTodo ={addTodo} updateTodo={updateTodo} deleteTodo={deleteTodo} newTodo={true}/>}
+          {modalOpen === true &&
+          <TaskOptionsModal setModalOpen={setModalOpen} modalOpen={modalOpen} task={''}
+          categoryId={categoryId} addTodo ={addTodo} updateTodo={updateTodo}
+          deleteTodo={deleteTodo} newTodo={true}/>}
         </Container>
         <Container sx={{ display: 'inline-block'}}>
           <Tasks tasks={todos} isMobile={isMobile}

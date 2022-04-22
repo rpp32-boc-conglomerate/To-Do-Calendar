@@ -26,23 +26,9 @@ function ToDoList({isMobile, draggedEvent, setDraggedEvent, handleDragStart, tas
 
   const [newCatModalOpen, setNewCatModalOpen] = useState(false);
   const [newToDoModalOpen, setNewToDoModalOpen] = useState(false);
-
-  // useEffect(() => {
-  //   console.log('taskdata', taskData)
-  //   if (taskData?.length) {
-  //     const [categorizedTasks] = taskData
-  //     console.log('categories', categorizedTasks)
-  //     taskData = categorizedTasks?.categories
-  //     setCategories(taskData)
-  //   }
-  // }, [])
+  // console.log('taskData in todolist', taskData)
 
   const classes = useStyles();
-
-  var addTask = (e) => {
-    console.log('addTask');
-
-  }
 
   const openSetNewCat = (boo) => {
     if (boo === false) {
