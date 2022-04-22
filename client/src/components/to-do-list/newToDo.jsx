@@ -28,7 +28,6 @@ const useStyles = makeStyles(theme => ({
 
 var AddToDoModal = (props) => {
   const classes = useStyles();
-
   const [title, setTitle] = useState(null);
   const [description, setDescription] = useState(null);
   const [startDate, setStartDate] = useState(new Date());
@@ -39,10 +38,9 @@ var AddToDoModal = (props) => {
 
   if (props.info.calendars) {
     userCats = props.info.calendars[0].categories;
-  }
+  };
 
   const handleAddTodo = () => {
-    console.log('cat state:', category);
     let newItem = {};
 
     newItem.title = title;
@@ -56,14 +54,14 @@ var AddToDoModal = (props) => {
     let minutes = endDate.getMinutes() - startDate.getMinutes();
     if (minutes < 0) {
       const convertedHours = (hours * 60) + minutes;
-      hours = Math.floor(convertedHours/60)
-      minutes = convertedHours % 60
+      hours = Math.floor(convertedHours/60);
+      minutes = convertedHours % 60;
     };
     const duration = hours + ':' + minutes;
     newItem.duration = duration;
 
     props.addTodo(newItem);
-    props.closeCat(false)
+    props.closeCat(false);
   }
 
   return (
