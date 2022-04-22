@@ -17,7 +17,8 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
   const [draggedEvent, setDraggedEvent] = useState();
   // Data present in 'a@a.com'
   const [userEmail, setEmail] = useState(null);
-  const [hasData, setHasData] = useState(false)
+  const [hasData, setHasData] = useState(false);
+  const [userCalendar, setUserCalendar] = useState(false);
 
   const navigate = useNavigate()
 
@@ -32,6 +33,7 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
             .then((response) => {
               console.log(response.data);
               setMyEvents(response.data.results[0].calendars[0].categories);
+              setUserCalendar(response.data.results[0].calendars[0]);
             })
             .then(() => setHasData(true))
             .catch((err) => {
@@ -111,21 +113,18 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
   }
 
   const addCategory = (category) => {
-
+    console.log('user calendars: ', userCalendar);
+    console.log('my events: ', myEvents);
     let incomingId;
 
-    if (info.length > 0) {
-      incomingId = info.calendars[0].calendar_id;
-    } else {
-      incomingId = 11;
-    }
+    incomingId = userCalendar.calendar_id;
 
     axios.post('http://localhost:3000/todoList/category', { params: { calendar_id: incomingId, category: category } })
       .then((result) => {
         console.log('cat post result: ', result);
         let catId = result.data.category_id;
         let newCat = { category_id: catId, category: category, todoitems: [] };
-        let newEventsList = myEvents[0];
+        let newEventsList = myEvents;
         newEventsList.push(newCat);
         setMyEvents(newEventsList);
         console.log('new event list: ', myEvents);
@@ -249,16 +248,16 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
 
   // All Components
 
-  const naviBar = (<TopBar isLoading={isLoading} setIsLoggedIn={setIsLoggedIn} 
-    isLoggedIn={isLoggedIn} isMobile={isMobile} onCalendar={onCalendar} 
+  const naviBar = (<TopBar isLoading={isLoading} setIsLoggedIn={setIsLoggedIn}
+    isLoggedIn={isLoggedIn} isMobile={isMobile} onCalendar={onCalendar}
     setOnCalendar={setOnCalendar} userEmail={userEmail}/>);
 
-  const toDoList = (<ToDoList isMobile={isMobile} taskData={myEvents.flat()} 
-    draggedEvent={draggedEvent} setDraggedEvent={setDraggedEvent} 
-    handleDragStart={handleDragStart} addCategory={addCategory} 
+  const toDoList = (<ToDoList isMobile={isMobile} taskData={myEvents.flat()}
+    draggedEvent={draggedEvent} setDraggedEvent={setDraggedEvent}
+    handleDragStart={handleDragStart} addCategory={addCategory}
     updateTodo={updateTodo} addTodo={addTodo} deleteTodo={deleteTodo}/>);
 
-  const myCalendar = (<MyCalendar myEvents={myEvents} moveEvent={moveEvent} 
+  const myCalendar = (<MyCalendar myEvents={myEvents} moveEvent={moveEvent}
     resizeEvent={resizeEvent} changeTitle={changeTitle} onDropFromOutside={onDropFromOutside}/>);
 
   // Conditional Rendering based on device
