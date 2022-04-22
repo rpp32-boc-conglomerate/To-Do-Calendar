@@ -80,23 +80,16 @@ function Task({task, isMobile, deleteTask, draggedEvent, setDraggedEvent, handle
                 <div>Duration:</div>
                 <Box>{hours} {hours === '1' ? 'hour' : 'hours'}</Box>
                 <Box>{minutes} {minutes === '1' ? 'minute' : 'minutes'}</Box>
-                {isMobile && addToCal}
               </div>
               <Typography>
-                {task.title}
-              </Typography>
-              <div>Duration:</div>
-              <Box>{hours} {hours === '1' ? 'hour' : 'hours'}</Box>
-              <Box>{minutes} {minutes === '1' ? 'minute' : 'minutes'}</Box>
-            </div>
-            <Typography>
-                {task.description}
-              </Typography>
-            <CardActions>
-              <Button variant="contained" size="small" onClick={() => setModalOpen(true)}>Edit</Button>
-            </CardActions>
-          </CardContent>
-        </Card>
+                  {task.description}
+                </Typography>
+              <CardActions>
+                <Button variant="contained" size="small" onClick={() => setModalOpen(true)}>Edit</Button>
+              </CardActions>
+            </CardContent>
+          </Card>
+        </Grid>
       </Grid>
     </Suspense>
   );
