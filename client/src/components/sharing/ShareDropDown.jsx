@@ -109,16 +109,21 @@ function DisplaySharedWithUserDropdown({userEmail}) {
 
 
   const handleEmailAdd = async (emailToAdd) => {
-    await axios.post('http://localhost:3000/share/insertToShares', {
-      email: [userEmail, emailToAdd],
-      withCredentials: true
-    }).then((result) => {
-      const newShares = [...shares];
-      newShares.push({shared_to: emailToAdd});
-      setShares(newShares);
-    }).catch((err) => {
-      console.log('err in emailAdd:', err);
-    });
+    if (emailToAdd === currentUser) {
+      alert('can not add yourself');
+    }
+    else {
+      await axios.post('http://localhost:3000/share/insertToShares', {
+        email: [userEmail, emailToAdd],
+        withCredentials: true
+      }).then((result) => {
+        const newShares = [...shares];
+        newShares.push({shared_to: emailToAdd});
+        setShares(newShares);
+      }).catch((err) => {
+        alert('Invalid email');
+      });
+    }
   };
 
 

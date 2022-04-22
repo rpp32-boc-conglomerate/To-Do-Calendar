@@ -60,6 +60,7 @@ export default function DisplaySharedWithUserDropdown({userEmail, viewSharedCal}
     setAnchorEl(null);
   };
 
+
   return (
     <div>
       <Button

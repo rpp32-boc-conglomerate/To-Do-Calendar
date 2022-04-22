@@ -17,10 +17,9 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
   const [draggedEvent, setDraggedEvent] = useState();
   // Data present in 'a@a.com'
   const [userEmail, setEmail] = useState(null);
-  const [info, setInfo] = useState([]);
+  const [hasData, setHasData] = useState(false);
   const [sharedEvents, setSharedEvents] = useState([]);
   const [viewingShared, setViewingShared] = useState(false);
-  const [hasData, setHasData] = useState(false)
 
   const navigate = useNavigate()
 
@@ -33,12 +32,12 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
           setEmail(result.data.info);
           await axios.get('http://localhost:3000/todoList/info', { params: { email: result.data.info } })
             .then((response) => {
-              console.log(response.data);
+              // console.log(response.data);
               setMyEvents(response.data.results[0].calendars[0].categories);
             })
             .then(() => setHasData(true))
             .catch((err) => {
-              console.log('info err:', err);
+              // console.log('info err:', err);
               return err;
             })
         }
@@ -250,60 +249,43 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
     [draggedEvent, setDraggedEvent, newEvent]
   )
 
+  // All Components
   const viewSharedCal = async function (sharedEmail) {
-    var viewThisEmail = sharedEmail[1]['user_email'];
-    console.log('is this view shared firing on its own?');
+
     if (sharedEmail.length === 1) {
       setSharedEvents([]);
       setViewingShared(false);
     }
     if (sharedEmail.length === 2) {
+      var viewThisEmail = sharedEmail[1]['user_email'];
       await axios.get('http://localhost:3000/todoList/info',{ params: { email: viewThisEmail } })
-      .then((response) => {
-        var result = response.data.results[0];
-
-        if (result.calendars.length === 0) {
+        .then((response) => {
+          setSharedEvents(response.data.results[0].calendars[0].categories);
+        })
+        .then(() => setViewingShared(true))
+        .catch((err) => {
+          console.log('info err:', err);
           setSharedEvents([]);
-        } else {
-          var toDos = result.calendars.filter(item => {
-            return item.calendar_owner === viewThisEmail
-          }).map(calendar => {
-            return calendar.categories.map(category =>
-              {return category})
-          })
-          setViewingShared(true);
-          setSharedEvents(toDos);
-        }
-      })
-      .catch((err) => {
-        console.log('info err:', err);
-        setSharedEvents([]);
-        setViewingShared(false);
-        return err;
-      })
+          setViewingShared(false);
+          return err;
+        })
     }
   }
 
 
-  // All Components
-
   const naviBar = (<TopBar isLoading={isLoading} setIsLoggedIn={setIsLoggedIn}
     isLoggedIn={isLoggedIn} isMobile={isMobile} onCalendar={onCalendar}
-    setOnCalendar={setOnCalendar} userEmail={userEmail}/>);
+    setOnCalendar={setOnCalendar} userEmail={userEmail} viewSharedCal={viewSharedCal}/>);
 
   const toDoList = (<ToDoList isMobile={isMobile} taskData={myEvents.flat()}
     draggedEvent={draggedEvent} setDraggedEvent={setDraggedEvent}
     handleDragStart={handleDragStart} addCategory={addCategory}
     updateTodo={updateTodo} addTodo={addTodo} deleteTodo={deleteTodo}/>);
 
-  var myCalender;
-  if (viewingShared) {
-    myCalender = (<MyCalendar myEvents={sharedEvents} moveEvent={moveEvent} resizeEvent={resizeEvent}
-      changeTitle={changeTitle} onDropFromOutside={onDropFromOutside} viewingShared={viewingShared}/>);
-  } else {
-    myCalender = (<MyCalendar myEvents={myEvents} moveEvent={moveEvent} resizeEvent={resizeEvent}
-      changeTitle={changeTitle} onDropFromOutside={onDropFromOutside} viewingShared={viewingShared}/>);
-  }
+  const myCalendar = (<MyCalendar myEvents={myEvents} moveEvent={moveEvent} resizeEvent={resizeEvent}
+    changeTitle={changeTitle} onDropFromOutside={onDropFromOutside} sharedEvents={sharedEvents}
+    viewingShared={viewingShared}/>);
+
 
 
   // Conditional Rendering based on device
