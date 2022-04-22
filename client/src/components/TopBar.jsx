@@ -24,12 +24,12 @@ import ViewShares from './sharing/SharedWithUserDropdown.jsx';
 var pages = [];
 const settings = ['Profile','Logout'];
 
-const TopBar = ({userEmail, isLoading, setIsLoggedIn, isLoggedIn, isMobile, onCalendar, setOnCalendar}) => {
+const TopBar = ({userEmail, isLoading, setIsLoggedIn, isLoggedIn, isMobile, onCalendar, setOnCalendar, viewSharedCal}) => {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
   const navigate = useNavigate();
   const ShareMenu = (<ShareWithOthers userEmail={userEmail}/>);
-  const ViewShared = (<ViewShares userEmail={userEmail}/>);
+  const ViewShared = (<ViewShares userEmail={userEmail} viewSharedCal={viewSharedCal}/>);
 
   if (!isMobile) {
     pages = []

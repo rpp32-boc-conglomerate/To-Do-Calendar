@@ -4,7 +4,7 @@ import Task from './Task.jsx';
 function Tasks({tasks, isMobile, deleteTodo, updateTodo, draggedEvent, setDraggedEvent, handleDragStart}) {
   // console.log('tasks in tasks', tasks)
   const onListTasks = tasks.filter(task => !task.in_calendar)
-  console.log('onListTasks', onListTasks)
+  // console.log('onListTasks', onListTasks)
 
   const formatTask = (task) => {
     const taskCopy = task

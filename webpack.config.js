@@ -5,6 +5,10 @@ const BrotliPlugin = require('brotli-webpack-plugin');
 const dotenv = require('dotenv').config();
 
 module.exports = {
+  // optimization: {
+  //   minimize: true,
+  //   minimizer: [new TerserPlugin()],
+  // },
   entry: ['regenerator-runtime/runtime.js', path.resolve(__dirname, "client", "src", 'index.js')],
   output: { path: path.resolve(__dirname, "client", "dist") },
   mode: 'development',
@@ -81,6 +85,20 @@ module.exports = {
       }
     ]
   },
+  // plugins: [
+  //   new CompressionPlugin({
+  //   algorithm: 'gzip',
+  //   test: /\.js$|\.css$|\.html$/,
+  //   threshold: 10240,
+  //   minRatio: 0.8
+  //   }),
+  //   new BrotliPlugin({
+  //   asset: '[path].br[query]',
+  //   test: /\.js$|\.css$|\.html$/,
+  //   threshold: 10240,
+  //   minRatio: 0.8
+  //   })
+  //  ],
   devServer: {
     port: 3001,
     watchContentBase: true,
