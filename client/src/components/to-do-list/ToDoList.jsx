@@ -27,7 +27,7 @@ function ToDoList({addToCalendar, isMobile, draggedEvent, setDraggedEvent, handl
   const [newToDoModalOpen, setNewToDoModalOpen] = useState(false);
   const [addTaskModal, setAddTaskModal] = useState(false)
 
-console.log('taskData in todolist', taskData)
+// console.log('taskData in todolist', taskData)
 
   // useEffect(() => {
   //   console.log('taskdata', taskData)
@@ -77,7 +77,7 @@ console.log('taskData in todolist', taskData)
         <Categories taskData={taskData} isMobile={isMobile} draggedEvent={draggedEvent}
         setDraggedEvent={setDraggedEvent}
         handleDragStart={handleDragStart}
-        addTask={addTask}/>
+        addTodo={addTodo}/>
       </div>
     </Container>
     )

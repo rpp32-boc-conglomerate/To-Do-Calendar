@@ -12,9 +12,10 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-function Category({tasks, addTask, isMobile, draggedEvent, setDraggedEvent, handleDragStart}) {
+function Category({tasks, addTodo, isMobile, draggedEvent, setDraggedEvent, handleDragStart}) {
   const classes = useStyles();
   const [totalTime, setTotalTime] = useState(0);
+  const [modalOpen, setModalOpen] = useState(false);
   const todos = tasks.items
 
   const onCalendarTasks = todos.filter(task => task.in_calendar)
@@ -29,13 +30,14 @@ function Category({tasks, addTask, isMobile, draggedEvent, setDraggedEvent, hand
           <div>Time Spent So Far: 0</div>
           <Button onClick={() => {
             setTotalTime(totalTime + 1);
-            addTask();
+            addTodo();
           }}>Add Task</Button>
         </Container>
         <Container sx={{ display: 'inline-block'}}>
           <Tasks tasks={todos} isMobile={isMobile}
           draggedEvent={draggedEvent} setDraggedEvent={setDraggedEvent}
-          handleDragStart={handleDragStart}/>
+          handleDragStart={handleDragStart}
+          modalOpen={modalOpen} setModalOpen={setModalOpen}/>
         </Container>
     </Paper>
   </Container>

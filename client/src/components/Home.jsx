@@ -25,7 +25,6 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
   useEffect(async () => {
     await axios.get('http://localhost:3000/auth/isLoggedIn', { withCredentials: true })
       .then(async (result) => {
-        console.log('result', result)
         setIsLoading(false);
         if (result.data) {
           setIsLoggedIn(result.data.loggedIn);
@@ -64,19 +63,19 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
   //modified to use actual user email
   const addTodo = (todo) => {
     console.log('Add todo: ', todo);
-    const incomingEmail = info.user_email;
-    axios.post('http://localhost:3000/todoList/item', { params: { userEmail: incomingEmail }, data: todo })
-      .then((result) => {
-        console.log(result);
-        let catId = result.data.id;
-        console.log('all todos before: ', myEvents);
-        let newTask = { item_id: catId, title: todo.title, description: todo.description, duration: todo.duration, start: todo.start, end_time: todo.end_date, in_calendar: todo.in_calendar };
-        // let newEventsList = myEvents[0];
-        // newEventsList.push(newCat);
-        // setMyEvents(newEventsList);
-        console.log('all todos after: ', myEvents);
-      })
-      .catch(err => console.error(err));
+    // const incomingEmail = info.user_email;
+    // axios.post('http://localhost:3000/todoList/item', { params: { userEmail: incomingEmail }, data: todo })
+    //   .then((result) => {
+    //     console.log(result);
+    //     let catId = result.data.id;
+    //     console.log('all todos before: ', myEvents);
+    //     let newTask = { item_id: catId, title: todo.title, description: todo.description, duration: todo.duration, start: todo.start, end_time: todo.end_date, in_calendar: todo.in_calendar };
+    //     // let newEventsList = myEvents[0];
+    //     // newEventsList.push(newCat);
+    //     // setMyEvents(newEventsList);
+    //     console.log('all todos after: ', myEvents);
+    //   })
+    //   .catch(err => console.error(err));
   }
 
 
