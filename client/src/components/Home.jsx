@@ -54,31 +54,19 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
   //
   // GET '/todoList/:userEmail' -> For all data
   const getAllTodos = (user) => {
-    console.log('Get All Todo Data');
-
-    // axios.get('/todoList/info', { params: { userEmail: userEmail } })
-    //   .then((result) => {
-    //       console.log(result);
-    //       setAllTodos(result.data);
-    //     })
-    //     .catch(err => console.error(err));
+    axios.get('http://localhost:3000/todoList/info', { params: { email: userEmail } })
+      .then((result) => {
+          setMyEvents(result.data.results[0].calendars[0].categories);
+        })
+        .catch(err => console.error(err));
   }
 
   // POST '/todoList/:userEmail' -> Adding or Upserting a "todoList item"
-  //modified to use actual user email
   const addTodo = (todo) => {
-    console.log('Add todo: ', todo);
-    const incomingEmail = userEmail;
-    axios.post('http://localhost:3000/todoList/item', { params: { userEmail: incomingEmail }, data: todo })
+
+    axios.post('http://localhost:3000/todoList/item', { params: { userEmail: userEmail }, data: todo })
       .then((result) => {
-        let catId = result.data.id;
-        console.log('catId: ', catId);
-        console.log('all todos before: ', myEvents);
-        let newTask = { item_id: catId, title: todo.title, description: todo.description, duration: todo.duration, start: todo.start, end_time: todo.end_date, in_calendar: todo.in_calendar };
-        let newEventsList = myEvents;
-        // newEventsList.push(newCat);
-        // setMyEvents(newEventsList);
-        console.log('all todos after: ', myEvents);
+        getAllTodos(userEmail);
       })
       .catch(err => console.error(err));
   }

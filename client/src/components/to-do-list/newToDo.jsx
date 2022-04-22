@@ -60,6 +60,7 @@ var AddToDoModal = (props) => {
       minutes = convertedHours % 60
     };
     const duration = hours + ':' + minutes;
+    console.log('duration: ', duration);
     newItem.duration = duration;
 
     props.addTodo(newItem);
