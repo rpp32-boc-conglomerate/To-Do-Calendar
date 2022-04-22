@@ -1,7 +1,7 @@
 import React from 'react';
 import Task from './Task.jsx';
 
-function Tasks({tasks, isMobile, deleteTodo, updateTodo, draggedEvent, setDraggedEvent, handleDragStart}) {
+function Tasks({tasks, isMobile, updateTodo, deleteTodo, draggedEvent, setDraggedEvent, handleDragStart, modalOpen, setModalOpen}) {
   // console.log('tasks in tasks', tasks)
   const onListTasks = tasks.filter(task => !task.in_calendar)
   // console.log('onListTasks', onListTasks)

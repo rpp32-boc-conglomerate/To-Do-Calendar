@@ -64,7 +64,7 @@ function DisplaySharedWithUserDropdown({userEmail}) {
   }
 
   useEffect(async () => {
-    console.log(currentUser);
+    // console.log(currentUser);
     if (userEmail) {
       console.log('share drop down use triggered');
       await axios.get('http://localhost:3000/share/sharedByUser', {
