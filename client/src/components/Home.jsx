@@ -23,17 +23,20 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
   const navigate = useNavigate();
 
   useEffect(async () => {
-    if (!isLoggedIn) {
-      return setMyEvents(result.calendars[0])
-    }
+    // if (!isLoggedIn) {
+    //   return setMyEvents(result.calendars[0]);
+    // }
     await axios.get('http://localhost:3000/auth/isLoggedIn', { withCredentials: true })
-      .then(async (result) => {
-        console.log(result);
+      .then((response) => {
         setIsLoading(false);
-        if (result.data) {
-          setIsLoggedIn(result.data.loggedIn);
-          setEmail(result.data.info);
-          getAllTodos(result.data.info);
+        if (response.data) {
+          if (response.data.loggedIn === false) {
+            setMyEvents(result.calendars[0]);
+          } else {
+            setIsLoggedIn(response.data.loggedIn);
+            setEmail(response.data.info);
+            getAllTodos(response.data.info);
+          }
         }
       })
       .catch((err) => {
@@ -42,26 +45,31 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
   }, [isLoggedIn])
 
   const getAllTodos = async (user) => {
+    if (!isLoggedIn) {
+      return;
+    }
     await axios.get('http://localhost:3000/todoList/info', { params: { email: user } })
       .then((response) => {
         setMyEvents(response.data.results[0].calendars[0]);
         setUserCalendar(response.data.results[0].calendars[0]);
       })
-      .then(() => setHasData(true))
+      .then(() => {
+        setHasData(true);
+      })
       .catch((err) => {
         return err;
       });
   }
 
-  const addTodo = (todo) => {
-    axios.post('http://localhost:3000/todoList/item', { params: { userEmail: userEmail }, data: todo })
+  const addTodo = async (todo) => {
+    await axios.post('http://localhost:3000/todoList/item', { params: { userEmail: userEmail }, data: todo })
       .then((result) => {
-        getAllTodos(userEmail)
+        getAllTodos(userEmail);
       })
       .catch(err => console.error(err));
   }
 
-  const updateTodo = (todo) => {
+  const updateTodo = async (todo) => {
     console.log('Update Todo: ', todo);
     axios.put('http://localhost:3000/todoList/updateItem', { params: { userEmail: userEmail }, data: todo })
       .then((result) => {
@@ -70,25 +78,35 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
       .catch(err => console.error(err));
   }
 
-  const updateCategory = (category) => {
+  const updateCategory = async (category) => {
     console.log('Update Category: ', category);
-    // axios.put('/todoList/category', { params: { userEmail: userEmail }, data: category })
+    // await axios.put('/todoList/category', { params: { userEmail: userEmail }, data: category })
     //   .then((result) => {
     //     console.log(result);
     //   })
     //   .catch(err => console.error(err));
   }
 
-  const deleteTodo = (todo) => {
+  const deleteTodo = async (todo) => {
     console.log('Delete Todo: ', todo);
-    axios.delete('/todoList/item', { params: { userEmail: userEmail }, data: todo })
+    await axios.delete('http://localhost:3000/todoList/item', { params: { userEmail: userEmail }, data: todo })
       .then((result) => {
-        console.log(result);
+        getAllTodos(userEmail);
       })
       .catch(err => console.error(err));
   }
 
-  const addCategory = (category) => {
+
+  const deleteCategory = async (category) => {
+    console.log('Delete Category: ', category);
+    await axios.delete('http://localhost:3000/todoList/category', { params: { userEmail: userEmail }, data: category })
+      .then((result) => {
+        getAllTodos(userEmail);
+      })
+      .catch(err => console.error(err));
+  }
+
+  const addCategory = async (category) => {
 
     let incomingId;
 
@@ -97,17 +115,15 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
     console.log(incomingId);
     console.log('userCalendar: ', userCalendar);
 
-    axios.post('http://localhost:3000/todoList/category', { params: { calendar_id: incomingId, category: category } })
+    await axios.post('http://localhost:3000/todoList/category', { params: { calendar_id: incomingId, category: category } })
       .then((result) => {
         let catId = result.data.category_id;
         let newCat = { category_id: catId, category: category, todoitems: [] };
-        let newEventsList = myEvent.categories;
-
-        setMyEvents([...newEventsList]);
-        let catTime = {}
-        catTime[catId] = 0
-        setTimePerCat(catTime)
-        console.log(timePerCat)
+        let newEventsList = myEvents;
+        newEventsList.categories.push(newCat);
+        console.log('newEventsList:', newEventsList);
+        // newEventsList.push(newCat);
+        setMyEvents(newEventsList);
       })
       .catch(err => console.error(err));
   }
@@ -135,7 +151,7 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
           return list;
         });
       }
-    }, [setMyEvents, myEvents]
+    }, [setMyEvents]
   );
 
   const newEvent = useCallback(
@@ -146,7 +162,7 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
         return [...prev, { ...event, id: newId }]
       })
     },
-    [setMyEvents, myEvents]
+    [setMyEvents]
   )
 
   const resizeEvent = useCallback(
@@ -169,7 +185,7 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
         });
       }
     },
-    [setMyEvents, myEvents]
+    [setMyEvents]
   );
 
   const changeTitle = (event) => {
@@ -264,17 +280,19 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
     setOnCalendar={setOnCalendar} userEmail={userEmail} viewSharedCal={viewSharedCal} />);
 
   const toDoList = (<ToDoList isMobile={isMobile} taskData={myEvents.categories ? myEvents.categories.flat() : []}
-    draggedEvent={draggedEvent} setDraggedEvent={setDraggedEvent}
+    draggedEvent={draggedEvent} setDraggedEvent={setDraggedEvent} deleteCategory={deleteCategory}
     handleDragStart={handleDragStart} addCategory={addCategory}
     updateTodo={updateTodo} addTodo={addTodo} deleteTodo={deleteTodo} />);
 
   const myCalendar = (<MyCalendar formatForCalendar={formatForCalendar} myEvents={myEvents} moveEvent={moveEvent} resizeEvent={resizeEvent}
     changeTitle={changeTitle} onDropFromOutside={onDropFromOutside} sharedEvents={sharedEvents}
+    updateTodo={updateTodo} addTodo={addTodo} deleteTodo={deleteTodo}
     viewingShared={viewingShared} />);
 
 
   const renderContent = () => {
     if (isMobile && !onCalendar) {
+      console.log('myEvents: ', myEvents);
       return (
         <div>
           {naviBar}
@@ -284,6 +302,7 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
         </div>
       )
     } else if (isMobile && onCalendar) {
+      console.log(myEvents);
       return (
         <div>
           {naviBar}

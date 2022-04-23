@@ -22,7 +22,7 @@ const useStyles = makeStyles({
   }
 });
 
-function ToDoList({isMobile, draggedEvent, setDraggedEvent, handleDragStart, taskData, addCategory, addTodo, updateTodo, deleteTodo}) {
+function ToDoList({isMobile, draggedEvent, setDraggedEvent, handleDragStart, taskData, addCategory, addTodo, updateTodo, deleteTodo, deleteCategory}) {
   const [newCatModalOpen, setNewCatModalOpen] = useState(false);
   const [newToDoModalOpen, setNewToDoModalOpen] = useState(false);
   const classes = useStyles();
@@ -54,7 +54,7 @@ function ToDoList({isMobile, draggedEvent, setDraggedEvent, handleDragStart, tas
       </Container>
       <div>
         <Categories taskData={taskData} isMobile={isMobile} draggedEvent={draggedEvent}
-          setDraggedEvent={setDraggedEvent} handleDragStart={handleDragStart}
+          setDraggedEvent={setDraggedEvent} handleDragStart={handleDragStart} deleteCategory={deleteCategory}
           addTodo={addTodo} updateTodo={updateTodo} deleteTodo={deleteTodo}/>
       </div>
     </Container>
