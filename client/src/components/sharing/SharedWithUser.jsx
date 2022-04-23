@@ -16,7 +16,7 @@ export default function DisplaySharedWithUserItem({userEmail, viewSharedCal}) {
   const [sharedCheck, setSharedCheck] = React.useState(sharedEmailsArray.toString());
 
   useEffect(async () => {
-    await axios.get('/share/sharedWithUser', {
+    await axios.get('http://localhost:3000/share/sharedWithUser', {
       params: {email: userEmail},
       withCredentials: true
     }).then((values) => {
