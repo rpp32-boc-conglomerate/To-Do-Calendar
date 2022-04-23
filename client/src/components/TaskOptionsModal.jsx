@@ -68,11 +68,8 @@ var TaskOptionsModal = (props) => {
     taskCopy.in_calendar = inCalendar;
     taskCopy.category_id = props.categoryId;
 
-<<<<<<< HEAD
     console.log(endTime.getHours());
 
-=======
->>>>>>> main
     let hours = endTime.getHours() - startTime.getHours();
     let minutes = endTime.getMinutes() - startTime.getMinutes();
 

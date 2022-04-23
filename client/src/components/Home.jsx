@@ -40,7 +40,7 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
   const getAllTodos = async (user) => {
     await axios.get('http://localhost:3000/todoList/info', { params: { email: user } })
       .then((response) => {
-        setMyEvents(response.data.results[0].calendars[0].categories);
+        setMyEvents([...response.data.results[0].calendars[0].categories]);
         setUserCalendar(response.data.results[0].calendars[0]);
       })
       .then(() => setHasData(true))
@@ -222,7 +222,7 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
       var viewThisEmail = sharedEmail[1]['user_email'];
       await axios.get('http://localhost:3000/todoList/info',{ params: { email: viewThisEmail } })
         .then((response) => {
-          setSharedEvents(response.data.results[0].calendars[0].categories);
+          setSharedEvents([...response.data.results[0].calendars[0].categories]);
         })
         .then(() => setViewingShared(true))
         .catch((err) => {
