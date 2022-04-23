@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-function Category({tasks, isMobile, draggedEvent, setDraggedEvent, handleDragStart, addTodo, updateTodo, deleteTodo}) {
+function Category({tasks, isMobile, draggedEvent, setDraggedEvent, handleDragStart, addTodo, updateTodo, deleteTodo, deleteCategory}) {
   const classes = useStyles();
   const [totalTime, setTotalTime] = useState(0);
   const [modalOpen, setModalOpen] = useState(false);
@@ -31,6 +31,9 @@ function Category({tasks, isMobile, draggedEvent, setDraggedEvent, handleDragSta
             setTotalTime(totalTime + 1);
             setModalOpen(true);
           }}>Add Task</Button>
+          <Button onClick={() => {
+            deleteCategory(tasks);
+          }}>Delete Category</Button>
           {modalOpen === true &&
           <TaskOptionsModal setModalOpen={setModalOpen} modalOpen={modalOpen} task={''}
           categoryId={categoryId} addTodo ={addTodo} updateTodo={updateTodo}
