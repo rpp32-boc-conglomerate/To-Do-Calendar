@@ -93,7 +93,7 @@ todoListRouter.put('/updateItem', async (req, res) => {
   var end_date =  req.body.data.end_date;
   var in_calendar =  req.body.data.in_calendar;
   var item_id = req.body.data.id;
-  console.log('updateItem: ', title, description, duration, start, end_date, in_calendar, item_id);
+  // console.log('updateItem: ', title, description, duration, start, end_date, in_calendar, item_id);
   query.updateItem(title, description, duration, start, end_date, in_calendar, item_id, async (err, response) => {
     if (err) {
       res.status(400).send('updateItem error');
