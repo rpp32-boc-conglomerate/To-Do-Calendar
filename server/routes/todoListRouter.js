@@ -60,8 +60,8 @@ todoListRouter.route('/:userEmail').post((req, res) => {
 })
 
 todoListRouter.put('/updateCategory', async (req, res) => {
-  var category_id = req.body.category_id;
-  var category = req.body.category;
+  var category_id = req.body.data.category_id;
+  var category = req.body.data.category;
   query.updateCategory(category_id, category, async (err, response) => {
     if (err) {
       res.status(400).send('update category error');
@@ -72,7 +72,6 @@ todoListRouter.put('/updateCategory', async (req, res) => {
 });
 
 todoListRouter.put('/updateItem', async (req, res) => {
-  console.log('req put', req.body.title)
   var title = req.body.data.title;
   var description =  req.body.data.description;
   var duration =  req.body.data.duration;
@@ -90,7 +89,8 @@ todoListRouter.put('/updateItem', async (req, res) => {
 });
 
 todoListRouter.delete('/item', async (req, res) => {
-  var item_id = req.body.item_id;
+  var item_id = req.body.id;
+  console.log(req.body);
   query.deleteItem(item_id, async (err, response) => {
     if (err) {
       res.status(400).send('delete item error');
@@ -101,7 +101,7 @@ todoListRouter.delete('/item', async (req, res) => {
 });
 
 todoListRouter.delete('/category', async (req, res) => {
-  var category_id = req.body.category_id;
+  var category_id = req.body.data.category_id;
   query.deleteCategory(category_id, async (err, response) => {
     if (err) {
       res.status(400).send('deleteCategory error');

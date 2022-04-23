@@ -90,7 +90,7 @@ const Login = ({setEmail, isLoggedIn, setIsLoggedIn}) => {
           setErrMsg("Email doesn't exist or Incorrect password");
         }
       }).catch((err) => {
-        alert('login err:', err);
+        return;
       })
     } else {
       alert ('Invalid login submission');

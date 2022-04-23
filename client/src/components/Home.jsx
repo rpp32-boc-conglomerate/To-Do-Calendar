@@ -22,9 +22,6 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
   const navigate = useNavigate();
 
   useEffect(async () => {
-    // if (!isLoggedIn) {
-    //   return setMyEvents(result.calendars[0]);
-    // }
     await axios.get('http://localhost:3000/auth/isLoggedIn', { withCredentials: true })
       .then((response) => {
         setIsLoading(false);
@@ -70,20 +67,20 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
 
   const updateTodo = async (todo) => {
     console.log('Update Todo: ', todo);
-    axios.put('http://localhost:3000/todoList/updateItem', { params: { userEmail: userEmail }, data: todo })
+    await axios.put('http://localhost:3000/todoList/updateItem', { params: { userEmail: userEmail }, data: todo })
       .then((result) => {
-
+        console.log(result);
       })
       .catch(err => console.error(err));
   }
 
   const updateCategory = async (category) => {
     console.log('Update Category: ', category);
-    // await axios.put('/todoList/category', { params: { userEmail: userEmail }, data: category })
-    //   .then((result) => {
-    //     console.log(result);
-    //   })
-    //   .catch(err => console.error(err));
+    await axios.put('http://localhost:3000/todoList/updateCategory', { params: { userEmail: userEmail }, data: category })
+      .then((result) => {
+        getAllTodos(userEmail);
+      })
+      .catch(err => console.error(err));
   }
 
   const deleteTodo = async (todo) => {
@@ -113,10 +110,11 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
 
     console.log(incomingId);
     console.log('userCalendar: ', userCalendar);
+    console.log(category);
 
     await axios.post('http://localhost:3000/todoList/category', { params: { calendar_id: incomingId, category: category } })
       .then((result) => {
-        getAllTodos(userEmail)
+        getAllTodos(userEmail);
       })
       .catch(err => console.error(err));
   }
@@ -207,7 +205,7 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
     if (isLoggedIn === false) {
       navigate('/signin')
     } else {
-      setDraggedEvent(event), []
+      setDraggedEvent(event)
     }
   })
 
@@ -223,7 +221,7 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
             category.items.forEach(item => {
               if (item === existing) {
                 item.in_calendar = !item.in_calendar
-                updateTodo(item)
+                updateTodo(item);
               }
             })
           })

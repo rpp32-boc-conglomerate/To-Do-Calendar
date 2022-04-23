@@ -36,7 +36,7 @@ function Category({tasks, isMobile, draggedEvent, setDraggedEvent, handleDragSta
             setTotalTime(totalTime + 1);
             setModalOpen(true);
           }}>Add Task</Button>
-          <Button onClick={() => {
+          <Button sx={{backgroundColor: 'red', color: 'white'}}onClick={() => {
             deleteCategory(tasks);
           }}>Delete Category</Button>
           {modalOpen === true &&

@@ -109,7 +109,7 @@ function DisplaySharedWithUserDropdown({userEmail}) {
       alert('can not add yourself');
     }
     else {
-      await axios.post('/share/insertToShares', {
+      await axios.post('http://localhost:3000/share/insertToShares', {
         email: [userEmail, emailToAdd],
         withCredentials: true
       }).then((result) => {
