@@ -25,15 +25,12 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
     await axios.get('http://localhost:3000/auth/isLoggedIn', { withCredentials: true })
       .then((response) => {
         setIsLoading(false);
-        if (response.data) {
-          if (response.data.loggedIn === false) {
-            setMyEvents(result.calendars[0]);
-          } else {
-            setIsLoggedIn(response.data.loggedIn);
-            setEmail(response.data.info);
-            getAllTodos(response.data.info);
-          }
+        if (!response.data) {
+          return setMyEvents(result.calendars[0])
         }
+          setIsLoggedIn(response.data.loggedIn);
+          setEmail(response.data.info);
+          getAllTodos(response.data.info);
       })
       .catch((err) => {
         return err;
@@ -270,8 +267,7 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
     }
   }
 
-  const naviBar = (<TopBar setMyEvents={setMyEvents} setAllTodos={setAllTodos}
-    isLoading={isLoading} setIsLoggedIn={setIsLoggedIn}
+  const naviBar = (<TopBar setMyEvents={setMyEvents} setAllTodos={setAllTodos}isLoading={isLoading} setIsLoggedIn={setIsLoggedIn}
     isLoggedIn={isLoggedIn} isMobile={isMobile} onCalendar={onCalendar}
     setOnCalendar={setOnCalendar} userEmail={userEmail} viewSharedCal={viewSharedCal} />);
 
