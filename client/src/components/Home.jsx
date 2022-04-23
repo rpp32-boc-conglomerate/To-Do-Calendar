@@ -222,6 +222,8 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
             category.items.forEach(item => {
               if (item === existing) {
                 item.in_calendar = !item.in_calendar
+                item.start = new Date(moment(item.start))
+                item.end_date = new Date(moment(item.end_date))
                 updateTodo(item);
               }
             })
