@@ -6,6 +6,7 @@ function Tasks({
   setDraggedEvent, handleDragStart, modalOpen, setModalOpen
 }) {
   const onListTasks = tasks.filter(task => !task.in_calendar);
+  // console.log('onListTasks', onListTasks)
 
   const formatTask = (task) => {
     const taskCopy = task;
