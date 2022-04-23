@@ -48,7 +48,7 @@ const TopBar = ({userEmail, isLoading, setIsLoggedIn, isLoggedIn, isMobile, onCa
   const handleCloseUserMenu = (e) => {
     setAnchorElUser(null);
     if (e.target.innerHTML === 'Logout') {
-      axios.get('/auth/logout', {withCredentials: true})
+      axios.get('http://localhost:3000/auth/logout', {withCredentials: true})
       .then((res) => {
         if (res.data === false) {
           setIsLoggedIn(false)
