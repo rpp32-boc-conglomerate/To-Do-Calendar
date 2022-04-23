@@ -85,6 +85,7 @@ var TaskOptionsModal = (props) => {
       const taskCopy = userTask;
       taskCopy.in_calendar = false;
       props.updateTodo(taskCopy);
+      props.setModalOpen(false);
     } else if (props.task.in_calendar === false) {
       console.log('false')
       const taskCopy = userTask;
@@ -92,6 +93,7 @@ var TaskOptionsModal = (props) => {
       // console.log('userTask:', userTask);
       taskCopy.in_calendar = true;
       props.updateTodo(taskCopy);
+      props.setModalOpen(false);
     }
 
   }
@@ -99,7 +101,7 @@ var TaskOptionsModal = (props) => {
   const handleTimeChange = (time, frame) => {
     const taskCopy = userTask;
     taskCopy[frame] = time;
-    setUserTask(taskCopy)
+    setUserTask(taskCopy);
   }
 
   const handleTodoDelete = () => {
