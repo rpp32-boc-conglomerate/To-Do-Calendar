@@ -65,7 +65,7 @@ function DisplaySharedWithUserDropdown({userEmail}) {
 
   useEffect(async () => {
     if (userEmail) {
-      await axios.get('http://localhost:3000share/sharedByUser', {
+      await axios.get('http://localhost:3000/share/sharedByUser', {
         params: {email: userEmail},
         withCredentials: true
       }).then((values) => {

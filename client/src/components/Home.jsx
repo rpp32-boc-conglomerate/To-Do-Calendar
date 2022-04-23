@@ -242,7 +242,7 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
       var viewThisEmail = sharedEmail[1]['user_email'];
       await axios.get('http://localhost:3000/todoList/info', { params: { email: viewThisEmail } })
         .then((response) => {
-          setSharedEvents([...response.data.results[0].calendars[0].categories]);
+          setSharedEvents(response.data.results[0].calendars[0]);
         })
         .then(() => setViewingShared(true))
         .catch((err) => {
