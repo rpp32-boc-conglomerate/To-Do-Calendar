@@ -71,6 +71,7 @@ todoListRouter.put('/updateCategory', async (req, res) => {
 });
 
 todoListRouter.put('/updateItem', async (req, res) => {
+  console.log('req put', req.body.title)
   var title = req.body.title;
   var description =  req.body.description;
   var duration =  req.body.duration;

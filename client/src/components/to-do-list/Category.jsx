@@ -18,8 +18,13 @@ function Category({tasks, isMobile, draggedEvent, setDraggedEvent, handleDragSta
   const [totalTime, setTotalTime] = useState(0);
   const [modalOpen, setModalOpen] = useState(false);
   const todos = tasks.items;
-  const categoryId = tasks.category_id
-  // const onCalendarTasks = todos.filter(task => task.in_calendar);
+  const categoryId = tasks.category_id;
+
+  const onCalendarTasks = todos.filter(task => task.in_calendar);
+
+  console.log('oncal', onCalendarTasks)
+
+
 
   return (
     <Container>

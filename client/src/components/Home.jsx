@@ -12,6 +12,7 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
   const [allTodos, setAllTodos] = useState([]);
   const [myEvents, setMyEvents] = useState([]);
   const [onCalendar, setOnCalendar] = useState(false);
+  const [timePerCat, setTimePerCat] = useState({});
   const [draggedEvent, setDraggedEvent] = useState();
   const [userEmail, setEmail] = useState(null);
   const [hasData, setHasData] = useState(false);
@@ -43,7 +44,7 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
   const getAllTodos = async (user) => {
     await axios.get('http://localhost:3000/todoList/info', { params: { email: user } })
       .then((response) => {
-        setMyEvents([...response.data.results[0].calendars[0].categories]);
+        setMyEvents(response.data.results[0].calendars[0]);
         setUserCalendar(response.data.results[0].calendars[0]);
       })
       .then(() => setHasData(true))
@@ -62,11 +63,11 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
 
   const updateTodo = (todo) => {
     console.log('Update Todo: ', todo);
-    // axios.put('/todoList/item', { params: { userEmail: userEmail }, data: todo })
-    //   .then((result) => {
-    //     console.log(result);
-    //   })
-    //   .catch(err => console.error(err));
+    axios.put('http://localhost:3000/todoList/updateItem', { params: { userEmail: userEmail }, data: todo })
+      .then((result) => {
+
+      })
+      .catch(err => console.error(err));
   }
 
   const updateCategory = (category) => {
@@ -100,9 +101,13 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
       .then((result) => {
         let catId = result.data.category_id;
         let newCat = { category_id: catId, category: category, todoitems: [] };
-        let newEventsList = myEvents;
-        newEventsList.push(newCat);
+        let newEventsList = myEvent.categories;
+
         setMyEvents([...newEventsList]);
+        let catTime = {}
+        catTime[catId] = 0
+        setTimePerCat(catTime)
+        console.log(timePerCat)
       })
       .catch(err => console.error(err));
   }
@@ -209,6 +214,7 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
             category.items.forEach(item => {
               if (item === existing) {
                 item.in_calendar = !item.in_calendar
+                updateTodo(item)
               }
             })
           })
