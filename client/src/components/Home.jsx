@@ -49,37 +49,38 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
       });
   }
 
-  const addTodo = (todo) => {
-    axios.post('/todoList/item', { params: { userEmail: userEmail }, data: todo })
+  const addTodo = async (todo) => {
+    await axios.post('/todoList/item', { params: { userEmail: userEmail }, data: todo })
       .then((result) => {
         getAllTodos(userEmail)
       })
       .catch(err => console.error(err));
   }
 
-  const updateTodo = (todo) => {
+  const updateTodo = async (todo) => {
     console.log('Update Todo: ', todo);
-    // axios.put('/todoList/item', { params: { userEmail: userEmail }, data: todo })
-    //   .then((result) => {
-      //     console.log(result);
-      //   })
-      //   .catch(err => console.error(err));
+    await axios.put('/todoList/item', { params: { userEmail: userEmail }, data: todo })
+      .then((result) => {
+          console.log(result);
+      })
+      .catch(err => console.error(err));
   }
 
-  const updateCategory = (category) => {
+  const updateCategory = async (category) => {
     console.log('Update Category: ', category);
-    // axios.put('/todoList/category', { params: { userEmail: userEmail }, data: category })
+    // await axios.put('/todoList/category', { params: { userEmail: userEmail }, data: category })
     //   .then((result) => {
     //     console.log(result);
     //   })
     //   .catch(err => console.error(err));
   }
 
-  const deleteTodo = (todo) => {
+  const deleteTodo = async (todo) => {
     console.log('Delete Todo: ', todo);
-    axios.delete('/todoList/item', { params: { userEmail: userEmail }, data: todo })
+    await axios.delete('/todoList/item', { params: { userEmail: userEmail }, data: todo })
       .then((result) => {
         console.log(result);
+        getAllTodos(userEmail);
       })
       .catch(err => console.error(err));
   }
