@@ -43,7 +43,7 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
   const getAllTodos = async (user) => {
     await axios.get('http://localhost:3000/todoList/info', { params: { email: user } })
       .then((response) => {
-        setMyEvents([...response.data.results[0].calendars[0].categories]);
+        setMyEvents(response.data.results[0].calendars[0]);
         setUserCalendar(response.data.results[0].calendars[0]);
       })
       .then(() => setHasData(true))
