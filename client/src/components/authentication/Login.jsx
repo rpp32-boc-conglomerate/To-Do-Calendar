@@ -82,15 +82,15 @@ const Login = ({setEmail, isLoggedIn, setIsLoggedIn}) => {
         'email': state['email'], 'password': state['password']}, {withCredentials: true}
       ).then((res) => {
         if(res.data === true) {
+          console.log(res.data);
           setIsLoggedIn(true);
-          setEmail(state['email']);
           navigate('/');
         } else {
           setFormErr('email');
           setErrMsg("Email doesn't exist or Incorrect password");
         }
       }).catch((err) => {
-        alert('login err:', err);
+        console.log(err);
       })
     } else {
       alert ('Invalid login submission');

@@ -22,9 +22,6 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
   const navigate = useNavigate();
 
   useEffect(async () => {
-    // if (!isLoggedIn) {
-    //   return setMyEvents(result.calendars[0]);
-    // }
     await axios.get('http://localhost:3000/auth/isLoggedIn', { withCredentials: true })
       .then((response) => {
         setIsLoading(false);
@@ -79,20 +76,20 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
 
   const updateTodo = async (todo) => {
     console.log('Update Todo: ', todo);
-    // await axios.put('/todoList/item', { params: { userEmail: userEmail }, data: todo })
-    //   .then((result) => {
-    //     console.log(result);
-    //   })
-    //   .catch(err => console.error(err));
+    await axios.put('http://localhost:3000/todoList/updateItem', { params: { userEmail: userEmail }, data: todo })
+      .then((result) => {
+        console.log(result);
+      })
+      .catch(err => console.error(err));
   }
 
   const updateCategory = async (category) => {
     console.log('Update Category: ', category);
-    // await axios.put('/todoList/category', { params: { userEmail: userEmail }, data: category })
-    //   .then((result) => {
-    //     console.log(result);
-    //   })
-    //   .catch(err => console.error(err));
+    await axios.put('http://localhost:3000/todoList/updateCategory', { params: { userEmail: userEmail }, data: category })
+      .then((result) => {
+        getAllTodos(userEmail);
+      })
+      .catch(err => console.error(err));
   }
 
   const deleteTodo = async (todo) => {
@@ -122,18 +119,11 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
 
     console.log('incoming ID:', incomingId);
     console.log('userCalendar: ', userCalendar);
-    console.log('my Events: ', myEvents);
+    console.log(category);
 
     await axios.post('http://localhost:3000/todoList/category', { params: { calendar_id: incomingId, category: category } })
       .then((result) => {
-        let catId = result.data.category_id;
-        let newCat = { category_id: catId, category: category, todoitems: [] };
-        let newEventsList = myEvents;
-        newEventsList.categories.push(newCat);
-        console.log('newEventsList:', newEventsList);
-        // newEventsList.push(newCat);
-        setMyEvents(newEventsList);
-
+        getAllTodos(userEmail);
       })
       .catch(err => console.error(err));
   }
@@ -224,7 +214,7 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
     if (isLoggedIn === false) {
       navigate('/signin')
     } else {
-      setDraggedEvent(event), []
+      setDraggedEvent(event)
     }
   })
 
@@ -240,6 +230,7 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
             category.items.forEach(item => {
               if (item === existing) {
                 item.in_calendar = !item.in_calendar
+                updateTodo(item);
               }
             })
           })
@@ -260,7 +251,7 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
       var viewThisEmail = sharedEmail[1]['user_email'];
       await axios.get('http://localhost:3000/todoList/info', { params: { email: viewThisEmail } })
         .then((response) => {
-          setSharedEvents([...response.data.results[0].calendars[0].categories]);
+          setSharedEvents(response.data.results[0].calendars[0]);
         })
         .then(() => setViewingShared(true))
         .catch((err) => {

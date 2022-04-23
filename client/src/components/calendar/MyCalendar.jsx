@@ -19,6 +19,7 @@ const MyCalendar = (props) => {
   }
 
   if (props.viewingShared) {
+    console.log(props.viewingShared, props.formatForCalendar(props.sharedEvents));
     return (
       <DragAndDropCalendar
         className='calendar'
@@ -33,6 +34,8 @@ const MyCalendar = (props) => {
       />
     )
   }
+
+  console.log(props.myEvents);
 
   return (
     <>

@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react';
 import Categories from './Categories.jsx';
 import Category from './Category.jsx';
 import Tasks from './Tasks.jsx';
-import TestModal from './testModal.jsx';
 import TaskOptionsModal from '../TaskOptionsModal.jsx';
 import Home from '../Home.jsx'
 import { makeStyles, Container, Button, Modal } from '@material-ui/core';
