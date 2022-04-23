@@ -65,7 +65,7 @@ function DisplaySharedWithUserDropdown({userEmail}) {
 
   useEffect(async () => {
     if (userEmail) {
-      await axios.get('/share/sharedByUser', {
+      await axios.get('http://localhost:3000/share/sharedByUser', {
         params: {email: userEmail},
         withCredentials: true
       }).then((values) => {
@@ -92,7 +92,7 @@ function DisplaySharedWithUserDropdown({userEmail}) {
 
   const handleEmailRemove = (e) => async () => {
     const currentIndex = shares.indexOf(e);
-    await axios.delete('/share/deleteFromShares', {
+    await axios.delete('http://localhost:3000/share/deleteFromShares', {
       params: {email: [userEmail, e.shared_to]},
       withCredentials: true
     }).then((result) => {

@@ -19,6 +19,7 @@ todoListRouter.get('/info', (req, res) => {
 });
 
 todoListRouter.post('/category', async (req, res) => {
+  console.log('')
   var calendar_id = req.body.params.calendar_id;
   var category = req.body.params.category;
   query.postCategory(calendar_id, category, async (err, response) => {
@@ -72,13 +73,13 @@ todoListRouter.put('/updateCategory', async (req, res) => {
 
 todoListRouter.put('/updateItem', async (req, res) => {
   console.log('req put', req.body.title)
-  var title = req.body.title;
-  var description =  req.body.description;
-  var duration =  req.body.duration;
-  var start =  req.body.start;
-  var end_date =  req.body.end_date;
-  var in_calendar =  req.body.in_calendar;
-  var item_id = req.body.item_id;
+  var title = req.body.data.title;
+  var description =  req.body.data.description;
+  var duration =  req.body.data.duration;
+  var start =  req.body.data.start;
+  var end_date =  req.body.data.end_date;
+  var in_calendar =  req.body.data.in_calendar;
+  var item_id = req.body.data.id;
   query.updateItem(title, description, duration, start, end_date, in_calendar, item_id, async (err, response) => {
     if (err) {
       res.status(400).send('updateItem error');

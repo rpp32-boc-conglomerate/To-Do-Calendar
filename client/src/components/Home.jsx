@@ -12,7 +12,6 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
   const [allTodos, setAllTodos] = useState([]);
   const [myEvents, setMyEvents] = useState([]);
   const [onCalendar, setOnCalendar] = useState(false);
-  const [timePerCat, setTimePerCat] = useState({});
   const [draggedEvent, setDraggedEvent] = useState();
   const [userEmail, setEmail] = useState(null);
   const [hasData, setHasData] = useState(false);
@@ -117,13 +116,7 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
 
     await axios.post('http://localhost:3000/todoList/category', { params: { calendar_id: incomingId, category: category } })
       .then((result) => {
-        let catId = result.data.category_id;
-        let newCat = { category_id: catId, category: category, todoitems: [] };
-        let newEventsList = myEvents;
-        newEventsList.categories.push(newCat);
-        console.log('newEventsList:', newEventsList);
-        // newEventsList.push(newCat);
-        setMyEvents(newEventsList);
+        getAllTodos(userEmail)
       })
       .catch(err => console.error(err));
   }

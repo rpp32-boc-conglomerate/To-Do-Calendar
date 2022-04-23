@@ -22,7 +22,7 @@ function Category({tasks, isMobile, draggedEvent, setDraggedEvent, handleDragSta
 
   const onCalendarTasks = todos.filter(task => task.in_calendar);
 
-  console.log('oncal', onCalendarTasks)
+  // console.log('oncal', onCalendarTasks)
 
 
 
