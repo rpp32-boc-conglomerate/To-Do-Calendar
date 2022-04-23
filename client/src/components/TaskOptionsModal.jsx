@@ -1,4 +1,3 @@
-// import {React, useState} from 'react';
 import React, { useState, useEffect, useRef } from 'react';
 import moment from 'moment';
 import { Button, TextField, Modal, Stack, InputLabel, Select, MenuItem, Container, makeStyles } from '@material-ui/core';
@@ -56,44 +55,35 @@ var TaskOptionsModal = (props) => {
   const classes = useStyles();
 
   const handleTextInput = (event, field) => {
-    const text = event.target.value
-    field === 'title' ? setTodoTitle(text) : setTodoDescription(text)
+    const text = event.target.value;
+    field === 'title' ? setTodoTitle(text) : setTodoDescription(text);
   }
 
   const handleEditDone = () => {
-    // front end update
     const taskCopy = userTask;
     taskCopy.title = todoTitle;
     taskCopy.description = todoDescription;
     taskCopy.start = userTask.start || new Date();
     taskCopy.end_date = userTask.end_date || new Date();
     taskCopy.in_calendar = inCalendar;
-    taskCopy.category_id = props.categoryId
+    taskCopy.category_id = props.categoryId;
 
-    let hours = endTime.getHours() - startTime.getHours()
-    let minutes = endTime.getMinutes() - startTime.getMinutes()
+    console.log(endTime.getHours());
+
+    let hours = endTime.getHours() - startTime.getHours();
+    let minutes = endTime.getMinutes() - startTime.getMinutes();
 
     if (minutes < 0) {
       const convertedHours = (hours * 60) + minutes;
-      hours = Math.floor(convertedHours/60)
-      minutes = convertedHours % 60
+      hours = Math.floor(convertedHours/60);
+      minutes = convertedHours % 60;
     }
 
-    const duration = hours + ':' + minutes
-    taskCopy.duration = duration
+    const duration = hours + ':' + minutes;
+    taskCopy.duration = duration;
 
-    setUserTask(taskCopy)
-    // props.updateTask(taskCopy)
+    setUserTask(taskCopy);
 
-    //back end update
-
-    // var todoToUpdate = {
-    //   title: todoTitle,
-    //   description: todoDescription,
-    //   start: startTime,
-    //   end_date: endTime,
-    //   in_calendar: inCalendar
-    // };
     props.newTodo ? props.addTodo(userTask) : props.updateTodo(userTask);
 
     props.setModalOpen(false);
@@ -130,11 +120,11 @@ var TaskOptionsModal = (props) => {
           <TextField multiline label="Description" className={classes.input} defaultValue={props.task.description} onChange={(newValue) => handleTextInput(newValue, 'description')}/>
 
           <DesktopDateTimePicker renderInput={(props) => <TextField className={classes.input} {...props} />} label="Start Time"
-            value={userTask.start} onChange={(newValue) => {
+            value={startTime} onChange={(newValue) => {
               handleTimeChange(newValue, 'start')
               setStartTime(newValue)}} />
           <DesktopDateTimePicker renderInput={(props) => <TextField className={classes.input} {...props} />} label="End Time"
-            value={userTask.end_date} onChange={(newValue) => {
+            value={endTime} onChange={(newValue) => {
               handleTimeChange(newValue, 'end_date')
               setEndTime(newValue)}}/>
 

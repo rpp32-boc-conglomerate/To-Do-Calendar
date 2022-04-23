@@ -5,7 +5,7 @@ import moment from 'moment';
 import './CalendarStyle.scss';
 import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop';
 
-const DragAndDropCalendar = withDragAndDrop(Calendar)
+const DragAndDropCalendar = withDragAndDrop(Calendar);
 const localizer = momentLocalizer(moment);
 
 const MyCalendar = (props) => {
@@ -18,14 +18,8 @@ const MyCalendar = (props) => {
         events={props.formatForCalendar(props.sharedEvents).filter(item => item.in_calendar)}
         startAccessor="start"
         endAccessor="end_date"
-        // onSelectEvent={(event) => {
-        //   props.changeTitle(event);
-        // }}
         min={new Date(moment().hour(6).minute(0))}
         max={new Date(moment().hour(23).minute(0))}
-        // onEventDrop={props.moveEvent}
-        // onEventResize={props.resizeEvent}
-        // onDropFromOutside={props.onDropFromOutside}
         style={{ height: 1000 }}
       />
     )
