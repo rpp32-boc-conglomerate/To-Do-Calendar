@@ -11,11 +11,18 @@ const localizer = momentLocalizer(moment);
 const MyCalendar = (props) => {
   const formatForCalendar = (list) => {
     if (list.length) {
-      return list.flat().map(item => { return item.items }).flat().map(item => {
-        const taskCopy = item;
-        taskCopy.start =  new Date(item.start);
-        taskCopy.end_date = new Date(item.end_date);
-        return taskCopy;
+      return list.flat().map(item => {
+        console.log('item layer 1: ', item);
+        return item.items;
+      }).flat().map(item => {
+        if (item !== undefined && item.length) {
+          const taskCopy = item;
+          taskCopy.start =  new Date(item.start);
+          taskCopy.end_date = new Date(item.end_date);
+          return taskCopy;
+        } else {
+          return;
+        }
       })
     } else {
       return [];
@@ -43,7 +50,7 @@ const MyCalendar = (props) => {
       className='calendar'
       localizer={localizer}
       defaultView="week"
-      events={formatForCalendar(props.myEvents).filter(item => item.in_calendar)}
+      events={formatForCalendar(props.myEvents).filter(item => item !== undefined ? item.in_calendar : false)}
       startAccessor="start"
       endAccessor="end_date"
       onSelectEvent={(event) => {
