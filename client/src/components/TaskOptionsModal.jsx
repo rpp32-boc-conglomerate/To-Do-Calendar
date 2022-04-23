@@ -50,6 +50,7 @@ var TaskOptionsModal = (props) => {
   const [todoDescription, setTodoDescription] = useState(props.task.description || '');
   const [startTime, setStartTime] = useState(props.task.start);
   const [endTime, setEndTime] = useState(props.task.end_date);
+  const [duration, setDuration] = useState(props.task.duration || 0)
   const [inCalendar, setInCalendar] = useState(props.task.in_calendar || false);
 
   const classes = useStyles();
@@ -67,40 +68,34 @@ var TaskOptionsModal = (props) => {
     taskCopy.end_date = userTask.end_date || new Date();
     taskCopy.in_calendar = inCalendar;
     taskCopy.category_id = props.categoryId;
-
-    console.log(endTime.getHours());
-
-    let hours = endTime.getHours() - startTime.getHours();
-    let minutes = endTime.getMinutes() - startTime.getMinutes();
-
-    if (minutes < 0) {
-      const convertedHours = (hours * 60) + minutes;
-      hours = Math.floor(convertedHours/60);
-      minutes = convertedHours % 60;
-    }
-
-    const duration = hours + ':' + minutes;
-    taskCopy.duration = duration;
-
+    // duration fix
+    var momentStart = moment(taskCopy.start)
+    var momentEnd = moment(taskCopy.end_date);
+    taskCopy.duration = momentEnd.diff(momentStart, 'hours').toString() + ' hours';
+    props.addTodo(taskCopy);
     setUserTask(taskCopy);
 
-    props.newTodo ? props.addTodo(userTask) : props.updateTodo(userTask);
-
+    props.newTodo ? props.addTodo(userTask) : (props.updateTodo(userTask), props.updateTask(userTask));
     props.setModalOpen(false);
   }
 
   const handleAddTo = () => {
     if (props.task.in_calendar === true) {
+      console.log('true')
       const taskCopy = userTask;
       taskCopy.in_calendar = false;
       props.updateTodo(taskCopy);
       props.setModalOpen(false);
     } else if (props.task.in_calendar === false) {
+      console.log('false')
       const taskCopy = userTask;
+      console.log('taskCopy:', taskCopy);
+      // console.log('userTask:', userTask);
       taskCopy.in_calendar = true;
       props.updateTodo(taskCopy);
       props.setModalOpen(false);
     }
+
   }
 
   const handleTimeChange = (time, frame) => {

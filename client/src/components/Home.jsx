@@ -25,7 +25,6 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
     await axios.get('http://localhost:3000/auth/isLoggedIn', { withCredentials: true })
       .then((response) => {
         setIsLoading(false);
-        console.log(response.data);
         if (!response.data) {
           return setMyEvents(result.calendars[0])
         }
@@ -44,8 +43,17 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
     }
     await axios.get('http://localhost:3000/todoList/info', { params: { email: user } })
       .then((response) => {
-        setMyEvents(response.data.results[0].calendars[0]);
-        setUserCalendar(response.data.results[0].calendars[0]);
+        if (response.data.results.length === 0) {
+          axios.post('http://localhost:3000/todoList/newUser', { params: { email: user } })
+            .then(() => {
+              getAllTodos(user);
+            }).catch((err) => {
+              return err;
+            })
+        } else {
+          setMyEvents(response.data.results[0].calendars[0]);
+          setUserCalendar(response.data.results[0].calendars[0]);
+        }
       })
       .then(() => {
         setHasData(true);
@@ -101,7 +109,6 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
   }
 
   const addCategory = async (category) => {
-
     let incomingId;
 
     incomingId = userCalendar.calendar_id;
@@ -202,6 +209,8 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
             category.items.forEach(item => {
               if (item === existing) {
                 item.in_calendar = !item.in_calendar
+                item.start = new Date(moment(item.start))
+                item.end_date = new Date(moment(item.end_date))
                 updateTodo(item);
               }
             })
@@ -247,7 +256,7 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
     }
   }
 
-  const naviBar = (<TopBar isLoading={isLoading} setIsLoggedIn={setIsLoggedIn}
+  const naviBar = (<TopBar setMyEvents={setMyEvents} setAllTodos={setAllTodos}isLoading={isLoading} setIsLoggedIn={setIsLoggedIn}
     isLoggedIn={isLoggedIn} isMobile={isMobile} onCalendar={onCalendar}
     setOnCalendar={setOnCalendar} userEmail={userEmail} viewSharedCal={viewSharedCal} />);
 
@@ -269,7 +278,8 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
         <div>
           {naviBar}
           <div className="">
-            {myEvents.length ? toDoList : null}
+            {/* {myEvents.length ? toDoList : null} */}
+            {toDoList}
           </div>
         </div>
       )
@@ -279,7 +289,8 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
         <div>
           {naviBar}
           <div>
-            {myEvents.length ? myCalendar : null}
+            {/* {myEvents.length ? myCalendar : null} */}
+            {myCalendar}
           </div>
         </div>
       )

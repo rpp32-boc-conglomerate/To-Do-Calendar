@@ -46,8 +46,23 @@ function Category({tasks, isMobile, draggedEvent, setDraggedEvent, handleDragSta
   const [totalTime, setTotalTime] = useState(0);
   const [modalOpen, setModalOpen] = useState(false);
   const todos = tasks.items;
-  const categoryId = tasks.category_id
-  // const onCalendarTasks = todos.filter(task => task.in_calendar);
+  const categoryId = tasks.category_id;
+  let accumulation = 0;
+  let accumulationHours = 0;
+  let accumulationMins = 0;
+  const onCalendarTasks = todos.filter(task => task.in_calendar);
+  onCalendarTasks.map(item => {
+    if (item.end_date < new Date()) {
+      const numberDuration = item.duration.split(':')
+      let hours = Number(numberDuration[0])
+      let minutes = Number(numberDuration[1])
+      const combinedTime = (hours * 60 ) + minutes
+      accumulation += combinedTime;
+      }
+      accumulationHours = Math.floor(accumulation / 60)
+      accumulationMins = accumulation % 60
+    })
+
 
   return (
     <Container>
@@ -56,11 +71,10 @@ function Category({tasks, isMobile, draggedEvent, setDraggedEvent, handleDragSta
           <div className={classes.taskTopDiv}>
             <div className={classes.titleNDesc}>
               <div className={classes.taskCategory}>{tasks.category}</div>
-              <div>Time Spent So Far: 0</div>
+              <div>Time Spent So Far: {accumulationHours} hours {accumulationMins} minutes</div>
             </div>
             <div className={classes.buttons}>
               <Button className={classes.add} onClick={() => {
-                setTotalTime(totalTime + 1);
                 setModalOpen(true);
               }}>Add Task</Button>
               <Button className={classes.delete} onClick={() => {
