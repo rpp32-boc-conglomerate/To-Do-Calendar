@@ -22,7 +22,7 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
   const navigate = useNavigate();
 
   useEffect(async () => {
-    await axios.get('http://localhost:3000/auth/isLoggedIn', { withCredentials: true })
+    await axios.get('/auth/isLoggedIn', { withCredentials: true })
       .then(async (result) => {
         console.log(result);
         setIsLoading(false);
@@ -38,7 +38,7 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
   }, [isLoggedIn])
 
   const getAllTodos = async (user) => {
-    await axios.get('http://localhost:3000/todoList/info', { params: { email: user } })
+    await axios.get('/todoList/info', { params: { email: user } })
       .then((response) => {
         setMyEvents([...response.data.results[0].calendars[0].categories]);
         setUserCalendar(response.data.results[0].calendars[0]);
@@ -50,7 +50,7 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
   }
 
   const addTodo = (todo) => {
-    axios.post('http://localhost:3000/todoList/item', { params: { userEmail: userEmail }, data: todo })
+    axios.post('/todoList/item', { params: { userEmail: userEmail }, data: todo })
       .then((result) => {
         getAllTodos(userEmail)
       })
@@ -93,7 +93,7 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
     console.log(incomingId);
     console.log('userCalendar: ', userCalendar);
 
-    axios.post('http://localhost:3000/todoList/category', { params: { calendar_id: incomingId, category: category } })
+    axios.post('/todoList/category', { params: { calendar_id: incomingId, category: category } })
       .then((result) => {
         let catId = result.data.category_id;
         let newCat = { category_id: catId, category: category, todoitems: [] };
