@@ -25,7 +25,7 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
     if (!isLoggedIn) {
       return setMyEvents(result.calendars[0])
     }
-    await axios.get('http://localhost:3000/auth/isLoggedIn', { withCredentials: true })
+    await axios.get('/auth/isLoggedIn', { withCredentials: true })
       .then(async (result) => {
         console.log(result);
         setIsLoading(false);
