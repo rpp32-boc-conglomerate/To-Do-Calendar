@@ -270,7 +270,8 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
     }
   }
 
-  const naviBar = (<TopBar isLoading={isLoading} setIsLoggedIn={setIsLoggedIn}
+  const naviBar = (<TopBar setMyEvents={setMyEvents} setAllTodos={setAllTodos}
+    isLoading={isLoading} setIsLoggedIn={setIsLoggedIn}
     isLoggedIn={isLoggedIn} isMobile={isMobile} onCalendar={onCalendar}
     setOnCalendar={setOnCalendar} userEmail={userEmail} viewSharedCal={viewSharedCal} />);
 
