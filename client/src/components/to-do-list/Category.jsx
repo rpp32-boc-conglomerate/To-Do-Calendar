@@ -19,7 +19,7 @@ function Category({tasks, isMobile, draggedEvent, setDraggedEvent, handleDragSta
   const [modalOpen, setModalOpen] = useState(false);
   const todos = tasks.items;
   const categoryId = tasks.category_id
-  const onCalendarTasks = todos.filter(task => task.in_calendar);
+  // const onCalendarTasks = todos.filter(task => task.in_calendar);
 
   return (
     <Container>
@@ -37,11 +37,12 @@ function Category({tasks, isMobile, draggedEvent, setDraggedEvent, handleDragSta
           deleteTodo={deleteTodo} newTodo={true}/>}
         </Container>
         <Container sx={{ display: 'inline-block'}}>
-          <Tasks tasks={todos} isMobile={isMobile}
-          draggedEvent={draggedEvent} setDraggedEvent={setDraggedEvent}
-          handleDragStart={handleDragStart}
-          updateTodo={updateTodo} deleteTodo={deleteTodo}
-          modalOpen={modalOpen} setModalOpen={setModalOpen}/>
+          { todos !== undefined && <Tasks tasks={todos} isMobile={isMobile}
+            draggedEvent={draggedEvent} setDraggedEvent={setDraggedEvent}
+            handleDragStart={handleDragStart}
+            updateTodo={updateTodo} deleteTodo={deleteTodo}
+            modalOpen={modalOpen} setModalOpen={setModalOpen}/>
+          }
         </Container>
     </Paper>
   </Container>

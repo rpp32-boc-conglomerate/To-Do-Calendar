@@ -68,10 +68,12 @@ var TaskOptionsModal = (props) => {
     taskCopy.start = userTask.start || new Date();
     taskCopy.end_date = userTask.end_date || new Date();
     taskCopy.in_calendar = inCalendar;
-    taskCopy.category_id = props.categoryId
+    taskCopy.category_id = props.categoryId;
 
-    let hours = endTime.getHours() - startTime.getHours()
-    let minutes = endTime.getMinutes() - startTime.getMinutes()
+    console.log(endTime.getHours());
+
+    let hours = endTime.getHours() - startTime.getHours();
+    let minutes = endTime.getMinutes() - startTime.getMinutes();
 
     if (minutes < 0) {
       const convertedHours = (hours * 60) + minutes;
@@ -130,11 +132,11 @@ var TaskOptionsModal = (props) => {
           <TextField multiline label="Description" className={classes.input} defaultValue={props.task.description} onChange={(newValue) => handleTextInput(newValue, 'description')}/>
 
           <DesktopDateTimePicker renderInput={(props) => <TextField className={classes.input} {...props} />} label="Start Time"
-            value={userTask.start} onChange={(newValue) => {
+            value={startTime} onChange={(newValue) => {
               handleTimeChange(newValue, 'start')
               setStartTime(newValue)}} />
           <DesktopDateTimePicker renderInput={(props) => <TextField className={classes.input} {...props} />} label="End Time"
-            value={userTask.end_date} onChange={(newValue) => {
+            value={endTime} onChange={(newValue) => {
               handleTimeChange(newValue, 'end_date')
               setEndTime(newValue)}}/>
 
