@@ -78,7 +78,7 @@ const Login = ({setEmail, isLoggedIn, setIsLoggedIn}) => {
   const handleLogin = async () => {
     let isValid = await validation();
     if (isValid) {
-      await axios.post('/auth/login', {
+      await axios.post('http://localhost:3000/auth/login', {
         'email': state['email'], 'password': state['password']}, {withCredentials: true}
       ).then((res) => {
         if(res.data === true) {

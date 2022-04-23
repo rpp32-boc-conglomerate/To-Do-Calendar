@@ -18,6 +18,21 @@ todoListRouter.get('/info', (req, res) => {
   }
 });
 
+todoListRouter.post('/newUser', async (req, res) => {
+  var email = req.body.params.email;
+
+  query.postNewUser(email, async (err, response) => {
+    console.log(response)
+    if (err) {
+      console.log('in error of new User');
+      console.log(err);
+      res.status(400).send('post new User error');
+    } else {
+      res.status(201).send( { email: response } );
+    }
+  });
+});
+
 todoListRouter.post('/category', async (req, res) => {
   var calendar_id = req.body.params.calendar_id;
   var category = req.body.params.category;
@@ -108,5 +123,7 @@ todoListRouter.delete('/category', async (req, res) => {
     }
   });
 });
+
+
 
 module.exports = todoListRouter;
