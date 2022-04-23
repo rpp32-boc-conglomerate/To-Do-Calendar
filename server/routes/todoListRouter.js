@@ -18,7 +18,23 @@ todoListRouter.get('/info', (req, res) => {
   }
 });
 
+todoListRouter.post('/newUser', async (req, res) => {
+  var email = req.body.params.email;
+
+  query.postNewUser(email, async (err, response) => {
+    console.log(response)
+    if (err) {
+      console.log('in error of new User');
+      console.log(err);
+      res.status(400).send('post new User error');
+    } else {
+      res.status(201).send( { email: response } );
+    }
+  });
+});
+
 todoListRouter.post('/category', async (req, res) => {
+  console.log('')
   var calendar_id = req.body.params.calendar_id;
   var category = req.body.params.category;
   query.postCategory(calendar_id, category, async (err, response) => {
@@ -59,8 +75,8 @@ todoListRouter.route('/:userEmail').post((req, res) => {
 })
 
 todoListRouter.put('/updateCategory', async (req, res) => {
-  var category_id = req.body.category_id;
-  var category = req.body.category;
+  var category_id = req.body.data.category_id;
+  var category = req.body.data.category;
   query.updateCategory(category_id, category, async (err, response) => {
     if (err) {
       res.status(400).send('update category error');
@@ -71,13 +87,14 @@ todoListRouter.put('/updateCategory', async (req, res) => {
 });
 
 todoListRouter.put('/updateItem', async (req, res) => {
-  var title = req.body.title;
-  var description =  req.body.description;
-  var duration =  req.body.duration;
-  var start =  req.body.start;
-  var end_date =  req.body.end_date;
-  var in_calendar =  req.body.in_calendar;
-  var item_id = req.body.item_id;
+  var title = req.body.data.title;
+  var description =  req.body.data.description;
+  var duration =  req.body.data.duration;
+  var start =  req.body.data.start;
+  var end_date =  req.body.data.end_date;
+  var in_calendar =  req.body.data.in_calendar;
+  var item_id = req.body.data.id;
+
   query.updateItem(title, description, duration, start, end_date, in_calendar, item_id, async (err, response) => {
     if (err) {
       res.status(400).send('updateItem error');
@@ -88,7 +105,8 @@ todoListRouter.put('/updateItem', async (req, res) => {
 });
 
 todoListRouter.delete('/item', async (req, res) => {
-  var item_id = req.body.item_id;
+  var item_id = req.body.id;
+  console.log(req.body);
   query.deleteItem(item_id, async (err, response) => {
     if (err) {
       res.status(400).send('delete item error');
@@ -99,6 +117,7 @@ todoListRouter.delete('/item', async (req, res) => {
 });
 
 todoListRouter.delete('/category', async (req, res) => {
+  console.log(req.body);
   var category_id = req.body.category_id;
   query.deleteCategory(category_id, async (err, response) => {
     if (err) {
@@ -108,5 +127,7 @@ todoListRouter.delete('/category', async (req, res) => {
     }
   });
 });
+
+
 
 module.exports = todoListRouter;

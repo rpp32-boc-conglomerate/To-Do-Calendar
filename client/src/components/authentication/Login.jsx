@@ -82,22 +82,22 @@ const Login = ({setEmail, isLoggedIn, setIsLoggedIn}) => {
         'email': state['email'], 'password': state['password']}, {withCredentials: true}
       ).then((res) => {
         if(res.data === true) {
+          console.log(res.data);
           setIsLoggedIn(true);
-          setEmail(state['email']);
           navigate('/');
         } else {
           setFormErr('email');
           setErrMsg("Email doesn't exist or Incorrect password");
         }
       }).catch((err) => {
-        alert('login err:', err);
+        console.log(err);
       })
     } else {
       alert ('Invalid login submission');
     }
   }
   const handleGoogleLogin = async () => {
-    window.open('http://localhost:3000/auth/google');
+    window.open('/auth/google');
   }
 
   return (
@@ -107,7 +107,7 @@ const Login = ({setEmail, isLoggedIn, setIsLoggedIn}) => {
           <Grid item align='center'>
             <Avatar
               variant="square"
-              src={'http://localhost:3001/images/x-icon/todocal - logo.ico'}
+              src={'/images/x-icon/todocal - logo.ico'}
               style={{width:'120px', height:'100px'}}/>
             <h1 style={{color:'#545863'}}><i>Sign In</i></h1>
           </Grid>

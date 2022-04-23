@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react';
 import Categories from './Categories.jsx';
 import Category from './Category.jsx';
 import Tasks from './Tasks.jsx';
-import TestModal from './testModal.jsx';
 import TaskOptionsModal from '../TaskOptionsModal.jsx';
 import Home from '../Home.jsx'
 import { makeStyles, Container, Button, Modal } from '@material-ui/core';
@@ -22,7 +21,7 @@ const useStyles = makeStyles({
   }
 });
 
-function ToDoList({isMobile, draggedEvent, setDraggedEvent, handleDragStart, taskData, addCategory, addTodo, updateTodo, deleteTodo}) {
+function ToDoList({isMobile, draggedEvent, setDraggedEvent, handleDragStart, taskData, addCategory, addTodo, updateTodo, deleteTodo, deleteCategory}) {
   const [newCatModalOpen, setNewCatModalOpen] = useState(false);
   const [newToDoModalOpen, setNewToDoModalOpen] = useState(false);
   const classes = useStyles();
@@ -54,7 +53,7 @@ function ToDoList({isMobile, draggedEvent, setDraggedEvent, handleDragStart, tas
       </Container>
       <div>
         <Categories taskData={taskData} isMobile={isMobile} draggedEvent={draggedEvent}
-          setDraggedEvent={setDraggedEvent} handleDragStart={handleDragStart}
+          setDraggedEvent={setDraggedEvent} handleDragStart={handleDragStart} deleteCategory={deleteCategory}
           addTodo={addTodo} updateTodo={updateTodo} deleteTodo={deleteTodo}/>
       </div>
     </Container>
