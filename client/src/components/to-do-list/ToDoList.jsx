@@ -13,16 +13,27 @@ import AddToDoModal from './newToDo.jsx'
 const useStyles = makeStyles({
   mobileMain: {
     width: '100%',
-    display: 'inline-block'
+    display: 'inline-block',
+    height: '100vh',
+    padding: 0
   },
   desktopMain: {
     width: '45%',
     display: 'inline-block',
     height: '100%'
   },
-  paper: {
+  paperMobile: {
     display: 'inline-block',
     padding: '1rem',
+    width: '100%',
+    color: 'black',
+    minHeight: '80vh',
+    overflowY: 'scroll'
+  },
+  paperDesktop: {
+    display: 'inline-block',
+    paddingRight: 0,
+    paddingLeft: 0,
     width: '100%',
     color: 'black',
     minHeight: '80vh',
@@ -33,6 +44,10 @@ const useStyles = makeStyles({
     width: '100%',
     marginBottom: '8px'
   },
+  todoListContainerMobile: {
+    padding: 0
+  },
+  todoListContainerDesktop: {},
   button: {
     wordWrap: 'initial',
     backgroundColor: '#1976d2',
@@ -68,8 +83,8 @@ function ToDoList({isMobile, draggedEvent, setDraggedEvent, handleDragStart, tas
 
   return (
     <Container className={isMobile ? classes.mobileMain : classes.desktopMain}>
-      <Paper elevation={1} className={classes.paper}>
-        <Container>
+      <Paper elevation={1} className={isMobile ? classes.paperDesktop : classes.paperMobile}>
+        <Container className={isMobile ? classes.todoListContainerMobile : classes.todoListContainerDesktop}>
           <Container className={classes.todoListTopContainer}>
             <div style={{display: 'flex', justifyContent: 'center', width: '100%', fontSize: '24px', fontWeight: '600', marginBottom: '12px'}}>To-Do List</div>
             <div style={{display: 'flex', justifyContent: 'center'}}>

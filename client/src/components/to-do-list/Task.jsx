@@ -62,10 +62,13 @@ function Task({task, isMobile, draggedEvent, setDraggedEvent, handleDragStart, c
       hours = hoursDigits[1];
     };
     let minutes = splitDuration[1];
-    const minutesDigits = minutes.split('')
-    if (minutesDigits[0] === '0') {
-      minutes = minutesDigits[1];
-    };
+    var minutesDigits;
+    if (minutesDigits) {
+      minutesDigits = minutes.split('')
+      if (minutesDigits[0] === '0') {
+        minutes = minutesDigits[1];
+      };
+    }
     setHours(hours);
     setMinutes(minutes);
   }
@@ -97,7 +100,7 @@ function Task({task, isMobile, draggedEvent, setDraggedEvent, handleDragStart, c
                   {task.title}
                 </Typography>
                 <div className={classes.duration}>
-                  <div>Duration: {hours} {hours === '1' ? 'hour' : 'hours'} {minutes} {minutes === '1' ? 'minute' : 'minutes'}</div>
+                  <div>Duration: {hours} h {minutes} m</div>
                 </div>
               </div>
               <Typography className={classes.description}>

@@ -72,10 +72,9 @@ var TaskOptionsModal = (props) => {
     var momentStart = moment(taskCopy.start)
     var momentEnd = moment(taskCopy.end_date);
     taskCopy.duration = momentEnd.diff(momentStart, 'hours').toString() + ' hours';
-    props.addTodo(taskCopy);
     setUserTask(taskCopy);
 
-    props.newTodo ? props.addTodo(userTask) : (props.updateTodo(userTask), props.updateTask(userTask));
+    props.newTodo ? props.addTodo(taskCopy) : (props.updateTodo(taskCopy), props.updateTask(taskCopy));
     props.setModalOpen(false);
   }
 
