@@ -277,8 +277,7 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
       return (
         <div>
           {naviBar}
-          <div className="">
-            {/* {myEvents.length ? toDoList : null} */}
+          <div>
             {toDoList}
           </div>
         </div>
@@ -289,7 +288,6 @@ const Home = ({ setIsLoading, isMobile, isLoggedIn, isLoading, setIsLoggedIn, sh
         <div>
           {naviBar}
           <div>
-            {/* {myEvents.length ? myCalendar : null} */}
             {myCalendar}
           </div>
         </div>
