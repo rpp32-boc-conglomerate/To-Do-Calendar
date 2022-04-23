@@ -1,4 +1,3 @@
-// import {React, useState} from 'react';
 import React, { useState, useEffect, useRef } from 'react';
 import moment from 'moment';
 import { Button, TextField, Modal, Stack, InputLabel, Select, MenuItem, Container, makeStyles } from '@material-ui/core';
@@ -56,12 +55,11 @@ var TaskOptionsModal = (props) => {
   const classes = useStyles();
 
   const handleTextInput = (event, field) => {
-    const text = event.target.value
-    field === 'title' ? setTodoTitle(text) : setTodoDescription(text)
+    const text = event.target.value;
+    field === 'title' ? setTodoTitle(text) : setTodoDescription(text);
   }
 
   const handleEditDone = () => {
-    // front end update
     const taskCopy = userTask;
     taskCopy.title = todoTitle;
     taskCopy.description = todoDescription;
@@ -70,32 +68,25 @@ var TaskOptionsModal = (props) => {
     taskCopy.in_calendar = inCalendar;
     taskCopy.category_id = props.categoryId;
 
+<<<<<<< HEAD
     console.log(endTime.getHours());
 
+=======
+>>>>>>> main
     let hours = endTime.getHours() - startTime.getHours();
     let minutes = endTime.getMinutes() - startTime.getMinutes();
 
     if (minutes < 0) {
       const convertedHours = (hours * 60) + minutes;
-      hours = Math.floor(convertedHours/60)
-      minutes = convertedHours % 60
+      hours = Math.floor(convertedHours/60);
+      minutes = convertedHours % 60;
     }
 
-    const duration = hours + ':' + minutes
-    taskCopy.duration = duration
+    const duration = hours + ':' + minutes;
+    taskCopy.duration = duration;
 
-    setUserTask(taskCopy)
-    // props.updateTask(taskCopy)
+    setUserTask(taskCopy);
 
-    //back end update
-
-    // var todoToUpdate = {
-    //   title: todoTitle,
-    //   description: todoDescription,
-    //   start: startTime,
-    //   end_date: endTime,
-    //   in_calendar: inCalendar
-    // };
     props.newTodo ? props.addTodo(userTask) : props.updateTodo(userTask);
 
     props.setModalOpen(false);

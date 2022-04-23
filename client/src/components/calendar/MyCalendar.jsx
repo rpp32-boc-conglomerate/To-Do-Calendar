@@ -5,11 +5,10 @@ import moment from 'moment';
 import './CalendarStyle.scss';
 import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop';
 
-const DragAndDropCalendar = withDragAndDrop(Calendar)
+const DragAndDropCalendar = withDragAndDrop(Calendar);
 const localizer = momentLocalizer(moment);
 
 const MyCalendar = (props) => {
-  // console.log('eventList', eventList)
   const formatForCalendar = (list) => {
     if (list.length) {
       return list.flat().map(item => {
@@ -26,8 +25,24 @@ const MyCalendar = (props) => {
         }
       })
     } else {
-      return []
+      return [];
     }
+  }
+
+  if (props.viewingShared) {
+    return (
+      <DragAndDropCalendar
+        className='calendar'
+        localizer={localizer}
+        defaultView="week"
+        events={formatForCalendar(props.sharedEvents).filter(item => item.in_calendar)}
+        startAccessor="start"
+        endAccessor="end_date"
+        min={new Date(moment().hour(6).minute(0))}
+        max={new Date(moment().hour(23).minute(0))}
+        style={{ height: 1000 }}
+      />
+    )
   }
 
   return (
